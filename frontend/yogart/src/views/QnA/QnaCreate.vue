@@ -49,7 +49,7 @@ export default {
     },
     data() {
         return {
-            SERVER_URL: this.$store.SERVER_URL,
+            SERVER_URL: this.$store.state.SERVER_URL,
             editor: ClassicEditor,
             editorData: '',
             editorConfig: {

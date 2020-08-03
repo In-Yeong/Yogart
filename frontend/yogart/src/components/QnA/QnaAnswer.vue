@@ -25,7 +25,7 @@ export default {
         return {
             answers: [],
             isAdmin: true,
-            SERVER_URL: this.$store.SERVER_URL,
+            SERVER_URL: this.$store.state.SERVER_URL,
         }
     },
     // mounted() {
