@@ -1,0 +1,51 @@
+package com.ssafy.yogart.qna.serviceImpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import com.ssafy.yogart.qna.model.QnA;
+import com.ssafy.yogart.qna.repository.QnARepository;
+import com.ssafy.yogart.qna.service.QnAService;
+
+@Service
+public class QnAServiceImpl implements QnAService{
+	@Autowired
+	private QnARepository qnaRepository;
+	
+	@Autowired
+    public QnAServiceImpl(QnARepository qnaRepository) {
+        this.qnaRepository = qnaRepository;
+    }
+	
+	@Override
+	public Page<QnA> allQnA(int page) {
+		return qnaRepository.findAll(PageRequest.of(page-1, 5));
+	}
+
+	@Override
+	public QnA detailQnA(int id) {
+		return qnaRepository.findByQnaId(id);
+	}
+
+	@Override
+	public QnA createQnA(QnA qna) {
+		return qnaRepository.save(qna);
+	}
+
+	@Override
+	public QnA updateQnA(QnA qna) {
+		return qnaRepository.save(qna);
+	}
+
+	@Override
+	public boolean deleteQnA(int id) {
+		QnA qna = qnaRepository.findByQnaId(id);
+		if(qna != null) {
+			qnaRepository.delete(qna);
+			return true;
+		}
+		return false;
+	}
+}

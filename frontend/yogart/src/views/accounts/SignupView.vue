@@ -1,0 +1,170 @@
+<template>
+    <div class="signupView pb-5">
+        <h1 class="py-3">회원가입</h1>
+        <div class="container d-flex justify-content-center text-left">
+            <div class="d-block">
+                <div class="form-group">
+                    <label for="userEmail">이메일</label>
+                    <br>
+                    <div class="input-box">
+                        <input class="border-0" type="text" id="userEmail" v-model="signupData.userEmail" @keyup="checkEmail">
+                        <span class="allIcon" id="userEmailCheckIcon">아이콘</span>
+                    </div>
+                    
+                </div>
+                <div class="form-group">
+                    <label for="userName">이름</label>
+                    <br>
+                    <div class="input-box">
+                        <input class="border-0" type="text" id="userName" v-model="signupData.userName" @keyup="checkName">
+                        <span class="allIcon" id="userNameCheckIcon">아이콘</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="userNickname">닉네임</label>
+                    <br>
+                    <div class="input-box">
+                        <input class="border-0" type="text" id="userNickname" v-model="signupData.userNickname" @keyup="checkNickname">
+                        <span class="allIcon" id="userNicknameCheckIcon">아이콘</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>비밀번호</label>
+                    <br>
+                    <div class="input-box">
+                        <input class="border-0" type="password" id="userPassword" v-model="signupData.userPassword" @keyup="checkPassword">
+                        <span class="allIcon" id="userPasswordCheckIcon">아이콘</span>
+                    </div>
+                    <small class="form-text text-muted">숫자, 영문 포함 8자 이상</small>
+                </div>
+                <div class="form-group">
+                    <label>비밀번호 확인</label>
+                    <br>
+                    <div class="input-box">
+                        <input class="border-0" type="password" id="userRePassword" v-model="signupData.userRePassword" @keyup="checkRePassword">
+                        <span class="allIcon" id="userRePasswordCheckIcon">아이콘</span>
+                    </div>
+                </div>
+                <button @click="signup" class="btn btn-primary mt-4 col-12">회원가입</button>
+            </div> 
+        </div>
+    </div>
+</template>
+
+<script>
+
+export default {
+    name: 'SignupView',
+    data() {
+        return {
+            signupData: {
+                userEmail: '',
+                userName: '',
+                userNickname: '',
+                userPassword: '',
+                userRePassword: '',
+            },
+            numberOfPassData: 0,
+        }
+    },
+    methods: {
+        signup() {
+            // App.vue로 이벤트 발생
+            document.getElementsByClassName('allIcon').forEach(element => {
+                if (element.style.color === 'blue') {
+                    this.numberOfPassData += 1
+                } else {
+                    alert('입력 정보를 다시 확인해주세요.')
+                    this.numberOfPassData = 0
+                }
+            });
+            if (this.numberOfPassData === 5) {
+                this.$emit('submit-signup-data', this.signupData)
+            }
+
+        },
+        checkEmail() {
+            // 입력을 시작하면 체크 아이콘이 보이게 함
+            document.getElementById('userEmailCheckIcon').style.visibility = 'visible'
+            // trim으로 공백 제거
+            this.signupData.userEmail = this.signupData.userEmail.trim()
+            // 이메일 형식(@와 .)을 갖추고 있고 45자 이하이면 체크 아이콘 색상 변경
+            if (this.signupData.userEmail.includes('@') & this.signupData.userEmail.includes('.') & this.signupData.userEmail.length < 46) {      
+                document.getElementById('userEmailCheckIcon').style.color = 'blue'
+            } else {
+                document.getElementById('userEmailCheckIcon').style.color = 'red'
+            }
+        },
+        checkName() {
+            // 입력을 시작하면 체크 아이콘이 보이게 함
+            document.getElementById('userNameCheckIcon').style.visibility = 'visible'
+            // trim으로 공백 제거
+            this.signupData.userName = this.signupData.userName.trim()
+            // 1~45자 사이면 체크 아이콘 색상 변경
+            if (this.signupData.userName.length > 0 & this.signupData.userName.length < 46) {
+                document.getElementById('userNameCheckIcon').style.color = 'blue'
+            } else {
+                document.getElementById('userNameCheckIcon').style.color = 'red'
+            }
+        },
+        checkNickname() {
+            // 입력을 시작하면 체크 아이콘이 보이게 함
+            document.getElementById('userNicknameCheckIcon').style.visibility = 'visible'
+            // trim으로 공백 제거
+            this.signupData.userNickname = this.signupData.userNickname.trim()
+            // 1~45자 사이면 체크 아이콘 색상 변경
+            if (this.signupData.userNickname.length > 0 & this.signupData.userNickname.length < 46) {
+                document.getElementById('userNicknameCheckIcon').style.color = 'blue'
+            } else {
+                document.getElementById('userNicknameCheckIcon').style.color = 'red'
+            }
+        },
+        checkPassword() {
+            // 입력을 시작하면 체크 아이콘이 보이게 함
+            document.getElementById('userPasswordCheckIcon').style.visibility = 'visible'
+            // 영문과 숫자 체크
+            var checkNumber = this.signupData.userPassword.search(/[0-9]/g);
+            var checkEnglish = this.signupData.userPassword.search(/[a-z]/ig);
+            // 영문과 숫자를 포함하고 8~45자 사이면 체크 아이콘 색상 변경
+            if (checkNumber !== -1 & checkEnglish !== -1 & this.signupData.userPassword.length > 7 & this.signupData.userPassword.length < 46) {
+                document.getElementById('userPasswordCheckIcon').style.color = 'blue'
+            } else {
+                document.getElementById('userPasswordCheckIcon').style.color = 'red'
+            }
+        },
+        checkRePassword() {
+            // 입력을 시작하면 체크 아이콘이 보이게 함
+            document.getElementById('userRePasswordCheckIcon').style.visibility = 'visible'
+            // 비밀번호가 일치하면 체크 아이콘 색상 변경
+            if (this.signupData.userRePassword === this.signupData.userPassword) {
+                document.getElementById('userRePasswordCheckIcon').style.color = 'blue'
+            } else {
+                document.getElementById('userRePasswordCheckIcon').style.color = 'red'
+            }
+        }
+    },
+}
+</script>
+
+<style scoped>
+input:focus {
+    outline: none;
+}
+input {
+    width: 30rem;
+}
+.allIcon {
+    color: red;
+    visibility: hidden;
+}
+.signupView {
+    background-color: #f5f6f7;
+}
+.input-box {
+    border-style: solid;
+    border-color: #dadada;
+    border-width: 0.1rem;
+    padding: 0.5rem;
+    background-color: white;
+}
+</style>
