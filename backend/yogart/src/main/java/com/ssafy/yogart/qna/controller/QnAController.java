@@ -65,7 +65,7 @@ public class QnAController {
 		User user = userService.authentication((String)header.get("authorization"));
 		System.out.println(user.getUserName());
 		QnA qna = new QnA();
-		qna.setQnaTitle("Temporary title!!");
+		qna.setQnaTitle("[Title] fix html code content");
 		qna.setQnaContent(content);
 		if (qnaService.createQnA(qna) != null) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);

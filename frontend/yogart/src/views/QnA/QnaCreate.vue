@@ -2,8 +2,9 @@
     <div>
         <h1>질문 작성</h1>
         <form @submit="onSubmit">
-             <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+            <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
             <button type="submit">작성</button>
+            <!-- <span v-if="isEmpty">아무것도 묻지 않음으로 질문 할 수는 없어요.</span> -->
         </form>
     </div>
 </template>
@@ -35,23 +36,22 @@ export default {
             console.log(this.editorData)
             const requestHeaders = {
                 headers: {
-                    // 보내는 양식 이게 맞나?
-                    Authorization: 'Token ' + this.$cookies.get('auth-token')
+                    Authorization: this.$cookies.get('auth-token')
                 }
             }
-            // 데이터 형식 및 URL 체크
-            axios.post(this.SERVER_URL + 'qna/create', null, requestHeaders)
+            // 데이터 형식 및 URL 체크  
+            axios.post(this.SERVER_URL + '/api/qna/make', this.editorData, requestHeaders)
             .then(res => {
-                console.log(res)
+                history.back()
             })
             .catch(err => console.error(err))
         }
     },
     data() {
         return {
-            SERVER_URL: this.$store.SERVER_URL,
+            SERVER_URL: this.$store.state.SERVER_URL,
             editor: ClassicEditor,
-            editorData: '',
+            editorData: null,
             editorConfig: {
                 language: 'ko',
                 plugins: [
