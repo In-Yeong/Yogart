@@ -40,16 +40,17 @@ export default {
     },
     methods : {
         onSuccess(googleUser) {
-            if (localStorage.getItem('JWT_token')) {
+            // 여기가 구글로그인이 성공하면 googleUser에 정보가 담겨서 넘어오는 곳입니까?
+            if (localStorage.getItem('auth-token')) {
                 return alert('이미 로그인 되어 있습니다.')
             }
             console.log(googleUser)
             console.log(googleUser.getBasicProfile())
-            },
+        },
         onFailure(googleUser) {
             console.log(googleUser)
             console.log(googleUser.getBasicProfile())
-            },
+        },
 
 
         //만약 구글 로그인 생겼을 시 버튼활성화와 함께 이 함수 활성화

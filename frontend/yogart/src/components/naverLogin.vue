@@ -15,13 +15,13 @@ const naverDomainUrl = "http://localhost:3000"
 export default {
     name:'naverLogin',
     data() {
-    return {
-      // 로그인 버튼 이미지
-      repo: {name: 'loginBtn', src: require('../assets/naverLoginBtn/naver_login_green.png')},
-      //  FIXME state 값 random string 으로 변경
-      state: 123,
-      naverLoginURL: 'https://nid.naver.com/oauth2.0/authorize?response_type=code',
-      }
+      return {
+          // 로그인 버튼 이미지
+          repo: {name: 'loginBtn', src: require('../assets/naverLoginBtn/naver_login_green.png')},
+          //  FIXME state 값 random string 으로 변경
+          state: 123,
+          naverLoginURL: 'https://nid.naver.com/oauth2.0/authorize?response_type=code',
+        }
     },
     created (){
       this.naverLoginURL += '&client_id=' + naverClientId

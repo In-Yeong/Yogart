@@ -32,6 +32,7 @@ export default {
         getUserData() {
             this.FB.api('/me', 'GET', {fields:'id,name,email'},
                 userInformation => {
+                    // 여기가 로그인이 완료되면 사용자의 id, name, email이 넘어오는 곳 입니까?
                     console.warn("get data from fb", userInformation)
                     this.personalID = userInformation.id;
                     this.email = userInformation.email;
@@ -40,6 +41,7 @@ export default {
             )
         },
         sdkLoaded(payload) {
+            // isConnected는 어디에?
             this.isConnected = payload.isConnected
             this.FB = payload.FB
             if (this.isConnected) {
