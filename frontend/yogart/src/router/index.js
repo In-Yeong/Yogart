@@ -5,13 +5,15 @@ import Home from '../views/Home.vue'
 import SignupView from '../views/accounts/SignupView.vue'
 import GraphView from '../views/mypage/GraphView.vue'
 import Callback from '../views/Callback.vue'
-import QnaView from '../views/QnA/QnaView.vue'
-import QnaCreate from '../views/QnA/QnaCreate.vue'
+import QnaView from '../views/qna/QnaView.vue'
+import QnaCreate from '../views/qna/QnaCreate.vue'
 import NoticeListView from '../views/notice/NoticeListView.vue'
 import NoticeDetailView from '../views/notice/NoticeDetailView.vue'
 import NoticeFormView from '../views/notice/NoticeFormView.vue'
 import MyPage from '../views/mypage/MyPage.vue'
 import UserUpdate from '../views/mypage/UserUpdate.vue'
+import TeacherList from '../views/teacher/TeacherList.vue'
+import TeacherDetail from '../views/teacher/TeacherDetail.vue'
 
 const requireAuth = () => (from, to, next) => {
     console.log(store.state.isLogin)
@@ -22,6 +24,16 @@ const requireAuth = () => (from, to, next) => {
 Vue.use(VueRouter)
 
 const routes = [
+    {
+        path: '/teachers',
+        name: 'TeacherList',
+        component: TeacherList,
+    },
+    {
+        path: '/teachers/:id',
+        name: 'TeacherDetail',
+        component: TeacherDetail,
+    },
     {
         path: '/naver/callback',
         name: 'Callback',

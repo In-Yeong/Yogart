@@ -3,7 +3,7 @@
     <div>
         <p>{{ item.qnaContent }}</p>
         <!-- QnaAnswer를 추가해 답변과 답변을 다는 공간을 보여줍니다. -->
-        <QnaAnswer :itemId="item.qnaId"/>
+        <QnaAnswer :itemId="item.id"/>
     </div>
 </template>
 
