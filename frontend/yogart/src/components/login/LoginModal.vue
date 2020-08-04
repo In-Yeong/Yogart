@@ -28,8 +28,8 @@
                 <hr>
                 <div class="my-5"></div>
                 <googleLogin></googleLogin>
-                <kakaoLogin></kakaoLogin>
-                <naverLogin></naverLogin>
+                <kakaoLogin @loginComplete="setUserData"></kakaoLogin>
+                <naverLogin @loginComplete="setUserData"></naverLogin>
                 <facebookLoginCom></facebookLoginCom>
                 <div class="my-5"></div>
             </div>
@@ -41,8 +41,8 @@
 <script>
 import axios from 'axios'
 import googleLogin from '@/components/googleLogin.vue'
-import naverLogin from '@/components/naverLogin.vue'
-import kakaoLogin from '@/components/kakaoLogin.vue'
+import naverLogin from '@/components/sociallogin/naverLogin.vue'
+import kakaoLogin from '@/components/sociallogin/kakaoLogin.vue'
 import facebookLoginCom from '@/components/facebookLogin.vue'
 
 const API_URL = 'http://localhost:8000/api/users'
@@ -73,7 +73,6 @@ export default {
                 // 로그인이 실패했다면 errorState에 status code를 저장해 오류를 출력합니다.
                 this.setCookie(res.data.token)
                 this.setUserData(res.data.userData)
-                this.$emit('loginComplete')
             })
             .catch(err => {
                 console.error(err)
@@ -86,6 +85,8 @@ export default {
         },
         setUserData(userData) {
             this.$store.commit('setUserData', userData)
+            this.$emit('loginComplete')
+
         }
     },
 }

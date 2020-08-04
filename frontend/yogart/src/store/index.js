@@ -20,10 +20,10 @@ export default new Vuex.Store({
         storeLogout(state) {
             state.isLogin = false
         },
-        setUserData(state, userData) {
-            state.userNickname = userData.userNickname
-            state.spoons = userData.spoons
-            state.imageUrl = userData.imageUrl
+        setUserData(state, payload) {
+            state.userNickname = payload.userNickname
+            state.spoons = payload.spoons
+            state.imageUrl = payload.imageUrl
         },
     },
     actions: {

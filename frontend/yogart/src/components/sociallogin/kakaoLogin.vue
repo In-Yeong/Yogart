@@ -44,9 +44,9 @@ export default {
                     token_type: authObj.token_type
                 })
                 .then(res1 => {
-                    // 여기서 res1을 찍으면 카카오톡 로그인이 완료됐을 때 리턴되는 정보가 오는 곳입니까?
+                    // res1 확인
                     console.log(res1);
-                    this.$router.push("/");
+                    this.$emit('loginComplete', res1.data.userData)
                 })
                 .catch(error => {
                     console.log(error);

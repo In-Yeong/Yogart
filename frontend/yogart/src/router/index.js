@@ -4,7 +4,6 @@ import store from '../store'
 import Home from '../views/Home.vue'
 import SignupView from '../views/accounts/SignupView.vue'
 import GraphView from '../views/mypage/GraphView.vue'
-import Login from '../views/Login.vue'
 import Callback from '../views/Callback.vue'
 import QnaView from '../views/QnA/QnaView.vue'
 import QnaCreate from '../views/QnA/QnaCreate.vue'
@@ -24,12 +23,7 @@ Vue.use(VueRouter)
 
 const routes = [
     {
-        path: '/login',
-        name: 'Login',
-        component: Login,
-    },
-    {
-        path: '/callback',
+        path: '/naver/callback',
         name: 'Callback',
         component: Callback,
     },

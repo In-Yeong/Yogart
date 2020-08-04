@@ -56,7 +56,7 @@ export default {
         return {
             SERVER_URL: this.$store.state.SERVER_URL,
             editor: ClassicEditor,
-            questionTitle,
+            questionTitle: null,
             editorData: null,
             editorConfig: {
                 language: 'ko',
