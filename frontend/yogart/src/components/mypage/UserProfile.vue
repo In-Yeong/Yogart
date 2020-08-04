@@ -7,14 +7,12 @@
                 <h5>승희</h5>
                 <div class="d-flex">
                     
-                    <button class="w3-button w3-black w3-tiny update">회원정보 수정</button>
+                    <router-link to="/mypage/update" class="w3-button w3-black w3-tiny update">회원정보 수정</router-link>
                     <button class="w3-button w3-black w3-tiny delete">회원탈퇴</button>
                 </div>
             </div>
             
-            <p>저는 요가를 좋아하는 요린이 입니다.
-
-            </p>
+            <p>저는 요가를 좋아하는 요린이 입니다.</p>
         </div>
     </div>
     

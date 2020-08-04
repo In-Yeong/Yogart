@@ -12,6 +12,7 @@ import NoticeListView from '../views/notice/NoticeListView.vue'
 import NoticeDetailView from '../views/notice/NoticeDetailView.vue'
 import NoticeFormView from '../views/notice/NoticeFormView.vue'
 import MyPage from '../views/mypage/MyPage.vue'
+import UserUpdate from '../views/mypage/UserUpdate.vue'
 
 const requireAuth = () => (from, to, next) => {
     console.log(store.state.isLogin)
@@ -52,6 +53,12 @@ const routes = [
         name: 'Graph',
         component: GraphView,
         beforeEnter: requireAuth(),
+    },
+    {
+        path: '/mypage/update',
+        name: 'UserUpdate',
+        component: UserUpdate,
+        // beforeEnter: requireAuth(),
     },
     {
         path: '/notice',
