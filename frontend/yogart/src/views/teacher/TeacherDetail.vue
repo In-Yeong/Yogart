@@ -12,11 +12,11 @@ export default {
     // 어떤 정보들을 가져와야 할까
     data() {
         return {
-            teacherId: $route.params.id
+            teacherId: $route.params.teacher_id
         }
     },
     mounted() {
-        
+
     }
 }
 </script>
