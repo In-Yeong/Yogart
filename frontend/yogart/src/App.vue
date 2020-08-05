@@ -11,6 +11,9 @@
             <router-link to="/accounts/signup">Signup</router-link> |
             <router-link to="/qna">Q&A</router-link> |
             <router-link to="/notice">공지사항</router-link> |
+            <router-link to="/coaching">AICoachingPage</router-link> |
+            <router-link to="/coaching/yogaposelist">YogaPoseListPage</router-link> |
+            <router-link to="/coaching/yogapose">YogaPosePage</router-link>
         </div>
             <router-view @submit-signup-data="signup" />
         <Footer/>
