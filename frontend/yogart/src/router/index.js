@@ -12,6 +12,10 @@ import NoticeListView from '../views/notice/NoticeListView.vue'
 import NoticeDetailView from '../views/notice/NoticeDetailView.vue'
 import NoticeFormView from '../views/notice/NoticeFormView.vue'
 import MyPage from '../views/mypage/MyPage.vue'
+import AICoachingPage from '../views/coaching/AICoachingPage.vue'
+import YogaPoseListPage from '../views/coaching/YogaPoseListPage.vue'
+import YogaPoseListDetailPage from '../views/coaching/YogaPoseListDetailPage.vue'
+import YogaPosePage from '../views/coaching/YogaPosePage.vue'
 
 const requireAuth = () => (from, to, next) => {
     console.log(store.state.isLogin)
@@ -80,6 +84,26 @@ const routes = [
         component: QnaCreate,
         beforeEnter: requireAuth(),
     },
+    {
+        path: '/coaching/',
+        name: 'AICoachingPage',
+        component: AICoachingPage
+      },
+      {
+        path: '/coaching/yogaposelist',
+        name: 'YogaPoseListPage',
+        component: YogaPoseListPage
+      },
+      {
+        path: '/coaching/yogaposelist/:list_id',
+        name: 'YogaPoseListDetailPage',
+        component: YogaPoseListDetailPage
+      },
+      {
+        path: '/coaching/yogapose',
+        name: 'YogaPosePage',
+        component: YogaPosePage
+      },
 ]
 
     const router = new VueRouter({
