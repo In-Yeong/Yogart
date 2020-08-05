@@ -28,6 +28,7 @@ export default {
     data() {
         return {
             isLogin: false,
+            SERVER_URL: this.$store.state.SERVER_URL,
         }
     },
     components: {
@@ -41,10 +42,11 @@ export default {
         },
         signup(signupData) {
         console.log(signupData)
-        axios.post(`${API_URL}/api/users/signup`, signupData)
+        axios.post(`${this.SERVER_URL}/api/users/signup`, signupData)
             .then(response => {
                 if (response.data.statusCode === 200) {
                     this.setCookie(response.data.token)
+                    this.$store.commit('storeLogin')
                     this.$router.push({name: 'Home'})
                } else {
                    alert('중복된 이메일입니다.')

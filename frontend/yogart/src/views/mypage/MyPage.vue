@@ -1,6 +1,5 @@
 <template>
     <div class="mb-5" style="margin-top : 50px">
-        <h1>Mypage</h1>
         <UserProfile/>
        
         <div class="d-flex flex-column">

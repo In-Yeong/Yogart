@@ -12,6 +12,7 @@ export default {
     data() {
         return {
             JavaScriptApiKey : JavaScriptApiKey,
+            SERVER_URL: this.$store.state.SERVER_URL,
         }
     },
     created() {
@@ -36,7 +37,7 @@ export default {
             success : function( authObj ) {
                 console.log( authObj );
                  axios
-                .post("http://localhost:8000/api/users/kakaoLogin", {
+                .post(this.SERVER_URL + "/api/users/kakaoLogin", {
                     access_token: authObj.access_token,
                     expires_in: authObj.expires_in,
                     refresh_token: authObj.refresh_token,

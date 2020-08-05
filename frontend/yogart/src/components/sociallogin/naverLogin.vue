@@ -9,9 +9,6 @@
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script>
 const naverClientId = '4eWVX86Cci4TFZzNvA3b'
-const naverCallbackUrl = "http://localhost:8000/api/users/naverLogin"
-const naverDomainUrl = "http://localhost:3000"
-
 
 export default {
     name:'naverLogin',
@@ -22,11 +19,13 @@ export default {
           //  FIXME state 값 random string 으로 변경
           state: 123,
           naverLoginURL: 'https://nid.naver.com/oauth2.0/authorize?response_type=code',
+          SERVER_URL: this.$store.state.SERVER_URL,
+          LOCAL_URL: this.$store.state.LOCAL_URL,
         }
     },
     created (){
       this.naverLoginURL += '&client_id=' + naverClientId
-      this.naverLoginURL += '&redirect_uri=' + naverCallbackUrl
+      this.naverLoginURL += '&redirect_uri=' + this.SERVER_URL + '/api/users/naverLogin'
       this.naverLoginURL += '&state=' + this.state
 
     }

@@ -45,8 +45,6 @@ import naverLogin from '@/components/sociallogin/naverLogin.vue'
 import kakaoLogin from '@/components/sociallogin/kakaoLogin.vue'
 import facebookLoginCom from '@/components/facebookLogin.vue'
 
-const API_URL = 'http://localhost:8000/api/users'
-
 export default {
     name: 'login-modal',
     data () {
@@ -56,6 +54,7 @@ export default {
                 userPassword: null,
             },
             errorState: null,
+            API_URL: this.$store.state.SERVER_URL,
         }
     },
     components: {
@@ -67,7 +66,7 @@ export default {
     methods: {
         onSubmit(e) {
             e.preventDefault()
-            axios.post(API_URL + '/login', this.loginData)
+            axios.post(this.API_URL + '/api/users/login', this.loginData)
             .then(res => {
                 console.log(res);
                 // 로그인이 실패했다면 errorState에 status code를 저장해 오류를 출력합니다.
@@ -86,7 +85,6 @@ export default {
         setUserData(userData) {
             this.$store.commit('setUserData', userData)
             this.$emit('loginComplete')
-
         }
     },
 }

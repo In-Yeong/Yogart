@@ -8,7 +8,8 @@ Vue.use(VueCookies)
 export default new Vuex.Store({
     state: {
         isLogin: !!window.$cookies.get('auth-token'),
-        SERVER_URL: "http://localhost:8000",
+        SERVER_URL: 'http://localhost:8000',
+        LOCAL_URL: 'http://localhost:3000',
         userNickname: null,
         spoons: null,
         imageUrl: null,

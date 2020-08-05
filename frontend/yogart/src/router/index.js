@@ -19,7 +19,7 @@ const requireAuth = () => (from, to, next) => {
     console.log(store.state.isLogin)
     if (store.state.isLogin) return next()
     $('#loginStaticBackdrop').modal('show')
-  }
+}
 
 Vue.use(VueRouter)
 
