@@ -85,7 +85,7 @@ const routes = [
         beforeEnter: requireAuth(),
     },
     {
-        path: '/coaching/',
+        path: '/coaching',
         name: 'AICoachingPage',
         component: AICoachingPage
       },

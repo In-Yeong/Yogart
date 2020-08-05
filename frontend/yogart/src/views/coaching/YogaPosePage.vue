@@ -23,7 +23,7 @@
       <div class="row">
         <div class="col-sm-3" id="poses" v-for="posefile in tempPosefiles" :key="posefile.pose_name">
             
-                <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../public/photos/${posefile.file_reference}`)">
+                <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                 <p>{{posefile.pose_name}}</p>
        </div>      
          
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import posefiles from '../../public/json.js'
+import posefiles from '../../../public/json.js'
 // console.log(posefiles)
 export default {
     name : 'YogaPosePage',
