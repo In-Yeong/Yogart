@@ -27,10 +27,8 @@
                 </ValidationObserver>
                 <hr>
                 <div class="my-5"></div>
-                <googleLogin></googleLogin>
                 <kakaoLogin @loginComplete="setUserData"></kakaoLogin>
                 <naverLogin @loginComplete="setUserData"></naverLogin>
-                <facebookLoginCom></facebookLoginCom>
                 <div class="my-5"></div>
             </div>
         </div>
@@ -70,8 +68,7 @@ export default {
             .then(res => {
                 console.log(res);
                 // 로그인이 실패했다면 errorState에 status code를 저장해 오류를 출력합니다.
-                this.setCookie(res.data.token)
-                this.setUserData(res.data.userData)
+                this.setUserData(res.data)
             })
             .catch(err => {
                 console.error(err)
@@ -82,8 +79,10 @@ export default {
         setCookie(token) {
             this.$cookies.set('auth-token', token)
         },
-        setUserData(userData) {
-            this.$store.commit('setUserData', userData)
+        setUserData(data) {
+            console.log('setUserData')
+            this.setCookie(data.token)
+            this.$store.commit('setUserData', data)
             this.$emit('loginComplete')
         }
     },
