@@ -4,7 +4,6 @@ import store from '../store'
 import Home from '../views/Home.vue'
 import SignupView from '../views/accounts/SignupView.vue'
 import GraphView from '../views/mypage/GraphView.vue'
-import Login from '../views/Login.vue'
 import Callback from '../views/Callback.vue'
 import QnaView from '../views/QnA/QnaView.vue'
 import QnaCreate from '../views/QnA/QnaCreate.vue'
@@ -12,6 +11,7 @@ import NoticeListView from '../views/notice/NoticeListView.vue'
 import NoticeDetailView from '../views/notice/NoticeDetailView.vue'
 import NoticeFormView from '../views/notice/NoticeFormView.vue'
 import MyPage from '../views/mypage/MyPage.vue'
+import UserUpdate from '../views/mypage/UserUpdate.vue'
 
 const requireAuth = () => (from, to, next) => {
     console.log(store.state.isLogin)
@@ -23,12 +23,7 @@ Vue.use(VueRouter)
 
 const routes = [
     {
-        path: '/login',
-        name: 'Login',
-        component: Login,
-    },
-    {
-        path: '/callback',
+        path: '/naver/callback',
         name: 'Callback',
         component: Callback,
     },
@@ -52,6 +47,12 @@ const routes = [
         name: 'Graph',
         component: GraphView,
         beforeEnter: requireAuth(),
+    },
+    {
+        path: '/mypage/update',
+        name: 'UserUpdate',
+        component: UserUpdate,
+        // beforeEnter: requireAuth(),
     },
     {
         path: '/notice',

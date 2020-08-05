@@ -1,6 +1,6 @@
 
 <template>
-    <!-- 질문 상세 하단에 댓글 방식으로 달리는 답변과, 답변을 다는 기능을 가지는 component // 답변 작성은 관리자만 -->
+    <!-- 질문 상세 하단에 댓글 방식으로 달리는 답변과, 답변을 다는 기능을 가지는 component // 답변 작성은 관리자 혹은 질문글 작성자만 -->
     <div>
         <div v-for="answer in answers" :key="answer.qnaReplyId">
             <p>{{ answer.qnaReplyContent }}</p>
@@ -27,6 +27,7 @@ export default {
             answers: [],
             isAdmin: true,
             SERVER_URL: this.$store.state.SERVER_URL,
+            answerData: null,
         }
     },
     mounted() {
@@ -52,6 +53,7 @@ export default {
             }
             // 데이터 형식 및 URL 체크 
             console.log(replycontents) 
+            if (this.answerData !== null && this.isAdmin === true) [
             axios.post(this.SERVER_URL + '/api/qna/reply/make', replycontents, requestHeaders)
             .then(res => {
                 axios.get(this.SERVER_URL + `/api/qna/reply/list/${this.itemId}`, this.itemId)
@@ -63,7 +65,7 @@ export default {
                 .catch(err => console.log(err))
             })
             .catch(err => console.error(err))
-            
+            ]
             console.log(e)
         }
     },
