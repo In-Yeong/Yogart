@@ -63,9 +63,7 @@ public class UserServiceImpl implements UserService {
 
     // 비밀번호 업데이트
     @Override
-    public User updatePassword(String token, String password) {
-        User user = this.authentication(token);
-        user.setUserPassword(password);
+    public User updateInfo(String token, User user) {
         return userRepository.save(user);
     }
 

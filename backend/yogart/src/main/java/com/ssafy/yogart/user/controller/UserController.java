@@ -1,6 +1,7 @@
 package com.ssafy.yogart.user.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -174,10 +175,16 @@ public class UserController {
     }
 
     // 자신의 비밀번호를 갱신한 뒤 그 결과를 반환
-    @ApiOperation(value="자신의 비밀번호를 갱신한 뒤 그 결과를 반환", response = User.class)
+    @ApiOperation(value="자신의 회원정보를 갱신한 뒤 그 결과를 반환", response = User.class)
     @PutMapping(value = "/myinfo")
-    public User updatePassword(@RequestHeader String authorization, @RequestParam String password) {
-        return userService.updatePassword(authorization, password);
+    public User updateInfo(@RequestHeader(value="config") Map<String, Object> header, @RequestBody User content) {
+    	String token = (String)header.get("authorization");
+    	String email = content.getUserEmail();
+    	String username = content.getUserName();
+    	String nickname = content.getUserNickname();
+    	String password = content.getUserPassword();
+    	User user = new User(email, username, nickname, password);
+        return userService.updateInfo(token, user);
     }
 
     // 탈퇴
