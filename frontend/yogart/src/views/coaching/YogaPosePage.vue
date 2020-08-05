@@ -3,6 +3,8 @@
       <h1 class="my-5">Making Yoga Pose List</h1>
         <h5>Wish poses :</h5>
         <p>{{poseList}}</p>
+        <!-- <p>{{poseIndexList}}</p> -->
+        
        <button @click="makeList" class="w3-btn w3-round-xlarge w3-red w3-large m-3">make pose list</button>
       <!-- <button class="w3-btn w3-round-xlarge w3-black w3-large">Put into my list</button> -->
        <div class="d-flex flex-column">
@@ -17,32 +19,34 @@
             
                 <div v-if="all">
                     <div class="row">
-                    <div class="col-sm-3" id="poses" v-for="posefile in posefiles" :key="posefile.pose_name">  
-                        <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                    <div class="col-sm-3" id="poses" v-for="(posefile,index) in posefiles" :key="posefile.pose_name">  
+                        <img @click="poseChoose(posefile,index)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                      
                         <p>{{posefile.pose_name}}</p>
                     </div>      
                     </div>
                 </div>
                 <div v-if="beginner">
                     <div class="row">
-                    <div class="col-sm-3" id="poses" v-for="posefile in beginnerPosefiles" :key="posefile.pose_name">  
-                        <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                    <div class="col-sm-3" id="poses" v-for="(posefile,index) in beginnerPosefiles" :key="posefile.pose_name">  
+                        <img @click="poseChoose(posefile,index)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                         <p>{{posefile.pose_name}}</p>
                     </div>      
                     </div>
                 </div>
                 <div v-if="intermediate">
                     <div class="row">
-                    <div class="col-sm-3" id="poses" v-for="posefile in intermediatePosefiles" :key="posefile.pose_name">  
-                        <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                    <div class="col-sm-3" id="poses" v-for="(posefile,index) in intermediatePosefiles" :key="posefile.pose_name">  
+                        <img @click="poseChoose(posefile,index)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                       
                         <p>{{posefile.pose_name}}</p>
                     </div>      
                     </div>
                 </div>
                 <div v-if="expert">
                     <div class="row">
-                    <div class="col-sm-3" id="poses" v-for="posefile in expertPosefiles" :key="posefile.pose_name">  
-                        <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                    <div class="col-sm-3" id="poses" v-for="(posefile,index) in expertPosefiles" :key="posefile.pose_name">  
+                        <img @click="poseChoose(posefile,index)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                         <p>{{posefile.pose_name}}</p>
                     </div>      
                     </div>
@@ -57,6 +61,7 @@
 
 <script>
 import posefiles from '../../../public/json.js'
+import axios from 'axios'
 
 // console.log(posefiles)
 export default {
@@ -68,6 +73,7 @@ export default {
             posefiles : posefiles,
             count : 0,
             poseList : [],
+            poseIndexList : [],
             max : 7,
             beginnerPosefiles : [],
             intermediatePosefiles : [],
@@ -76,8 +82,7 @@ export default {
             beginner : false,
             intermediate : false,
             expert : false,
-
-            
+            idx_count : 0,
             
         }
     },
@@ -103,15 +108,20 @@ export default {
                 }
         }.bind(this))
         },
-        poseChoose(btnPose) {
+     
+
+        poseChoose(btnPose,index) {
+            console.log(index)
             if (this.poseList.length <= this.max ) {
                 if (this.poseList.includes(btnPose.pose_name)){
 
                     var idx = this.poseList.indexOf(btnPose.pose_name)
                     this.poseList.splice(idx,1);
+                    this.poseIndexList.splice(idx,1);
                 }
                 else {
                     this.poseList.push(btnPose.pose_name)
+                    this.poseIndexList.push(index)
                 }
             }
             else {
@@ -119,7 +129,14 @@ export default {
             }
         },
         makeList() {
-          alert('최대 7개의 동작만 가능합니다.')
+        //   window.confirm("리스트로 넘어갑니다.");
+        //   axios.post('주소')
+        //   .then(res => {
+        //       console.log(res)
+        //       this.$router.push(`/coaching/yogaposelist/${코스번호}`)
+        //   })
+        //   .catch(err => {console.log(err)})
+          
 
         },
         allBtn() {
