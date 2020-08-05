@@ -3,7 +3,7 @@
       <h1 class="my-5">Making Yoga Pose List</h1>
         <h5>Wish poses :</h5>
         <p>{{poseList}}</p>
-        <!-- <p>{{poseIndexList}}</p> -->
+        <p>{{poseIndexList}}</p>
         
        <button @click="makeList" class="w3-btn w3-round-xlarge w3-red w3-large m-3">make pose list</button>
       <!-- <button class="w3-btn w3-round-xlarge w3-black w3-large">Put into my list</button> -->
@@ -60,7 +60,7 @@
       <div class="row">
         <div class="col-sm-3" id="poses" v-for="posefile in tempPosefiles" :key="posefile.pose_name">
             
-                <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                <img @click="poseChoose(posefile,index)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                 <p>{{posefile.pose_name}}</p>
        </div>      
       </div>
@@ -116,7 +116,7 @@ export default {
                 }
         }.bind(this))
         },
-        poseChoose(btnPose) {
+        poseChoose(btnPose,index) {
             if (this.poseList.length < this.max ) {
                 if (this.poseList.includes(btnPose.pose_name)){
 
@@ -134,11 +134,14 @@ export default {
             }
         },
         makeList() {
+            let poseCourse = this.poseIndexList.join('/')
+            console.log(this.poseIndexList)
+            console.log(poseCourse)
         //   window.confirm("리스트로 넘어갑니다.");
         //   axios.post('주소')
         //   .then(res => {
         //       console.log(res)
-        //       this.$router.push(`/coaching/yogaposelist/${코스번호}`)
+        //       this.$router.push(`/coaching/yogaposelist/${코스번호}`,poseCourse)
         //   })
         //   .catch(err => {console.log(err)})
           
