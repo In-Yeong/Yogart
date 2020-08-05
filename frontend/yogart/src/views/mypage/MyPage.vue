@@ -1,12 +1,11 @@
 <template>
     <div class="mb-5" style="margin-top : 50px">
         <UserProfile/>
-       
         <div class="d-flex flex-column">
             <div class="w3-bar" style="margin-left: 10vw;">
-            <!-- <button class="w3-bar-item w3-button w3-black" @click="onDiary">다이어리</button> -->
-            <button class="w3-bar-item w3-button w3-teal" @click="onPTMang">PT관리</button>
-            <button class="w3-bar-item w3-button w3-red" @click="onExerHis">운동기록</button>
+                <!-- <button class="w3-bar-item w3-button w3-black" @click="onDiary">다이어리</button> -->
+                <button class="w3-bar-item w3-button w3-teal" @click="onPTMang">PT관리</button>
+                <button class="w3-bar-item w3-button w3-red" @click="onExerHis">운동기록</button>
             </div>
             <div class="schedule">
                 <PTManagement :ptManagement="ptManagement"/>

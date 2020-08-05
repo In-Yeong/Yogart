@@ -14,6 +14,7 @@ import MyPage from '../views/mypage/MyPage.vue'
 import UserUpdate from '../views/mypage/UserUpdate.vue'
 import TeacherList from '../views/teacher/TeacherList.vue'
 import TeacherDetail from '../views/teacher/TeacherDetail.vue'
+import TeacherApply from '../views/teacher/TeacherApply.vue'
 
 const requireAuth = () => (from, to, next) => {
     console.log(store.state.isLogin)
@@ -33,6 +34,11 @@ const routes = [
         path: '/teachers/:teacher_id',
         name: 'TeacherDetail',
         component: TeacherDetail,
+    },
+    {
+        path: '/teachers/apply',
+        name: 'TeacherApply',
+        component: TeacherApply
     },
     {
         path: '/naver/callback',
