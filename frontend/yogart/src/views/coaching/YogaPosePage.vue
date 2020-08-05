@@ -26,7 +26,7 @@
       <div class="row">
         <div class="col-sm-3" id="poses" v-for="posefile in tempPosefiles" :key="posefile.pose_name">
             
-                <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../public/photos/${posefile.file_reference}`)">
+                <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                 <p>{{posefile.pose_name}}</p>
        </div>      
       </div>
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import posefiles from '../../public/json.js'
+import posefiles from '../../../public/json.js'
 // import YogaPoseAll from '../components/YogaPose/YogaPoseAll.vue'
 // import YogaPoseBeginner from '../components/YogaPose/YogaPoseBeginner.vue'
 // import YogaPoseIntermediate from '../components/YogaPose/YogaPoseIntermediate.vue'
@@ -89,7 +89,7 @@ export default {
         // })
         // },
         poseChoose(btnPose) {
-            if (this.poseList.length <= this.max ) {
+            if (this.poseList.length < this.max ) {
                 if (this.poseList.includes(btnPose.pose_name)){
                     // this.poseList.filter(function(value, index, arr){ return value > 5;})
                     var idx = this.poseList.indexOf(btnPose.pose_name)

@@ -23,7 +23,7 @@ export default {
     },
     methods: {
         yogaListDetail(num) {
-            this.$router.push(`/yogaposelist/${num}`)
+            this.$router.push(`/coaching/yogaposelist/${num}`)
         }
     },
 }
