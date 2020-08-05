@@ -56,6 +56,14 @@
             </div>
         </div>
 
+      
+      <div class="row">
+        <div class="col-sm-3" id="poses" v-for="posefile in tempPosefiles" :key="posefile.pose_name">
+            
+                <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                <p>{{posefile.pose_name}}</p>
+       </div>      
+      </div>
   </div>
 </template>
 
@@ -108,11 +116,8 @@ export default {
                 }
         }.bind(this))
         },
-     
-
-        poseChoose(btnPose,index) {
-            console.log(index)
-            if (this.poseList.length <= this.max ) {
+        poseChoose(btnPose) {
+            if (this.poseList.length < this.max ) {
                 if (this.poseList.includes(btnPose.pose_name)){
 
                     var idx = this.poseList.indexOf(btnPose.pose_name)
