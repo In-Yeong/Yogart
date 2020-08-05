@@ -3,10 +3,13 @@
     <!-- Start Navbar Area -->
     <div class="navbar-area" style="margin-bottom=55px;">
       <!-- Menu For Mobile Device -->
-      <div class="mobile-nav">
-        <router-link to="/" class="logo">
-          Logo
-        </router-link>
+      <div class="container">
+
+        <div class="mobile-nav">
+          <router-link to="/" class="logo">
+            Logo
+          </router-link>
+        </div>
       </div>
 
       <!-- Menu For Desktop Device -->
@@ -44,9 +47,6 @@
                 </li>
                 <li class="nav-item">
                   <router-link to="/mypage" class="nav-link">Mypage</router-link>
-                </li>
-                <li class="nav-item">
-                  <router-link to="/mypage/graph" class="nav-link">Graph</router-link>
                 </li>
                 <li class="nav-item">
                   <router-link to="#" class="nav-link dropdown-toggle">Pages</router-link>
@@ -134,5 +134,15 @@ export default {
 </script>
 
 <style>
-
+.mobile-nav {
+    background: #000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 100%;
+    z-index: 999;
+    height: 99px;
+}
 </style>

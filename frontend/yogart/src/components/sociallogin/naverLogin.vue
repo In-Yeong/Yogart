@@ -26,6 +26,7 @@ export default {
         }
     },
     mounted (){
+        const axiosVue = this
         var naverLogin = new naver.LoginWithNaverId(
             {
                 clientId: naverClientId,
@@ -38,7 +39,8 @@ export default {
         /* 설정정보를 초기화하고 연동을 준비 */
         naverLogin.init();
         /* (4) Callback의 처리. 정상적으로 Callback 처리가 완료될 경우 main page로 redirect(또는 Popup close) */
-		window.addEventListener('load', function () {
+		if (naverLogin.accessToken !== null) {
+            console.log(naverLogin)
 			naverLogin.getLoginStatus(function (status) {
 				if (status) {
 					/* (5) 필수적으로 받아야하는 프로필 정보가 있다면 callback처리 시점에 체크 */
@@ -57,15 +59,16 @@ export default {
                     })
                     .then(res => {
                         console.log(res)
+                        axiosVue.$emit('loginComplete', res.data)
                     })
                     .catch(err => console.error(err))
 				} else {
 					console.log("callback 처리에 실패하였습니다.");
 				}
 			});
-		});
-    }
+        }
 
+    }
 }
 </script>
 
