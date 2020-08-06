@@ -69,6 +69,7 @@ public class UserController {
     		String token = jwtService.create("user", user, email);
     		System.out.println(token);
     		result.setToken(token);
+    		result.setUser(user);
     		response = new ResponseEntity<>(result, HttpStatus.OK);
     	}
     	
