@@ -1,7 +1,5 @@
-<template>
-    
-    <div>
-        
+<template>   
+    <div> 
         <div id="AI"  v-if="!loading">
             <h1>AI Coaching Service</h1>
             <h5>{{current+1}}번째 동작 :{{yogaPostures[current]}}</h5>
@@ -12,18 +10,15 @@
             <h3 class="m-5">AI 요가 코칭 서비스를 시작합니다</h3>
             <p>{{current+1}}번째 동작 :{{yogaPostures[current]}}</p>
             <!-- <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
-            <span class="sr-only">Loading...</span> -->
-          
+            <span class="sr-only">Loading...</span> -->    
             <i class="fa fa-spinner fa-pulse fa-5x fa-fw m-5"></i>
             <span class="sr-only">Loading...</span>
-      
             <!-- <i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i>
             <span class="sr-only">Refreshing...</span> -->
-
             <h3 class="m-5">웹캠을 켜주시고 잠시만 기다려 주세요</h3>
             <p> AI Yoga Coaching Service is running, Please turn on your webcam and wait</p>
-
         </div>
+
         <div v-if="aiPage" class="d-flex m-1">
             <div id="pose-data">
                 <p>{{time}}</p>
@@ -32,19 +27,17 @@
                 <div>난이도: {{posefiles[yogaPostures[current]].difficulty }}</div>
                 <!-- <div>설명: {{posefiles[yogaPostures[current]].description[posefiles[yogaPostures[current]].description.length-1] }}</div> -->
                 <img :src="require(`../../public/photos/${posefiles[yogaPostures[current]].file_reference}`)" alt="">
+            </div> 
             <div>
                 <button v-if="!startBtn" class="w3-button w3-teal" type="button" @click="restart">Restart</button>
                 <button v-if="!startBtn" class="w3-button w3-black" type="button" @click="stop">Stop</button>
                 <button @click="next" class="w3-btn w3-round-xlarge w3-red w3-large m-5" type="button">Next Yoga Posture</button>
-           </div>
-            </div> 
-            <!-- <p>AI 코칭을 경험해 보세요</p> -->
-            
-     
-        <!-- <div><canvas id="canvas"></canvas></div>
-        <div id="label-container"></div> -->
-        <canvas id="canvas"></canvas>
+           </div>   
+        </div>
+
+        <div style="margin-top : 0;"><canvas id="canvas"></canvas></div>
         <div id="label-container"></div>
+       
         <div v-if="flag"> 
             <!-- <i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i> -->
             <span class="sr-only">Refreshing...</span>
