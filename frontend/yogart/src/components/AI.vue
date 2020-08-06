@@ -1,13 +1,7 @@
 <template>
     
     <div>
-        <div>
-            <div>포즈 이름: {{ posePick.pose_name }}</div>
-            <div>카테고리: {{posePick.category }}</div>
-            <div>난이도: {{posePick.difficulty }}</div>
-            <div>설명: {{posePick.description[posePick.description.length-1] }}</div>
-            <img :src="require(`../../public/photos/${posePick.file_reference}`)" alt="">
-        </div> 
+        
         <div id="AI"  v-if="!loading">
             <h1>AI Coaching Service</h1>
             <h5>{{current+1}}번째 동작 :{{yogaPostures[current]}}</h5>
@@ -30,22 +24,33 @@
             <p> AI Yoga Coaching Service is running, Please turn on your webcam and wait</p>
 
         </div>
-        <div v-if="aiPage" class="m-1">
-            <p>{{time}}</p>
+        <div v-if="aiPage" class="d-flex m-1">
+            <div id="pose-data">
+                <p>{{time}}</p>
+                <div>포즈 이름: {{ posefiles[yogaPostures[current]].pose_name }}</div>
+                <div>카테고리: {{posefiles[yogaPostures[current]].category }}</div>
+                <div>난이도: {{posefiles[yogaPostures[current]].difficulty }}</div>
+                <!-- <div>설명: {{posefiles[yogaPostures[current]].description[posefiles[yogaPostures[current]].description.length-1] }}</div> -->
+                <img :src="require(`../../public/photos/${posefiles[yogaPostures[current]].file_reference}`)" alt="">
+            <div>
+                <button v-if="!startBtn" class="w3-button w3-teal" type="button" @click="restart">Restart</button>
+                <button v-if="!startBtn" class="w3-button w3-black" type="button" @click="stop">Stop</button>
+                <button @click="next" class="w3-btn w3-round-xlarge w3-red w3-large m-5" type="button">Next Yoga Posture</button>
+           </div>
+            </div> 
             <!-- <p>AI 코칭을 경험해 보세요</p> -->
-            <button v-if="!startBtn" class="w3-button w3-teal" type="button" @click="restart">Restart</button>
-            <button v-if="!startBtn" class="w3-button w3-black" type="button" @click="stop">Stop</button>
-            <button @click="next" class="w3-btn w3-round-xlarge w3-red w3-large m-5" type="button">Next Yoga Posture</button>
-        </div>
-        <div><canvas id="canvas"></canvas></div>
-        <div id="label-container">
             
-        </div>
+     
+        <!-- <div><canvas id="canvas"></canvas></div>
+        <div id="label-container"></div> -->
+        <canvas id="canvas"></canvas>
+        <div id="label-container"></div>
         <div v-if="flag"> 
             <!-- <i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i> -->
             <span class="sr-only">Refreshing...</span>
             <div id="seconds-counter"></div>
         </div>
+     </div>
   </div>
 </template>v
 
@@ -69,7 +74,7 @@
                 startTime : true,
                 endTime : true,
                 requestId : undefined,
-                yogaPostures : ['Hi','Hi2','ChildPose','EasyPose', 'TreePose'],
+                yogaPostures : [1,2,3,4,5],
                 current : 0,
                 flag : false,
                 seconds : 11,
@@ -78,7 +83,7 @@
                 restartBtn : false,
                 counter : undefined,
                 posefiles : posefiles,
-                posePick : posefiles[2],
+              
              
             }
         },
