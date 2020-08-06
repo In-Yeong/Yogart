@@ -19,16 +19,32 @@ import AICoachingPage from '../views/coaching/AICoachingPage.vue'
 import YogaPoseListPage from '../views/coaching/YogaPoseListPage.vue'
 import YogaPoseListDetailPage from '../views/coaching/YogaPoseListDetailPage.vue'
 import YogaPosePage from '../views/coaching/YogaPosePage.vue'
+import ClassSetting from '../components/teacher/ClassSetting.vue'
 
 const requireAuth = () => (from, to, next) => {
-    console.log(store.state.isLogin)
+    // console.log(store.state.isLogin)
     if (store.state.isLogin) return next()
     $('#loginStaticBackdrop').modal('show')
+}
+
+const requireUNAuth = () => (from, to, next) => {
+    // console.log(store.state.isLogin)
+    if (!store.state.isLogin) return next()
+    return
+}
+
+const requireAdmin = () => (from, to, next) => {
+    
 }
 
 Vue.use(VueRouter)
 
 const routes = [
+    {
+        path: '/teachers/class-setting',
+        name: 'ClassSetting',
+        component: ClassSetting,
+    },
     {
         path: '/teachers',
         name: 'TeacherList',
@@ -57,7 +73,8 @@ const routes = [
     {
         path: '/accounts/signup',
         name: 'SignupView',
-        component: SignupView
+        component: SignupView,
+        beforeEnter: requireUNAuth(),
     },
     {
         path: '/mypage',
@@ -74,7 +91,7 @@ const routes = [
         path: '/mypage/update',
         name: 'UserUpdate',
         component: UserUpdate,
-        // beforeEnter: requireAuth(),
+        beforeEnter: requireAuth(),
     },
     {
         path: '/notice',

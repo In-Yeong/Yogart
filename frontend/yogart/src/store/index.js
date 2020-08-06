@@ -16,15 +16,22 @@ export default new Vuex.Store({
     },
     mutations: {
         storeLogin(state) {
+            console.log('login complete')
             state.isLogin = true
+            console.log(state)
         },
         storeLogout(state) {
+            console.log('logout complete')
             state.isLogin = false
+            console.log('@@@@@@@', state)
+
         },
         setUserData(state, payload) {
-            state.userNickname = payload.userNickname
+            console.log(state)
+            console.log(payload.user.userNickname)
+            state.userNickname = payload.user.userNickname
             state.spoons = payload.spoons
-            state.imageUrl = payload.imageUrl
+            state.imageUrl = payload.user.imageUrl
         },
     },
     actions: {

@@ -40,7 +40,7 @@ export default {
         naverLogin.init();
         /* (4) Callback의 처리. 정상적으로 Callback 처리가 완료될 경우 main page로 redirect(또는 Popup close) */
 		if (naverLogin.accessToken !== null) {
-            console.log(naverLogin)
+            // console.log(naverLogin)
 			naverLogin.getLoginStatus(function (status) {
 				if (status) {
 					/* (5) 필수적으로 받아야하는 프로필 정보가 있다면 callback처리 시점에 체크 */
@@ -52,13 +52,13 @@ export default {
 						return;
                     }
                     let accessToken = String(naverLogin.accessToken.accessToken);
-                    console.log(naverLogin.accessToken.accessToken)
+                    // console.log(naverLogin.accessToken.accessToken)
                     axios.post('http://localhost:8000/api/users/naverLogin', 
                     {
                         accessToken: accessToken
                     })
                     .then(res => {
-                        console.log(res)
+                        // console.log(res)
                         axiosVue.$emit('loginComplete', res.data)
                     })
                     .catch(err => console.error(err))

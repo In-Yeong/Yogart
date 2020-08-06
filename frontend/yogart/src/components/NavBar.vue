@@ -39,15 +39,23 @@
                   <router-link to="/notice" class="nav-link">Notice</router-link>
                 </li>
                 <!-- 로그인과 사인업 로그인 중에는 안 보이도록 해야함. -> 로그아웃, 마이페이지 출력 -->
-                <li class="nav-item">
-                  <a @click="openLoginModal" style="cursor:pointer;" class="nav-link">Login</a>
-                </li>
-                <li class="nav-item">
-                  <router-link to="/accounts/signup" class="nav-link">Signup</router-link>
-                </li>
-                <li class="nav-item">
-                  <router-link to="/mypage" class="nav-link">Mypage</router-link>
-                </li>
+                <template v-if="!isLogin">
+                  <li class="nav-item">
+                    <a @click="openLoginModal" style="cursor:pointer;" class="nav-link">Login</a>
+                  </li>
+                  <li class="nav-item">
+                    <router-link to="/accounts/signup" class="nav-link">Signup</router-link>
+                  </li>
+                </template>
+                <template v-else>
+                  <li class="nav-item">
+                    <router-link to="/mypage" class="nav-link">Mypage</router-link>
+                  </li>
+                  <li class="nav-item">
+                    <a @click="logoutEmmit" style="cursor:pointer;" class="nav-link">Logout</a>
+                  </li>
+                </template>
+
                 <li class="nav-item">
                   <router-link to="#" class="nav-link dropdown-toggle">Pages</router-link>
                   <ul class="dropdown-menu">
@@ -129,10 +137,16 @@
 export default {
     methods: {
         openLoginModal() {
-              if (this.$store.state.isLogin) return next()
+              if (this.isLogin) return
               $('#loginStaticBackdrop').modal('show')
-        }
-    }
+        },
+        logoutEmmit() {
+            this.$emit('logout')
+        },
+    },
+    props: {
+        isLogin: Boolean
+    },
 }
 </script>
 

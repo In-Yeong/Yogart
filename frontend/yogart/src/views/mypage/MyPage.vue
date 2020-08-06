@@ -40,9 +40,9 @@ export default {
     },
     mounted() {
         // const diary = document.getElementById('diary')
-        const pt = document.getElementById('pt')
-        const exchis = document.getElementById('exc-his')
-        pt.style.backgroundColor = 'lightgray'
+        // const pt = document.getElementById('pt')
+        // const exchis = document.getElementById('exc-his')
+        // pt.style.backgroundColor = 'lightgray'
     },
     methods : {
         // onDiary() {
@@ -58,8 +58,8 @@ export default {
             // this.d/ary = false
             this.exerciseHistory = false
             // diary.style.backgroundColor = 'gray'
-            pt.style.backgroundColor = 'lightgray'
-            exchis.style.backgroundColor = 'gray'
+            // pt.style.backgroundColor = 'lightgray'
+            // exchis.style.backgroundColor = 'gray'
  
         },
         onExerHis() {
@@ -67,8 +67,8 @@ export default {
             // this.diary = false
             this.exerciseHistory = true
             // diary.style.backgroundColor = 'gray'
-            pt.style.backgroundColor = 'gray'
-            exchis.style.backgroundColor = 'lightgray'
+            // pt.style.backgroundColor = 'gray'
+            // exchis.style.backgroundColor = 'lightgray'
         },
     }
 }
@@ -99,6 +99,4 @@ export default {
     padding : 1rem;
     border : 2px solid gray;
 }
-
-
 </style>

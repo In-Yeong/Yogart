@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <NavBar/>
+        <NavBar @logout="logout" :isLogin="isLogin"/>
         <div style="height:99px;"></div>
         <login-modal @loginComplete="loginComplete"></login-modal>
         <div id="nav" v-if="false">
@@ -30,7 +30,7 @@ export default {
     name: "App",
     data() {
         return {
-            isLogin: false,
+            isLogin: this.$store.state.isLogin,
             SERVER_URL: this.$store.state.SERVER_URL,
         }
     },
@@ -44,7 +44,7 @@ export default {
           this.isLogin = true
         },
         signup(signupData) {
-        console.log(signupData)
+        // console.log(signupData)
         axios.post(`${this.SERVER_URL}/api/users/signup`, signupData)
             .then(response => {
                 if (response.data.statusCode === 200) {
@@ -66,12 +66,15 @@ export default {
 		},
 		loginComplete() {
 			this.$store.commit('storeLogin')
-			$('#loginStaticBackdrop').modal('hide')
+            this.isLogin = true
+            $('#loginStaticBackdrop').modal('hide')
+			this.$router.replace({ name: 'Home' })
 		},
 		logout() {
 			// 로그아웃은 쿠키를 삭제하는 것으로 마무리합니다.
-			this.removeCookie()
 			this.$store.commit('storeLogout')
+            this.isLogin = false
+            this.removeCookie()
 			// 로그아웃이 완료되면 사용자를 홈페이지로 던집니다.
 			this.$router.replace({ name: 'Home' })
 		},

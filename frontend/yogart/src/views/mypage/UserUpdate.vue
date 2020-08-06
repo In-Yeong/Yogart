@@ -10,11 +10,17 @@
                     <label for="userEmail">닉네임</label>
                     <br>
                     <div class="input-box">
-                        <input class="border-0" type="text" id="userEmail">
+                        <input class="border-0" type="text" id="userEmail" v-model="userNickname">
+                        <span class="allIcon" id="userEmailCheckIcon">아이콘</span>
+                    </div>
+                    <label for="userIntro">한마디</label>
+                    <br>
+                    <div class="input-box">
+                        <input class="border-0" type="text" id="userIntro" v-model="userIntro">
                         <span class="allIcon" id="userEmailCheckIcon">아이콘</span>
                     </div>
                 </div>
-                <button @click="signup" class="btn btn-primary mt-4 col-12">수정</button>
+                <button @click="update" class="btn btn-primary mt-4 col-12">수정</button>
             </div> 
         </div>
     </div>
@@ -32,6 +38,7 @@ export default {
             userId: null,
             userNickname: null,
             userImageUrl: null,
+            userIntro: null,
             SERVER_URL: this.$store.state.SERVER_URL,
         }
     },
@@ -48,6 +55,7 @@ export default {
             this.userId = res.data.userId
             this.userNickname = res.data.userNickname
             this.userImageUrl = res.data.userImageUrl
+            this.userIntro = res.data.userIntro
         })
         .catch(err => console.error(err))
     },
@@ -64,6 +72,7 @@ export default {
             fd.append('userId', this.userId)
             fd.append('userNickname', this.userNickname)
             fd.append('userImage', this.userImage)
+            fd.append('userIntro', this.userIntro)
 
             axios.post(this.SERVER_URL + '/api/users/info-update', fd, requestHeaders)
             .then(res => {
