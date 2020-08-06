@@ -24,10 +24,6 @@ export default {
 
         // @details 카카오톡 Developer API 사이트에서 발급받은 JavaScript Key
       
-        // Kakao.init("688de69414ec5331cee58badb1cad1ea");
-        Kakao.init("804d91902e09ccbb770ad9e5f6e72c5f");
-
-
 
         // @breif 카카오 로그인 버튼을 생성합니다.
 

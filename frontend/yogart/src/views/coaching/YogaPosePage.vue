@@ -19,8 +19,8 @@
             
                 <div v-if="all">
                     <div class="row">
-                    <div class="col-sm-3" id="poses" v-for="(posefile,index) in posefiles" :key="posefile.pose_name">  
-                        <img @click="poseChoose(posefile,index)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                    <div class="col-sm-3" id="poses" v-for="posefile in posefiles" :key="posefile.pose_name">  
+                        <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                       
                         <p>{{posefile.pose_name}}</p>
                     </div>      
@@ -28,16 +28,16 @@
                 </div>
                 <div v-if="beginner">
                     <div class="row">
-                    <div class="col-sm-3" id="poses" v-for="(posefile,index) in beginnerPosefiles" :key="posefile.pose_name">  
-                        <img @click="poseChoose(posefile,index)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                    <div class="col-sm-3" id="poses" v-for="posefile in beginnerPosefiles" :key="posefile.pose_name">  
+                        <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                         <p>{{posefile.pose_name}}</p>
                     </div>      
                     </div>
                 </div>
                 <div v-if="intermediate">
                     <div class="row">
-                    <div class="col-sm-3" id="poses" v-for="(posefile,index) in intermediatePosefiles" :key="posefile.pose_name">  
-                        <img @click="poseChoose(posefile,index)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                    <div class="col-sm-3" id="poses" v-for="posefile in intermediatePosefiles" :key="posefile.pose_name">  
+                        <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                        
                         <p>{{posefile.pose_name}}</p>
                     </div>      
@@ -45,8 +45,8 @@
                 </div>
                 <div v-if="expert">
                     <div class="row">
-                    <div class="col-sm-3" id="poses" v-for="(posefile,index) in expertPosefiles" :key="posefile.pose_name">  
-                        <img @click="poseChoose(posefile,index)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                    <div class="col-sm-3" id="poses" v-for="posefile in expertPosefiles" :key="posefile.pose_name">  
+                        <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                         <p>{{posefile.pose_name}}</p>
                     </div>      
                     </div>
@@ -60,7 +60,7 @@
       <div class="row">
         <div class="col-sm-3" id="poses" v-for="posefile in tempPosefiles" :key="posefile.pose_name">
             
-                <img @click="poseChoose(posefile,index)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                 <p>{{posefile.pose_name}}</p>
        </div>      
       </div>
@@ -116,7 +116,7 @@ export default {
                 }
         }.bind(this))
         },
-        poseChoose(btnPose,index) {
+        poseChoose(btnPose) {
             if (this.poseList.length < this.max ) {
                 if (this.poseList.includes(btnPose.pose_name)){
 
@@ -126,7 +126,7 @@ export default {
                 }
                 else {
                     this.poseList.push(btnPose.pose_name)
-                    this.poseIndexList.push(index)
+                    this.poseIndexList.push(btnPose.id)
                 }
             }
             else {

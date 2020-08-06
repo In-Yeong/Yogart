@@ -23,6 +23,14 @@ export default {
     components : {
         facebookLogin
     },
+    created() {
+//         FB.init({
+//             appId  : '넣업'
+//             status : true, // check login status
+//             cookie : true, // enable cookies to allow the server to access the session
+//             xfbml  : true  // parse XFBML
+// });
+    },
     data() {
         return {
             facebookAppId : facebookAppId,
