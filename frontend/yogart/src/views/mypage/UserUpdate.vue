@@ -2,7 +2,7 @@
     <div class="updateView pb-5">
         <div>{{ userName }} 정보 수정</div>
         <img :src="userImageUrl" alt="user profile image">
-        <input @change="fileChange" type="file" ref="userImage" id="user-image" accept=".jpg, .jpeg, .gif">
+        <input @change="fileChange" type="file" ref="userImage" id="user-image" accept=".jpg, .jpeg, .png">
 
         <div class="container d-flex justify-content-center text-left">
             <div class="d-block">
@@ -39,7 +39,6 @@ export default {
         // 유저 정보를 받아옵니다.
         const requestHeaders = {
             headers: {
-                // 보내는 양식 이게 맞나?
                 Authorization: 'Token ' + this.$cookies.get('auth-token')
             }
         }
@@ -48,7 +47,7 @@ export default {
             this.userName = res.data.userName
             this.userId = res.data.userId
             this.userNickname = res.data.userNickname
-            this.userImage = res.data.userImage
+            this.userImageUrl = res.data.userImageUrl
         })
         .catch(err => console.error(err))
     },
@@ -56,24 +55,27 @@ export default {
         update() {
             const requestHeaders = {
                 headers: {
-                    // 보내는 양식 이게 맞나?
                     Authorization: 'Token ' + this.$cookies.get('auth-token'),
                     'Content-Type' : 'multipart/form-data',
                 }
             }
-            const fd = new FormData()
+            let fd = new FormData()
             fd.append('userName', this.userName)
             fd.append('userId', this.userId)
             fd.append('userNickname', this.userNickname)
             fd.append('userImage', this.userImage)
 
-            axios.post(SERVER_URL + 'info-update', fd, requestHeaders)
+            axios.post(this.SERVER_URL + '/api/users/info-update', fd, requestHeaders)
             .then(res => {
-                // this.$router.replace({ name: 'MyPage', params: { userId: this.userName }})
+                this.$router.replace({ name: 'MyPage' })
             })
             .catch(err => console.error(err))
         },
-        fileChange() {
+        fileChange(e) {
+            var file = e.target.files[0]
+            if (file && file.type.match(/^image\/(png|jpeg)$/)) {
+                this.userImageUrl = window.URL.createObjectURL(file)
+            }
             this.userImage = this.$refs.userImage.files[0]
         },
     },

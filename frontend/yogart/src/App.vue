@@ -78,6 +78,9 @@ export default {
 		removeCookie() {
 			this.$cookies.remove('auth-token')
 		},
+    },
+    created() {
+        Kakao.init('688de69414ec5331cee58badb1cad1ea');
     }
 
 }
