@@ -32,6 +32,7 @@
                 axios.get(this.SERVER_URL + `/api/aicoach/list`, { 'headers': { 'auth-token': window.$cookies.get('auth-token') } })
                 .then(response => {
                     console.log(response)
+
                 })
                 .catch(err => console.error(err))
             }

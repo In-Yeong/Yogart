@@ -50,6 +50,7 @@ export default {
             this.yogaList = this.backCommingString.split(',')
         },
         clickStart() {
+            this.$store.state.test = this.yogaList
             this.$router.push(`/coaching`)
         }
 
