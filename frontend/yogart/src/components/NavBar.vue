@@ -75,10 +75,13 @@
                       <router-link to="#" class="nav-link dropdown-toggle">AI Coaching</router-link>
                       <ul class="dropdown-menu">
                         <li class="nav-item">
-                          <router-link to="#" class="nav-link">Yoga Postures</router-link>
+                          <router-link to="/coaching" class="nav-link">AI Coaching Page</router-link>
                         </li>
                         <li class="nav-item">
-                          <router-link to="#" class="nav-link">Get Start</router-link>
+                          <router-link to="/coaching/yogapose" class="nav-link">Yoga Pose</router-link>
+                        </li>
+                        <li class="nav-item">
+                          <router-link to="/coaching/yogaposelist" class="nav-link">Yoga Pose List</router-link>
                         </li>
                       </ul>
                     </li>

@@ -7,7 +7,7 @@
     <div class="col-md-8">
       <div class="card-body">
         <h5 class="card-title">{{ teacher.name }}</h5>
-        <p class="card-text">{{ teacher.tags }}</p>
+        <p class="card-text">{{ teacher.intro }}</p>
         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
       </div>
     </div>

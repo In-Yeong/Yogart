@@ -15,6 +15,10 @@ import UserUpdate from '../views/mypage/UserUpdate.vue'
 import TeacherList from '../views/teacher/TeacherList.vue'
 import TeacherDetail from '../views/teacher/TeacherDetail.vue'
 import TeacherApply from '../views/teacher/TeacherApply.vue'
+import AICoachingPage from '../views/coaching/AICoachingPage.vue'
+import YogaPoseListPage from '../views/coaching/YogaPoseListPage.vue'
+import YogaPoseListDetailPage from '../views/coaching/YogaPoseListDetailPage.vue'
+import YogaPosePage from '../views/coaching/YogaPosePage.vue'
 
 const requireAuth = () => (from, to, next) => {
     console.log(store.state.isLogin)
@@ -99,6 +103,26 @@ const routes = [
         component: QnaCreate,
         beforeEnter: requireAuth(),
     },
+    {
+        path: '/coaching',
+        name: 'AICoachingPage',
+        component: AICoachingPage
+      },
+      {
+        path: '/coaching/yogaposelist',
+        name: 'YogaPoseListPage',
+        component: YogaPoseListPage
+      },
+      {
+        path: '/coaching/yogaposelist/:list_id',
+        name: 'YogaPoseListDetailPage',
+        component: YogaPoseListDetailPage
+      },
+      {
+        path: '/coaching/yogapose',
+        name: 'YogaPosePage',
+        component: YogaPosePage
+      },
 ]
 
     const router = new VueRouter({
