@@ -2,13 +2,13 @@
     <div> 
         <div id="AI"  v-if="!loading">
             <h1>AI Coaching Service</h1>
-            <h5>{{current+1}}번째 동작 :{{yogaPostures[current]}}</h5>
+            <h5>{{cur+1}}번째 동작 :{{course[cur]}}</h5>
             <button v-if="startBtn" class="w3-btn w3-round-xlarge w3-red w3-xlarge m-5" type="button" @click="init()">Get Start!</button>
         </div>
        
         <div id="loading" v-if="loading">
             <h3 class="m-5">AI 요가 코칭 서비스를 시작합니다</h3>
-            <p>{{current+1}}번째 동작 :{{yogaPostures[current]}}</p>
+            <p>{{cur+1}}번째 동작 :{{course[cur]}}</p>
             <!-- <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
             <span class="sr-only">Loading...</span> -->    
             <i class="fa fa-spinner fa-pulse fa-5x fa-fw m-5"></i>
@@ -18,34 +18,34 @@
             <h3 class="m-5">웹캠을 켜주시고 잠시만 기다려 주세요</h3>
             <p> AI Yoga Coaching Service is running, Please turn on your webcam and wait</p>
         </div>
-
-        <div v-if="aiPage" class="d-flex m-1">
-            <div id="pose-data">
-                <p>{{time}}</p>
-                <div>포즈 이름: {{ posefiles[yogaPostures[current]].pose_name }}</div>
-                <div>카테고리: {{posefiles[yogaPostures[current]].category }}</div>
-                <div>난이도: {{posefiles[yogaPostures[current]].difficulty }}</div>
-                <!-- <div>설명: {{posefiles[yogaPostures[current]].description[posefiles[yogaPostures[current]].description.length-1] }}</div> -->
-                <img :src="require(`../../public/photos/${posefiles[yogaPostures[current]].file_reference}`)" alt="">
-            </div> 
-            <div>
-                <button v-if="!startBtn" class="w3-button w3-teal" type="button" @click="restart">Restart</button>
-                <button v-if="!startBtn" class="w3-button w3-black" type="button" @click="stop">Stop</button>
-                <button @click="next" class="w3-btn w3-round-xlarge w3-red w3-large m-5" type="button">Next Yoga Posture</button>
-           </div>   
+        <div class="row">
+            <div v-if="aiPage" class="col-4">
+                <div id="pose-data">
+                    <p>{{time}}</p>
+                    <div>포즈 이름: {{ posefiles[course[cur]].pose_name }}</div>
+                    <div>카테고리: {{posefiles[course[cur]].category }}</div>
+                    <div>난이도: {{posefiles[course[cur]].difficulty }}</div>
+                    <img :src="require(`../../public/photos/${posefiles[course[cur]].file_reference}`)" alt="">
+                </div>
+                <div>
+                    <button @click="next" class="w3-btn w3-round-xlarge w3-red w3-large m-5" type="button">Next Yoga Posture</button>
+                </div>
+            </div>
+            <div class="col-4">
+                <div><canvas id="canvas"></canvas></div>
+                <div id="label-container"></div>
+                <div v-if="flag"> 
+                    <!-- <i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i> -->
+                    <span class="sr-only">Refreshing...</span>
+                    <div id="seconds-counter"></div>
+                </div>
+            </div>
         </div>
+        
+        
 
-        <div style="margin-top : 0;"><canvas id="canvas"></canvas></div>
-        <div id="label-container"></div>
-       
-        <div v-if="flag"> 
-            <!-- <i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i> -->
-            <span class="sr-only">Refreshing...</span>
-            <div id="seconds-counter"></div>
-        </div>
-     </div>
-  </div>
-</template>v
+    </div>
+</template>
 
 <script>
     import '@tensorflow/tfjs'
@@ -67,8 +67,8 @@
                 startTime : true,
                 endTime : true,
                 requestId : undefined,
-                yogaPostures : [1,2,3,4,5],
-                current : 0,
+                course : [1,2,3,4,5],
+                cur : 0,
                 flag : false,
                 seconds : 11,
                 time : '',
@@ -101,11 +101,11 @@
             },
             next() {
                 clearInterval(this.counter) 
-                this.current++;
+                this.cur++;
                 this.flag = !this.flag
-                console.log("current : ",this.current)
-                console.log("다음동작",this.yogaPostures[this.current],"을 실행합니다.")
-                this.init(this.yogaPostures[this.current])
+                console.log("current : ",this.cur)
+                console.log("다음동작",this.course[this.cur],"을 실행합니다.")
+                this.init(this.course[this.cur])
             },
             stop() {
                 this.stopBtn = true;
@@ -137,14 +137,14 @@
 
             async init() {
 
-                console.log(this.yogaPostures[this.current])
+                console.log(this.course[this.cur])
                 this.startBtn = false;
                
                 console.log("click the start btn")
                 // 로딩이 시작
                 this.loading = true;
 
-                const URL = `../YogaPostures/${this.yogaPostures[this.current]}/`;
+                const URL = `../YogaPoses/${this.course[this.cur]}/`;
                 const modelURL = URL + "model.json";
                 const metadataURL = URL + "metadata.json";
     
@@ -202,8 +202,7 @@
                 if (this.requestId) {
                     this.requestId = window.requestAnimationFrame(this.loop);
                 }
-
-                },
+            },
     
             async predict() {
                 // Prediction #1: run input through posenet
@@ -218,26 +217,21 @@
                     if (prediction[i].probability.toFixed(2) >= 0.9){
                         labelContainer.childNodes[0].innerHTML = prediction[i].className;
                         //만약 제대로된 요가동작이 인식되면 밑에 카운트 시작 메세지가 같이 뜬다
-                        if (prediction[i].className === this.yogaPostures[this.current] && !this.flag ) {
+                        if (prediction[i].className === String(this.course[this.cur]) && !this.flag ) {
                             this.flag = true;
                             console.log(this.flag,this.seconds)
                             this.seconds = 11;
                             this.counter = setInterval(this.incrementSeconds,1000)  
                         
-                        } else if (prediction[i].className === this.yogaPostures[this.current]) {
+                        } else if (prediction[i].className === String(this.course[this.cur])) {
                             this.restart()
                         } else {
                             labelContainer.childNodes[1].innerHTML = ""
                             this.stop()
                         }
-
-                     }
-                     
+                     }                    
                  } 
-                
-                    
-                
-        
+
                 // 원래코드
                 // for (let i = 0; i < maxPredictions; i++) {
                 //     const classPrediction =
