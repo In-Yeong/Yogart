@@ -22,6 +22,8 @@
 
 <script>
 import posefiles from '../../../public/json.js'
+import axios from 'axios'
+
 export default {
     name : 'YogaPoseListDetailPage',
     data() {
@@ -29,13 +31,22 @@ export default {
             posefiles : posefiles,
             listId : document.location.href.split("yogaposelist/")[1],
             backCommingString: '1,2,3,4,5',
-            yogaList: []
+            yogaList: [],
+            SERVER_URL: this.$store.state.SERVER_URL
         }
     },
     components: {
         
     },
     methods: {
+        getCourseList() {
+            axios.get(this.SERVER_URL + `/api/주소넣기/${listId}`)
+            .then(response => {
+                console.log(response)
+                this.backCommingString = response.data.content
+            })
+            .catch(err => console.error(err))
+        },
         StringToArr() {
             this.yogaList = this.backCommingString.split(',')
         },
