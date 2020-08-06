@@ -7,14 +7,13 @@
         </div>
        
         <div id="loading" v-if="loading">
+        <!-- <div id="loading" v-if="true"> -->
             <h3 class="m-5">AI 요가 코칭 서비스를 시작합니다</h3>
             <p>{{cur+1}}번째 동작 :{{course[cur]}}</p>
-            <!-- <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
-            <span class="sr-only">Loading...</span> -->    
-            <i class="fa fa-spinner fa-pulse fa-5x fa-fw m-5"></i>
+    
+            <i class="fa fa-spinner fa-pulse fa-5x fa-fw m-5" ></i>
             <span class="sr-only">Loading...</span>
-            <!-- <i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i>
-            <span class="sr-only">Refreshing...</span> -->
+
             <h3 class="m-5">웹캠을 켜주시고 잠시만 기다려 주세요</h3>
             <p> AI Yoga Coaching Service is running, Please turn on your webcam and wait</p>
         </div>
@@ -76,8 +75,7 @@
                 restartBtn : false,
                 counter : undefined,
                 posefiles : posefiles,
-              
-             
+
             }
         },
         created() {
@@ -143,7 +141,7 @@
                 console.log("click the start btn")
                 // 로딩이 시작
                 this.loading = true;
-
+                
                 const URL = `../YogaPoses/${this.course[this.cur]}/`;
                 const modelURL = URL + "model.json";
                 const metadataURL = URL + "metadata.json";
@@ -151,6 +149,7 @@
                 // load the model and metadata
                 // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
                 // Note: the pose library adds a tmPose object to your window (window.tmPose)
+              
                 model = await tmPose.load(modelURL, metadataURL);
                 console.log("model",model)
                 maxPredictions = model.getTotalClasses();
@@ -260,6 +259,6 @@
     }
 </script>
     
-<style>
+<style scoped>
 
 </style>
