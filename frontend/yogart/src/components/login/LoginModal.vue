@@ -68,12 +68,14 @@ export default {
             e.preventDefault()
             axios.post(this.API_URL + '/api/users/login', this.loginData)
             .then(res => {
-                // console.log(res);
+                console.log('then')
+                console.log(res);
                 // 로그인이 실패했다면 errorState에 status code를 저장해 오류를 출력합니다.
                 this.setUserData(res.data)
             })
             .catch(err => {
-                // console.error(err)
+                console.log('catch')
+                console.error(err)
                 this.errorState = true
                 this.loginData.userPassword = null
             })
@@ -82,12 +84,12 @@ export default {
             this.$cookies.set('auth-token', token)
         },
         setUserData(data) {
-            // console.log('setUserData')
             if (data.token !== null){
                 this.setCookie(data.token)
             } else {
                 this.serverState = true
             }
+            console.log('setUserData')
             this.$store.commit('setUserData', data)
             this.$emit('loginComplete')
         }

@@ -56,7 +56,7 @@ const routes = [
         component: TeacherDetail,
     },
     {
-        path: '/teachers/apply',
+        path: '/teacher-apply',
         name: 'TeacherApply',
         component: TeacherApply
     },

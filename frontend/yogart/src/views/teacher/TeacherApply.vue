@@ -31,7 +31,7 @@ export default {
             }
             // 확인 필요
             let fd = new FormData()
-            for (let i = 0; i < this.$refs.tI.files.length(); i++) {
+            for (let i = 0; i < this.$refs.tI.files.length; i++) {
                 fd.append('images', this.images.append(this.$refs.tI.files[i]))
             }
             axios.post(this.SERVER_URL + '/users/teacher-apply', fd, requestHeaders)
