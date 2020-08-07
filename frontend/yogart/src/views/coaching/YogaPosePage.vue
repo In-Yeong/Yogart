@@ -1,12 +1,14 @@
 <template>
   <div class="container my-5" >
       <h1 class="my-5">Making Yoga Pose List</h1>
+        <h5>Course Name</h5>
+        <span>
+            <input class="w-25" v-model="courseName">
+            <button @click="makeList(courseName)" class="w3-btn w3-round-xlarge w3-red w3-small m-3">make pose list</button>
+        </span>
         <h5>Wish poses :</h5>
         <p>{{poseList}}</p>
         <!-- <p>{{poseIndexList}}</p> -->
-        
-       <button @click="makeList" class="w3-btn w3-round-xlarge w3-red w3-large m-3">make pose list</button>
-      <!-- <button class="w3-btn w3-round-xlarge w3-black w3-large">Put into my list</button> -->
        <div class="d-flex flex-column">
             <div class="w3-bar" >
             <!-- <button class="w3-bar-item w3-button w3-black" @click="onDiary">다이어리</button> -->
@@ -19,51 +21,50 @@
             
                 <div v-if="all">
                     <div class="row">
-                    <div class="col-sm-3" id="poses" v-for="(posefile,index) in posefiles" :key="posefile.pose_name">  
-                        <img @click="poseChoose(posefile,index)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-                      
+                    <div class="col-sm-3" id="poses" v-for="posefile in posefiles" :key="posefile.pose_name">  
+                       <div class="pose-img">
+                        <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                        <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
+                        </div> 
                         <p>{{posefile.pose_name}}</p>
                     </div>      
                     </div>
                 </div>
                 <div v-if="beginner">
                     <div class="row">
-                    <div class="col-sm-3" id="poses" v-for="(posefile,index) in beginnerPosefiles" :key="posefile.pose_name">  
-                        <img @click="poseChoose(posefile,index)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                    <div class="col-sm-3" id="poses" v-for="posefile in beginnerPosefiles" :key="posefile.pose_name">  
+                         <div class="pose-img">
+                            <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                            <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
+                        </div> 
                         <p>{{posefile.pose_name}}</p>
                     </div>      
                     </div>
                 </div>
                 <div v-if="intermediate">
                     <div class="row">
-                    <div class="col-sm-3" id="poses" v-for="(posefile,index) in intermediatePosefiles" :key="posefile.pose_name">  
-                        <img @click="poseChoose(posefile,index)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-                       
+                    <div class="col-sm-3" id="poses" v-for="posefile in intermediatePosefiles" :key="posefile.pose_name">  
+                         <div class="pose-img">
+                            <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                            <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
+                        </div> 
                         <p>{{posefile.pose_name}}</p>
                     </div>      
                     </div>
                 </div>
                 <div v-if="expert">
                     <div class="row">
-                    <div class="col-sm-3" id="poses" v-for="(posefile,index) in expertPosefiles" :key="posefile.pose_name">  
-                        <img @click="poseChoose(posefile,index)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                    <div class="col-sm-3" id="poses" v-for="posefile in expertPosefiles" :key="posefile.pose_name">  
+                         <div class="pose-img">
+                            <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                            <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
+                        </div> 
                         <p>{{posefile.pose_name}}</p>
                     </div>      
-                    </div>
                 </div>
-              
-            
-            </div>
+            </div>  
         </div>
-
-      
-      <div class="row">
-        <div class="col-sm-3" id="poses" v-for="posefile in tempPosefiles" :key="posefile.pose_name">
-            
-                <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-                <p>{{posefile.pose_name}}</p>
-       </div>      
-      </div>
+    </div>
   </div>
 </template>
 
@@ -90,7 +91,8 @@ export default {
             beginner : false,
             intermediate : false,
             expert : false,
-            idx_count : 0,
+            SERVER_URL : this.$store.state.SERVER_URL
+            
             
         }
     },
@@ -126,22 +128,27 @@ export default {
                 }
                 else {
                     this.poseList.push(btnPose.pose_name)
-                    this.poseIndexList.push(index)
+                    this.poseIndexList.push(btnPose.id)
                 }
             }
             else {
                 alert('최대 7개의 동작만 가능합니다.')
             }
         },
-        makeList() {
-        //   window.confirm("리스트로 넘어갑니다.");
-        //   axios.post('주소')
-        //   .then(res => {
-        //       console.log(res)
-        //       this.$router.push(`/coaching/yogaposelist/${코스번호}`)
-        //   })
-        //   .catch(err => {console.log(err)})
-          
+        makeList(courseName) {
+            let poseCourse = this.poseIndexList.join(',')
+            console.log(this.poseIndexList)
+            console.log(courseName,poseCourse)
+            window.confirm(`${courseName} 리스트를 만드시겠습니까?`);
+            axios.post(this.SERVER_URL + '/api/aicoach/list/create',
+            { 'headers': { 'auth-token': window.$cookies.get('auth-token')},'courseName' : courseName, 'poseCourse': poseCourse } )
+            .then(res => {
+                console.log(res)
+                //이 안에서 코스 pk뽑아오기
+                this.$router.push(`/coaching/yogaposelist/${코스번호}`,poseCourse)
+            })
+            .catch(err => {console.log(err)})
+            
 
         },
         allBtn() {
@@ -201,5 +208,25 @@ export default {
 }
 .pose-box {
     background-color: lightgray;
+}
+.user-profile:hover{
+    background: url("../../../public/css/heart.png") no-repeat;
+   
+}
+.pose-img {
+    position: relative;
+    display: inline-block;
+  
+}
+.pose-img .pose-img-top {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    cursor:pointer;
+}
+.pose-img:hover .pose-img-top {
+    display: inline;
 }
 </style>

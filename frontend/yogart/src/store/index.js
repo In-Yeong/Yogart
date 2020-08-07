@@ -9,6 +9,7 @@ export default new Vuex.Store({
     state: {
         isLogin: !!window.$cookies.get('auth-token'),
         SERVER_URL: "http://localhost:8000",
+        test: ''
     },
     mutations: {
         storeLogin(state) {
