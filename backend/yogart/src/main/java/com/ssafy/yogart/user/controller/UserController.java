@@ -209,7 +209,7 @@ public class UserController {
 //    		File dest = new File(request.getServletContext().getRealPath("/") + fileName);
     		System.out.println(request.getServletContext().getRealPath("/"));
     		try {
-				save(file, request.getServletContext().getRealPath("/uploadData"));
+				save(file, request.getServletContext().getRealPath("/"));
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
