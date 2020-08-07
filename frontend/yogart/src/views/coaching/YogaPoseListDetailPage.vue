@@ -26,7 +26,7 @@ export default {
     data() {
         return {
             posefiles : posefiles,
-            listId : document.location.href.split("yogaposelist/")[1],
+            listId : this.$cookies.get('coaching-list'),
             backCommingString: '1,2,3,4,5',
             yogaList: [],
             courseName: '',
@@ -56,6 +56,7 @@ export default {
 
     },
     created() {
+        this.getCourseList()
         this.StringToArr()
     },
 }

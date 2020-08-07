@@ -23,7 +23,9 @@ export default {
     },
     methods: {
         yogaListDetail(num) {
-            this.$router.push(`/coaching/yogaposelist/${num}`)
+            // 쿠키에 저장
+            this.$cookies.set('coaching-list', num)
+            this.$router.push(`/coaching/yogaposelist/detail`)
         }
     },
 }

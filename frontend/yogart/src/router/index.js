@@ -131,7 +131,7 @@ const routes = [
         component: YogaPoseListPage
       },
       {
-        path: '/coaching/yogaposelist/:list_id',
+        path: '/coaching/yogaposelist/detail',
         name: 'YogaPoseListDetailPage',
         component: YogaPoseListDetailPage
       },
