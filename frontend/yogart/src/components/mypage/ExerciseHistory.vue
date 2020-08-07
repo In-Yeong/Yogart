@@ -1,15 +1,20 @@
 <template>
     <div v-if="exerciseHistory">
         <h3>운동기록</h3>
-        <p>그래프들이 추가될 예정</p>
+        <GraphView></GraphView>
     </div>
 </template>
 
 <script>
+import GraphView from '@/views/mypage/GraphView.vue'
+
 export default {
     name : 'ExerciseHistory',
     props : {
         exerciseHistory : Boolean,
+    },
+    components: {
+        GraphView,
     }
 }
 </script>

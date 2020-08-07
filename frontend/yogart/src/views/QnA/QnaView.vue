@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import QnaList from '../../components/QnA/QnaList.vue'
+import QnaList from '@/components/qna/QnaList.vue'
 import axios from 'axios'
 import Paginate from 'vuejs-paginate'
 import Vue from 'vue'

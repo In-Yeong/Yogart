@@ -4,35 +4,64 @@ import store from '../store'
 import Home from '../views/Home.vue'
 import SignupView from '../views/accounts/SignupView.vue'
 import GraphView from '../views/mypage/GraphView.vue'
-import Login from '../views/Login.vue'
-import Callback from '../views/Callback.vue'
-import QnaView from '../views/QnA/QnaView.vue'
-import QnaCreate from '../views/QnA/QnaCreate.vue'
+import Callback from '../components/sociallogin/naverLogin.vue'
+import QnaView from '../views/qna/QnaView.vue'
+import QnaCreate from '../views/qna/QnaCreate.vue'
 import NoticeListView from '../views/notice/NoticeListView.vue'
 import NoticeDetailView from '../views/notice/NoticeDetailView.vue'
 import NoticeFormView from '../views/notice/NoticeFormView.vue'
 import MyPage from '../views/mypage/MyPage.vue'
+import UserUpdate from '../views/mypage/UserUpdate.vue'
+import TeacherList from '../views/teacher/TeacherList.vue'
+import TeacherDetail from '../views/teacher/TeacherDetail.vue'
+import TeacherApply from '../views/teacher/TeacherApply.vue'
 import AICoachingPage from '../views/coaching/AICoachingPage.vue'
 import YogaPoseListPage from '../views/coaching/YogaPoseListPage.vue'
 import YogaPoseListDetailPage from '../views/coaching/YogaPoseListDetailPage.vue'
 import YogaPosePage from '../views/coaching/YogaPosePage.vue'
+import ClassSetting from '../components/teacher/ClassSetting.vue'
 
 const requireAuth = () => (from, to, next) => {
-    console.log(store.state.isLogin)
+    // console.log(store.state.isLogin)
     if (store.state.isLogin) return next()
     $('#loginStaticBackdrop').modal('show')
-  }
+}
+
+const requireUNAuth = () => (from, to, next) => {
+    // console.log(store.state.isLogin)
+    if (!store.state.isLogin) return next()
+    return
+}
+
+const requireAdmin = () => (from, to, next) => {
+    
+}
 
 Vue.use(VueRouter)
 
 const routes = [
     {
-        path: '/login',
-        name: 'Login',
-        component: Login,
+        path: '/teachers/class-setting',
+        name: 'ClassSetting',
+        component: ClassSetting,
     },
     {
-        path: '/callback',
+        path: '/teachers',
+        name: 'TeacherList',
+        component: TeacherList,
+    },
+    {
+        path: '/teachers/:teacher_id',
+        name: 'TeacherDetail',
+        component: TeacherDetail,
+    },
+    {
+        path: '/teacher-apply',
+        name: 'TeacherApply',
+        component: TeacherApply
+    },
+    {
+        path: '/naver/callback',
         name: 'Callback',
         component: Callback,
     },
@@ -44,7 +73,8 @@ const routes = [
     {
         path: '/accounts/signup',
         name: 'SignupView',
-        component: SignupView
+        component: SignupView,
+        beforeEnter: requireUNAuth(),
     },
     {
         path: '/mypage',
@@ -55,6 +85,12 @@ const routes = [
         path: '/mypage/graph',
         name: 'Graph',
         component: GraphView,
+        beforeEnter: requireAuth(),
+    },
+    {
+        path: '/mypage/update',
+        name: 'UserUpdate',
+        component: UserUpdate,
         beforeEnter: requireAuth(),
     },
     {

@@ -37,6 +37,7 @@ export default {
             // )
         },
         sdkLoaded(payload) {
+            // isConnected는 어디에?
             this.isConnected = payload.isConnected
             this.FB = payload.FB
             if (this.isConnected) {
