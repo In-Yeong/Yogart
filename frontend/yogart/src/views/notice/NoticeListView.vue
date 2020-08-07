@@ -50,24 +50,21 @@ import Paginate from 'vuejs-paginate'
 import Vue from 'vue'
 Vue.component('paginate', Paginate)
 
-
-
-const API_URL = 'http://127.0.0.1:8000/api'
-
 export default {
     name: 'NoticeListView',
     data() {
         return {
-        notices: null,
-        searchNotice: "", 
-        page: 1,
-        totalPages: 10,  
+            notices: null,
+            searchNotice: "", 
+            page: 1,
+            totalPages: 10,
+            SERVER_URL: this.$store.state.SERVER_URL,
         }
     },
     methods: {
         getNotices(pageNum) {
             // console.log(this.page)
-            axios.get(`${API_URL}/notice/list/${pageNum}`)
+            axios.get(`${this.SERVER_URL}/api/notice/list/${pageNum}`)
             .then(response => {
                 console.log(response)
                 this.notices = response.data.content
