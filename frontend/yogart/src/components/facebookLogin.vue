@@ -3,7 +3,7 @@
         <div>
             <facebook-login 
             class="button social-login-btn facebook-btn"
-            :appId="facebookAppId"
+            :appId="291260192294247"
             @login="onLogin"
             @logout="onLogout"
             @sdk-loaded="sdkLoaded">
@@ -16,29 +16,25 @@
 <script>
 import Vue from 'vue'
 import facebookLogin from 'facebook-login-vuejs';
-const facebookAppId = process.env.VUE_APP_FACEBOOK_APP_ID
+
 
 export default {
     name : 'facebookLoginCom',
     components : {
         facebookLogin
     },
-    data() {
-        return {
-            facebookAppId : facebookAppId,
-        }
-    },
+
     methods : {
         getUserData() {
-            this.FB.api('/me', 'GET', {fields:'id,name,email'},
-                userInformation => {
-                    // 여기가 로그인이 완료되면 사용자의 id, name, email이 넘어오는 곳 입니까?
-                    console.warn("get data from fb", userInformation)
-                    this.personalID = userInformation.id;
-                    this.email = userInformation.email;
-                    this.name = userInformation.name;
-                }
-            )
+            this.FB.init()
+            // this.FB.api('/me', 'GET', {fields:'id,name,email'},
+            //     userInformation => {
+            //         console.warn("get data from fb", userInformation)
+            //         this.personalID = userInformation.id;
+            //         this.email = userInformation.email;
+            //         this.name = userInformation.name;
+            //     }
+            // )
         },
         sdkLoaded(payload) {
             // isConnected는 어디에?
