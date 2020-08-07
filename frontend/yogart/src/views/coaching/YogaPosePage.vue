@@ -22,15 +22,10 @@
                 <div v-if="all">
                     <div class="row">
                     <div class="col-sm-3" id="poses" v-for="posefile in posefiles" :key="posefile.pose_name">  
-<<<<<<< HEAD
-                        <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-                      
-=======
                        <div class="pose-img">
                         <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                         <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
                         </div> 
->>>>>>> a2e9f35f81e64c9460b65002075720ab3ed41709
                         <p>{{posefile.pose_name}}</p>
                     </div>      
                     </div>
@@ -38,14 +33,10 @@
                 <div v-if="beginner">
                     <div class="row">
                     <div class="col-sm-3" id="poses" v-for="posefile in beginnerPosefiles" :key="posefile.pose_name">  
-<<<<<<< HEAD
-                        <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-=======
                          <div class="pose-img">
                             <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                             <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
                         </div> 
->>>>>>> a2e9f35f81e64c9460b65002075720ab3ed41709
                         <p>{{posefile.pose_name}}</p>
                     </div>      
                     </div>
@@ -53,15 +44,10 @@
                 <div v-if="intermediate">
                     <div class="row">
                     <div class="col-sm-3" id="poses" v-for="posefile in intermediatePosefiles" :key="posefile.pose_name">  
-<<<<<<< HEAD
-                        <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-                       
-=======
                          <div class="pose-img">
                             <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                             <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
                         </div> 
->>>>>>> a2e9f35f81e64c9460b65002075720ab3ed41709
                         <p>{{posefile.pose_name}}</p>
                     </div>      
                     </div>
@@ -69,32 +55,16 @@
                 <div v-if="expert">
                     <div class="row">
                     <div class="col-sm-3" id="poses" v-for="posefile in expertPosefiles" :key="posefile.pose_name">  
-<<<<<<< HEAD
-                        <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-=======
                          <div class="pose-img">
                             <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                             <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
                         </div> 
->>>>>>> a2e9f35f81e64c9460b65002075720ab3ed41709
                         <p>{{posefile.pose_name}}</p>
                     </div>      
                 </div>
             </div>  
         </div>
-<<<<<<< HEAD
-
-      
-      <div class="row">
-        <div class="col-sm-3" id="poses" v-for="posefile in tempPosefiles" :key="posefile.pose_name">
-            
-                <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-                <p>{{posefile.pose_name}}</p>
-       </div>      
-      </div>
-=======
     </div>
->>>>>>> a2e9f35f81e64c9460b65002075720ab3ed41709
   </div>
 </template>
 
