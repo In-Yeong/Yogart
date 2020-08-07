@@ -2,6 +2,7 @@
     <div> 
         <div id="AI"  v-if="!loading">
             <h1>AI Coaching Service</h1>
+
             <h5>{{cur+1}}번째 동작 :{{course[cur]}}</h5>
             <button v-if="startBtn" class="w3-btn w3-round-xlarge w3-red w3-xlarge m-5" type="button" @click="init()">Get Start!</button>
         </div>
@@ -36,8 +37,12 @@
                 <div v-if="flag"> 
                     <!-- <i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i> -->
                     <span class="sr-only">Refreshing...</span>
-                    <div id="seconds-counter"></div>
+                
+                    
                 </div>
+            </div>
+            <div class="col-4">
+                <div id="pie-chart" class="pie-chart"><span class="center" id="seconds-counter">30</span></div>
             </div>
         </div>
         
@@ -69,7 +74,7 @@
                 course : [1,2,3,4,5],
                 cur : 0,
                 flag : false,
-                seconds : 11,
+                seconds : 30,
                 time : '',
                 stopBtn : false,
                 restartBtn : false,
@@ -90,8 +95,9 @@
         methods: {
             incrementSeconds() {
                 this.seconds--;
-                document.getElementById('seconds-counter').innerText = this.seconds +"초 남았습니다."
-                console.log(this.seconds)
+                document.getElementById('seconds-counter').innerText = this.seconds
+                document.getElementById('pie-chart').style.background = `conic-gradient(#ffffff 0% ${100-100*(this.seconds/30)}%, red ${100-100*(this.seconds/30)}% 100%)`
+                console.log(document.getElementById('pie-chart').style)
                 if (this.seconds===0) {
                     clearInterval(this.counter) 
                     this.next()
@@ -101,6 +107,9 @@
                 clearInterval(this.counter) 
                 this.cur++;
                 this.flag = !this.flag
+                document.getElementById('seconds-counter').innerText = 30
+                document.getElementById('pie-chart').style.background = "red"
+
                 console.log("current : ",this.cur)
                 console.log("다음동작",this.course[this.cur],"을 실행합니다.")
                 this.init(this.course[this.cur])
@@ -187,6 +196,7 @@
             async loop(timestamp) {
                 this.loading = false;
                 this.aiPage = true;
+                document.getElementById('pie-chart').style.visibility= 'visible'
                 
                 if (this.startTime){
                     console.log("starttime",timestamp)
@@ -219,7 +229,7 @@
                         if (prediction[i].className === String(this.course[this.cur]) && !this.flag ) {
                             this.flag = true;
                             console.log(this.flag,this.seconds)
-                            this.seconds = 11;
+                            this.seconds = 30;
                             this.counter = setInterval(this.incrementSeconds,1000)  
                         
                         } else if (prediction[i].className === String(this.course[this.cur])) {
@@ -257,8 +267,33 @@
         }
  
     }
+
+
+  
+
 </script>
     
 <style scoped>
+.pie-chart {
+  position: relative;
+  display:inline-block;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: red;
+  visibility: hidden;
+  
+}
+span.center{
+  background: #fff;
+  display : block;
+  position: absolute;
+  top:50%; left:50%;
+  width:150px; height:150px;
+  border-radius: 50%;
+  text-align:center; line-height: 150px;
+  font-size:30px;
+   transform: translate(-50%, -50%);
+}
 
 </style>
