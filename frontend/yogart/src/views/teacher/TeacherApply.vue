@@ -4,7 +4,7 @@
         <h4>이를 위해 아래에 해당하는 이미지를 첨부해주세요.</h4>
         <p>1. 신분증 사본</p>
         <p>2. 요가지도자 자격증 사본(종류 무관)</p>
-        <input type="file" ref="tI" id="t-i" accept=".jpg, .jpeg, .gif">
+        <input type="file" ref="tI" id="t-i" accept=".jpg, .jpeg, .gif, .png" multiple="multiple">
         <div>모든 파일은 인증 후 파기됩니다.</div>
         <button @click="onSubmit"></button>
     </div>
@@ -17,8 +17,7 @@ export default {
     name: 'TeacherApply',
     data() {
         return {
-            images: [],
-            SERVER_URL: this.$store.state.SERVER_URL,
+            SERVER_URL: this.$store.state.SERVER_URL
         }
     },
     methods: {
@@ -30,11 +29,19 @@ export default {
                 }
             }
             // 확인 필요
-            let fd = new FormData()
+            let fd = new FormData();
+            // let file = [];
             for (let i = 0; i < this.$refs.tI.files.length; i++) {
-                fd.append('images', this.images.append(this.$refs.tI.files[i]))
+                // file.push(this.$refs.tI.files[i]);
+                let file = this.$refs.tI.files[i];
+                console.log(file);
+                fd.append('files', file)
+         
             }
-            axios.post(this.SERVER_URL + '/users/teacher-apply', fd, requestHeaders)
+            // fd.append("files",file);
+            // console.log(file);
+            console.log(fd);
+            axios.post(this.SERVER_URL + '/api/users/imageUpload', fd, requestHeaders)
             .then(res => console.log(res)) //다른 곳으로 이동 필요
             .catch(err => console.error(err))
         },
