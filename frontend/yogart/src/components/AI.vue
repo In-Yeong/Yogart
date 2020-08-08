@@ -43,7 +43,8 @@
             </div>
             <div class="col-4 coaching-data" id="coaching-data">
                 <div class="watch m-5">{{ watchMin }}:{{ watchSec}}</div>
-                <div id="pie-chart" class="pie-chart"><span class="center" id="seconds-counter">30</span></div>
+                <div id="pie-chart" class="pie-chart m-5"><span class="center" id="seconds-counter">30</span></div>
+                <div>{{poseTimes}}</div>
             </div>
         </div>
         
@@ -83,8 +84,10 @@
                 posefiles : posefiles,
                 startDateTime: '',
                 watch: '',
+                watchStamp: 0,
                 watchMin: '00',
                 watchSec: '00',
+                poseTimes: [],
 
             }
         },
@@ -110,6 +113,9 @@
                 clearInterval(this.counter) 
                 this.cur++;
                 this.flag = !this.flag
+                var t = this.watch-this.watchStamp
+                this.poseTimes.push(t)
+                this.watchStamp = this.watch
                 document.getElementById('seconds-counter').innerText = 30
                 document.getElementById('pie-chart').style.background = "red"
 
