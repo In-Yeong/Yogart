@@ -126,6 +126,7 @@
             },
             next() {
                 this.cur++;
+                console.log('here!', this.course.length)
                 if (this.cur < this.course.length){
                     clearInterval(this.counter) 
                     this.flag = !this.flag
@@ -135,8 +136,8 @@
                     document.getElementById('seconds-counter').innerText = 30
                     document.getElementById('pie-chart').style.background = "red"
 
-                    console.log("current : ",this.cur)
-                    console.log("다음동작",this.course[this.cur],"을 실행합니다.")
+                    // console.log("current : ",this.cur)
+                    // console.log("다음동작",this.course[this.cur],"을 실행합니다.")
                     this.init(this.course[this.cur])
 
                 }

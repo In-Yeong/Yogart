@@ -28,7 +28,6 @@
                         <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
                         </div> 
                         <p>{{posefile.korean_pose_name}}</p>
-                        <!-- <p>{{posefile.id}}</p> -->
                     </div>      
                     </div>
                 </div>
