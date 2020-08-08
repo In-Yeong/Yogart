@@ -86,7 +86,7 @@
                           <router-link to="/coaching" class="nav-link">AI Coaching Page</router-link>
                         </li>
                         <li class="nav-item">
-                          <router-link to="/coachingresult" class="nav-link">AI Coaching Result</router-link>
+                          <router-link to="/coaching/result" class="nav-link">AI Coaching Result</router-link>
                         </li>
                         <li class="nav-item">
                           <router-link to="/coaching/yogapose" class="nav-link">Yoga Pose</router-link>
