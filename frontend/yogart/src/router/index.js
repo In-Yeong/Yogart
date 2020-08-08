@@ -125,6 +125,11 @@ const routes = [
         name: 'AICoachingPage',
         component: AICoachingPage
       },
+    {
+        path: '/coachingresult',
+        name: 'AICoachingResultPage',
+        component: AICoachingResultPage
+      },
       {
         path: '/coaching/yogaposelist',
         name: 'YogaPoseListPage',
