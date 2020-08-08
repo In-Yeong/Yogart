@@ -15,6 +15,7 @@ import 'chartjs-plugin-labels'
 import lineChart from '../../components/aiResult/lineChart.vue'
 import dougnutChart from '../../components/aiResult/dougnutChart.vue'
 
+
 export default {
     name : 'AICoachingResultPage',
     components : {
@@ -24,34 +25,45 @@ export default {
     data() {
         return {
             posefiles : posefiles,
+            courseName : '',
+            course : [],
             courseStr : '1,2,3,4,5', //get으로 가져와야
             lineLabels: ['자세이름들'],
             linedata : this.$cookies.get('resultPoseTimes').split('.'),
             dougnutdata : [], //태그별 계산해야함
             totalTime : this.$cookies.get('resultRunTime'),
-            
-            
-        }
+            startDateTime : undefined,
+              
+        }  
     },
     methods : {
+       
+
         createLineLabels() {
-            var course = this.courseStr.split(',')
             var labels = []  
-            course.forEach(function (poseID, idx){
+            this.course.forEach(function (poseID, idx){
                 labels.push(posefiles[poseID].pose_name)
             })
             this.lineLabels = labels
             console.log(this.lineLabels)
+        },
+        clickStart() {
+            this.startDateTime = new Date();
+                
+        },
+        getCourseName() {
+
         }
     },
     created(){
-
+        this.course = this.courseStr.split(',')
         //axios.get요청 보내서 코스이름이랑 코스순서 받아와서 태그로 부위별 그래프에 넣기
         //점수 가져와서 표시하기
         //db에 오늘날짜, 경과시간,부위별 태그횟수 보내서 저장
 
-        console.log("this.poseTimes")
+        console.log(this.course)
          this.createLineLabels()
+         this.clickStart()
     },
  
 }
