@@ -4,7 +4,7 @@
             <h1>AI Coaching Service</h1>
 
             <h5>{{cur+1}}번째 동작 :{{course[cur]}}</h5>
-            <button v-if="startBtn" class="w3-btn w3-round-xlarge w3-red w3-xlarge m-5" type="button" @click="init()">Get Start!</button>
+            <button v-if="startBtn" class="w3-btn w3-round-xlarge w3-red w3-xlarge m-5" type="button" @click="clickStart()">Get Start!</button>
         </div>
        
         <div id="loading" v-if="loading">
@@ -21,7 +21,7 @@
         <div class="row">
             <div v-if="aiPage" class="col-4">
                 <div id="pose-data">
-                    <p>{{time}}</p>
+                    <!-- <p>{{time}}</p> -->
                     <div>포즈 이름: {{ posefiles[course[cur]].pose_name }}</div>
                     <div>카테고리: {{posefiles[course[cur]].category }}</div>
                     <div>난이도: {{posefiles[course[cur]].difficulty }}</div>
@@ -41,7 +41,8 @@
                     
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-4 coaching-data" id="coaching-data">
+                <div class="watch m-5">{{ watchMin }}:{{ watchSec}}</div>
                 <div id="pie-chart" class="pie-chart"><span class="center" id="seconds-counter">30</span></div>
             </div>
         </div>
@@ -80,24 +81,26 @@
                 restartBtn : false,
                 counter : undefined,
                 posefiles : posefiles,
+                startDateTime: '',
+                watch: '',
+                watchMin: '00',
+                watchSec: '00',
 
             }
         },
-        created() {
-            
-            var d = new Date();
-            var hour = d.getHours();
-            var minutes = d.getMinutes();
-            var sec = d.getSeconds();
-            this.time = hour%12+"시 "+minutes%60+"분 "+sec%60+"초에 시작하셨습니다."
-            
-        },
         methods: {
+            clickStart() {
+                this.startDateTime = new Date();
+                // var hour = this.startDateTime.getHours();
+                // var minutes = this.startDateTime.getMinutes();
+                // var sec = this.startDateTime.getSeconds();
+                // this.time = hour%12+"시 "+minutes%60+"분 "+sec%60+"초에 시작하셨습니다."
+                this.init()
+            },
             incrementSeconds() {
                 this.seconds--;
                 document.getElementById('seconds-counter').innerText = this.seconds
                 document.getElementById('pie-chart').style.background = `conic-gradient(#ffffff 0% ${100-100*(this.seconds/30)}%, red ${100-100*(this.seconds/30)}% 100%)`
-                console.log(document.getElementById('pie-chart').style)
                 if (this.seconds===0) {
                     clearInterval(this.counter) 
                     this.next()
@@ -142,10 +145,19 @@
                 } 
             },
 
+            timerCustom(num) {
+                num = num + '';
+                if (num.length < 2) {
+                    num = '0' + num
+                }
+                return num
+            },
+
             async init() {
 
                 console.log(this.course[this.cur])
                 this.startBtn = false;
+                
                
                 console.log("click the start btn")
                 // 로딩이 시작
@@ -196,7 +208,7 @@
             async loop(timestamp) {
                 this.loading = false;
                 this.aiPage = true;
-                document.getElementById('pie-chart').style.visibility= 'visible'
+                document.getElementById('coaching-data').style.visibility= 'visible'
                 
                 if (this.startTime){
                     console.log("starttime",timestamp)
@@ -211,6 +223,11 @@
                 if (this.requestId) {
                     this.requestId = window.requestAnimationFrame(this.loop);
                 }
+
+                var nowDateTime = new Date();
+                this.watch = Math.floor((nowDateTime-this.startDateTime)/(1000))
+                this.watchMin = this.timerCustom(Math.floor(this.watch/60))
+                this.watchSec = this.timerCustom(this.watch-this.watchMin*60)
             },
     
             async predict() {
@@ -274,6 +291,9 @@
 </script>
     
 <style scoped>
+.watch {
+    font-size: 2rem;
+}
 .pie-chart {
   position: relative;
   display:inline-block;
@@ -281,8 +301,6 @@
   height: 160px;
   border-radius: 50%;
   background: red;
-  visibility: hidden;
-  
 }
 span.center{
   background: #fff;
@@ -294,6 +312,9 @@ span.center{
   text-align:center; line-height: 150px;
   font-size:30px;
    transform: translate(-50%, -50%);
+}
+.coaching-data {
+    visibility: hidden;
 }
 
 </style>
