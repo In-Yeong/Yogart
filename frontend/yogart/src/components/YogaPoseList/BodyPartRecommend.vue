@@ -3,10 +3,10 @@
     <div class="container">
         <h1 class="m-5">부위별 추천 코스</h1>
         <div class="row">
-            <div class="col-4 border rect" @click="clickSet(2)">다리</div>
-            <div class="col-4 border rect" @click="clickSet(3)">복근</div>
-            <div class="col-4 border rect" @click="clickSet(4)">튼튼 척추</div>
-            <div class="col-4 border rect" @click="clickSet(5)">전신</div>
+            <div class="col-4 border rect" @click="clickSet(3)">다리</div>
+            <div class="col-4 border rect" @click="clickSet(4)">복근</div>
+            <div class="col-4 border rect" @click="clickSet(5)">척추</div>
+            <div class="col-4 border rect" @click="clickSet(6)">전신</div>
             
         </div>
     </div>

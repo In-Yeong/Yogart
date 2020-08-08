@@ -108,25 +108,64 @@ export default {
     },
     mounted() {
         this.difficultyDistribution()
+        this.tagDistribution()
     },
     methods : {
         difficultyDistribution() {
             this.posefiles.forEach(function(posefile) {
-            console.log(posefile.difficulty)
+     
             if (posefile.difficulty === 'Beginner') {
-                    console.log(posefile.difficulty)
+              
                     this.beginnerPosefiles.push(posefile)
                 }
                 else if (posefile.difficulty === 'Intermediate') {
                     this.intermediatePosefiles.push(posefile)
                 }
                 else if (posefile.difficulty === 'Expert') {
-                    console.log(this)
-                    console.log(this.expertPosefiles)
+                    
                     this.expertPosefiles.push(posefile)
                     
                 }
         }.bind(this))
+        },
+        tagDistribution() {
+            const tags_idx = ['전신','팔','다리','복근','에너지','릴렉싱','척추']
+            var tags_val = [0,0,0,0,0,0,0]
+            var error = 0
+            this.posefiles.forEach(function(posefile) {
+                // var pose = posefile
+                console.log(posefile)
+                posefile.tag.forEach(function(tag){
+
+                if (tag === '전신') {
+                        tags_val[0] ++
+                        
+                    }
+                    else if (tag === '팔') {
+                        tags_val[1] ++
+                    }
+                    else if (tag === '다리') {
+                        tags_val[2] ++
+                    }
+                    else if (tag === '복근') {
+                        tags_val[3] ++
+                    }
+                    else if (tag === '에너지') {
+                        tags_val[4] ++
+                    }
+                    else if (tag === '릴렉싱') {
+                        tags_val[5] ++
+                    } 
+                    else if (tag === '척추') {
+                        tags_val[6] ++
+                    } 
+                    else {
+                        error ++
+                    }
+                    
+                })
+        }.bind(this))
+        console.log(tags_idx,tags_val,"오타:",error)
         },
         poseChoose(btnPose) {
             if (this.poseList.length < this.max ) {

@@ -55,7 +55,7 @@ export default {
                     title : {
                         display : true,
                         fontSize : 25,
-                        text : '부위별 비율'
+                        text : '태그별 비율'
                     } ,
                     plugins: {
                     
