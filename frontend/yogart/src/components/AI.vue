@@ -22,7 +22,7 @@
             <div v-if="aiPage" class="col-4">
                 <div id="pose-data">
                     <!-- <p>{{time}}</p> -->
-                    <div>포즈 이름: {{ posefiles[course[cur]].pose_name }}</div>
+                    <div>포즈 이름: {{ posefiles[course[cur]].korean_pose_name }}</div>
                     <div>카테고리: {{posefiles[course[cur]].category }}</div>
                     <div>난이도: {{posefiles[course[cur]].difficulty }}</div>
                     <img :src="require(`../../public/photos/${posefiles[course[cur]].file_reference}`)" alt="">
@@ -69,11 +69,12 @@
                 startBtn : true,
                 loading : false,
                 aiPage : false,
-                predictionTime : 3,
+                // predictionTime : 3,
                 startTime : true,
                 endTime : true,
                 requestId : undefined,
-                course : [1,2,3,4,5],
+                course : [1,2,3],
+                courseName : '코스이름',
                 cur : 0,
                 flag : false,
                 seconds : 30,
@@ -88,16 +89,30 @@
                 watchMin: '00',
                 watchSec: '00',
                 poseTimes: [],
+                scores:[],
+
 
             }
         },
+        mounted(){
+            this.calculateScores()
+        },
         methods: {
+            calculateScores() {
+                console.log(this.poseTimes,this.scores)
+                this.poseTimes.forEach(function(poseTime){
+                    if (poseTime < 30){
+                        this.scores.push(0)
+                    }
+                    else {
+                        var score = Math.floor(30/poseTime*100)
+                        this.scores.push(score)
+                    }
+                }.bind(this))
+                console.log('here',this.scores)
+            },
             clickStart() {
                 this.startDateTime = new Date();
-                // var hour = this.startDateTime.getHours();
-                // var minutes = this.startDateTime.getMinutes();
-                // var sec = this.startDateTime.getSeconds();
-                // this.time = hour%12+"시 "+minutes%60+"분 "+sec%60+"초에 시작하셨습니다."
                 this.init()
             },
             incrementSeconds() {
@@ -110,28 +125,38 @@
                 } 
             },
             next() {
-                clearInterval(this.counter) 
                 this.cur++;
-                this.flag = !this.flag
-                var t = this.watch-this.watchStamp
-                this.poseTimes.push(t)
-                this.watchStamp = this.watch
-                document.getElementById('seconds-counter').innerText = 30
-                document.getElementById('pie-chart').style.background = "red"
+                if (this.cur < this.course.length){
+                    clearInterval(this.counter) 
+                    this.flag = !this.flag
+                    var t = this.watch-this.watchStamp
+                    this.poseTimes.push(t)
+                    this.watchStamp = this.watch
+                    document.getElementById('seconds-counter').innerText = 30
+                    document.getElementById('pie-chart').style.background = "red"
 
-                console.log("current : ",this.cur)
-                console.log("다음동작",this.course[this.cur],"을 실행합니다.")
-                this.init(this.course[this.cur])
+                    console.log("current : ",this.cur)
+                    console.log("다음동작",this.course[this.cur],"을 실행합니다.")
+                    this.init(this.course[this.cur])
+
+                }
+                else {
+                    console.log('else')
+                    this.$cookies.set('resultScores', this.scores)
+                    this.$cookies.set('resultPoseTimes', this.poseTimes)
+                    this.$cookies.set('resultCourse', this.course)
+                    this.$cookies.set('resultCourseName', this.courseName)
+                    this.$cookies.set('resultRunTime', str(this.watchMin)+':'+str(this.watchSec))
+                    this.$router.push("/coaching/result")
+
+                }
+                
             },
             stop() {
                 this.stopBtn = true;
                 this.restartBtn = false;
                 console.log("click stop btn",this.requestId)
-                // if (this.requestId) {
-                //     window.cancelAnimationFrame(this.requestId);
-                //     this.requestId = undefined;
-                //     console.log("click stop btn",this.requestId)
-                // }   
+     
                 if (this.flag && this.stopBtn && this.counter!==undefined) {
                     clearInterval(this.counter)
                     this.counter = undefined
@@ -182,12 +207,12 @@
                 maxPredictions = model.getTotalClasses();
 
                 // 예상 소요시간 > 디폴트소요시간이면 갱신
-                console.log("this.prediction",this.predictionTime)
-                if (this.predictionTime < maxPredictions) {
-                    this.predictionTime = maxPredictions
-                }
-                console.log("this.prediction",this.predictionTime)
-                console.log("maxPredictions",maxPredictions)
+                // console.log("this.prediction",this.predictionTime)
+                // if (this.predictionTime < maxPredictions) {
+                //     this.predictionTime = maxPredictions
+                // }
+                // console.log("this.prediction",this.predictionTime)
+                // console.log("maxPredictions",maxPredictions)
                
         
                 // Convenience function to setup a webcam
@@ -264,15 +289,6 @@
                      }                    
                  } 
 
-                // 원래코드
-                // for (let i = 0; i < maxPredictions; i++) {
-                //     const classPrediction =
-                //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-                //     labelContainer.childNodes[i].innerHTML = classPrediction;
-                // }
-        
-                // finally draw the poses
-                //this 붙여줘야!!!!!!!!!!!
                 this.drawPose(pose);
             },
         

@@ -127,7 +127,7 @@ const routes = [
         component: AICoachingPage
       },
     {
-        path: '/coachingresult',
+        path: '/coaching/result',
         name: 'AICoachingResultPage',
         component: AICoachingResultPage
       },

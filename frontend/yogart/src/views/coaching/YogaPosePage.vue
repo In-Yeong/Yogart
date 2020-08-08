@@ -22,7 +22,7 @@
                 <div v-if="all">
                     <div class="row">
                        
-                    <div class="col-sm-3" id="poses" v-for="posefile in posefiles" :key="posefile.pose_name">  
+                    <div class="col-sm-2" id="poses" v-for="posefile in posefiles" :key="posefile.pose_name">  
                        <div class="pose-img">
                         <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                         <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
@@ -34,7 +34,7 @@
                 <div v-if="beginner">
                     <div class="row">
                        
-                    <div class="col-sm-3" id="poses" v-for="posefile in beginnerPosefiles" :key="posefile.pose_name">  
+                    <div class="col-sm-2" id="poses" v-for="posefile in beginnerPosefiles" :key="posefile.pose_name">  
                          <div class="pose-img">
                             <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                             <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
@@ -47,7 +47,7 @@
                 <div v-if="intermediate">
                     <div class="row">
                        
-                    <div class="col-sm-3" id="poses" v-for="posefile in intermediatePosefiles" :key="posefile.pose_name">  
+                    <div class="col-sm-2" id="poses" v-for="posefile in intermediatePosefiles" :key="posefile.pose_name">  
                         
                          <div class="pose-img">
                             <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
@@ -61,7 +61,7 @@
                 <div v-if="expert">
                     <div class="row">
                        
-                    <div class="col-sm-3" id="poses" v-for="posefile in expertPosefiles" :key="posefile.pose_name">  
+                    <div class="col-sm-2" id="poses" v-for="posefile in expertPosefiles" :key="posefile.pose_name">  
                         
                          <div class="pose-img">
                             <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
@@ -107,7 +107,7 @@ export default {
     },
     mounted() {
         this.difficultyDistribution()
-        this.tagDistribution()
+        // this.tagDistribution()
     },
     methods : {
         difficultyDistribution() {

@@ -1,7 +1,7 @@
 <template>
     
     <div class="container">
-        <h1 class="m-5">사용자 지정 코스</h1>
+        <h3 class="m-5">사용자 지정 코스</h3>
         <div class="row">
             <div class="col-4 rect create-list row align-items-center" @click="newCourse()"><h1 class="col align-self-center">+</h1></div>
         </div>
