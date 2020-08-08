@@ -74,7 +74,7 @@
                 endTime : true,
                 requestId : undefined,
                 course : [1,2,3],
-                courseName : '코스이름',
+                courseName : 'courseName',
                 cur : 0,
                 flag : false,
                 seconds : 30,
@@ -113,6 +113,7 @@
             },
             clickStart() {
                 this.startDateTime = new Date();
+                console.log(this.startDateTime.split(' '),"스타트")
                 this.init()
             },
             incrementSeconds() {
@@ -142,14 +143,14 @@
 
                 }
                 else {
-                    console.log('else')
-                    this.$cookies.set('resultScores', this.scores)
-                    this.$cookies.set('resultPoseTimes', this.poseTimes)
-                    this.$cookies.set('resultCourse', this.course)
-                    this.$cookies.set('resultCourseName', this.courseName)
-                    this.$cookies.set('resultRunTime', this.watchMin+':'+this.watchSec)
+                    const runTime = this.watchMin+'.'+this.watchSec
+                    
+                    this.$cookies.set('resultScores', this.scores.join("."))
+                    this.$cookies.set('resultPoseTimes', this.poseTimes.join("."))
+                    // this.$cookies.set('resultCourse', this.course.join("."))
+                    this.$cookies.set('resultRunTime', runTime )
+                    this.$cookies.set('resultStartDateTime', this.startDateTime )
                     this.$router.push("/coaching/result")
-
                 }
                 
             },
@@ -167,10 +168,10 @@
             restart() {
                 this.stopBtn = false;
                 this.restartBtn = true;
-                console.log("click restart btn",this.requestId)
+                // console.log("click restart btn",this.requestId)
                 if (!this.requestId) {
                     this.requestId = window.requestAnimationFrame(this.loop);
-                    console.log("click restart btn",this.requestId)
+                    // console.log("click restart btn",this.requestId)
                 }
                 if(this.flag && this.restartBtn && this.counter===undefined) {
                     this.counter = setInterval(this.incrementSeconds,1000)

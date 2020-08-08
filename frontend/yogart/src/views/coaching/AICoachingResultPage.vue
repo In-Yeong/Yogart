@@ -24,11 +24,12 @@ export default {
     data() {
         return {
             posefiles : posefiles,
-            courseStr : '1,2,3,4,5',
-            lineLabels: [],
-            linedata : ['소요시간들'],
-            dougnutdata : [],
-            totalTime : '00 : 04 : 32',
+            courseStr : '1,2,3,4,5', //get으로 가져와야
+            lineLabels: ['자세이름들'],
+            linedata : this.$cookies.get('resultPoseTimes').split('.'),
+            dougnutdata : [], //태그별 계산해야함
+            totalTime : this.$cookies.get('resultRunTime'),
+            
             
         }
     },
@@ -44,6 +45,12 @@ export default {
         }
     },
     created(){
+
+        //axios.get요청 보내서 코스이름이랑 코스순서 받아와서 태그로 부위별 그래프에 넣기
+        //점수 가져와서 표시하기
+        //db에 오늘날짜, 경과시간,부위별 태그횟수 보내서 저장
+
+        console.log("this.poseTimes")
          this.createLineLabels()
     },
  
