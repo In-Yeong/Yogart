@@ -55,7 +55,7 @@
 <script>
     import '@tensorflow/tfjs'
     import * as tmPose from "@teachablemachine/pose"
-    import posefiles from "../json"
+    import posefiles from "../../public/json"
     // npm install --save @tensorflow/tfjs @teachablemachine/pose
     console.log(posefiles)
     let model, webcam, ctx, labelContainer, maxPredictions;
