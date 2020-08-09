@@ -95,6 +95,9 @@
         mounted(){
             this.calculateScores()
         },
+        beforeDestroy() {
+            window.location.reload();
+        },
         methods: {
             calculateScores() {
                 console.log(this.poseTimes,this.scores)
@@ -289,6 +292,9 @@
         }
  
     }
+    window.onbeforeunload = function () {
+	console.log('out!')
+};
 
 
   
