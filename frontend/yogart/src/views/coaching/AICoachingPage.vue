@@ -18,7 +18,15 @@ export default {
   components: {
     AI,
     
-   
+  },
+  data() {
+    return {
+      test: ''
+    }
+  },
+  created() {
+    this.test = this.$store.state.test 
+    console.log(this.test)
   },
   
 }

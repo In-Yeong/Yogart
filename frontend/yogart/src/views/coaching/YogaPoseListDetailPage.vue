@@ -1,5 +1,5 @@
 <template>
-  <div>
+    <div>
         <h1 class="m-5">{{listId}}번 리스트 디테일 페이지 입니다</h1>
         <div class="row justify-content-center border-top border-bottom m-5">
             <div class="col-sm-2" id="poses" v-for="poseId in yogaList" :key="posefiles[poseId].pose_name">
@@ -13,15 +13,14 @@
         </div>
         <div class="m-5">
             <button @click="clickStart()">시작하기 버튼</button>
-        </div>
-        
-
-      
-  </div>
+        </div>  
+    </div>
 </template>
 
 <script>
 import posefiles from '../../../public/json.js'
+import axios from 'axios'
+
 export default {
     name : 'YogaPoseListDetailPage',
     data() {
@@ -29,17 +28,29 @@ export default {
             posefiles : posefiles,
             listId : document.location.href.split("yogaposelist/")[1],
             backCommingString: '1,2,3,4,5',
-            yogaList: []
+            yogaList: [],
+            courseName: '',
+            SERVER_URL: this.$store.state.SERVER_URL
         }
     },
     components: {
         
     },
     methods: {
+        getCourseList() {
+            axios.get(this.SERVER_URL + `/api/aicoach/list/${listId}`)
+            .then(response => {
+                console.log(response)
+                this.courseName = response.data.courseName
+                this.backCommingString = response.data.course
+            })
+            .catch(err => console.error(err))
+        },
         StringToArr() {
             this.yogaList = this.backCommingString.split(',')
         },
         clickStart() {
+            this.$store.state.test = this.yogaList
             this.$router.push(`/coaching`)
         }
 

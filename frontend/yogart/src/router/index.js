@@ -20,6 +20,7 @@ import YogaPoseListPage from '../views/coaching/YogaPoseListPage.vue'
 import YogaPoseListDetailPage from '../views/coaching/YogaPoseListDetailPage.vue'
 import YogaPosePage from '../views/coaching/YogaPosePage.vue'
 import ClassSetting from '../components/teacher/ClassSetting.vue'
+import TeacherPage from '../views/teacher/TeacherPage.vue'
 
 const requireAuth = () => (from, to, next) => {
     // console.log(store.state.isLogin)
@@ -40,6 +41,11 @@ const requireAdmin = () => (from, to, next) => {
 Vue.use(VueRouter)
 
 const routes = [
+    {
+        path: '/teacherpage',
+        name: 'TeacherPage',
+        component: TeacherPage
+    },
     {
         path: '/teachers/class-setting',
         name: 'ClassSetting',
