@@ -43,19 +43,23 @@ export default {
                 console.log(response)
                 this.courseName = response.data.courseName
                 this.backCommingString = response.data.course
+                console.log(this.courseName,this.backCommingString)
             })
             .catch(err => console.error(err))
         },
-        // sendCourse() {
-        //     const Course =  this.backCommingString.split(',')
-        //     const filteredCourse =  []
-        //     Course.forEach(function(courseID){
-        //         if (courseID !== 1000){
-        //             filteredCourse.push(courseID)
-        //         }
-        //     })
-        //     this.$cookies.set('course',filteredCourse.join(','))
-        // },
+        sendCourse() {
+            const Course =  this.backCommingString.split(',')
+            console.log(Course)
+            const filteredCourse =  []
+            Course.forEach(function(courseID){
+                if (courseID < 1000){
+                    filteredCourse.push(courseID)
+                }
+                console.log(filteredCourse.join(','))
+                const filteredCourseStr = filteredCourse.join(',')
+            })
+            this.$cookies.set('course',filteredCourseStr)
+        },
         StringToArr() {
             this.yogaList = this.backCommingString.split(',')
         },
@@ -67,6 +71,7 @@ export default {
     created() {
         this.getCourseList()
         this.StringToArr()
+        // this.sendCourse()
     },
 }
 </script>

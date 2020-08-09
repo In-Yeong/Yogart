@@ -3,14 +3,14 @@
         <div id="AI"  v-if="!loading">
             <h1>AI Coaching Service</h1>
 
-            <h5>{{cur+1}}번째 동작 :{{course[cur]}}</h5>
+            <h5>{{cur+1}}번째 동작 :{{course[cur].korean_pose_name}}</h5>
             <button v-if="startBtn" class="w3-btn w3-round-xlarge w3-red w3-xlarge m-5" type="button" @click="clickStart()">Get Start!</button>
         </div>
        
         <div id="loading" v-if="loading">
         <!-- <div id="loading" v-if="true"> -->
             <h3 class="m-5">AI 요가 코칭 서비스를 시작합니다</h3>
-            <p>{{cur+1}}번째 동작 :{{course[cur]}}</p>
+            <p>{{courseName}} 코스 준비중</p>
     
             <i class="fa fa-spinner fa-pulse fa-5x fa-fw m-5" ></i>
             <span class="sr-only">Loading...</span>
@@ -68,6 +68,7 @@
                 startTime : true,
                 endTime : true,
                 requestId : undefined,
+                // course : this.$cookies.get('course').split(','),
                 course : [1,2,3],
                 courseName : 'courseName',
                 cur : 0,
@@ -85,41 +86,19 @@
                 watchSec: '00',
                 poseTimes: [],
                 scores:[],
+                SERVER_URL : this.$store.state.SERVER_URL
 
 
             }
         },
         mounted(){
-            this.getCourse()
+          
             this.calculateScores()
             document.getElementById('good').style.display= 'none'
             document.getElementById('bad').style.display= 'none'
         },
         methods: {
-             getCourse() {
-                const courseID = this.$cookies.get('coaching-list')   
-                axios.get(this.SERVER_URL + `/api/aicoach/list/${courseID}`)
-                .then(res => {
-                    console.log("result에서 axios 성공",res)
-                    //코스 이름과 코스 리스트 save
-                    this.courseName = res.data.courseName
-                    
-                    const Course =  res.data.course.split(',') 
-                    const filteredCourse =  []
-                    Course.forEach(function(courseID){
-                        if (courseID !== 1000){
-                            filteredCourse.push(courseID)
-                        }
-                    })
-                    this.course = filteredCourse
-                    console.log(this.course)
-                    //
-                })
-                .catch(err => {
-                    this.course = [2,7,11]
-                    console.error(err)
-                })
-            },
+          
             calculateScores() {
                 console.log(this.poseTimes,this.scores)
                 this.poseTimes.forEach(function(poseTime){
