@@ -1,5 +1,6 @@
 <template>
   <div>
+
       <canvas id="lineChart"></canvas>
   </div>
 </template>
@@ -7,11 +8,15 @@
 <script>
 export default {
     name : 'lineChart',
-    props : {
-        lineLabels : Array,
-        linedata : Array,
+
+    data() {
+        return{
+            lineLabels : this.$cookies.get('lineLabelStr').split(','),
+            linedata : this.$cookies.get('resultPoseTimes').split('.'),
+        }
     },
     mounted() {
+        console.log(this.lineLabels,this.linedata)
         this.createChart()
     },
     methods : {
@@ -29,7 +34,7 @@ export default {
             //  multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>",
                 // The type of chart we want to create
                 type: 'line',
-
+                
                 // The data for our dataset
                 data: {
                     labels: this.lineLabels,
@@ -39,7 +44,7 @@ export default {
                         // backgroundColor: 'rgb(255, 99, 132)',
                         // borderColor: '#3c5b74',
                         // hoverBackgroundColor : '#3c5b74',
-                        data: [30, 40, 50, 32, 44, 35, 30],
+                        data: this.linedata,
                         borderColor: gradientStroke,
                         pointBorderColor: gradientStroke,
                         pointBackgroundColor: gradientStroke,

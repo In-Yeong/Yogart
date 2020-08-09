@@ -7,10 +7,13 @@
 <script>
 export default {
     name : 'dougnutChart',
-    props: {
-        dougnutdata : Array,
+    data() {
+        return{
+            dougnutdata : this.$cookies.get('dougnutdataStr').split(','),
+        }
     },
     mounted() {
+        console.log("도넛차트",this.dougnutdata)
         this.createChart()
     },
     methods : {
@@ -26,7 +29,7 @@ export default {
                     datasets: [{
                         label: '부위 포함',
                         hoverBackgroundColor : '#8e6b73',
-                        data: [1,4,3,2,1,1],
+                        data: this.dougnutdata,
                         backgroundColor: [
                             '#8e6b73',
                             '#a94300',

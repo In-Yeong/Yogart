@@ -58,9 +58,8 @@
     import * as tmPose from "@teachablemachine/pose"
     import posefiles from "../../public/json"
     // npm install --save @tensorflow/tfjs @teachablemachine/pose
-    console.log(posefiles)
     let model, webcam, ctx, labelContainer, maxPredictions;
-    // var el = document.getElementById('seconds-counter')
+
     
     export default {
         name : 'Yoga1',
@@ -69,7 +68,6 @@
                 startBtn : true,
                 loading : false,
                 aiPage : false,
-                // predictionTime : 3,
                 startTime : true,
                 endTime : true,
                 requestId : undefined,
@@ -135,13 +133,12 @@
                     this.watchStamp = this.watch
                     document.getElementById('seconds-counter').innerText = 30
                     document.getElementById('pie-chart').style.background = "red"
-
-                    // console.log("current : ",this.cur)
-                    // console.log("다음동작",this.course[this.cur],"을 실행합니다.")
                     this.init(this.course[this.cur])
 
                 }
                 else {
+                    var t = this.watch-this.watchStamp
+                    this.poseTimes.push(t)
                     const runTime = this.watchMin+'.'+this.watchSec
                     console.log(this.startDateTime.getDate() )
                     this.$cookies.set('resultScores', this.scores.join("."))
@@ -153,9 +150,7 @@
             },
             stop() {
                 this.stopBtn = true;
-                this.restartBtn = false;
-                console.log("click stop btn",this.requestId)
-     
+                this.restartBtn = false;     
                 if (this.flag && this.stopBtn && this.counter!==undefined) {
                     clearInterval(this.counter)
                     this.counter = undefined
@@ -165,10 +160,8 @@
             restart() {
                 this.stopBtn = false;
                 this.restartBtn = true;
-                // console.log("click restart btn",this.requestId)
                 if (!this.requestId) {
                     this.requestId = window.requestAnimationFrame(this.loop);
-                    // console.log("click restart btn",this.requestId)
                 }
                 if(this.flag && this.restartBtn && this.counter===undefined) {
                     this.counter = setInterval(this.incrementSeconds,1000)
@@ -204,15 +197,6 @@
                 model = await tmPose.load(modelURL, metadataURL);
                 console.log("model",model)
                 maxPredictions = model.getTotalClasses();
-
-                // 예상 소요시간 > 디폴트소요시간이면 갱신
-                // console.log("this.prediction",this.predictionTime)
-                // if (this.predictionTime < maxPredictions) {
-                //     this.predictionTime = maxPredictions
-                // }
-                // console.log("this.prediction",this.predictionTime)
-                // console.log("maxPredictions",maxPredictions)
-               
         
                 // Convenience function to setup a webcam
                 //여기 웹캠 사이즈
