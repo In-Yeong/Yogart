@@ -98,6 +98,9 @@
             document.getElementById('good').style.display= 'none'
             document.getElementById('bad').style.display= 'none'
         },
+        beforeDestroy() {
+            window.location.reload()
+        },
         methods: {
              getCourse() {
                 const courseID = this.$cookies.get('coaching-list')   
