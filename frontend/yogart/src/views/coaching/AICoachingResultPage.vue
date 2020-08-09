@@ -89,7 +89,7 @@ export default {
             this.$cookies.set('lineLabelStr',lineLabelStr) 
         },
         createDougnutData() { //data - 태그별 카운트 
-            console.log("도넛데이터만들기,코스 : ",this.course)
+            console.log("도넛 데이터 만들기- 코스 : ",this.course)
             this.course.forEach(function (poseID){
                 this.posefiles[poseID].tag.forEach(function(tag){
                     // console.log(tag,this.dougnutdata)

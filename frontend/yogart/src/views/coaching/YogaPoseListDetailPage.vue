@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="m-5">{{listId}}번 리스트 디테일 페이지 입니다</h1>
+        <h1 class="m-5">{{listId}}번 {{courseName}}리스트 디테일 페이지 입니다</h1>
         <div class="row justify-content-center border-top border-bottom m-5">
             <div class="col-sm-2" id="poses" v-for="poseId in yogaList" :key="posefiles[poseId].pose_name">
             
