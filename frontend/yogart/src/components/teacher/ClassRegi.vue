@@ -1,11 +1,12 @@
 <template>
     <div>
-        <h1>pt Regi
-        </h1>
+        <h2>{{ ptInfo.ptName }}</h2>
+        <h5>{{ ptInfo.ptPrice }}</h5>
+        <h5>{{ ptInfo.ptIntro }}</h5>
         <!-- 데이터 피커를 이용해 날짜를 받으면, 그 날짜에 열리는 모든 수업을 리스팅한다. -->
         <DatePicker format="yyyy-MM-dd-D" :highlighted="highlighted" @selected="selectDate" :language="ko"></DatePicker>
-        <div v-for="pt in showArray" :key="pt.id">
-            <PtListItem :pt="pt"></PtListItem>
+        <div v-for="time in showArray" :key="time.time">
+            <PtListItem :ptInfo="ptInfo" :time="time" :clickedDate="clickedDate"></PtListItem>
         </div>
         <div>
 
@@ -20,20 +21,29 @@ import { ko } from 'vuejs-datepicker/dist/locale'
 import PtListItem from './PtListItem.vue'
 
 export default {
+    name: 'ClassRegi',
     components: {
         DatePicker,
         PtListItem,
     },
+    props: {
+        ptId: Number,
+    },
     methods: {
         selectDate(date) {
-            // 유저가 날짜를 선택하면 그에 맞는 날짜에 열리는 수업을 보여줘야 합니다.
-            let year = date.getYear() + 1900
-            let month = date.getMonth() + 1
-            let day = date.getDate()
-            let selectedDate = `${year}-${month}-${day}`
+            // 유저가 날짜를 선택하면 그날에 열리는 수업을 보여줘야 합니다.
+            this.clickedDate = date
+            let day = date.getDay()
             this.showArray.length = 0
-            this.showArray = this.ptArray.filter(pt => {
-                return pt.date === selectedDate
+            let self = this
+            this.showArray = this.ptTimes.filter(pt => {
+                let isSoldOut = true
+                for (let k = 0; k < self.soldOut.length; k++) {
+                    if (date.getDate() === self.soldOut[k].getDate() && pt.time === self.soldOut[k].getHours()) {
+                        isSoldOut = false
+                    }
+                }
+                return pt.day === day && isSoldOut
             })
         }
     },
@@ -43,31 +53,62 @@ export default {
                 dates: [],
             },
             ko: ko,
-            ptArray: [],
+            ptInfo: {
+                ptTeacher: null,
+                ptId: null,
+                ptName: null,
+                ptPrice: null,
+                ptIntro: null,
+            },
+            ptTimes: [],
+            soldOut: [],
             showArray: [],
+            clickedDate: null,
             SERVER_URL: this.$store.state.SERVER_URL,
         }
     },
     mounted() {
-        // 강사의 모든 열린 수업을 가져옵니다.
-        // axios.get(this.SERVER_URL + '/api/teachers/open-pt')
+        // 강사의 수업 정보와 이미 예약된 PT리스트를 가져옵니다.
+        // axios.get(this.SERVER_URL + '/api/teachers/pt', ptId)
         // .then(res => {
-            // 가져온 모든 열린 수업을 ptArray에 저장한다.
-            // this.ptArray = res.ptArray
-            // 수업이 열린 날을 표시하기 위해 this.highlighted.dates에 new Date(yyyy, M, d)를 추가한다.
-            // for (let i = 0; i < res.data.pt.length; i++) {
-            //     let yyyy = Number(res.data.pt[i].slice(0, 4))
-            //     let mm = Number(res.data.pt[i].slice(5,7)) - 1
-            //     let dd = Number(res.data.pt[i].slice(8, 10))
-            //     this.highlighted.dates.push(new Date(yyyy, mm, dd))
-//             // }
-//             var day = new Date('Apr 30, 2000');
-// console.log(day); // Apr 30 2000
-
-// var nextDay = new Date(day);
-// nextDay.setDate(day.getDate() + 1);
-// console.log(nextDay); // May 01 2000 
-        // })
+            let res = {
+                data: {
+                    ptTeacher: 12, // 요가강사 id값
+                    ptId: 1,
+                    ptName: '요가를 처음 하는 사람을 위함',
+                    ptPrice: 250,
+                    ptIntro: '편하게 시작해 봐요',
+                    clicked: [{day: 3, time:20}, {day:4, time: 19}, {day: 4, time:18}, {day:3, time: 18}],
+                    soldOut: [ new Date(2020, 7, 13, 19), new Date(2020, 7, 12, 18)]
+                }
+            }
+            this.ptTimes = res.data.clicked
+            this.ptInfo.ptTeacher = res.data.ptTeacher
+            this.ptInfo.ptId = res.data.ptId
+            this.ptInfo.ptName = res.data.ptName
+            this.ptInfo.ptPrice = res.data.ptPrice
+            this.ptInfo.ptIntro = res.data.ptIntro
+            this.soldOut = res.data.soldOut
+            const today = new Date() // 오늘의 날짜
+            for (let i = 0; i < 14; i++) {
+                let cnt = 0
+                let nextDay = new Date(today)
+                nextDay.setDate(today.getDate() + i) // 오늘 + i 날
+                let day = nextDay.getDay()
+                for (let j = 0; j < this.ptTimes.length; j++) {
+                    if (this.ptTimes[j].day === day) {
+                        cnt++
+                    }
+                }
+                for (let j = 0; j < this.soldOut.length; j++) {
+                    if (nextDay.getDate() === this.soldOut[j].getDate()) {
+                        cnt--
+                    }
+                }
+                if (cnt > 0) {
+                    this.highlighted.dates.push(nextDay)
+                }
+            }
     }
 }
 </script>

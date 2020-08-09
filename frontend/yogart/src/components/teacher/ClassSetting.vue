@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import TimeTable from './TimeTable.vue'
 
 export default {
@@ -39,7 +40,7 @@ export default {
     },
     data() {
         return {
-            times: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+            times: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
             clicked: [],
             ptName: null,
             ptPrice: null,
@@ -73,6 +74,7 @@ export default {
                 ptIntro: this.ptIntro,
                 clicked: this.clicked,
             }
+            console.log(ptData)
             // 데이터 저장을 요청합니다. 데이터를 저장하며 clicked에 맞춰 수업을 생성해야 합니다.
             axios.post(this.SERVER_URL + '/api/teachers/pt-create', ptData, requestHeaders)
             .then(res => {
