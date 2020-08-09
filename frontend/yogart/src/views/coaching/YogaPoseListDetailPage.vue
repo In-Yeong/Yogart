@@ -64,6 +64,7 @@ export default {
             this.yogaList = this.backCommingString.split(',')
         },
         clickStart() {
+            this.$cookies.set('coaching-list', this.listId)
             this.$router.push(`/coaching`)
         }
 
