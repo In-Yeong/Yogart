@@ -6,19 +6,30 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.ssafy.yogart.user.model.KakaoPaymentReady;
 import com.ssafy.yogart.user.service.KakaoService;
 
 @Service
 public class KakaoServiceImpl implements KakaoService {
 
+	private static final String KAKAO_PAY_HOST = "https://kapi.kakao.com";
+	private static final String KAKAO_PAY_ADMIN_KEY = "c6b40447619f78404eb74f24d63da6a3";
+	
 	@Override
 	public String getAccessToken(String authorizeCode) {
 		
@@ -152,5 +163,37 @@ public class KakaoServiceImpl implements KakaoService {
 	    return userInfo;
 	}
 
-
+	@Override
+	public KakaoPaymentReady kakaoPayReady(String userNickname, String quantity, String price) throws Exception {
+		
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders header = new HttpHeaders();
+		KakaoPaymentReady kakaoPaymentReady;
+		
+//		RequestHeader
+		header.add("Authorization", "KakaoAK " + KAKAO_PAY_ADMIN_KEY);
+		header.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+		header.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
+		
+//		RequestBody
+		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+		parameters.add("cid", "TC0ONETIME");
+        parameters.add("partner_order_id", "1001");
+        parameters.add("partner_user_id", userNickname);
+        parameters.add("item_name", "스푼");
+        parameters.add("quantity", quantity.toString());
+        parameters.add("total_amount", price.toString());
+        parameters.add("tax_free_amount", "0");
+        parameters.add("approval_url", "http://localhost:3000/kakaoPay/Success");
+        parameters.add("cancel_url", "http://localhost:3000/kakaoPay/Cancel");
+        parameters.add("fail_url", "http://localhost:3000/kakaoPay/Fail");
+		
+        HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(parameters, header);
+        
+        kakaoPaymentReady = restTemplate.postForObject(new URI(KAKAO_PAY_HOST + "/v1/payment/ready"), body, KakaoPaymentReady.class);
+            
+        System.out.println(kakaoPaymentReady);
+ 
+		return kakaoPaymentReady;
+	}
 }
