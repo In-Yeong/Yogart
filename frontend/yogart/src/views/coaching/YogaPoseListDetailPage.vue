@@ -1,7 +1,6 @@
 <template>
     <div>
-        <h1 class="m-5">{{listId}}번 리스트 디테일 페이지 입니다</h1>
-        <div>{{courseName}}</div>
+        <h1 class="m-5">{{listId}}번 {{courseName}}리스트 디테일 페이지 입니다</h1>
         <div class="row justify-content-center border-top border-bottom m-5">
             <div class="col-sm-2 poses" v-for="poseId in yogaList" :key="poseId">
             
@@ -41,11 +40,9 @@ export default {
         getCourseList() {
             axios.get(this.SERVER_URL + `/api/aicoach/list/${this.listId}`)
             .then(response => {
-                console.log(response)
                 this.courseName = response.data.courseName
                 this.backCommingString = response.data.course
                 this.StringToArr()
-                console.log(posefiles[1].file_reference)
             })
             .catch(err => console.error(err))
         },
