@@ -35,7 +35,6 @@ export default {
         }  
     },
     mounted(){
-        this.course = [2,7,11]
 
         //점수 가져와서 표시하기
         this.splitTotaltime()
@@ -101,7 +100,10 @@ export default {
                 console.log(this.course)
                 //
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+                this.course = [2,7,11]
+                console.error(err)
+            })
         },
         saveResult() {
             //오늘 날짜

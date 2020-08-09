@@ -191,7 +191,7 @@ export default {
             axios.post(this.SERVER_URL + '/api/aicoach/list/create',
             { 'headers': { 'auth-token': window.$cookies.get('auth-token')},'courseName' : courseName, 'poseCourse': poseCourse } )
             .then(res => {
-                console.log(res)
+                console.log("이거 res",res)
                 //이 안에서 코스 pk뽑아오기
                 // 쿠키에 저장
                 this.$cookies.set('coaching-list', res.data)
