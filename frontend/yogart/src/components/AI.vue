@@ -34,12 +34,8 @@
             <div class="col-4">
                 <div><canvas id="canvas"></canvas></div>
                 <div id="label-container"></div>
-                <div v-if="flag"> 
-                    <!-- <i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i> -->
-                    <span class="sr-only">Refreshing...</span>
-                
-                    
-                </div>
+                <h2 id="good">GOOD</h2>
+                <h2 id="bad">BAD</h2>
             </div>
             <div class="col-4 coaching-data" id="coaching-data">
                 <div class="watch m-5">{{ watchMin }}:{{ watchSec}}</div>
@@ -94,6 +90,8 @@
         },
         mounted(){
             this.calculateScores()
+            document.getElementById('good').style.display= 'none'
+            document.getElementById('bad').style.display= 'none'
         },
         beforeDestroy() {
             window.location.reload();
@@ -256,20 +254,26 @@
 
                 // Rule : class1은 항상 요가포즈, class2는 에러, class3은 
                 for (let i = 0; i < maxPredictions; i++) {
+                    document.getElementById('label-container').firstChild.style.display = 'none'
                     //90퍼이상 일치하는 동작의 클래스명을 보여준다.
                     if (prediction[i].probability.toFixed(2) >= 0.9){
                         labelContainer.childNodes[0].innerHTML = prediction[i].className;
                         //만약 제대로된 요가동작이 인식되면 밑에 카운트 시작 메세지가 같이 뜬다
                         if (prediction[i].className === String(this.course[this.cur]) && !this.flag ) {
                             this.flag = true;
+                            document.getElementById('good').style.display = 'inline'
+                            document.getElementById('bad').style.display = 'none'
                             console.log(this.flag,this.seconds)
                             this.seconds = 30;
                             this.counter = setInterval(this.incrementSeconds,1000)  
                         
                         } else if (prediction[i].className === String(this.course[this.cur])) {
+                            document.getElementById('good').style.display = 'inline'
+                            document.getElementById('bad').style.display = 'none'
                             this.restart()
                         } else {
-                            labelContainer.childNodes[1].innerHTML = ""
+                            document.getElementById('good').style.display = 'none'
+                            document.getElementById('bad').style.display = 'inline'
                             this.stop()
                         }
                      }                    
