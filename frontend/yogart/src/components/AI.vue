@@ -113,7 +113,6 @@
             },
             clickStart() {
                 this.startDateTime = new Date();
-                console.log(this.startDateTime.split(' '),"스타트")
                 this.init()
             },
             incrementSeconds() {
