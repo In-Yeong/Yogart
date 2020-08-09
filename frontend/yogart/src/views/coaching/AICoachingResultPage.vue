@@ -28,8 +28,6 @@ export default {
             courseId : 0,
             courseName : '',
             course : [], //course순서 array
-            lineLabels: [], //자세이름들
-            dougnutdata : [0,0,0,0,0,0,0], //태그별 계산해야함
             minutes : 0,
             seconds : 0,          
             SERVER_URL : this.$store.state.SERVER_URL
@@ -38,8 +36,7 @@ export default {
     },
     mounted(){
         this.course = [1,3,5]
-        console.log(this.dougnutdata[7])
-        console.log(typeof(this.lineLabels))
+
         //점수 가져와서 표시하기
         this.splitTotaltime()
         this.getCourse()
@@ -55,41 +52,42 @@ export default {
           
         },
         createLineLabels() { //라벨 - 동작이름들
+            const lineLabels = []
             this.course.forEach(function (poseID){
-                this.lineLabels.push(posefiles[poseID].korean_pose_name)
+                lineLabels.push(posefiles[poseID].korean_pose_name)
             }.bind(this))
-            const lineLabelStr = this.lineLabels.join(',')
+            const lineLabelStr = lineLabels.join(',')
             this.$cookies.set('lineLabelStr',lineLabelStr) 
         },
         createDougnutData() { //data - 태그별 카운트 
-            
+            const dougnutdata = [0,0,0,0,0,0,0]
             this.course.forEach(function (poseID){
                 this.posefiles[poseID].tag.forEach(function(tag){
                     // console.log(tag,this.dougnutdata)
                     if (tag === '전신') {
-                        this.dougnutdata[0] ++       
+                        dougnutdata[0] ++       
                     }
                     else if (tag === '팔') {
-                        this.dougnutdata[1] ++
+                        dougnutdata[1] ++
                     }
                     else if (tag === '다리') {
-                        this.dougnutdata[2] ++
+                        dougnutdata[2] ++
                     }
                     else if (tag === '복근') {
-                        this.dougnutdata[3] ++
+                        dougnutdata[3] ++
                     }
                     else if (tag === '에너지') {
-                        this.dougnutdata[4] ++
+                        dougnutdata[4] ++
                     }
                     else if (tag === '릴렉싱') {
-                        this.dougnutdata[5] ++
+                        dougnutdata[5] ++
                     } 
                     else if (tag === '척추') {
-                        this.dougnutdata[6] ++
+                        dougnutdata[6] ++
                     } 
-                }.bind(this))         
+                })         
             }.bind(this))
-            const dougnutdataStr = this.dougnutdata.join(',')
+            const dougnutdataStr = dougnutdata.join(',')
             this.$cookies.set('dougnutdataStr',dougnutdataStr)
         },
         getCourse() {
@@ -114,7 +112,7 @@ export default {
             const tagCounting = this.dougnutdata.join(',')
            
             //db에 오늘날짜, 경과시간,부위별 태그횟수 보내서 저장
-            axios.post(this.SERVER_URL + `/api/aicoach/result/${courseId}`,
+            axios.post(this.SERVER_URL + `/api/aicoach/result/${this.courseId}`,
                 { 'headers': { 'auth-token': window.$cookies.get('auth-token')},
                 'totalTime' : totalTime, 
                 'startDateTime': startDateTime, 
