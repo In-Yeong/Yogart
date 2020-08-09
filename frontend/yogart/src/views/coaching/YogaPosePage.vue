@@ -194,7 +194,7 @@ export default {
                 console.log(res)
                 //이 안에서 코스 pk뽑아오기
                 // 쿠키에 저장
-                this.$cookies.set('coaching-list', 코스번호)
+                this.$cookies.set('coaching-list', res.data)
                 this.$router.push(`/coaching/yogaposelist`)
             })
             .catch(err => {console.log(err)})
