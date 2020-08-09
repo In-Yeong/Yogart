@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.yogart.aicoach.model.Aicoach;
 import com.ssafy.yogart.aicoach.model.AicoachCourse;
+import com.ssafy.yogart.aicoach.model.CourseDetailResult;
 import com.ssafy.yogart.aicoach.repository.AicoachCourseRepository;
 import com.ssafy.yogart.aicoach.service.AicoachService;
 import com.ssafy.yogart.user.model.User;
@@ -61,6 +63,22 @@ public class AicoachController {
 						"startDateTime: " + startDateTime + ", " +
 						"tagCounting" + tagCounting;
 		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "유저의 코스결과를 보낸다.", response = String.class)
+	@GetMapping(value="/list/{courseId}")
+	public ResponseEntity<CourseDetailResult> getDetail(@PathVariable int courseId) throws Exception {
+		System.out.println(courseId);
+		AicoachCourse aicoachCourse = aicoachService.detailCourse(courseId);
+		String courseName = aicoachCourse.getAiCourseDetailName();
+		String course = String.format("%d,%d,%d,%d,%d,%d,%d"
+				, aicoachCourse.getC1(),aicoachCourse.getC2(),aicoachCourse.getC3()
+				, aicoachCourse.getC4(),aicoachCourse.getC5(),aicoachCourse.getC6()
+				, aicoachCourse.getC7());
+		CourseDetailResult result = new CourseDetailResult();
+		result.setCourse(course);
+		result.setCourseName(courseName);
+		return new ResponseEntity<CourseDetailResult>(result, HttpStatus.OK);
 	}
 
     @ApiOperation(value = "유저가 만든 모든 코스를 보낸다.", response = List.class)
