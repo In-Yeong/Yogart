@@ -35,7 +35,7 @@ export default {
         }  
     },
     mounted(){
-        this.course = [1,3,5]
+        this.course = [2,7,11]
 
         //점수 가져와서 표시하기
         this.splitTotaltime()
