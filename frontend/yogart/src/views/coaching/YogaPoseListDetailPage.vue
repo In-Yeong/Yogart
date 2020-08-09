@@ -50,7 +50,7 @@ export default {
             this.yogaList = this.backCommingString.split(',')
         },
         clickStart() {
-            this.$store.state.test = this.yogaList
+            this.$cookies.set('listId', listId)
             this.$router.push(`/coaching`)
         }
 
