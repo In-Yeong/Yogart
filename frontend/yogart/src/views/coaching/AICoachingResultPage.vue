@@ -28,19 +28,22 @@ export default {
             courseId : 0,
             courseName : '',
             course : [], //course순서 array
+            dougnutdata : [0,0,0,0,0,0,0],
             minutes : 0,
             seconds : 0,          
             SERVER_URL : this.$store.state.SERVER_URL
               
         }  
     },
+    created() {
+        // this.getCourse()
+    },
     mounted(){
 
         //점수 가져와서 표시하기
-        this.splitTotaltime()
         this.getCourse()
-        this.createLineLabels()
-        this.createDougnutData()
+        this.splitTotaltime()
+        
         this.saveResult()
     },
     methods : {
@@ -50,45 +53,6 @@ export default {
             this.seconds = totalTime[1]
           
         },
-        createLineLabels() { //라벨 - 동작이름들
-            const lineLabels = []
-            this.course.forEach(function (poseID){
-                lineLabels.push(posefiles[poseID].korean_pose_name)
-            }.bind(this))
-            const lineLabelStr = lineLabels.join(',')
-            this.$cookies.set('lineLabelStr',lineLabelStr) 
-        },
-        createDougnutData() { //data - 태그별 카운트 
-            const dougnutdata = [0,0,0,0,0,0,0]
-            this.course.forEach(function (poseID){
-                this.posefiles[poseID].tag.forEach(function(tag){
-                    // console.log(tag,this.dougnutdata)
-                    if (tag === '전신') {
-                        dougnutdata[0] ++       
-                    }
-                    else if (tag === '팔') {
-                        dougnutdata[1] ++
-                    }
-                    else if (tag === '다리') {
-                        dougnutdata[2] ++
-                    }
-                    else if (tag === '복근') {
-                        dougnutdata[3] ++
-                    }
-                    else if (tag === '에너지') {
-                        dougnutdata[4] ++
-                    }
-                    else if (tag === '릴렉싱') {
-                        dougnutdata[5] ++
-                    } 
-                    else if (tag === '척추') {
-                        dougnutdata[6] ++
-                    } 
-                })         
-            }.bind(this))
-            const dougnutdataStr = dougnutdata.join(',')
-            this.$cookies.set('dougnutdataStr',dougnutdataStr)
-        },
         getCourse() {
             this.courseId = this.$cookies.get('coaching-list')   
             axios.get(this.SERVER_URL + `/api/aicoach/list/${this.courseId}`)
@@ -96,15 +60,66 @@ export default {
                 console.log("result에서 axios 성공",res)
                 //코스 이름과 코스 리스트 save
                 this.courseName = res.data.courseName
-                this.course = res.data.course.split(',') 
-                console.log(this.course)
+                
+                const Course =  res.data.course.split(',') 
+                const filteredCourse =  []
+                Course.forEach(function(courseID){
+                    if (courseID < 1000){
+                        console.log("if 안",courseID)
+                        filteredCourse.push(courseID)
+                    }
+                })
+                this.course = filteredCourse
+                console.log("filter",this.course)
+                this.createLineLabels()
+                this.createDougnutData()
                 //
             })
             .catch(err => {
-                this.course = [2,7,11]
                 console.error(err)
             })
         },
+        createLineLabels() { //라벨 - 동작이름들
+            const lineLabels = []
+            console.log(this.course)
+            this.course.forEach(function (poseID){
+                lineLabels.push(posefiles[poseID].korean_pose_name)
+            }.bind(this))
+            const lineLabelStr = lineLabels.join(',')
+            this.$cookies.set('lineLabelStr',lineLabelStr) 
+        },
+        createDougnutData() { //data - 태그별 카운트 
+            console.log("도넛데이터만들기,코스 : ",this.course)
+            this.course.forEach(function (poseID){
+                this.posefiles[poseID].tag.forEach(function(tag){
+                    // console.log(tag,this.dougnutdata)
+                    if (tag === '팔') {
+                        this.dougnutdata[0] ++       
+                    }
+                    else if (tag === '다리') {
+                        this.dougnutdata[1] ++
+                    }
+                    else if (tag === '복근') {
+                        this.dougnutdata[2] ++
+                    }
+                    else if (tag === '척추') {
+                        this.dougnutdata[3] ++
+                    }
+                    else if (tag === '전신') {
+                        this.dougnutdata[4] ++
+                    }
+                    else if (tag === '에너지') {
+                        this.dougnutdata[5] ++
+                    } 
+                    else if (tag === '릴렉싱') {
+                        this.dougnutdata[6] ++
+                    } 
+                }.bind(this))         
+            }.bind(this))
+            const dougnutdataStr = this.dougnutdata.join(',')
+            this.$cookies.set('dougnutdataStr',dougnutdataStr)
+        },
+        
         saveResult() {
             //오늘 날짜
             const startDateTime = new Date();
@@ -114,7 +129,7 @@ export default {
             const tagCounting = this.dougnutdata.join(',')
            
             //db에 오늘날짜, 경과시간,부위별 태그횟수 보내서 저장
-            axios.post(this.SERVER_URL + `/api/aicoach/result/${this.courseId}`,
+            axios.post(this.SERVER_URL + `/api/aicoach/result`,
                 { 'headers': { 'auth-token': window.$cookies.get('auth-token')},
                 'totalTime' : totalTime, 
                 'startDateTime': startDateTime, 

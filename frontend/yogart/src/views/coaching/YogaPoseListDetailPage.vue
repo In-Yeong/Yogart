@@ -46,6 +46,16 @@ export default {
             })
             .catch(err => console.error(err))
         },
+        // sendCourse() {
+        //     const Course =  this.backCommingString.split(',')
+        //     const filteredCourse =  []
+        //     Course.forEach(function(courseID){
+        //         if (courseID !== 1000){
+        //             filteredCourse.push(courseID)
+        //         }
+        //     })
+        //     this.$cookies.set('course',filteredCourse.join(','))
+        // },
         StringToArr() {
             this.yogaList = this.backCommingString.split(',')
         },

@@ -25,7 +25,7 @@ export default {
 
                 // The data for our dataset
                 data: {
-                    labels: ['다리', '척추', '복근', '전신', '에너지','릴렉스'],
+                    labels: ['팔', '다리', '복근', '척추','전신', '에너지','릴렉스'],
                     datasets: [{
                         label: '부위 포함',
                         hoverBackgroundColor : '#8e6b73',

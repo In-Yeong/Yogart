@@ -50,6 +50,7 @@
 </template>
 
 <script>
+    import axios from 'axios'
     import '@tensorflow/tfjs'
     import * as tmPose from "@teachablemachine/pose"
     import posefiles from "../../public/json"
@@ -89,11 +90,36 @@
             }
         },
         mounted(){
+            this.getCourse()
             this.calculateScores()
             document.getElementById('good').style.display= 'none'
             document.getElementById('bad').style.display= 'none'
         },
         methods: {
+             getCourse() {
+                const courseID = this.$cookies.get('coaching-list')   
+                axios.get(this.SERVER_URL + `/api/aicoach/list/${courseID}`)
+                .then(res => {
+                    console.log("result에서 axios 성공",res)
+                    //코스 이름과 코스 리스트 save
+                    this.courseName = res.data.courseName
+                    
+                    const Course =  res.data.course.split(',') 
+                    const filteredCourse =  []
+                    Course.forEach(function(courseID){
+                        if (courseID !== 1000){
+                            filteredCourse.push(courseID)
+                        }
+                    })
+                    this.course = filteredCourse
+                    console.log(this.course)
+                    //
+                })
+                .catch(err => {
+                    this.course = [2,7,11]
+                    console.error(err)
+                })
+            },
             calculateScores() {
                 console.log(this.poseTimes,this.scores)
                 this.poseTimes.forEach(function(poseTime){
