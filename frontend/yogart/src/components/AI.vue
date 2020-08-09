@@ -143,12 +143,10 @@
                 }
                 else {
                     const runTime = this.watchMin+'.'+this.watchSec
-                    
+                    console.log(this.startDateTime.getDate() )
                     this.$cookies.set('resultScores', this.scores.join("."))
                     this.$cookies.set('resultPoseTimes', this.poseTimes.join("."))
-                    // this.$cookies.set('resultCourse', this.course.join("."))
                     this.$cookies.set('resultRunTime', runTime )
-                    this.$cookies.set('resultStartDateTime', this.startDateTime )
                     this.$router.push("/coaching/result")
                 }
                 
