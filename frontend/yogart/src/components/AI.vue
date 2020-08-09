@@ -94,7 +94,6 @@
         },
         mounted(){
             this.getCourse()
-            this.calculateScores()
             document.getElementById('good').style.display= 'none'
             document.getElementById('bad').style.display= 'none'
         },
@@ -171,6 +170,7 @@
                     var t = this.watch-this.watchStamp
                     this.poseTimes.push(t)
                     const runTime = this.watchMin+'.'+this.watchSec
+                    this.calculateScores()
                     console.log(this.startDateTime.getDate() )
                     this.$cookies.set('resultScores', this.scores.join("."))
                     this.$cookies.set('resultPoseTimes', this.poseTimes.join("."))

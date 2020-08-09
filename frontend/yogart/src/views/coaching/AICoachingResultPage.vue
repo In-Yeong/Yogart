@@ -6,6 +6,20 @@
         <lineChart/>
         <dougnutChart/>
     </div>
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">자세</th>
+            <th scope="col">결과</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="poseId in course"  :key="poseId">
+            <td>{{ posefiles[poseId].korean_pose_name }}</td>
+            <td>{{ scores[`${poseId}`] }}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 </template>
 
@@ -29,6 +43,7 @@ export default {
             courseName : '',
             course : [], //course순서 array
             dougnutdata : [0,0,0,0,0,0,0],
+            scores: {},
             minutes : 0,
             seconds : 0,          
             SERVER_URL : this.$store.state.SERVER_URL
@@ -39,11 +54,8 @@ export default {
         // this.getCourse()
     },
     mounted(){
-
-        //점수 가져와서 표시하기
         this.getCourse()
         this.splitTotaltime()
-        
         this.saveResult()
     },
     methods : {
@@ -53,26 +65,44 @@ export default {
             this.seconds = totalTime[1]
           
         },
+        getScores() {
+            var scoreArr = this.$cookies.get('resultScores').split('.')
+            var cnt = 0
+            var scores = {}
+            this.course.forEach(function(courseId){
+                if (scoreArr[cnt] < 30) {
+                    scores[`${courseId}`] = 'BAD'
+                } else if (scoreArr[cnt] < 60) {
+                    scores[`${courseId}`] = 'NOT BAD'
+                } else if (scoreArr[cnt] < 80) {
+                    scores[`${courseId}`] = 'GOOD'
+                } else {
+                    scores[`${courseId}`] = 'VERY GOOD'
+                }
+                cnt++
+            })
+            this.scores = scores
+            console.log(this.scores)
+
+        },
         getCourse() {
             this.courseId = this.$cookies.get('coaching-list')   
             axios.get(this.SERVER_URL + `/api/aicoach/list/${this.courseId}`)
             .then(res => {
-                console.log("result에서 axios 성공",res)
                 //코스 이름과 코스 리스트 save
                 this.courseName = res.data.courseName
                 
                 const Course =  res.data.course.split(',') 
                 const filteredCourse =  []
-                Course.forEach(function(courseID){
-                    if (courseID < 1000){
-                        console.log("if 안",courseID)
-                        filteredCourse.push(courseID)
+                Course.forEach(function(courseId){
+                    if (courseId < 1000){
+                        filteredCourse.push(courseId)
                     }
                 })
                 this.course = filteredCourse
-                console.log("filter",this.course)
                 this.createLineLabels()
                 this.createDougnutData()
+                this.getScores()
                 //
             })
             .catch(err => {
@@ -81,7 +111,6 @@ export default {
         },
         createLineLabels() { //라벨 - 동작이름들
             const lineLabels = []
-            console.log(this.course)
             this.course.forEach(function (poseID){
                 lineLabels.push(posefiles[poseID].korean_pose_name)
             }.bind(this))
@@ -89,7 +118,6 @@ export default {
             this.$cookies.set('lineLabelStr',lineLabelStr) 
         },
         createDougnutData() { //data - 태그별 카운트 
-            console.log("도넛 데이터 만들기- 코스 : ",this.course)
             this.course.forEach(function (poseID){
                 this.posefiles[poseID].tag.forEach(function(tag){
                     // console.log(tag,this.dougnutdata)
