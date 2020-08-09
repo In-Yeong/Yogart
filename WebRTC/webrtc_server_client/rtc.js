@@ -13,6 +13,7 @@ let pcConfig = {
         'urls': 'stun:stun.l.google.com:19302'
       }]
 }
+let isLocalOn = true;
 
 var currentURL = document.URL;
 var params = {};
@@ -93,6 +94,11 @@ function gotStream(stream) {
   if (isInitiator) {
     maybeStart();
   }
+}
+
+function vidMute() {
+  localStream.getTracks().forEach(track => track.enabled = !track.enabled);
+  isLocalOn = !isLocalOn;
 }
 
 function createPeerConnection() {
