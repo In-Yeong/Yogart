@@ -62,6 +62,7 @@
         name : 'Yoga1',
         data() {
             return{
+                SERVER_URL: this.$store.state.SERVER_URL,
                 startBtn : true,
                 loading : false,
                 aiPage : false,
@@ -98,6 +99,7 @@
         methods: {
              getCourse() {
                 const courseID = this.$cookies.get('coaching-list')   
+                console.log('코스아이디', courseID)
                 axios.get(this.SERVER_URL + `/api/aicoach/list/${courseID}`)
                 .then(res => {
                     console.log("result에서 axios 성공",res)
@@ -107,7 +109,7 @@
                     const Course =  res.data.course.split(',') 
                     const filteredCourse =  []
                     Course.forEach(function(courseID){
-                        if (courseID !== 1000){
+                        if (courseID !== "1000"){
                             filteredCourse.push(courseID)
                         }
                     })
