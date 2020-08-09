@@ -25,9 +25,9 @@ export default {
     data() {
         return {
             posefiles : posefiles,
+            courseId : 0,
             courseName : '',
-            course : [],
-            courseStr : '1,2,3,4,5', //get으로 가져와야
+            course : [], //course순서 array
             lineLabels: ['자세이름들'],
             linedata : this.$cookies.get('resultPoseTimes').split('.'),
             dougnutdata : [], //태그별 계산해야함
@@ -51,19 +51,31 @@ export default {
             this.startDateTime = new Date();
                 
         },
-        getCourseName() {
+        getCourse() {
+            this.courseId = this.$cookies.get('listId')   
+            console.log(this.courseId)
+            // axios.get(this.SERVER_URL + `/api/aicoach/list/${this.courseId}`)
+            // .then(res => {
+            //     console.log(res)
+            //     //코스 이름과 코스 리스트 save
+            //     this.courseName = res.data.courseName
+            //     this.course = res.data.course.split(',') 
+            //     console.log(this.course)
+            //     //
+            // })
+            // .catch(err => console.error(err))
 
+        
         }
     },
     created(){
-        this.course = this.courseStr.split(',')
+        
         //axios.get요청 보내서 코스이름이랑 코스순서 받아와서 태그로 부위별 그래프에 넣기
         //점수 가져와서 표시하기
-        //db에 오늘날짜, 경과시간,부위별 태그횟수 보내서 저장
-
-        console.log(this.course)
-         this.createLineLabels()
-         this.clickStart()
+        //db에 오늘날짜, 경과시간,부위별 태그횟수 보내서 저장 +코스번호?
+        this.getCourse()
+        this.createLineLabels()
+        this.clickStart()
     },
  
 }
