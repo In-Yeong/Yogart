@@ -1,5 +1,7 @@
 package com.ssafy.yogart.aicoach.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +27,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ai_course")
-public class AicoachCourse {
+public class AicoachCourse implements Serializable {
 	@Id
 	@Column(name="ai_course_id")
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
