@@ -61,9 +61,8 @@ public class QnAController {
 //   		}
    		QnAResult qnaResult = new QnAResult();
    		qnaResult.setList(qnaService.allQnAReply(qnaId));
-   		System.out.println(1);
    		qnaResult.setAdmin(true);
-   		System.out.println(qnaResult.getList().get(0).getUserEmail());
+//   		System.out.println(qnaResult.getList().get(0).getUserEmail());
    		return new ResponseEntity<QnAResult>(qnaResult, HttpStatus.OK);
    	}
     
@@ -76,16 +75,15 @@ public class QnAController {
 
     @ApiOperation(value = "새로운 QnA를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping(value="/make", produces = "application/json; charset=UTF-8")
-	public ResponseEntity<String> createQna(@RequestHeader(value="config") Map<String, Object> header, @RequestBody String content) {
+	public ResponseEntity<String> createQna(@RequestHeader(value="config") Map<String, Object> header, @RequestBody Map<String, Object> content) {
 		logger.debug("createQnA - 호출");
 		System.out.println((String)header.get("authorization"));
-		System.out.println(content);
 		User user = userService.authentication((String)header.get("authorization"));
 		System.out.println(user.getUserName());
 		QnA qna = new QnA();
-		qna.setQnaTitle("[Title] join complete");
+		qna.setQnaTitle((String)content.get("qnaTitle"));
 		qna.setUserEmail(user);
-		qna.setQnaContent(content);
+		qna.setQnaContent((String)content.get("qnaContent"));
 		if (qnaService.createQnA(qna) != null) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
@@ -95,6 +93,7 @@ public class QnAController {
     @ApiOperation(value = "새로운 QnA reply를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
    	@PostMapping(value="/reply/make", produces = "application/json; charset=UTF-8")
    	public ResponseEntity<String> createQnaReply(@RequestHeader(value="config") Map<String, Object> header, @RequestBody Map<String, Object> content) {
+    	System.out.println("success::");
    		logger.debug("createQnA - 호출");
    		System.out.println((String)header.get("authorization"));
    		System.out.println(content);
