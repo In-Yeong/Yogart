@@ -12,7 +12,7 @@ public interface UserService {
     // 인증 & 개인정보 조회
     User authentication(String token);
     // 비밀번호 변경
-    User updatePassword(String token, String password);
+    User updateInfo(String token, User user);
     // 탈퇴
     void withdraw(String token);
 }

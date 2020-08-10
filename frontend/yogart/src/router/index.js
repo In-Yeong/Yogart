@@ -16,6 +16,7 @@ import TeacherList from '../views/teacher/TeacherList.vue'
 import TeacherDetail from '../views/teacher/TeacherDetail.vue'
 import TeacherApply from '../views/teacher/TeacherApply.vue'
 import AICoachingPage from '../views/coaching/AICoachingPage.vue'
+import AICoachingResultPage from '../views/coaching/AICoachingResultPage.vue'
 import YogaPoseListPage from '../views/coaching/YogaPoseListPage.vue'
 import YogaPoseListDetailPage from '../views/coaching/YogaPoseListDetailPage.vue'
 import YogaPosePage from '../views/coaching/YogaPosePage.vue'
@@ -125,13 +126,18 @@ const routes = [
         name: 'AICoachingPage',
         component: AICoachingPage
       },
+    {
+        path: '/coaching/result',
+        name: 'AICoachingResultPage',
+        component: AICoachingResultPage
+      },
       {
         path: '/coaching/yogaposelist',
         name: 'YogaPoseListPage',
         component: YogaPoseListPage
       },
       {
-        path: '/coaching/yogaposelist/:list_id',
+        path: '/coaching/yogaposelist/detail',
         name: 'YogaPoseListDetailPage',
         component: YogaPoseListDetailPage
       },

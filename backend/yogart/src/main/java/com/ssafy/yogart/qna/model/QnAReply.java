@@ -1,8 +1,6 @@
 package com.ssafy.yogart.qna.model;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
-
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,34 +20,33 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Entity
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "qna")
-public class QnA implements Serializable {
+@Table(name = "qna_reply")
+public class QnAReply {
 	@Id
-	@Column(name="qna_id")
+	@Column(name="qna_reply_id")
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@ApiModelProperty(value="질문아이디")
-	private Integer qnaId;
+	@ApiModelProperty(value="댓글번호")
+	private Integer qnaReplyId;
 	
 	@ManyToOne(optional=false)
-	@JoinColumn(name="qna_user_email", referencedColumnName = "user_email")
+	@JoinColumn(name="qna_reply_qna_id", referencedColumnName="qna_id")
+	@ApiModelProperty(value="아이디")
+	private QnA qnaId;
+	
+	@ManyToOne(optional=false)
+	@JoinColumn(name="qna_reply_user_email", referencedColumnName="user_email")
     @ApiModelProperty(value="email")
     private User userEmail;
 	
-	@Column(name="qna_title")
-    @ApiModelProperty(value="제목")
-	private String qnaTitle;
-	
-	@Column(name="qna_content", columnDefinition = "text")
-    @ApiModelProperty(value="내용")
-	private String qnaContent;
+	@Column(name="qna_reply_content", columnDefinition = "text")
+    @ApiModelProperty(value="답글내용")
+	private String qnaReplyContent;
 	
 	@CreationTimestamp
 	@Column(insertable = false, updatable = false)
