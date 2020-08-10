@@ -53,9 +53,11 @@ export default {
                     this.$router.push({name: 'Home'})
                } else if (response.data.statusCode === 403) {
                    if (response.data.message === 'email') {
-                       alert('중복된 이메일입니다.')
+                       alert('이메일이 이미 존재합니다.')
+                   } else if (response.data.message === 'nickname') {
+                       alert('닉네임이 이미 존재합니다.')
                    } else {
-                       alert('중복된 닉네임입니다.')
+                       alert('이메일과 닉네임이 이미 존재합니다.')
                    }
                } else {
                    alert('회원가입 실패')
