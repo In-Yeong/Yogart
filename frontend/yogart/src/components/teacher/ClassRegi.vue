@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2>{{ ptInfo.ptName }}</h2>
-        <h5>{{ ptInfo.ptPrice }}</h5>
+        <h5>{{ ptInfo.ptPrice }}스푼으로 함께해요</h5>
         <h5>{{ ptInfo.ptIntro }}</h5>
         <!-- 데이터 피커를 이용해 날짜를 받으면, 그 날짜에 열리는 모든 수업을 리스팅한다. -->
         <DatePicker format="yyyy-MM-dd-D" :highlighted="highlighted" @selected="selectDate" :language="ko"></DatePicker>

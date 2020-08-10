@@ -86,7 +86,7 @@ export default {
     },
     mounted() {
         // // 전에 저장했던 강사의 수업 가능 시간을 받아 옵니다.
-        // axios.get()
+        // axios.get(this.SERVER_URL + '/api/teachers/pt-timetable, pt)
         // .then(res => {
         //     this.clicked = res.data.clicked
         // })

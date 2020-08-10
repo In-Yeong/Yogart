@@ -21,6 +21,7 @@ import YogaPoseListDetailPage from '../views/coaching/YogaPoseListDetailPage.vue
 import YogaPosePage from '../views/coaching/YogaPosePage.vue'
 import ClassSetting from '../components/teacher/ClassSetting.vue'
 import TeacherPage from '../views/teacher/TeacherPage.vue'
+import SpoonPurchase from '../views/spoon/SpoonPurchase.vue'
 
 const requireAuth = () => (from, to, next) => {
     // console.log(store.state.isLogin)
@@ -41,6 +42,12 @@ const requireAdmin = () => (from, to, next) => {
 Vue.use(VueRouter)
 
 const routes = [
+    {
+        path: '/spoons',
+        name: 'SpoonPurchase',
+        component: SpoonPurchase,
+        beforeEnter: requireAuth()
+    },
     {
         path: '/teacherpage',
         name: 'TeacherPage',
@@ -85,7 +92,8 @@ const routes = [
     {
         path: '/mypage',
         name: 'MyPage',
-        component: MyPage
+        component: MyPage,
+        beforeEnter: requireAuth(),
     },    
     {
         path: '/mypage/graph',

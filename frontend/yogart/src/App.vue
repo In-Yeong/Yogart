@@ -1,8 +1,8 @@
 <template>
     <div id="app">
+        <login-modal @loginComplete="loginComplete"></login-modal>
         <NavBar @logout="logout" :isLogin="isLogin"/>
         <div style="height:99px;"></div>
-        <login-modal @loginComplete="loginComplete"></login-modal>
         <div id="nav" v-if="false">
             <router-link to="/login">login</router-link> |  
             <router-link to="/">Home</router-link> | 
