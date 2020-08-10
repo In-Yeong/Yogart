@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.ssafy.yogart.user.model.User;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,49 +24,24 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ai_course_detail")
+@Table(name = "ai_course")
 public class AicoachCourse {
 	@Id
-	@Column(name="ai_course_detail_id")
+	@Column(name="ai_course_id")
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@ApiModelProperty(value="아이디")
-	private Integer aiCourseDetailId;
+	@ApiModelProperty(value="질문아이디")
+	private Integer aiCourseId;
 	
 	@ManyToOne(fetch = FetchType.EAGER, optional=false, cascade = CascadeType.ALL)
-	@JoinColumn(name="ai_course_detail_no", referencedColumnName="ai_course_id")
-    @ApiModelProperty(value="유저번호")
-    private Aicoach aiCourseDetailNo;
+	@JoinColumn(name="ai_course_user_nickname", referencedColumnName="user_nickname")
+    @ApiModelProperty(value="닉네임")
+    private User aiCourseUserNickname;
 	
-	@Column(name="ai_course_detail_name")
+	@Column(name="ai_course_name")
 	@ApiModelProperty(value="코스이름")
-	private String aiCourseDetailName;
+	private String aiCourseName;
 	
-	@Column(name="c1")
-	@ApiModelProperty(value="코스1")
-	private Integer c1;
-	
-	@Column(name="c2")
-	@ApiModelProperty(value="코스2")
-	private Integer c2;
-	
-	@Column(name="c3")
-	@ApiModelProperty(value="코스3")
-	private Integer c3;
-	
-	@Column(name="c4")
-	@ApiModelProperty(value="코스4")
-	private Integer c4;
-	
-	@Column(name="c5")
-	@ApiModelProperty(value="코스5")
-	private Integer c5;
-	
-	@Column(name="c6")
-	@ApiModelProperty(value="코스6")
-	private Integer c6;
-	
-	@Column(name="c7")
-	@ApiModelProperty(value="코스7")
-	private Integer c7;
-	
+	@Column(name="ai_course_order")
+	@ApiModelProperty(value="코스순서")
+	private String aiCourseOrder;
 }

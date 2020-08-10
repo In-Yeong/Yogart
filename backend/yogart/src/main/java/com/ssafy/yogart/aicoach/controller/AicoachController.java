@@ -1,6 +1,5 @@
 package com.ssafy.yogart.aicoach.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.yogart.aicoach.model.Aicoach;
 import com.ssafy.yogart.aicoach.model.AicoachCourse;
 import com.ssafy.yogart.aicoach.model.CourseDetailResult;
 import com.ssafy.yogart.aicoach.repository.AicoachCourseRepository;
@@ -58,10 +56,10 @@ public class AicoachController {
 		String totalTime = (String)courseData.get("totalTime");
 		String startDateTime = (String)courseData.get("totalTime");
 		String tagCounting = (String)courseData.get("tagCounting");
-		String result = "nickname: " + nickname + ", " +
-						"totalTime: " + totalTime + ", " +
-						"startDateTime: " + startDateTime + ", " +
-						"tagCounting" + tagCounting;
+		String result = "nickname:" + nickname + "," +
+						"totalTime:" + totalTime + "," +
+						"startDateTime:" + startDateTime + "," +
+						"tagCounting:" + tagCounting;
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 	
@@ -70,11 +68,8 @@ public class AicoachController {
 	public ResponseEntity<CourseDetailResult> getDetail(@PathVariable int courseId) throws Exception {
 		System.out.println(courseId);
 		AicoachCourse aicoachCourse = aicoachService.detailCourse(courseId);
-		String courseName = aicoachCourse.getAiCourseDetailName();
-		String course = String.format("%d,%d,%d,%d,%d,%d,%d"
-				, aicoachCourse.getC1(),aicoachCourse.getC2(),aicoachCourse.getC3()
-				, aicoachCourse.getC4(),aicoachCourse.getC5(),aicoachCourse.getC6()
-				, aicoachCourse.getC7());
+		String courseName = aicoachCourse.getAiCourseName();
+		String course = aicoachCourse.getAiCourseOrder();
 		CourseDetailResult result = new CourseDetailResult();
 		result.setCourse(course);
 		result.setCourseName(courseName);
@@ -87,12 +82,8 @@ public class AicoachController {
 		logger.debug("allMyCourse - 호출");
 		System.out.println(token);
 		User user = userService.authentication(token);
-		String nickname = user.getUserNickname();
-		List<Aicoach> nums = aicoachService.getNo(nickname);
-		List<AicoachCourse> mylist = new ArrayList<>();
-		for(int i = 0; i < nums.size(); i++) {
-			mylist.add(aicoachService.detailCourse(nums.get(i).getAiCourseId()));			
-		}
+//		String nickname = user.getUserNickname();
+		List<AicoachCourse> mylist = aicoachService.userCourse(user);	
 		return new ResponseEntity<List<AicoachCourse>>(mylist, HttpStatus.OK);
 	}
     
@@ -103,37 +94,16 @@ public class AicoachController {
     	String token = headers.get("auth-token");
     	String coursename = (String)courseData.get("courseName");
     	String posecourse = (String)courseData.get("poseCourse");
-    	System.out.println(token);
     	System.out.println(coursename);
     	User user = userService.authentication(token);
-		String nickname = user.getUserNickname();
-		System.out.println(nickname);
 		AicoachCourse aicoachCourse = new AicoachCourse();
-		Aicoach aicoach = new Aicoach();
-		String[] list = posecourse.split(",");
-		String[] list2 = new String[7];
-		System.out.println(list.length);
-    	for(int i = 0; i < list.length; i++) {
-    		list2[i] = list[i];
-    	}
-    	for(int j = list.length; j < 7; j++) {
-    		list2[j] = "1000";
-    	}
-    	aicoach.setAiCourseUserNickname(nickname);
-    	aicoachCourse.setC1(Integer.parseInt(list2[0]));
-    	aicoachCourse.setC2(Integer.parseInt(list2[1]));
-    	aicoachCourse.setC3(Integer.parseInt(list2[2]));
-    	aicoachCourse.setC4(Integer.parseInt(list2[3]));
-    	aicoachCourse.setC5(Integer.parseInt(list2[4]));
-    	aicoachCourse.setC6(Integer.parseInt(list2[5]));
-    	aicoachCourse.setC7(Integer.parseInt(list2[6]));
-    	aicoachCourse.setAiCourseDetailName(coursename);
-    	aicoachCourse.setAiCourseDetailNo(aicoach);
+    	aicoachCourse.setAiCourseOrder(posecourse);
+    	aicoachCourse.setAiCourseName(coursename);
+    	aicoachCourse.setAiCourseUserNickname(user);
     	aicoachService.createCourse(aicoachCourse);
-    	System.out.println("fail?");
-    	Integer idx = aicoachcourseRepository.findTopByOrderByAiCourseDetailIdDesc().getAiCourseDetailId();
+    	Integer idx = aicoachcourseRepository.findTopByOrderByAiCourseIdDesc().getAiCourseId();
     	System.out.println(idx);
-    	String detailIdx = idx.toString();
-        return new ResponseEntity<String>(detailIdx, HttpStatus.OK);
+    	String ID = idx.toString();
+        return new ResponseEntity<String>(ID, HttpStatus.OK);
     }
 }

@@ -42,24 +42,4 @@ public class QnA {
 	@Column(insertable = false, updatable = false)
     @ApiModelProperty(value="생성일")
 	private LocalDateTime createDate;
-	
-//	@Column(name="qna_user_id")
-//    @ApiModelProperty(value="이름")
-//	private String qnaUserid;
-	
-//	@Column(insertable = false, updatable = false)
-//    @ApiModelProperty(value="질문생성일")
-//	private Date qnaDate;
-//	
-//	@Column(name="qna_reply_content")
-//    @ApiModelProperty(value="이름")
-//	private String qnaReplyContent;
-//	
-//	@Column(insertable = false, updatable = false)
-//    @ApiModelProperty(value="댓글생성일")
-//	private Date qnaReplyDate;
-//	
-//	@Column(name="qna_reply_user_id")
-//    @ApiModelProperty(value="댓글아이디")
-//	private String qnaReplyUserid;
 }
