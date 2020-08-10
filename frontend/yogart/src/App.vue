@@ -51,8 +51,14 @@ export default {
                     this.setCookie(response.data.token)
                     this.$store.commit('storeLogin')
                     this.$router.push({name: 'Home'})
+               } else if (response.data.statusCode === 403) {
+                   if (response.data.result === 'email') {
+                       alert('중복된 이메일입니다.')
+                   } else {
+                       alert('중복된 닉네임입니다.')
+                   }
                } else {
-                   alert('중복된 이메일입니다.')
+                   alert('회원가입 실패')
                }
             })
             .catch(err => {

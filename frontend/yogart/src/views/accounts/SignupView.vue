@@ -8,7 +8,7 @@
                     <br>
                     <div class="input-box">
                         <input class="border-0" type="text" id="userEmail" v-model="signupData.userEmail" @keyup="checkEmail">
-                        <span class="allIcon" id="userEmailCheckIcon">아이콘</span>
+                        <!-- <span class="allIcon" id="userEmailCheckIcon">아이콘</span> -->
                     </div>
                     
                 </div>
@@ -17,7 +17,7 @@
                     <br>
                     <div class="input-box">
                         <input class="border-0" type="text" id="userName" v-model="signupData.userName" @keyup="checkName">
-                        <span class="allIcon" id="userNameCheckIcon">아이콘</span>
+                        <!-- <span class="allIcon" id="userNameCheckIcon">아이콘</span> -->
                     </div>
                 </div>
                 <div class="form-group">
@@ -25,7 +25,7 @@
                     <br>
                     <div class="input-box">
                         <input class="border-0" type="text" id="userNickname" v-model="signupData.userNickname" @keyup="checkNickname">
-                        <span class="allIcon" id="userNicknameCheckIcon">아이콘</span>
+                        <!-- <span class="allIcon" id="userNicknameCheckIcon">아이콘</span> -->
                     </div>
                 </div>
                 <div class="form-group">
@@ -64,21 +64,30 @@ export default {
                 userPassword: '',
                 userRePassword: '',
             },
-            numberOfPassData: 0,
+            formCheck: {
+                userEmail: false,
+                userName: false,
+                userNickname: false,
+                userPassword: false,
+                userRePassword: false,
+            },
         }
     },
     methods: {
         signup() {
             // App.vue로 이벤트 발생
-            document.getElementsByClassName('allIcon').forEach(element => {
-                if (element.style.color === 'blue') {
-                    this.numberOfPassData += 1
-                } else {
-                    alert('입력 정보를 다시 확인해주세요.')
-                    this.numberOfPassData = 0
-                }
-            });
-            if (this.numberOfPassData === 5) {
+
+            if (this.formCheck.userEmail === false) {
+                alert('올바른 이메일을 입력해주세요.')
+            } else if (this.formCheck.userName === false) {
+                alert('올바른 이름을 입력해주세요.')
+            } else if (this.formCheck.userNickname === false) {
+                alert('올바른 닉네임을 입력해주세요.')
+            } else if (this.formCheck.userPassword === false) {
+                alert('숫자, 영문 포함 8자 이상 비밀번호를 입력해주세요')
+            } else if (this.formCheck.userRePassword === false) {
+                alert('비밀번호가 일치하지 않습니다.')
+            } else {
                 this.$emit('submit-signup-data', this.signupData)
             }
 
@@ -90,9 +99,9 @@ export default {
             this.signupData.userEmail = this.signupData.userEmail.trim()
             // 이메일 형식(@와 .)을 갖추고 있고 45자 이하이면 체크 아이콘 색상 변경
             if (this.signupData.userEmail.includes('@') & this.signupData.userEmail.includes('.') & this.signupData.userEmail.length < 46) {      
-                document.getElementById('userEmailCheckIcon').style.color = 'blue'
+                this.formCheck.userEmail = true
             } else {
-                document.getElementById('userEmailCheckIcon').style.color = 'red'
+                this.formCheck.userEmail = false
             }
         },
         checkName() {
@@ -102,9 +111,9 @@ export default {
             this.signupData.userName = this.signupData.userName.trim()
             // 1~45자 사이면 체크 아이콘 색상 변경
             if (this.signupData.userName.length > 0 & this.signupData.userName.length < 46) {
-                document.getElementById('userNameCheckIcon').style.color = 'blue'
+                this.formCheck.userName = true
             } else {
-                document.getElementById('userNameCheckIcon').style.color = 'red'
+                this.formCheck.userName = false
             }
         },
         checkNickname() {
@@ -114,9 +123,9 @@ export default {
             this.signupData.userNickname = this.signupData.userNickname.trim()
             // 1~45자 사이면 체크 아이콘 색상 변경
             if (this.signupData.userNickname.length > 0 & this.signupData.userNickname.length < 46) {
-                document.getElementById('userNicknameCheckIcon').style.color = 'blue'
+                this.formCheck.userNickname = true
             } else {
-                document.getElementById('userNicknameCheckIcon').style.color = 'red'
+                this.formCheck.userNickname = false
             }
         },
         checkPassword() {
@@ -128,8 +137,10 @@ export default {
             // 영문과 숫자를 포함하고 8~45자 사이면 체크 아이콘 색상 변경
             if (checkNumber !== -1 & checkEnglish !== -1 & this.signupData.userPassword.length > 7 & this.signupData.userPassword.length < 46) {
                 document.getElementById('userPasswordCheckIcon').style.color = 'blue'
+                this.formCheck.userPassword = true
             } else {
                 document.getElementById('userPasswordCheckIcon').style.color = 'red'
+                this.formCheck.userPassword = false
             }
         },
         checkRePassword() {
@@ -138,8 +149,10 @@ export default {
             // 비밀번호가 일치하면 체크 아이콘 색상 변경
             if (this.signupData.userRePassword === this.signupData.userPassword) {
                 document.getElementById('userRePasswordCheckIcon').style.color = 'blue'
+                this.formCheck.userRePassword = true
             } else {
                 document.getElementById('userRePasswordCheckIcon').style.color = 'red'
+                this.formCheck.userRePassword = false
             }
         }
     },
