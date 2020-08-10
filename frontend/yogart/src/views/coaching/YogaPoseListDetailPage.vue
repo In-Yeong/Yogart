@@ -1,11 +1,11 @@
 <template>
     <div>
-        <h1 class="m-5">{{listId}}번 리스트 디테일 페이지 입니다</h1>
+        <h1 class="m-5">{{listId}}번 {{courseName}}리스트 디테일 페이지 입니다</h1>
         <div class="row justify-content-center border-top border-bottom m-5">
-            <div class="col-sm-2" id="poses" v-for="poseId in yogaList" :key="posefiles[poseId].pose_name">
+            <div class="col-sm-2 poses" v-for="poseId in yogaList" :key="poseId">
             
                 <img class="user-profile m-3" :src="require(`../../../public/photos/${posefiles[poseId].file_reference}`)">
-                <p>{{posefiles[poseId].pose_name}}</p>
+                <p>{{posefiles[poseId].korean_pose_name}}</p>
             </div>
         </div>
         <div class="mx-auto my-3">
@@ -27,7 +27,7 @@ export default {
         return {
             posefiles : posefiles,
             listId : this.$cookies.get('coaching-list'),
-            backCommingString: '1,2,3,4,5',
+            backCommingString: '',
             yogaList: [],
             courseName: '',
             SERVER_URL: this.$store.state.SERVER_URL
@@ -38,25 +38,32 @@ export default {
     },
     methods: {
         getCourseList() {
-            axios.get(this.SERVER_URL + `/api/aicoach/list/${listId}`)
+            axios.get(this.SERVER_URL + `/api/aicoach/list/${this.listId}`)
             .then(response => {
-                console.log(response)
                 this.courseName = response.data.courseName
                 this.backCommingString = response.data.course
+                this.StringToArr()
             })
             .catch(err => console.error(err))
         },
         StringToArr() {
-            this.yogaList = this.backCommingString.split(',')
+            const Course =  this.backCommingString.split(',')
+            const filteredCourse =  []
+            Course.forEach(function(courseID){
+                if (courseID !== "1000"){
+                    filteredCourse.push(courseID)
+                }
+            })
+            this.yogaList = filteredCourse
         },
         clickStart() {
+            this.$cookies.set('coaching-list', this.listId)
             this.$router.push(`/coaching`)
         }
 
     },
     created() {
         this.getCourseList()
-        this.StringToArr()
     },
 }
 </script>

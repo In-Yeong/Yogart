@@ -6,6 +6,20 @@
         <lineChart/>
         <dougnutChart/>
     </div>
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">자세</th>
+            <th scope="col">결과</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="poseId in course"  :key="poseId">
+            <td>{{ posefiles[poseId].korean_pose_name }}</td>
+            <td>{{ scores[`${poseId}`] }}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 </template>
 
@@ -28,20 +42,20 @@ export default {
             courseId : 0,
             courseName : '',
             course : [], //course순서 array
+            dougnutdata : [0,0,0,0,0,0,0],
+            scores: {},
             minutes : 0,
             seconds : 0,          
             SERVER_URL : this.$store.state.SERVER_URL
               
         }  
     },
+    created() {
+        // this.getCourse()
+    },
     mounted(){
-        this.course = [1,3,5]
-
-        //점수 가져와서 표시하기
-        this.splitTotaltime()
         this.getCourse()
-        this.createLineLabels()
-        this.createDougnutData()
+        this.splitTotaltime()
         this.saveResult()
     },
     methods : {
@@ -50,6 +64,50 @@ export default {
             this.minutes = totalTime[0]
             this.seconds = totalTime[1]
           
+        },
+        getScores() {
+            var scoreArr = this.$cookies.get('resultScores').split('.')
+            var cnt = 0
+            var scores = {}
+            this.course.forEach(function(courseId){
+                if (scoreArr[cnt] < 30) {
+                    scores[`${courseId}`] = 'BAD'
+                } else if (scoreArr[cnt] < 60) {
+                    scores[`${courseId}`] = 'NOT BAD'
+                } else if (scoreArr[cnt] < 80) {
+                    scores[`${courseId}`] = 'GOOD'
+                } else {
+                    scores[`${courseId}`] = 'VERY GOOD'
+                }
+                cnt++
+            })
+            this.scores = scores
+            console.log(this.scores)
+
+        },
+        getCourse() {
+            this.courseId = this.$cookies.get('coaching-list')   
+            axios.get(this.SERVER_URL + `/api/aicoach/list/${this.courseId}`)
+            .then(res => {
+                //코스 이름과 코스 리스트 save
+                this.courseName = res.data.courseName
+                
+                const Course =  res.data.course.split(',') 
+                const filteredCourse =  []
+                Course.forEach(function(courseId){
+                    if (courseId < 1000){
+                        filteredCourse.push(courseId)
+                    }
+                })
+                this.course = filteredCourse
+                this.createLineLabels()
+                this.createDougnutData()
+                this.getScores()
+                //
+            })
+            .catch(err => {
+                console.error(err)
+            })
         },
         createLineLabels() { //라벨 - 동작이름들
             const lineLabels = []
@@ -60,49 +118,36 @@ export default {
             this.$cookies.set('lineLabelStr',lineLabelStr) 
         },
         createDougnutData() { //data - 태그별 카운트 
-            const dougnutdata = [0,0,0,0,0,0,0]
             this.course.forEach(function (poseID){
                 this.posefiles[poseID].tag.forEach(function(tag){
                     // console.log(tag,this.dougnutdata)
-                    if (tag === '전신') {
-                        dougnutdata[0] ++       
-                    }
-                    else if (tag === '팔') {
-                        dougnutdata[1] ++
+                    if (tag === '팔') {
+                        this.dougnutdata[0] ++       
                     }
                     else if (tag === '다리') {
-                        dougnutdata[2] ++
+                        this.dougnutdata[1] ++
                     }
                     else if (tag === '복근') {
-                        dougnutdata[3] ++
+                        this.dougnutdata[2] ++
+                    }
+                    else if (tag === '척추') {
+                        this.dougnutdata[3] ++
+                    }
+                    else if (tag === '전신') {
+                        this.dougnutdata[4] ++
                     }
                     else if (tag === '에너지') {
-                        dougnutdata[4] ++
-                    }
+                        this.dougnutdata[5] ++
+                    } 
                     else if (tag === '릴렉싱') {
-                        dougnutdata[5] ++
+                        this.dougnutdata[6] ++
                     } 
-                    else if (tag === '척추') {
-                        dougnutdata[6] ++
-                    } 
-                })         
+                }.bind(this))         
             }.bind(this))
-            const dougnutdataStr = dougnutdata.join(',')
+            const dougnutdataStr = this.dougnutdata.join(',')
             this.$cookies.set('dougnutdataStr',dougnutdataStr)
         },
-        getCourse() {
-            this.courseId = this.$cookies.get('coaching-list')   
-            axios.get(this.SERVER_URL + `/api/aicoach/list/${this.courseId}`)
-            .then(res => {
-                console.log("result에서 axios 성공",res)
-                //코스 이름과 코스 리스트 save
-                this.courseName = res.data.courseName
-                this.course = res.data.course.split(',') 
-                console.log(this.course)
-                //
-            })
-            .catch(err => console.error(err))
-        },
+        
         saveResult() {
             //오늘 날짜
             const startDateTime = new Date();
@@ -112,7 +157,7 @@ export default {
             const tagCounting = this.dougnutdata.join(',')
            
             //db에 오늘날짜, 경과시간,부위별 태그횟수 보내서 저장
-            axios.post(this.SERVER_URL + `/api/aicoach/result/${this.courseId}`,
+            axios.post(this.SERVER_URL + `/api/aicoach/result`,
                 { 'headers': { 'auth-token': window.$cookies.get('auth-token')},
                 'totalTime' : totalTime, 
                 'startDateTime': startDateTime, 

@@ -48,7 +48,7 @@ public class AicoachController {
 	
 	// test용
 	@ApiOperation(value = "유저의 코스결과를 보낸다.", response = String.class)
-	@GetMapping(value="/result")
+	@PostMapping(value="/result")
 	public ResponseEntity<String> showResult(@RequestBody Map<String, Object> courseData) throws Exception {
 		Map<String, String> headers = (Map<String, String>)courseData.get("headers");
     	String token = headers.get("auth-token");

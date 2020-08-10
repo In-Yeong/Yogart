@@ -3,14 +3,14 @@
         <div id="AI"  v-if="!loading">
             <h1>AI Coaching Service</h1>
 
-            <h5>{{cur+1}}번째 동작 :{{course[cur]}}</h5>
+            <h5>{{cur+1}}번째 동작 :{{course[cur].korean_pose_name}}</h5>
             <button v-if="startBtn" class="w3-btn w3-round-xlarge w3-red w3-xlarge m-5" type="button" @click="clickStart()">Get Start!</button>
         </div>
        
         <div id="loading" v-if="loading">
         <!-- <div id="loading" v-if="true"> -->
             <h3 class="m-5">AI 요가 코칭 서비스를 시작합니다</h3>
-            <p>{{cur+1}}번째 동작 :{{course[cur]}}</p>
+            <p>{{courseName}} 코스 준비중</p>
     
             <i class="fa fa-spinner fa-pulse fa-5x fa-fw m-5" ></i>
             <span class="sr-only">Loading...</span>
@@ -34,12 +34,8 @@
             <div class="col-4">
                 <div><canvas id="canvas"></canvas></div>
                 <div id="label-container"></div>
-                <div v-if="flag"> 
-                    <!-- <i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i> -->
-                    <span class="sr-only">Refreshing...</span>
-                
-                    
-                </div>
+                <h2 id="good">GOOD</h2>
+                <h2 id="bad">BAD</h2>
             </div>
             <div class="col-4 coaching-data" id="coaching-data">
                 <div class="watch m-5">{{ watchMin }}:{{ watchSec}}</div>
@@ -54,6 +50,7 @@
 </template>
 
 <script>
+    import axios from 'axios'
     import '@tensorflow/tfjs'
     import * as tmPose from "@teachablemachine/pose"
     import posefiles from "../../public/json"
@@ -65,12 +62,14 @@
         name : 'Yoga1',
         data() {
             return{
+                SERVER_URL: this.$store.state.SERVER_URL,
                 startBtn : true,
                 loading : false,
                 aiPage : false,
                 startTime : true,
                 endTime : true,
                 requestId : undefined,
+                // course : this.$cookies.get('course').split(','),
                 course : [1,2,3],
                 courseName : 'courseName',
                 cur : 0,
@@ -88,17 +87,45 @@
                 watchSec: '00',
                 poseTimes: [],
                 scores:[],
+                SERVER_URL : this.$store.state.SERVER_URL
 
 
             }
         },
         mounted(){
-            this.calculateScores()
+            this.getCourse()
+            document.getElementById('good').style.display= 'none'
+            document.getElementById('bad').style.display= 'none'
         },
         beforeDestroy() {
-            window.location.reload();
+            window.location.reload()
         },
         methods: {
+             getCourse() {
+                const courseID = this.$cookies.get('coaching-list')   
+                console.log('코스아이디', courseID)
+                axios.get(this.SERVER_URL + `/api/aicoach/list/${courseID}`)
+                .then(res => {
+                    console.log("result에서 axios 성공",res)
+                    //코스 이름과 코스 리스트 save
+                    this.courseName = res.data.courseName
+                    
+                    const Course =  res.data.course.split(',') 
+                    const filteredCourse =  []
+                    Course.forEach(function(courseID){
+                        if (courseID !== "1000"){
+                            filteredCourse.push(courseID)
+                        }
+                    })
+                    this.course = filteredCourse
+                    console.log(this.course)
+                    //
+                })
+                .catch(err => {
+                    this.course = [2,7,11]
+                    console.error(err)
+                })
+            },
             calculateScores() {
                 console.log(this.poseTimes,this.scores)
                 this.poseTimes.forEach(function(poseTime){
@@ -143,6 +170,7 @@
                     var t = this.watch-this.watchStamp
                     this.poseTimes.push(t)
                     const runTime = this.watchMin+'.'+this.watchSec
+                    this.calculateScores()
                     console.log(this.startDateTime.getDate() )
                     this.$cookies.set('resultScores', this.scores.join("."))
                     this.$cookies.set('resultPoseTimes', this.poseTimes.join("."))
@@ -256,20 +284,26 @@
 
                 // Rule : class1은 항상 요가포즈, class2는 에러, class3은 
                 for (let i = 0; i < maxPredictions; i++) {
+                    document.getElementById('label-container').firstChild.style.display = 'none'
                     //90퍼이상 일치하는 동작의 클래스명을 보여준다.
                     if (prediction[i].probability.toFixed(2) >= 0.9){
                         labelContainer.childNodes[0].innerHTML = prediction[i].className;
                         //만약 제대로된 요가동작이 인식되면 밑에 카운트 시작 메세지가 같이 뜬다
                         if (prediction[i].className === String(this.course[this.cur]) && !this.flag ) {
                             this.flag = true;
+                            document.getElementById('good').style.display = 'inline'
+                            document.getElementById('bad').style.display = 'none'
                             console.log(this.flag,this.seconds)
                             this.seconds = 30;
                             this.counter = setInterval(this.incrementSeconds,1000)  
                         
                         } else if (prediction[i].className === String(this.course[this.cur])) {
+                            document.getElementById('good').style.display = 'inline'
+                            document.getElementById('bad').style.display = 'none'
                             this.restart()
                         } else {
-                            labelContainer.childNodes[1].innerHTML = ""
+                            document.getElementById('good').style.display = 'none'
+                            document.getElementById('bad').style.display = 'inline'
                             this.stop()
                         }
                      }                    
@@ -282,19 +316,16 @@
                 if (webcam.canvas) {
                     ctx.drawImage(webcam.canvas, 0, 0);
                     // draw the keypoints and skeleton
-                    if (pose) {
-                        const minPartConfidence = 0.5;
-                        tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
-                        tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
-                    }
+                    // if (pose) {
+                    //     const minPartConfidence = 0.5;
+                    //     tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
+                    //     tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
+                    // }
                 }
             }
         }
  
     }
-    window.onbeforeunload = function () {
-	console.log('out!')
-};
 
 
   
