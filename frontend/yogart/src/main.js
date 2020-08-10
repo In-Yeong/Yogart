@@ -6,7 +6,10 @@ import VueCookies from 'vue-cookies'
 import LoginModal from './components/login/LoginModal.vue'
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
 import { required, email, min } from 'vee-validate/dist/rules'
-import CKEditor from '@ckeditor/ckeditor5-vue'
+import 'codemirror/lib/codemirror.css';
+import '@toast-ui/editor/dist/toastui-editor.css';
+
+import { Editor } from '@toast-ui/vue-editor';
 
 // for google login
 // import GAuth from 'vue-google-oath2'
@@ -14,7 +17,7 @@ import CKEditor from '@ckeditor/ckeditor5-vue'
 
 Vue.config.productionTip = false
 Vue.use(VueCookies)
-Vue.use(CKEditor)
+Vue.use(Editor)
 
 Vue.component(LoginModal.name, LoginModal)
 Vue.component('ValidationObserver', ValidationObserver)

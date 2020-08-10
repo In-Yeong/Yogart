@@ -1,5 +1,12 @@
 package com.ssafy.yogart.user.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.yogart.user.model.KakaoLoginRequest;
 import com.ssafy.yogart.user.model.Result;
@@ -194,4 +202,45 @@ public class UserController {
     public void withdraw(@RequestHeader String authorization) {
         userService.withdraw(authorization);
     }
+    
+    @ApiOperation(value="이미지 업로드")
+    @PostMapping(value = "/imageUpload")
+    public ResponseEntity<Result> imageUpload(@RequestParam("files") MultipartFile[] files, HttpServletRequest request) {
+;
+    	System.out.println(files.length);
+    	ResponseEntity<Result> response;
+    	for(MultipartFile file : files)
+    	{
+    		String fileName = file.getOriginalFilename();
+    		System.out.println(fileName);
+//    		File dest = new File(request.getServletContext().getRealPath("/") + fileName);
+    		System.out.println(request.getServletContext().getRealPath("/"));
+    		try {
+				save(file, request.getServletContext().getRealPath("/uploadData"));
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+				e.printStackTrace();
+			}
+    	}
+    	Result result = Result.successInstance();
+    	response = new ResponseEntity<>(result, HttpStatus.OK);
+    	return response;
+    }
+    
+    private String save(MultipartFile file, String contextPath) {
+        try {
+           SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+           String newFileName = simpleDateFormat.format(new Date()) + file.getOriginalFilename();
+           byte[] bytes = file.getBytes();
+           //윈도우에서는 폴더가 없으면 생성이안됨
+           Path path = Paths.get(contextPath + newFileName);
+           Files.write(path,bytes);
+           return newFileName; 
+           
+        } catch (Exception e) {
+        	e.printStackTrace();
+           return null;
+        }
+     }
 }

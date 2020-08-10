@@ -1,6 +1,6 @@
 <template>
     <div class="timeGraph">
-        <h1>부위별 트레이닝 횟수</h1>
+        <h1>태그별 트레이닝 횟수</h1>
         <div class="wrapper">
             <canvas id="bodyChart"></canvas>
         </div>
@@ -26,16 +26,17 @@
             var ctx = document.getElementById('bodyChart').getContext("2d");
 
             var birdsData = {
-            labels: ["허리", "복부", "종아리", "허벅지", "팔", "등"],
+            labels: ["척추", "복근", "팔", "다리", "전신", "에너지", "릴렉싱"],
             datasets: [{
-                data: [10, 7, 3, 9, 2, 6],  // 데이터 들어가는 부분
+                data: [10, 7, 5, 3, 9, 2, 6],  // 데이터 들어가는 부분
                 backgroundColor: [
                 "rgba(255, 0, 0, 0.5)",
                 "rgba(100, 255, 0, 0.5)",
                 "rgba(200, 50, 255, 0.5)",
                 "rgba(0, 100, 255, 0.5)",
                 "rgba(255, 100, 0, 0.5)",
-                "rgba(100, 100, 0, 0.5)"
+                "rgba(100, 100, 0, 0.5)",
+                "rgba(100, 200, 150, 0.5)"
                 ]
             }]
             };

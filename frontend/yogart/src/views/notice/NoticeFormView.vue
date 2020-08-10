@@ -2,7 +2,7 @@
     <div class="NoticeFormView">
         <h1 class="m-5">공지사항 작성 페이지</h1>
         <div id="app">
-            <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+            <!-- <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor> -->
         </div>
         <button @click="test()">test</button>
 
@@ -13,8 +13,7 @@
 // @ is an alias to /src
 import axios from 'axios'
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
-const API_URL = 'http://127.0.0.1:8000'
+// import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 
 export default {
     name: 'NoticeFormView',
@@ -24,8 +23,8 @@ export default {
             editorData: '',
             editorConfig: {
                 // The configuration of the editor.
-            }
-
+            },
+            SERVER_URL: this.$store.state.SERVER_URL,
         }
     },
     methods: {

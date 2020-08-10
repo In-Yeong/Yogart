@@ -4,7 +4,7 @@
         <img class="user-profile m-3" :src="require('@/assets/Hedgehog.jpg')">
         <div class="d-flex flex-column mt-3" >
             <div class="d-flex mb-5" >
-                <h5>승희</h5>
+                <h5>{{ userName }}</h5>
                 <div class="d-flex">
                     
                     <router-link to="/mypage/update" class="w3-button w3-black w3-tiny update">회원정보 수정</router-link>
@@ -22,6 +22,14 @@
 <script>
 export default {
     name : 'UserProfile',
+    data() {
+        return {
+            userName: this.$store.state.userNickname
+        }
+    },
+    mounted() {
+        // console.log(this.$store.state.userNickname)
+    }
 }
 </script>
 

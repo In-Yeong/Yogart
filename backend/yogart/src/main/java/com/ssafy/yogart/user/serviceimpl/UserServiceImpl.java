@@ -50,7 +50,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User authentication(String token) {
     	if(jwtService.isUsable(token)) {
-    		System.out.println("123");
 //    		Map<String, Object> result = jwtService.get(token);
     		User userTemp = jwtService.get(token);
 //    		User user = userRepository.findByUserEmailAndUserPassword((String)result.get("UserEmail")
