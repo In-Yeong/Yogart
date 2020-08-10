@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.yogart.user.model.KakaoLoginRequest;
+import com.ssafy.yogart.user.model.KakaoPaymentApproval;
 import com.ssafy.yogart.user.model.KakaoPaymentReady;
 import com.ssafy.yogart.user.model.Result;
 import com.ssafy.yogart.user.model.User;
@@ -57,6 +59,8 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+    
+    private static int RECENT_TOTAL_AMOUNT;
     
     //로그인
     @ApiOperation(value = "로그인")
@@ -222,9 +226,11 @@ public class UserController {
     
     @ApiOperation(value="스푼 결제")
     @PostMapping(value = "/pay")
-    public ResponseEntity<KakaoPaymentReady> chargeSpoon(@RequestHeader String authorization, @RequestParam String quantity, 
-    		@RequestParam String price)
-    {
+    public ResponseEntity<KakaoPaymentReady> chargeSpoon(@RequestHeader String authorization, 
+    		@RequestBody Map<String, Integer> purchaseData) {
+    	
+    	int quantity = purchaseData.get("quantity");
+    	int price = purchaseData.get("price");
     	User currentUser = userService.authentication(authorization);
     	String userNickname = currentUser.getUserNickname();
     	KakaoPaymentReady paymentInfo = null;
@@ -233,6 +239,30 @@ public class UserController {
     	try {
 			paymentInfo = kakaoService.kakaoPayReady(userNickname, quantity, price);
 			response = new ResponseEntity<>(paymentInfo, HttpStatus.OK);
+		} catch (Exception e) {
+			response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+    	
+    	RECENT_TOTAL_AMOUNT = price;
+    	return response;
+    }
+    
+    @ApiOperation(value="스푼 결제 승인 정보")
+    @PostMapping(value = "/paymentSuccess")
+    public ResponseEntity<KakaoPaymentApproval> paymentSuccess(@RequestHeader String authorization, 
+    		@RequestBody Map<String, String> paymentData) {
+    	
+    	String tID = paymentData.get("t_id");
+    	String pgToken = paymentData.get("pg_token");
+    	User currentUser = userService.authentication(authorization);
+    	String userNickname = currentUser.getUserNickname();
+    	KakaoPaymentApproval approvalInfo = null;
+    	ResponseEntity<KakaoPaymentApproval> response;
+    	
+    	try {
+			approvalInfo = kakaoService.kakaoPaySuccess(userNickname, tID, pgToken, RECENT_TOTAL_AMOUNT);
+			response = new ResponseEntity<>(approvalInfo, HttpStatus.OK);
 		} catch (Exception e) {
 			response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 			e.printStackTrace();

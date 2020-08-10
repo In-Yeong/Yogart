@@ -21,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.ssafy.yogart.user.model.KakaoPaymentApproval;
 import com.ssafy.yogart.user.model.KakaoPaymentReady;
 import com.ssafy.yogart.user.service.KakaoService;
 
@@ -164,7 +165,7 @@ public class KakaoServiceImpl implements KakaoService {
 	}
 
 	@Override
-	public KakaoPaymentReady kakaoPayReady(String userNickname, String quantity, String price) throws Exception {
+	public KakaoPaymentReady kakaoPayReady(String userNickname, int quantity, int price) throws Exception {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders header = new HttpHeaders();
@@ -181,8 +182,8 @@ public class KakaoServiceImpl implements KakaoService {
         parameters.add("partner_order_id", "1001");
         parameters.add("partner_user_id", userNickname);
         parameters.add("item_name", "스푼");
-        parameters.add("quantity", quantity.toString());
-        parameters.add("total_amount", price.toString());
+        parameters.add("quantity", String.valueOf(quantity));
+        parameters.add("total_amount", String.valueOf(price));
         parameters.add("tax_free_amount", "0");
         parameters.add("approval_url", "http://localhost:3000/kakaoPay/Success");
         parameters.add("cancel_url", "http://localhost:3000/kakaoPay/Cancel");
@@ -195,5 +196,29 @@ public class KakaoServiceImpl implements KakaoService {
         System.out.println(kakaoPaymentReady);
  
 		return kakaoPaymentReady;
+	}
+
+	@Override
+	public KakaoPaymentApproval kakaoPaySuccess(String userNickname, String tID, String pgToken, int totalAmount) throws Exception {
+
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders header = new HttpHeaders();
+		KakaoPaymentApproval kakaoPaymentApproval;
+		
+        header.add("Authorization", "KakaoAK " + KAKAO_PAY_ADMIN_KEY);
+        header.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+        header.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
+        
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+        params.add("cid", "TC0ONETIME");
+        params.add("tid", tID);
+        params.add("partner_order_id", "1001");
+        params.add("partner_user_id", userNickname);
+        params.add("pg_token", pgToken);
+        params.add("total_amount", String.valueOf(totalAmount));
+        
+        HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, header);
+        kakaoPaymentApproval = restTemplate.postForObject(new URI(KAKAO_PAY_HOST+ "/v1/payment/approve"), body, KakaoPaymentApproval.class);
+        return kakaoPaymentApproval;        
 	}
 }
