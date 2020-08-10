@@ -52,7 +52,7 @@ export default {
                     this.$store.commit('storeLogin')
                     this.$router.push({name: 'Home'})
                } else if (response.data.statusCode === 403) {
-                   if (response.data.result === 'email') {
+                   if (response.data.message === 'email') {
                        alert('중복된 이메일입니다.')
                    } else {
                        alert('중복된 닉네임입니다.')
