@@ -158,7 +158,23 @@ public class UserController {
     					+ username + ", " 
     					+ nickname + ", " 
     					+ password);
-    	userService.join(email, username, nickname, password);
+    	
+    	User emailCheck = userService.emailChk(user.getUserEmail());
+    	User nicknameCheck = userService.nicknameChk(user.getUserNickname());
+    	if(emailCheck != null && nicknameCheck != null) {
+    		result.setMessage("email/nickname");
+    		result.setStatusCode(HttpStatus.FORBIDDEN);
+    		return new ResponseEntity<Result>(result, HttpStatus.FORBIDDEN);
+    	}else if(emailCheck != null) {
+    		result.setMessage("email");
+    		result.setStatusCode(HttpStatus.FORBIDDEN);
+    		return new ResponseEntity<Result>(result, HttpStatus.FORBIDDEN);
+    	}else if(nicknameCheck != null) {
+    		result.setMessage("nickname");
+    		result.setStatusCode(HttpStatus.FORBIDDEN);
+    		return new ResponseEntity<Result>(result, HttpStatus.FORBIDDEN);
+    	}
+    	userService.join(email, username, nickname, password);    	
     	String token = jwtService.create("user", user, email);
 		System.out.println(token);
 		result.setToken(token);
