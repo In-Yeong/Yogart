@@ -22,6 +22,11 @@ import YogaPosePage from '../views/coaching/YogaPosePage.vue'
 import ClassSetting from '../components/teacher/ClassSetting.vue'
 import TeacherPage from '../views/teacher/TeacherPage.vue'
 import SpoonPurchase from '../views/spoon/SpoonPurchase.vue'
+import PayComplete from '../views/kakaopay/PayComplete.vue'
+import PayCancel from '../views/kakaopay/PayCancel.vue'
+import PayFail from '../views/kakaopay/PayFail.vue'
+
+
 
 const requireAuth = () => (from, to, next) => {
     // console.log(store.state.isLogin)
@@ -42,6 +47,22 @@ const requireAdmin = () => (from, to, next) => {
 Vue.use(VueRouter)
 
 const routes = [
+    // 카카오 페이 callback
+    {
+        path: '/kakaoPay/Success',
+        name: 'PayComplete',
+        component: PayComplete
+    },
+    {
+        path: '/kakaoPay/Cancel',
+        name: 'PayCancel',
+        component: PayCancel
+    },
+    {
+        path: '/kakaoPay/Fail',
+        name: 'PayFail',
+        component: PayFail
+    },
     {
         path: '/spoons',
         name: 'SpoonPurchase',

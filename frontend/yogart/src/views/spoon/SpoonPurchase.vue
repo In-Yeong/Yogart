@@ -39,9 +39,7 @@ export default {
             axios.post(this.SERVER_URL + '/api/users/pay', purchaseData, requestHeaders)
             .then(res => {
                 // 카카오페이 결제창 오픈
-                // console.log(res.data.next_redirect_pc_url)
                 window.open(res.data.next_redirect_pc_url)
-                
             })
             .catch(err => console.error(err))
         }

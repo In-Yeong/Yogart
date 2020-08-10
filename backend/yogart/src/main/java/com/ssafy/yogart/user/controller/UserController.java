@@ -61,6 +61,7 @@ public class UserController {
     }
     
     private static int RECENT_TOTAL_AMOUNT;
+    private static String RECENT_TID;
     
     //로그인
     @ApiOperation(value = "로그인")
@@ -239,12 +240,13 @@ public class UserController {
     	try {
 			paymentInfo = kakaoService.kakaoPayReady(userNickname, quantity, price);
 			response = new ResponseEntity<>(paymentInfo, HttpStatus.OK);
+			RECENT_TOTAL_AMOUNT = price;
+			RECENT_TID = paymentInfo.getTid();
 		} catch (Exception e) {
 			response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 			e.printStackTrace();
 		}
     	
-    	RECENT_TOTAL_AMOUNT = price;
     	return response;
     }
     
@@ -253,15 +255,14 @@ public class UserController {
     public ResponseEntity<KakaoPaymentApproval> paymentSuccess(@RequestHeader String authorization, 
     		@RequestBody Map<String, String> paymentData) {
     	
-    	String tID = paymentData.get("t_id");
-    	String pgToken = paymentData.get("pg_token");
+    	String pgToken = paymentData.get("pgToken");
     	User currentUser = userService.authentication(authorization);
     	String userNickname = currentUser.getUserNickname();
     	KakaoPaymentApproval approvalInfo = null;
     	ResponseEntity<KakaoPaymentApproval> response;
     	
     	try {
-			approvalInfo = kakaoService.kakaoPaySuccess(userNickname, tID, pgToken, RECENT_TOTAL_AMOUNT);
+			approvalInfo = kakaoService.kakaoPaySuccess(userNickname, RECENT_TID, pgToken, RECENT_TOTAL_AMOUNT);
 			response = new ResponseEntity<>(approvalInfo, HttpStatus.OK);
 		} catch (Exception e) {
 			response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
