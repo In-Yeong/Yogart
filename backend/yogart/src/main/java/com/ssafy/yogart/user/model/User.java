@@ -41,7 +41,7 @@ public class User implements Serializable {
     @ApiModelProperty(value="이름")
     private String userName;
    
-    @Column(name="user_nickname")
+    @Column(name="user_nickname", unique = true)
     @ApiModelProperty(value="닉네임")
     private String userNickname;
     
