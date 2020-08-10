@@ -1,7 +1,5 @@
 package com.ssafy.yogart.user.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.yogart.user.model.KakaoLoginRequest;
+import com.ssafy.yogart.user.model.KakaoPaymentReady;
 import com.ssafy.yogart.user.model.Result;
 import com.ssafy.yogart.user.model.User;
 import com.ssafy.yogart.user.service.JwtService;
@@ -209,7 +208,7 @@ public class UserController {
 //    		File dest = new File(request.getServletContext().getRealPath("/") + fileName);
     		System.out.println(request.getServletContext().getRealPath("/"));
     		try {
-				save(file, request.getServletContext().getRealPath("/uploadData"));
+				save(file, request.getServletContext().getRealPath("/"));
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -218,6 +217,27 @@ public class UserController {
     	}
     	Result result = Result.successInstance();
     	response = new ResponseEntity<>(result, HttpStatus.OK);
+    	return response;
+    }
+    
+    @ApiOperation(value="스푼 결제")
+    @PostMapping(value = "/pay")
+    public ResponseEntity<KakaoPaymentReady> chargeSpoon(@RequestHeader String authorization, @RequestParam String quantity, 
+    		@RequestParam String price)
+    {
+    	User currentUser = userService.authentication(authorization);
+    	String userNickname = currentUser.getUserNickname();
+    	KakaoPaymentReady paymentInfo = null;
+    	ResponseEntity<KakaoPaymentReady> response;
+    	
+    	try {
+			paymentInfo = kakaoService.kakaoPayReady(userNickname, quantity, price);
+			response = new ResponseEntity<>(paymentInfo, HttpStatus.OK);
+		} catch (Exception e) {
+			response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+    	
     	return response;
     }
     
