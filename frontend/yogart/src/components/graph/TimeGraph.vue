@@ -18,6 +18,9 @@
             return {
             }
         },
+        props: {
+            time: Object,
+        },
         mounted () {
         this.fillData()
         },

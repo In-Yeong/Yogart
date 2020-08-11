@@ -1,8 +1,8 @@
 <template>
     <div class="GraphView">
-        <TimeGraph/>
-        <CalendarGraph/>
-        <BodyGraph/>
+        <TimeGraph :time="time" />
+        <CalendarGraph :calendar="calendar" />
+        <BodyGraph :body="body" />
     </div>
 </template>
 
@@ -22,19 +22,24 @@ export default {
     },
     data() {
         return {
-            SERVER_URL: this.$store.state.SERVER_URL
+            SERVER_URL: this.$store.state.SERVER_URL,
+            time: null,
+            calendar: null,
+            body: null,
         }
     },
     created() {
-        this.getData()
+      this.getData()  
     },
     methods: {
         getData() {
              axios.get(this.SERVER_URL + `/api/mypage/graph`, { 'headers': { 'auth-token': window.$cookies.get('auth-token') } })
                 .then(res => {
                     console.log(res)
-                    // body1, body2... 부분에는 back에서 받는 태그이름 입력
-                    bodydata = [res.data.wholeBody, res.data.spine, res.data.Abs, res.data.arm, res.data.leg, res.data.relaxing, res.data.energy]
+                    this.time = res.data.timeCount
+                    this.calendar = res.data.attendance
+                    this.body = res.data.tags
+                    console.log(this.body)
                 })
                 .catch(err => {
                     console.error(err)
