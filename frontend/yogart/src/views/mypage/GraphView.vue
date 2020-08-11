@@ -20,12 +20,17 @@ export default {
         CalendarGraph,
         BodyGraph
     },
+    data() {
+        return {
+            SERVER_URL: this.$store.state.SERVER_URL
+        }
+    },
     created() {
-        getData()
+        this.getData()
     },
     methods: {
         getData() {
-             axios.get(this.SERVER_URL + `/api/graph`, { 'headers': { 'auth-token': window.$cookies.get('auth-token') } })
+             axios.get(this.SERVER_URL + `/api/mypage/graph`, { 'headers': { 'auth-token': window.$cookies.get('auth-token') } })
                 .then(res => {
                     console.log(res)
                     // body1, body2... 부분에는 back에서 받는 태그이름 입력
