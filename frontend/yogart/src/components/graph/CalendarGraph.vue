@@ -43,7 +43,6 @@
                     var date = e[0].split('-')
                     var run = e[1]*1
                     this.chartData.push([new Date(date[0]*1, date[1]*1, date[2]*1), run])
-                    console.log(date)
                 });
             }
         }
