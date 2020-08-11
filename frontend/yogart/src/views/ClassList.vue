@@ -1,6 +1,11 @@
 <template>
     <div class="signupView pb-5">
         <h1 class="py-3">수업 조회</h1>
+        <select name="cars" id="cars" onchange="resorting()">
+            <option value="new">최신순</option>
+            <option value="low">낮은가격순</option>
+            <option value="high">높은가격순</option>
+        </select>
         <div class="border my-3 mx-auto class-box row align-items-center" v-for="yogaClass in yogaList" :key="yogaClass.id">
             <div class="d-inline-block col-2">
                 <img class="user-profile m-3" :src="require('@/assets/Hedgehog.jpg')">
@@ -52,6 +57,9 @@ export default {
         InfiniteLoading
     },
     methods: {
+        resorting(str) {
+            console.log(str)
+        },
         btnClick(classId) {
             console.log(classId)
             // 해당 수업 상세 페이지로 이동
