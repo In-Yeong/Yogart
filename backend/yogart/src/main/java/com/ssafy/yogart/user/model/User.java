@@ -56,11 +56,19 @@ public class User implements Serializable {
     @Column(name="user_authority")
     @ApiModelProperty(value="권한")
     private String userAuthority;
-    
+        
     @CreationTimestamp
     @Column(insertable = false, updatable = false)
     @ApiModelProperty(value="생성일")
     private LocalDateTime createDate;
+    
+    @Column(name="user_profile", columnDefinition = "text")
+    @ApiModelProperty(value="프로필사진")
+    private String userProfile;
+    
+    @Column(name="user_intro", columnDefinition = "text")
+    @ApiModelProperty(value="자기소개")
+    private String userIntro;
     
     public User(String userEmail, String userName, String userNickname, String userPassword) {
     	this.userEmail = userEmail;

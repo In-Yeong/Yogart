@@ -3,6 +3,8 @@ package com.ssafy.yogart.aicoach.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.yogart.aicoach.model.AicoachCourse;
@@ -78,12 +79,11 @@ public class AicoachController {
 
     @ApiOperation(value = "유저가 만든 모든 코스를 보낸다.", response = List.class)
 	@GetMapping(value="/list")
-	public ResponseEntity<List<AicoachCourse>> allMyCourse(@RequestParam String token) throws Exception {
+	public ResponseEntity<List<AicoachCourse>> allMyCourse(HttpServletRequest request) throws Exception {
 		logger.debug("allMyCourse - 호출");
-		System.out.println(token);
+		String token = request.getHeader("auth-token");
 		User user = userService.authentication(token);
-//		String nickname = user.getUserNickname();
-		List<AicoachCourse> mylist = aicoachService.userCourse(user);	
+		List<AicoachCourse> mylist = aicoachService.userCourse(user.getUserNickname());	
 		return new ResponseEntity<List<AicoachCourse>>(mylist, HttpStatus.OK);
 	}
     
