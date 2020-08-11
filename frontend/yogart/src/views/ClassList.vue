@@ -12,18 +12,21 @@
             <div class="d-inline-block col-2">
                 <button class="btn btn-primary" @click="btnClick(yogaClass.id)">신청하기</button>
             </div>
-            
-            
         </div>
+        <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
     </div>
 </template>
 
 <script>
+import InfiniteLoading from 'vue-infinite-loading'
+import axios from 'axios'
 
 export default {
     name: 'ClassList',
     data() {
         return {
+            SERVER_URL: this.$store.state.SERVER_URL,
+            limit: 0,
             yogaList : [{
                 id: 1,
                 name: '상욱쌤과 함께하는 스프링 요가',
@@ -39,16 +42,40 @@ export default {
             },
             {
                 id: 3,
-                name: '상급자 요가 클래스dddddddddddddddddddddddddddddd',
+                name: '상급자 요가 클래스',
                 price: 300,
                 teacher_nickName: '규동도롱'
             }]
         }
     },
+    components: {
+        InfiniteLoading
+    },
     methods: {
         btnClick(classId) {
             console.log(classId)
             // 해당 수업 상세 페이지로 이동
+        },
+        infiniteHandler($state) {
+            axios.get(`${this.SERVER_URL}/api/class/list/${this.limit + 10}`)
+            .then(res => {
+                setTimeout(()=> {
+                    if (res.data.length) {
+                        this.yogaList = this.yogaList.concat(res.data);
+                        $state.loaded();
+                        this.limit += 10
+                        if (this.yogaList.length / 10 === 0){
+                            $state.complete();
+                        }
+                    } else {
+                        $state.complete();
+                    }
+                    
+                }, 500)
+            })
+            .catch(err => {
+                console.log(err)
+            })
         }
 
     },
