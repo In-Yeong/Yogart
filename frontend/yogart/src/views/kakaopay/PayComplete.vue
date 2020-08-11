@@ -34,8 +34,8 @@ export default {
             tid: tid,
             pgToken: pgToken
         }
-        console.log(payData)
-        axios.post(this.SERVER_URL + '/api/users/kakaopay', payData, requestHeaders)
+        console.log(paymentData)
+        axios.post(this.SERVER_URL + '/api/users/paymentSuccess', paymentData, requestHeaders)
         .then(res => {
             console.log(res)
         })

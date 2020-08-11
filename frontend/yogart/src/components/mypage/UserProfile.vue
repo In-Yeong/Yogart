@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="gray d-flex  my-5">
-        <img class="user-profile m-3" :src="require('@/assets/Hedgehog.jpg')">
+        <img class="user-profile m-3" :src="imgSrc">
         <div class="d-flex flex-column mt-3" >
             <div class="d-flex mb-5" >
                 <h5>{{ userName }}</h5>
@@ -24,6 +24,7 @@ export default {
     name : 'UserProfile',
     data() {
         return {
+            imgSrc : "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
             userName: this.$store.state.userNickname
         }
     },

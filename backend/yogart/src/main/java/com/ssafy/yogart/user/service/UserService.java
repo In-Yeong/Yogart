@@ -15,4 +15,5 @@ public interface UserService {
     User updatePassword(String token, String password);
     // 탈퇴
     void withdraw(String token);
+    User updateInfo(User user);
 }
