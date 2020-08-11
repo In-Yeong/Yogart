@@ -27,12 +27,12 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Table(name = "user")
 public class User implements Serializable {
-	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@ApiModelProperty(value="아이디")
+   @Id
+   @Column(name="id")
+   @GeneratedValue(strategy= GenerationType.IDENTITY)
+   @ApiModelProperty(value="아이디")
     private Integer id;
-	
+   
     @Column(name="user_email", unique = true)
     @ApiModelProperty(value="email")
     private String userEmail;
@@ -62,23 +62,35 @@ public class User implements Serializable {
     @ApiModelProperty(value="생성일")
     private LocalDateTime createDate;
     
+<<<<<<< HEAD
     @Column(name="user_profile", columnDefinition="text")
     @ApiModelProperty(value="프로필사진")
     private String userProfile;
     
     @Column(name="user_intro", columnDefinition="text")
+=======
+    @Column(name="user_profile", columnDefinition = "text")
+    @ApiModelProperty(value="프로필사진")
+    private String userProfile;
+    
+    @Column(name="user_intro", columnDefinition = "text")
+>>>>>>> 588971c2fb959c3f1fd5ea2ea1925f657b82bf18
     @ApiModelProperty(value="자기소개")
     private String userIntro;
     
+    @Column(name="user_spoon")
+    @ApiModelProperty(value="잔여스푼")
+    private Integer userSpoon;
+    
     public User(String userEmail, String userName, String userNickname, String userPassword) {
-    	this.userEmail = userEmail;
+       this.userEmail = userEmail;
         this.userName = userName;
         this.userNickname = userNickname;
         this.userPassword = userPassword;
     }
     
     public User(String userEmail, String userName, String userNickname, String userPassword, String loginMethod) {
-    	this.userEmail = userEmail;
+       this.userEmail = userEmail;
         this.userName = userName;
         this.userNickname = userNickname;
         this.userPassword = userPassword;
@@ -86,8 +98,8 @@ public class User implements Serializable {
     }
     
     public User(String userEmail, String userNickname, String loginMethod) {
-    	this.userEmail = userEmail;
-    	this.userName = userNickname;
+       this.userEmail = userEmail;
+       this.userName = userNickname;
         this.userNickname = userNickname;
         this.loginMethod = loginMethod;
     }

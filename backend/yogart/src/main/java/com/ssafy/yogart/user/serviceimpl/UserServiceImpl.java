@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
     // 비밀번호 업데이트
     @Override
-    public User updateInfo(String token, User user) {
+    public User updateInfo(User user) {
         return userRepository.save(user);
     }
 

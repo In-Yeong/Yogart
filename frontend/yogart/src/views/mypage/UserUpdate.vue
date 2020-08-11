@@ -3,6 +3,7 @@
         <div>{{ userName }} 정보 수정</div>
         <img :src="userImageUrl" alt="user profile image">
         <input @change="fileChange" type="file" ref="userImage" id="user-image" accept=".jpg, .jpeg, .png">
+        <button @click="imageSubmit" class="btn btn-primary mt-4 col-12">프로필 사진 변경</button>
 
         <div class="container d-flex justify-content-center text-left">
             <div class="d-block">
@@ -94,6 +95,22 @@ export default {
             }
             this.userImage = this.$refs.userImage.files[0]
         },
+        imageSubmit(e) {
+            const requestHeaders = {
+                headers: {
+                    Authorization: this.$cookies.get('auth-token'),
+                    'Content-Type' : 'multipart/form-data',
+                }
+            }
+            let fd = new FormData()
+            fd.append('userImage', this.userImage)
+            axios.post(this.SERVER_URL + '/api/users/profileUpload', fd, requestHeaders)
+            .then(res => {
+                console.log(res)
+                alert('변경이 완료되었습니다.')
+            })
+            .catch(err => console.error(err))
+        }
     },
 }
 </script>
