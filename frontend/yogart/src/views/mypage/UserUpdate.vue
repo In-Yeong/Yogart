@@ -31,7 +31,9 @@
             <div class="d-block text-center">
                 <h3>{{ ment }}</h3>
             </div>
-            <b-button class="mt-3" variant="outline-danger" block @click="hideModal">탈퇴</b-button>
+            <b-button v-if="leave" class="mt-3" variant="outline-info" block @click="cancelDelete">남는다</b-button>
+            <b-button v-if="leave" class="mt-3" variant="outline-danger" block @click="hideModal">떠난다</b-button>
+            <b-button v-if="stay" class="mt-3" variant="outline-info" block @click="stayHere">그래</b-button>
         </b-modal>
     </div>
 </template>
@@ -52,6 +54,8 @@ export default {
             SERVER_URL: this.$store.state.SERVER_URL,
             ment: "진짜 탈퇴를 원하시나요?",
             confirm: 0,
+            leave: true,
+            stay: false,
         }
     },
     create() {
@@ -78,6 +82,20 @@ export default {
             // alert()
             // alert()
             //회원 탈퇴 내용 넣어야
+        },
+        stayHere() {
+            this.$refs['my-modal'].hide()
+            this.ment = "진짜 탈퇴를 원하시나요?"
+            this.leave = true
+            this.stay = false
+        },
+        cancelDelete() {
+            this.$refs['my-modal'].hide()
+            this.stay = true
+            this.leave = false
+            this.confirm = 0
+            this.ment = "더 건강한 서비스로 보답하겠습니다. 감사합니다."
+            this.$refs['my-modal'].show()
         },
         hideModal(){
             if (this.confirm === 0) {
