@@ -21,6 +21,7 @@
                     </div>
                 </div>
                 <button @click="update" class="btn btn-primary mt-4 col-12">수정</button>
+                <a class="my-3" style="color : red; text-decoration : underline;" @click="withdrawl">회원 탈퇴를 원하시나요?</a>
             </div> 
         </div>
     </div>
@@ -60,6 +61,12 @@ export default {
         .catch(err => console.error(err))
     },
     methods: {
+        withdrawl() {
+            alert("진짜 탈퇴를 원하시나요?")
+            alert("진짜 진짜로 ( ˃̣̣̥᷄⌓˂̣̣̥᷅ ) ???")
+            alert("알겠습니다.. 보내드릴게요... 아프지말고... 건강하고...잘 가요.")
+            //회원 탈퇴 내용 넣어야
+        },
         update() {
             const requestHeaders = {
                 headers: {
@@ -111,5 +118,8 @@ input {
     border-width: 0.1rem;
     padding: 0.5rem;
     background-color: white;
+}
+a:hover {
+    cursor:pointer;
 }
 </style>
