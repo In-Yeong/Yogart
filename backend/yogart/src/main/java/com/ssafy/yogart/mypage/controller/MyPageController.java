@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,17 +44,21 @@ public class MyPageController {
 
 	@ApiOperation(value = "그래프 기록 데이터를 보낸다", response = GraphResult.class)
 	@GetMapping(value="/graph")
-	public ResponseEntity<GraphResult> showResult(@RequestBody Map<String, Object> courseData) throws Exception {
-		Map<String, String> headers = (Map<String, String>)courseData.get("headers");
-		String token = headers.get("auth-token");
+	public ResponseEntity<GraphResult> showResult(HttpServletRequest request) throws Exception {
+//		Map<String, String> headers = (Map<String, String>)courseData.get("headers");
+//		String token = headers.get("auth-token");
+		String token = request.getHeader("auth-token");
 		System.out.println(token);
 		User user = userService.authentication(token);
 		GraphBodyPart tags = myPageService.showTagGraph(user);
+		System.out.println(1);
 		List<GraphTime> attendance = myPageService.showattendance(user);
+		System.out.println(2);
 		GraphResult result = new GraphResult();
 		Map<Integer, Integer> timeCount = result.getTimeCount();
 		for(int i = 0; i < attendance.size(); i++) {
 			int hour = attendance.get(i).getGraphDateTime().getHour();
+			System.out.println(hour);
 			int value = timeCount.get(hour) + 1;
 			timeCount.put(hour, value);
 		}

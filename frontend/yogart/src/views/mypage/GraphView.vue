@@ -34,7 +34,7 @@ export default {
                 .then(res => {
                     console.log(res)
                     // body1, body2... 부분에는 back에서 받는 태그이름 입력
-                    // bodydata = [res.data.spine, res.data.Abs, res.data.arm, res.data.leg, res.data.body5, res.data.body6, res.data.body7]
+                    bodydata = [res.data.wholeBody, res.data.spine, res.data.Abs, res.data.arm, res.data.leg, res.data.relaxing, res.data.energy]
                 })
                 .catch(err => {
                     console.error(err)

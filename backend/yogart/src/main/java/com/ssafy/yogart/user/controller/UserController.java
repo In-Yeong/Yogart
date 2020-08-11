@@ -209,7 +209,7 @@ public class UserController {
     	String nickname = content.getUserNickname();
     	String password = content.getUserPassword();
     	User user = new User(email, username, nickname, password);
-        return userService.updateInfo(token, user);
+        return userService.updateInfo(user);
     }
 
     // 탈퇴
