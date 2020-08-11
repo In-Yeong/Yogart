@@ -23,12 +23,13 @@
         },
         methods: {
         fillData () {
+            var bodydata = [0,0,0,0,0,0,0]
             var ctx = document.getElementById('bodyChart').getContext("2d");
 
             var birdsData = {
             labels: ["척추", "복근", "팔", "다리", "전신", "에너지", "릴렉싱"],
             datasets: [{
-                data: [10, 7, 5, 3, 9, 2, 6],  // 데이터 들어가는 부분
+                data: bodydata,  // 데이터 들어가는 부분
                 backgroundColor: [
                 "rgba(255, 0, 0, 0.5)",
                 "rgba(100, 255, 0, 0.5)",
