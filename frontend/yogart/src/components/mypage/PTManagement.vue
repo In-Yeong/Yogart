@@ -22,9 +22,9 @@
             <div v-for="todayCourse in todayCourses" :key="todayCourse.courseID">{{}} | 
               <tr>
                 <!-- <th scope="row">1</th> -->
-                <td>{{todayCourse.teacherName}}</td>
-                <td>{{todayCourse.courseName}}</td>
-                <td>{{todayCourse.courseDate}}</td>
+                <td>{{todayCourse.ptClickedName.ptTeacherId.userNickname}}</td>
+                <td>{{todayCourse.ptClickedName}}</td>
+                <td>{{todayCourse.dateTime}}</td>
                 <td><button class="w3-bar-item w3-button w3-red">입장하기</button></td>
               </tr>
             </div>
@@ -118,7 +118,7 @@ export default {
             Authorization : this.$cookies.get('auth-token')
           }
         }
-        axios.get(this.SERVER_URL + 'api/users/ptlist', RequestHeaders)
+        axios.get(this.SERVER_URL + 'api/mypage/ptlist', RequestHeaders)
         .then(res => {
           console.log("PTManagement 성공",res)
           //과거 pt 기록들 날짜,시간순으로 배열로 넘겨주세요

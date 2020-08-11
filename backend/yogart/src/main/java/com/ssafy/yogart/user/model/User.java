@@ -62,19 +62,11 @@ public class User implements Serializable {
     @ApiModelProperty(value="생성일")
     private LocalDateTime createDate;
     
-<<<<<<< HEAD
     @Column(name="user_profile", columnDefinition="text")
     @ApiModelProperty(value="프로필사진")
     private String userProfile;
     
     @Column(name="user_intro", columnDefinition="text")
-=======
-    @Column(name="user_profile", columnDefinition = "text")
-    @ApiModelProperty(value="프로필사진")
-    private String userProfile;
-    
-    @Column(name="user_intro", columnDefinition = "text")
->>>>>>> 588971c2fb959c3f1fd5ea2ea1925f657b82bf18
     @ApiModelProperty(value="자기소개")
     private String userIntro;
     
