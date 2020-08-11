@@ -51,22 +51,28 @@ export default {
                     this.setCookie(response.data.token)
                     this.$store.commit('storeLogin')
                     this.$router.push({name: 'Home'})
-               } else if (response.data.statusCode === 403) {
-                   if (response.data.message === 'email') {
+               } 
+               else {
+                   console.log(response)
+                   alert('회원가입 실패')
+               }
+            })
+            .catch(err => {
+
+                console.log(err.response)
+                if (err.data.statusCode === 403) {
+                   if (err.data.message === 'email') {
                        alert('이메일이 이미 존재합니다.')
                    } else if (response.data.message === 'nickname') {
                        alert('닉네임이 이미 존재합니다.')
                    } else {
                        alert('이메일과 닉네임이 이미 존재합니다.')
                    }
-               } else {
-                   console.log(response)
-                   alert('회원가입 실패')
-               }
-            })
-            .catch(err => {
-            console.log(err.response)
-            alert('회원가입 실패')
+                }
+                else {  
+                    alert('회원가입 실패')
+                }
+            
             })
         },
         showLoginModal() {
