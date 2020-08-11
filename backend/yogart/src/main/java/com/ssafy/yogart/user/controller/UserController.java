@@ -276,7 +276,7 @@ public class UserController {
 			approvalInfo = kakaoService.kakaoPaySuccess(userNickname, RECENT_TID, pgToken, RECENT_TOTAL_AMOUNT);
 			response = new ResponseEntity<>(approvalInfo, HttpStatus.OK);
 			currentUser.setUserSpoon(currentUser.getUserSpoon() + approvalInfo.getQuantity());
-			userService.updateInfo(currentUser); 
+			userService.updateInfo(currentUser);
 		} catch (Exception e) {
 			response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 			e.printStackTrace();
