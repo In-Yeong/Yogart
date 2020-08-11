@@ -20,8 +20,13 @@ export default {
         CalendarGraph,
         BodyGraph
     },
+    data() {
+        return {
+            SERVER_URL: this.$store.state.SERVER_URL
+        }
+    },
     created() {
-        getData()
+        this.getData()
     },
     methods: {
         getData() {
