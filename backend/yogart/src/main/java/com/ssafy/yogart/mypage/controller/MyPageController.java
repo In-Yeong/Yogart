@@ -40,7 +40,7 @@ public class MyPageController {
 	@Autowired
 	private MyPageService myPageService;
 
-	@ApiOperation(value = "그래프 기록 데이터를 보낸다", response = String.class)
+	@ApiOperation(value = "그래프 기록 데이터를 보낸다", response = GraphResult.class)
 	@GetMapping(value="/graph")
 	public ResponseEntity<GraphResult> showResult(@RequestBody Map<String, Object> courseData) throws Exception {
 		Map<String, String> headers = (Map<String, String>)courseData.get("headers");
