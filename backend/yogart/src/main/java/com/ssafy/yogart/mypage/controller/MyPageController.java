@@ -1,5 +1,8 @@
 package com.ssafy.yogart.mypage.controller;
 
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -14,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.yogart.aicoach.controller.AicoachController;
+import com.ssafy.yogart.mypage.model.GraphBodyPart;
+import com.ssafy.yogart.mypage.model.GraphResult;
+import com.ssafy.yogart.mypage.model.GraphTime;
+import com.ssafy.yogart.mypage.service.MyPageService;
 import com.ssafy.yogart.user.model.User;
 import com.ssafy.yogart.user.service.UserService;
 
@@ -29,17 +36,33 @@ public class MyPageController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private MyPageService myPageService;
 
 	@ApiOperation(value = "그래프 기록 데이터를 보낸다", response = String.class)
 	@GetMapping(value="/graph")
-	public ResponseEntity<String> showResult(@RequestBody Map<String, Object> courseData) throws Exception {
+	public ResponseEntity<GraphResult> showResult(@RequestBody Map<String, Object> courseData) throws Exception {
 		Map<String, String> headers = (Map<String, String>)courseData.get("headers");
 		String token = headers.get("auth-token");
 		System.out.println(token);
 		User user = userService.authentication(token);
-		//
-		String nickname = user.getUserNickname();
-		
-		return new ResponseEntity<String>("응답 어떻게 줄껀지 작성", HttpStatus.OK);
+		GraphBodyPart tags = myPageService.showTagGraph(user);
+		List<GraphTime> attendance = myPageService.showattendance(user);
+		GraphResult result = new GraphResult();
+		Map<Integer, Integer> timeCount = result.getTimeCount();
+		for(int i = 0; i < attendance.size(); i++) {
+			int hour = attendance.get(i).getGraphDateTime().getHour();
+			int value = timeCount.get(hour) + 1;
+			timeCount.put(hour, value);
+		}
+		Map<LocalDate, Integer> attendances = new HashMap<>();
+		for(int i = 0; i < attendance.size(); i++) {
+			attendances.put(LocalDate.from(attendance.get(i).getGraphDateTime()), attendance.get(i).getGraphRunningTime());
+		}
+		result.setTags(tags);
+		result.setAttendance(attendances);
+		result.setTimeCount(timeCount);
+		return new ResponseEntity<GraphResult>(result, HttpStatus.OK);
 	}
 }
