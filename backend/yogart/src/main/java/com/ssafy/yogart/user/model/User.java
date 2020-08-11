@@ -27,12 +27,12 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Table(name = "user")
 public class User implements Serializable {
-	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@ApiModelProperty(value="아이디")
+   @Id
+   @Column(name="id")
+   @GeneratedValue(strategy= GenerationType.IDENTITY)
+   @ApiModelProperty(value="아이디")
     private Integer id;
-	
+   
     @Column(name="user_email", unique = true)
     @ApiModelProperty(value="email")
     private String userEmail;
@@ -70,15 +70,19 @@ public class User implements Serializable {
     @ApiModelProperty(value="자기소개")
     private String userIntro;
     
+    @Column(name="user_spoon")
+    @ApiModelProperty(value="잔여스푼")
+    private Integer userSpoon;
+    
     public User(String userEmail, String userName, String userNickname, String userPassword) {
-    	this.userEmail = userEmail;
+       this.userEmail = userEmail;
         this.userName = userName;
         this.userNickname = userNickname;
         this.userPassword = userPassword;
     }
     
     public User(String userEmail, String userName, String userNickname, String userPassword, String loginMethod) {
-    	this.userEmail = userEmail;
+       this.userEmail = userEmail;
         this.userName = userName;
         this.userNickname = userNickname;
         this.userPassword = userPassword;
@@ -86,8 +90,8 @@ public class User implements Serializable {
     }
     
     public User(String userEmail, String userNickname, String loginMethod) {
-    	this.userEmail = userEmail;
-    	this.userName = userNickname;
+       this.userEmail = userEmail;
+       this.userName = userNickname;
         this.userNickname = userNickname;
         this.loginMethod = loginMethod;
     }

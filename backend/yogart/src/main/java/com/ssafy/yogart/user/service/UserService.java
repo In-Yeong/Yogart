@@ -17,7 +17,7 @@ public interface UserService {
     // 인증 & 개인정보 조회
     User authentication(String token);
     // 비밀번호 변경
-    User updateInfo(String token, User user);
+    User updateInfo(User user);
     // 탈퇴
     void withdraw(String token);
 }
