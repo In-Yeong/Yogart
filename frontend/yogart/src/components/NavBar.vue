@@ -103,7 +103,7 @@
                           <router-link to="#" class="nav-link">Yoga Teachers</router-link>
                         </li>
                         <li class="nav-item">
-                          <router-link to="#" class="nav-link">Yoga Classes</router-link>
+                          <router-link to="/class" class="nav-link">Yoga Classes</router-link>
                         </li>
                         <li class="nav-item">
                           <router-link to="#" class="nav-link dropdown-toggle">Submenu 3</router-link>
