@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="profile-box d-flex  my-5">
-        <img class="user-profile-img m-3" :src="require(`@/assets/${userProfile}.jpg`)">
+        <img class="user-profile-img m-3" :src="imgSrc">
         <div class="d-flex flex-column mt-3" >
             <div class="d-flex mb-5" >
                 <h5>{{ userName }}</h5> 
@@ -33,6 +33,7 @@ export default {
             userProfile : '',
             userIntro : '',
             userId : undefined,
+            imgSrc : "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
             spoons : this.$store.state.spoons
 
 

@@ -230,7 +230,9 @@ public class UserController {
 //    		File dest = new File(request.getServletContext().getRealPath("/") + fileName);
     		System.out.println(request.getServletContext().getRealPath("/"));
     		try {
-				save(file, request.getServletContext().getRealPath("/"));
+    			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+   			 	String uploadDate = simpleDateFormat.format(new Date());
+				save(file, request.getServletContext().getRealPath("/"), uploadDate);
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -291,12 +293,13 @@ public class UserController {
     	return response;
     }
     
-    @ApiOperation(value="이미지 업로드")
+    @ApiOperation(value="프로필 사진 업로드")
     @PostMapping(value = "/profileUpload")
-    public ResponseEntity<Result> profileImageUpload(@RequestHeader String authorization, @RequestParam("files") MultipartFile[] files, HttpServletRequest request) {
+    public ResponseEntity<Result> profileImageUpload(@RequestHeader Map<String, String> authorization, @RequestParam("userImage") MultipartFile[] files,
+    		HttpServletRequest request) {
 
-    	System.out.println(files.length);
     	ResponseEntity<Result> response;
+    	User currUser = userService.authentication(authorization.get("authorization"));
     	for(MultipartFile file : files)
     	{
     		String fileName = file.getOriginalFilename();
@@ -305,7 +308,11 @@ public class UserController {
 //    		File dest = new File(request.getServletContext().getRealPath("/") + fileName);
     		System.out.println(request.getServletContext().getRealPath("/"));
     		try {
-				save(file, request.getServletContext().getRealPath("/"));
+    			 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+    			 String uploadDate = simpleDateFormat.format(new Date());
+				 save(file, request.getServletContext().getRealPath("/"), uploadDate);
+				 currUser.setUserProfile(uploadDate + fileName);
+				 userService.updateInfo(currUser);
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -345,10 +352,9 @@ public class UserController {
     	return response;
     }
     
-    private String save(MultipartFile file, String contextPath) {
+    private String save(MultipartFile file, String contextPath, String uploadDate) {
         try {
-           SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-           String newFileName = simpleDateFormat.format(new Date()) + file.getOriginalFilename();
+           String newFileName = uploadDate + file.getOriginalFilename();
            byte[] bytes = file.getBytes();
            //윈도우에서는 폴더가 없으면 생성이안됨
            Path path = Paths.get(contextPath + newFileName);
