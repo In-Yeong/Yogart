@@ -21,6 +21,7 @@ import YogaPoseListPage from '../views/coaching/YogaPoseListPage.vue'
 import YogaPoseListDetailPage from '../views/coaching/YogaPoseListDetailPage.vue'
 import YogaPosePage from '../views/coaching/YogaPosePage.vue'
 import ClassSetting from '../components/teacher/ClassSetting.vue'
+import ClassList from '../views/ClassList.vue'
 
 const requireAuth = () => (from, to, next) => {
     // console.log(store.state.isLogin)
@@ -145,6 +146,11 @@ const routes = [
         path: '/coaching/yogapose',
         name: 'YogaPosePage',
         component: YogaPosePage
+      },
+      {
+        path: '/class',
+        name: 'ClassList',
+        component: ClassList
       },
 ]
 
