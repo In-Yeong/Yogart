@@ -22,9 +22,7 @@
             this.getUserCourse()
         },
         methods: {
-            clickSet() {
-                console.log('here~~~')
-                var num = this.$cookies.get('clickId')*1
+            clickSet(num) {
                 console.log(num)
                 this.$emit("clickSet",num)
             },
@@ -32,6 +30,7 @@
                 this.$router.push(`/coaching/yogapose/`)
             },
             getUserCourse() {
+                let self = this
                 axios.get(this.SERVER_URL + `/api/aicoach/list`, { 'headers': { 'auth-token': window.$cookies.get('auth-token') } })
                 .then(res => {
                     console.log(res)
@@ -41,8 +40,7 @@
                         list.classList.add('col-4', 'border', 'rect', 'd-flex', 'flex-column');
                         list.addEventListener('click', function(){
                             // 미완 (테스트 필요)
-                            this.$cookies.set('clickId', e.listId)
-                            this.clickSet
+                            self.clickSet(e.aiCourseId)
                         })
                         list.innerText = e.aiCourseName + '\n' + e.aiCourseOrder + '\n' + e.aiCourseUserNickname.userNickname
                         document.getElementById('mylist').prepend(list)
