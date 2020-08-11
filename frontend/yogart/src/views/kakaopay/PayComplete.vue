@@ -22,14 +22,14 @@ export default {
     },
     mounted() {
         const kakaoData = getUrlParams()
-        console.log(kakaoData)
+        const tid = this.$cookies.get('kakao-tid')
+        this.$cookies.remove('kakao-tid')
+        const pgToken = kakaoData.pg_token
         const requestHeaders = {
             headers: {
                 Authorization: this.$cookies.get('auth-token')
             }
         }
-        const tid = this.$cookies.get('tid')
-        const pgToken = kakaoData.pg_token
         const payData = {
             tid: tid,
             pgToken: pgToken
