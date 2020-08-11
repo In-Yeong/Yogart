@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -157,7 +158,23 @@ public class UserController {
     					+ username + ", " 
     					+ nickname + ", " 
     					+ password);
-    	userService.join(email, username, nickname, password);
+    	
+    	User emailCheck = userService.emailChk(user.getUserEmail());
+    	User nicknameCheck = userService.nicknameChk(user.getUserNickname());
+    	if(emailCheck != null && nicknameCheck != null) {
+    		result.setMessage("email/nickname");
+    		result.setStatusCode(HttpStatus.FORBIDDEN);
+    		return new ResponseEntity<Result>(result, HttpStatus.FORBIDDEN);
+    	}else if(emailCheck != null) {
+    		result.setMessage("email");
+    		result.setStatusCode(HttpStatus.FORBIDDEN);
+    		return new ResponseEntity<Result>(result, HttpStatus.FORBIDDEN);
+    	}else if(nicknameCheck != null) {
+    		result.setMessage("nickname");
+    		result.setStatusCode(HttpStatus.FORBIDDEN);
+    		return new ResponseEntity<Result>(result, HttpStatus.FORBIDDEN);
+    	}
+    	userService.join(email, username, nickname, password);    	
     	String token = jwtService.create("user", user, email);
 		System.out.println(token);
 		result.setToken(token);
@@ -166,13 +183,13 @@ public class UserController {
 
     // 자신의 정보를 반환
     @ApiOperation(value="자신의 정보를 반환")
-    @PostMapping(value = "/myinfo")
-    public ResponseEntity<Result> getMe(HttpServletRequest request) {
+    @GetMapping(value = "/myInfo")
+    public ResponseEntity<Result> getMe(@RequestHeader(value="config") Map<String, Object> header) {
     	ResponseEntity<Result> response = null;
-    	Cookie[] myCookies = request.getCookies();
-    	System.out.println("token: " + myCookies[0].getValue());
+    	String token = (String)header.get("authorization");
+    	System.out.println(token);
     	Result result = Result.successInstance();
-    	User user = userService.authentication(myCookies[0].getValue());
+    	User user = userService.authentication(token);
     	if(user == null) {
     		response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     	} else {
@@ -183,10 +200,16 @@ public class UserController {
     }
 
     // 자신의 비밀번호를 갱신한 뒤 그 결과를 반환
-    @ApiOperation(value="자신의 비밀번호를 갱신한 뒤 그 결과를 반환", response = User.class)
-    @PutMapping(value = "/myinfo")
-    public User updatePassword(@RequestHeader String authorization, @RequestParam String password) {
-        return userService.updatePassword(authorization, password);
+    @ApiOperation(value="자신의 회원정보를 갱신한 뒤 그 결과를 반환", response = User.class)
+    @PutMapping(value = "/myInfo/update")
+    public User updateInfo(@RequestHeader(value="config") Map<String, Object> header, @RequestBody User content) {
+    	String token = (String)header.get("authorization");
+    	String username = content.getUserName();
+    	String email = content.getUserEmail();
+    	String nickname = content.getUserNickname();
+    	String password = content.getUserPassword();
+    	User user = new User(email, username, nickname, password);
+        return userService.updateInfo(token, user);
     }
 
     // 탈퇴

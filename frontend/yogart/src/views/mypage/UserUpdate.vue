@@ -46,15 +46,15 @@ export default {
         // 유저 정보를 받아옵니다.
         const requestHeaders = {
             headers: {
-                Authorization: 'Token ' + this.$cookies.get('auth-token')
+                Authorization: this.$cookies.get('auth-token')
             }
         }
-        axios.get(this.SERVER_URL + '/myInfo/update', null, requestHeaders)
+        axios.get(this.SERVER_URL + '/api/users/myInfo', null, requestHeaders)
         .then(res => {
             this.userName = res.data.userName
             this.userId = res.data.userId
             this.userNickname = res.data.userNickname
-            this.userImageUrl = res.data.userImageUrl
+            this.userProfile = res.data.userProfile
             this.userIntro = res.data.userIntro
         })
         .catch(err => console.error(err))
@@ -71,10 +71,10 @@ export default {
             fd.append('userName', this.userName)
             fd.append('userId', this.userId)
             fd.append('userNickname', this.userNickname)
-            fd.append('userImage', this.userImage)
+            fd.append('userProfile', this.userProfile)
             fd.append('userIntro', this.userIntro)
 
-            axios.post(this.SERVER_URL + '/api/users/info-update', fd, requestHeaders)
+            axios.post(this.SERVER_URL + '/api/users/myInfo/update', fd, requestHeaders)
             .then(res => {
                 this.$router.replace({ name: 'MyPage' })
             })

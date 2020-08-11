@@ -62,9 +62,7 @@ public class UserServiceImpl implements UserService {
 
     // 비밀번호 업데이트
     @Override
-    public User updatePassword(String token, String password) {
-        User user = this.authentication(token);
-        user.setUserPassword(password);
+    public User updateInfo(String token, User user) {
         return userRepository.save(user);
     }
 
@@ -78,6 +76,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User login(String email, String loginMethod, String trash) {
 		User user = userRepository.findByUserEmailAndLoginMethod(email, loginMethod);
+		return user;
+	}
+
+	@Override
+	public User emailChk(String email) {
+		User user = userRepository.findByUserEmail(email);
+		return user;
+	}
+
+	@Override
+	public User nicknameChk(String nickname) {
+		User user = userRepository.findByUserNickname(nickname);
 		return user;
 	}
 
