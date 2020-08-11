@@ -71,8 +71,7 @@ export default {
                 console.log('then')
                 console.log(res);
                 // 로그인이 실패했다면 errorState에 status code를 저장해 오류를 출력합니다.
-                this.setCookie(res.data.token)
-                this.setUserData(res.data.user)
+                this.setUserData(res.data)
             })
             .catch(err => {
                 console.log('catch')
