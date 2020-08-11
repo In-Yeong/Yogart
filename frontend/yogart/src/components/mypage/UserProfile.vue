@@ -2,6 +2,7 @@
 <div>
     <div class="gray d-flex  my-5">
         <img class="user-profile m-3" :src="require('@/assets/Hedgehog.jpg')">
+        <img class="user-profile m-3" :src="require('@/assets/Hedgehog.jpg')">
         <div class="d-flex flex-column mt-3" >
             <div class="d-flex mb-5" >
                 <h5>{{ userName }}</h5>
@@ -12,7 +13,8 @@
                 </div>
             </div>
             
-            <p>저는 요가를 좋아하는 요린이 입니다.</p>
+            <p>{{userMessage}}</p>
+            <p>{{userImageUrl}}</p>
         </div>
     </div>
     
@@ -24,7 +26,10 @@ export default {
     name : 'UserProfile',
     data() {
         return {
-            userName: this.$store.state.userNickname
+            userName: this.$store.state.userNickname,
+            userMessage : payload.user.user_intro,
+            userImageUrl : this.$store.state.imageUrl
+
         }
     },
     mounted() {
