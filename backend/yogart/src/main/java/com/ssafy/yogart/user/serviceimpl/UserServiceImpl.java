@@ -50,7 +50,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User authentication(String token) {
     	if(jwtService.isUsable(token)) {
-    		System.out.println("123");
 //    		Map<String, Object> result = jwtService.get(token);
     		User userTemp = jwtService.get(token);
 //    		User user = userRepository.findByUserEmailAndUserPassword((String)result.get("UserEmail")
@@ -59,14 +58,6 @@ public class UserServiceImpl implements UserService {
     		return user;
     	}
     	return null;
-    }
-
-    // 비밀번호 업데이트
-    @Override
-    public User updatePassword(String token, String password) {
-        User user = this.authentication(token);
-        user.setUserPassword(password);
-        return userRepository.save(user);
     }
 
     // 탈퇴
@@ -86,5 +77,17 @@ public class UserServiceImpl implements UserService {
     public User updateInfo(User user) {
         return userRepository.save(user);
     }
+
+	@Override
+	public User emailChk(String email) {
+		User user = userRepository.findByUserEmail(email);
+		return user;
+	}
+
+	@Override
+	public User nicknameChk(String nickname) {
+		User user = userRepository.findByUserNickname(nickname);
+		return user;
+	}
 
 }
