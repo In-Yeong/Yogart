@@ -114,6 +114,7 @@ export default {
             fd.append('userName', this.userName)
             fd.append('userId', this.userId)
             fd.append('userNickname', this.userNickname)
+            fd.append('userProfile', this.userProfile)
             fd.append('userIntro', this.userIntro)
 
             axios.post(this.SERVER_URL + '/api/users/myInfo/update', fd, requestHeaders)

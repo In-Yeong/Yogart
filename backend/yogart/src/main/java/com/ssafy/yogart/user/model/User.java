@@ -27,10 +27,10 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Table(name = "user")
 public class User implements Serializable {
-   @Id
-   @Column(name="id")
-   @GeneratedValue(strategy= GenerationType.IDENTITY)
-   @ApiModelProperty(value="아이디")
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@ApiModelProperty(value="아이디")
     private Integer id;
    
     @Column(name="user_email", unique = true)
@@ -73,7 +73,7 @@ public class User implements Serializable {
     @Column(name="user_spoon")
     @ApiModelProperty(value="스푼 갯수")
     private Integer userSpoon;
-    
+
     public User(String userEmail, String userName, String userNickname, String userPassword) {
        this.userEmail = userEmail;
         this.userName = userName;

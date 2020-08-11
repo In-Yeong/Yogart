@@ -3,7 +3,7 @@
     <div>
         <viewer :initialValue="viewerText"/>
         <!-- QnaAnswer를 추가해 답변과 답변을 다는 공간을 보여줍니다. -->
-        <QnaAnswer :itemId="item.id"/>
+        <QnaAnswer :itemId="item.qnaId"/>
     </div>
 </template>
 

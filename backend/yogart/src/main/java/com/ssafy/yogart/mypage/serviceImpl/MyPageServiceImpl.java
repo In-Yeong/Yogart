@@ -1,0 +1,34 @@
+package com.ssafy.yogart.mypage.serviceImpl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ssafy.yogart.mypage.model.GraphBodyPart;
+import com.ssafy.yogart.mypage.model.GraphTime;
+import com.ssafy.yogart.mypage.repository.GraphBodyPartRepository;
+import com.ssafy.yogart.mypage.repository.GraphTimeRepository;
+import com.ssafy.yogart.mypage.service.MyPageService;
+import com.ssafy.yogart.user.model.User;
+
+@Service
+public class MyPageServiceImpl implements MyPageService {
+
+	@Autowired
+	private GraphBodyPartRepository graphBodyPartRepository;
+	
+	@Autowired
+	private GraphTimeRepository graphTimeRepository;
+	
+	@Override
+	public GraphBodyPart showTagGraph(User user) {
+		return graphBodyPartRepository.findByGraphBodyPartUserNickname(user);
+	}
+
+	@Override
+	public List<GraphTime> showattendance(User user) {
+		return graphTimeRepository.findByGraphUserNickname(user);
+	}
+	
+}
