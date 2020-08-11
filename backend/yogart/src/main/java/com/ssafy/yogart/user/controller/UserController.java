@@ -183,13 +183,13 @@ public class UserController {
 
     // 자신의 정보를 반환
     @ApiOperation(value="자신의 정보를 반환")
-    @PostMapping(value = "/myinfo")
-    public ResponseEntity<Result> getMe(HttpServletRequest request) {
+    @GetMapping(value = "/myInfo")
+    public ResponseEntity<Result> getMe(@RequestHeader(value="config") Map<String, Object> header) {
     	ResponseEntity<Result> response = null;
-    	Cookie[] myCookies = request.getCookies();
-    	System.out.println("token: " + myCookies[0].getValue());
+    	String token = (String)header.get("authorization");
+    	System.out.println(token);
     	Result result = Result.successInstance();
-    	User user = userService.authentication(myCookies[0].getValue());
+    	User user = userService.authentication(token);
     	if(user == null) {
     		response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     	} else {
@@ -201,11 +201,11 @@ public class UserController {
 
     // 자신의 비밀번호를 갱신한 뒤 그 결과를 반환
     @ApiOperation(value="자신의 회원정보를 갱신한 뒤 그 결과를 반환", response = User.class)
-    @PutMapping(value = "/myinfo")
+    @PutMapping(value = "/myInfo/update")
     public User updateInfo(@RequestHeader(value="config") Map<String, Object> header, @RequestBody User content) {
     	String token = (String)header.get("authorization");
-    	String email = content.getUserEmail();
     	String username = content.getUserName();
+    	String email = content.getUserEmail();
     	String nickname = content.getUserNickname();
     	String password = content.getUserPassword();
     	User user = new User(email, username, nickname, password);

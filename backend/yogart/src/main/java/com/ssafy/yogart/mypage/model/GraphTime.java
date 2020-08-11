@@ -1,5 +1,6 @@
-package com.ssafy.yogart.qna.model;
+package com.ssafy.yogart.mypage.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
@@ -28,30 +29,25 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "qna_reply")
-public class QnAReply {
+@Table(name = "graph_time")
+public class GraphTime implements Serializable {
 	@Id
-	@Column(name="qna_reply_id")
+	@Column(name="graph_time_id")
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@ApiModelProperty(value="댓글번호")
-	private Integer qnaReplyId;
-	
-	@ManyToOne(fetch = FetchType.EAGER, optional=false, cascade = CascadeType.ALL)
-	@JoinColumn(name="qna_reply_qna_id", referencedColumnName="qna_id")
 	@ApiModelProperty(value="아이디")
-	private QnA qnaId;
+	private Integer graphTimeId;
 	
 	@ManyToOne(fetch = FetchType.EAGER, optional=false, cascade = CascadeType.ALL)
-	@JoinColumn(name="qna_reply_user_email", referencedColumnName="user_email")
-    @ApiModelProperty(value="email")
-    private User userEmail;
-	
-	@Column(name="qna_reply_content", columnDefinition = "text")
-    @ApiModelProperty(value="답글내용")
-	private String qnaReplyContent;
+	@JoinColumn(name="graph_user_nickname", referencedColumnName="user_nickname")
+    @ApiModelProperty(value="닉네임")
+    private User graphUserNickname;
 	
 	@CreationTimestamp
-	@Column(insertable = false, updatable = false)
-    @ApiModelProperty(value="생성일")
-	private LocalDateTime createDate;
+    @Column(insertable = false, updatable = false)
+	@ApiModelProperty(value="운동날짜")
+	private LocalDateTime graphDateTime;
+	
+	@Column(name="graph_running_time")
+	@ApiModelProperty(value="운동시간")
+	private Integer graphRunningTime;
 }

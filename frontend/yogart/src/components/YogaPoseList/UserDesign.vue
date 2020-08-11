@@ -36,6 +36,7 @@
                 .then(res => {
                     console.log(res)
                     res.data.forEach(e => {
+                        console.log(e)
                         var list = document.createElement('div');
                         list.classList.add('col-4', 'border', 'rect', 'd-flex', 'flex-column');
                         list.addEventListener('click', function(){
@@ -43,7 +44,7 @@
                             this.$cookies.set('clickId', e.listId)
                             this.clickSet
                         })
-                        list.innerText = e.courseName
+                        list.innerText = e.aiCourseName + '\n' + e.aiCourseOrder + '\n' + e.aiCourseUserNickname.userNickname
                         document.getElementById('mylist').prepend(list)
                     });
 
