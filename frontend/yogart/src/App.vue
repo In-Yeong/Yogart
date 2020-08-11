@@ -53,17 +53,16 @@ export default {
                     this.$router.push({name: 'Home'})
                } 
                else {
-                   console.log(response)
                    alert('회원가입 실패')
                }
             })
             .catch(err => {
 
                 console.log(err.response)
-                if (err.data.statusCode === 403) {
-                   if (err.data.message === 'email') {
+                if (err.response.data.statusCode === 403) {
+                   if (err.response.data.message === 'email') {
                        alert('이메일이 이미 존재합니다.')
-                   } else if (response.data.message === 'nickname') {
+                   } else if (err.response.data.message === 'nickname') {
                        alert('닉네임이 이미 존재합니다.')
                    } else {
                        alert('이메일과 닉네임이 이미 존재합니다.')
