@@ -76,6 +76,7 @@ export default {
     methods: {
         signup() {
             // App.vue로 이벤트 발생
+            console.log(this.formCheck)
 
             if (this.formCheck.userEmail === false) {
                 alert('올바른 이메일을 입력해주세요.')
@@ -93,8 +94,6 @@ export default {
 
         },
         checkEmail() {
-            // 입력을 시작하면 체크 아이콘이 보이게 함
-            document.getElementById('userEmailCheckIcon').style.visibility = 'visible'
             // trim으로 공백 제거
             this.signupData.userEmail = this.signupData.userEmail.trim()
             // 이메일 형식(@와 .)을 갖추고 있고 45자 이하이면 체크 아이콘 색상 변경
@@ -105,8 +104,6 @@ export default {
             }
         },
         checkName() {
-            // 입력을 시작하면 체크 아이콘이 보이게 함
-            document.getElementById('userNameCheckIcon').style.visibility = 'visible'
             // trim으로 공백 제거
             this.signupData.userName = this.signupData.userName.trim()
             // 1~45자 사이면 체크 아이콘 색상 변경
@@ -117,8 +114,6 @@ export default {
             }
         },
         checkNickname() {
-            // 입력을 시작하면 체크 아이콘이 보이게 함
-            document.getElementById('userNicknameCheckIcon').style.visibility = 'visible'
             // trim으로 공백 제거
             this.signupData.userNickname = this.signupData.userNickname.trim()
             // 1~45자 사이면 체크 아이콘 색상 변경

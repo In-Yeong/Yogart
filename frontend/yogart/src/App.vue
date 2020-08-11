@@ -60,6 +60,7 @@ export default {
                        alert('이메일과 닉네임이 이미 존재합니다.')
                    }
                } else {
+                   console.log(response)
                    alert('회원가입 실패')
                }
             })
