@@ -2,7 +2,7 @@
     <div>
         <div @click="itemClick">
             <span class="m-3">{{ item.qnaTitle }}</span>
-            <span class="m-3">작성자</span>
+            <span class="m-3">admin</span>
             <span class="m-3">{{ item.createDate }}</span>
         </div>
         <div>

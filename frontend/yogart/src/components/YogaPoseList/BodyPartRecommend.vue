@@ -1,12 +1,13 @@
 <template>
     
-    <div class="container">
-        <h1 class="m-5">부위별 추천 코스</h1>
-        <div class="row">
-            <div class="col-4 border rect" @click="clickSet(2)">다리</div>
-            <div class="col-4 border rect" @click="clickSet(3)">복근</div>
-            <div class="col-4 border rect" @click="clickSet(4)">튼튼 척추</div>
-            <div class="col-4 border rect" @click="clickSet(5)">전신</div>
+    <div class="m-5">
+        <h3 class="m-5">부위별 추천 코스</h3>
+        <div class="d-flex">
+            <div class="d-flex flex-column border rect" @click="clickSet(3)"><img style="width:300px; height:261px;" :src="require('../../../public/yogaList/legs.jpg')"/><p>다리</p></div>
+            <div class="d-flex flex-column border rect" @click="clickSet(4)"><img style="width:300px; height:261px;" :src="require('../../../public/yogaList/arm.jpg')"/><p>팔</p></div>
+            <div class="d-flex flex-column border rect" @click="clickSet(5)"><img style="width:300px; height:261px;" :src="require('../../../public/yogaList/abs.jpg')"/><p>복근</p></div>
+            <div class="d-flex flex-column border rect" @click="clickSet(6)"><img style="width:300px; height:261px;" :src="require('../../../public/yogaList/spine.jpg')"/><p>척추</p></div>
+            <div class="d-flex flex-column border rect" @click="clickSet(7)"><img style="width:300px; height:261px;" :src="require('../../../public/yogaList/body.jpg')"/><p>전신</p></div>
             
         </div>
     </div>

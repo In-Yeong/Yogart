@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h1>요가 포즈 리스트 페이지 입니다</h1>
+      <h1 class="m-5">요가 포즈 리스트</h1>
       <YogartRecommend @clickSet="yogaListDetail"/>
       <BodyPartRecommend @clickSet="yogaListDetail"/>
       <UserDesign @clickSet="yogaListDetail"/>
@@ -23,7 +23,9 @@ export default {
     },
     methods: {
         yogaListDetail(num) {
-            this.$router.push(`/coaching/yogaposelist/${num}`)
+            // 쿠키에 저장
+            this.$cookies.set('coaching-list', num)
+            this.$router.push(`/coaching/yogaposelist/detail`)
         }
     },
 }

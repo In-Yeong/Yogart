@@ -1,5 +1,6 @@
 package com.ssafy.yogart.user.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -23,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -34,11 +37,11 @@ public class User {
     @ApiModelProperty(value="email")
     private String userEmail;
     
-    @Column(name="user_name")
+    @Column(name="user_name", columnDefinition = "char")
     @ApiModelProperty(value="이름")
     private String userName;
    
-    @Column(name="user_nickname")
+    @Column(name="user_nickname", unique = true)
     @ApiModelProperty(value="닉네임")
     private String userNickname;
     
@@ -50,9 +53,22 @@ public class User {
     @ApiModelProperty(value="접속방식")
     private String loginMethod;
     
+    @Column(name="user_authority")
+    @ApiModelProperty(value="권한")
+    private String userAuthority;
+        
+    @CreationTimestamp
     @Column(insertable = false, updatable = false)
     @ApiModelProperty(value="생성일")
     private LocalDateTime createDate;
+    
+    @Column(name="user_profile", columnDefinition = "text")
+    @ApiModelProperty(value="프로필사진")
+    private String userProfile;
+    
+    @Column(name="user_intro", columnDefinition = "text")
+    @ApiModelProperty(value="자기소개")
+    private String userIntro;
     
     public User(String userEmail, String userName, String userNickname, String userPassword) {
     	this.userEmail = userEmail;

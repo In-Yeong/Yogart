@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.yogart.qna.model.QnA;
+import com.ssafy.yogart.qna.model.QnAReply;
+import com.ssafy.yogart.qna.model.QnAResult;
 import com.ssafy.yogart.qna.service.QnAService;
 import com.ssafy.yogart.user.model.User;
 import com.ssafy.yogart.user.service.UserService;
@@ -49,6 +51,21 @@ public class QnAController {
 		return new ResponseEntity<Page<QnA>>(qnaService.allQnA(page), HttpStatus.OK);
 	}
     
+    @ApiOperation(value = "모든 질문게시판답글 정보를 반환한다.", response = List.class)
+   	@GetMapping(value="/reply/list/{qnaId}")
+   	public ResponseEntity<QnAResult> allQnaReply( @PathVariable int qnaId) throws Exception {
+   		logger.debug("retrieveQnAReply - 호출");
+   		System.out.println(qnaId);
+//   		if(qnaService.allQnAReply(qnaId) == null) {
+//   			return new ResponseEntity<List<QnAReply>>(" ", HttpStatus.NO_CONTENT);
+//   		}
+   		QnAResult qnaResult = new QnAResult();
+   		qnaResult.setList(qnaService.allQnAReply(qnaId));
+   		qnaResult.setAdmin(true);
+//   		System.out.println(qnaResult.getList().get(0).getUserEmail());
+   		return new ResponseEntity<QnAResult>(qnaResult, HttpStatus.OK);
+   	}
+    
     @ApiOperation(value = "글번호에 해당하는 질문글의 정보를 반환한다.", response = QnA.class)    
 	@GetMapping("/{id}")
 	public ResponseEntity<QnA> detailQna(@PathVariable int id) {
@@ -58,20 +75,42 @@ public class QnAController {
 
     @ApiOperation(value = "새로운 QnA를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping(value="/make", produces = "application/json; charset=UTF-8")
-	public ResponseEntity<String> createQna(@RequestHeader(value="config") Map<String, Object> header, @RequestBody String content) {
+	public ResponseEntity<String> createQna(@RequestHeader(value="config") Map<String, Object> header, @RequestBody Map<String, Object> content) {
 		logger.debug("createQnA - 호출");
 		System.out.println((String)header.get("authorization"));
-		System.out.println(content);
 		User user = userService.authentication((String)header.get("authorization"));
 		System.out.println(user.getUserName());
 		QnA qna = new QnA();
-		qna.setQnaTitle("[Title] fix html code content");
-		qna.setQnaContent(content);
+		qna.setQnaTitle((String)content.get("qnaTitle"));
+		qna.setUserEmail(user);
+		qna.setQnaContent((String)content.get("qnaContent"));
 		if (qnaService.createQnA(qna) != null) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
+    
+    @ApiOperation(value = "새로운 QnA reply를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+   	@PostMapping(value="/reply/make", produces = "application/json; charset=UTF-8")
+   	public ResponseEntity<String> createQnaReply(@RequestHeader(value="config") Map<String, Object> header, @RequestBody Map<String, Object> content) {
+    	System.out.println("success::");
+   		logger.debug("createQnA - 호출");
+   		System.out.println((String)header.get("authorization"));
+   		System.out.println(content);
+   		User user = userService.authentication((String)header.get("authorization"));
+   		if(user.getUserAuthority().equals("ADMIN")) {
+   			QnAReply qnaReply = new QnAReply();
+   			QnA qna = new QnA();
+   			qna.setQnaId((Integer)content.get("qnaId"));
+   			qnaReply.setQnaId(qna);
+   	   		qnaReply.setUserEmail(user);
+   	   		qnaReply.setQnaReplyContent((String)content.get("ReplyContent"));
+   	   		if (qnaService.createReplyQnA(qnaReply) != null) {
+   	   			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+   	   		}
+   		}
+   		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+   	}
 
     @ApiOperation(value = "글번호에 해당하는 QnA의 정보를 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("/update/{id}")
