@@ -13,7 +13,8 @@ public interface AicoachCourseRepository extends JpaRepository<AicoachCourse, In
 	@Query(value="SELECT * FROM ai_course WHERE ai_course_id = :ai_course_id", nativeQuery=true)
 	AicoachCourse findByAiCourseId(@Param("ai_course_id") int ai_course_id);
 	
-	List<AicoachCourse> findByAiCourseUserNickname(User user);
+	@Query(value="SELECT * FROM ai_course WHERE ai_course_user_nickname = :ai_course_user_nickname", nativeQuery=true)
+	List<AicoachCourse> findByAiUserNickname(@Param("ai_course_user_nickname") String ai_course_user_nickname);
 	
 	AicoachCourse findTopByOrderByAiCourseIdDesc();
 }

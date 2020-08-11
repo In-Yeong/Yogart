@@ -24,8 +24,8 @@ public class AicoachServiceImpl implements AicoachService {
 	}
 	
 	@Override
-	public List<AicoachCourse> userCourse(User user) {
-		List<AicoachCourse> list = aicoachcourseRepository.findByAiCourseUserNickname(user);
+	public List<AicoachCourse> userCourse(String nickname) {
+		List<AicoachCourse> list = aicoachcourseRepository.findByAiUserNickname(nickname);
 		return list;
 	}
 	
