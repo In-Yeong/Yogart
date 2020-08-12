@@ -171,23 +171,7 @@ public class UserController {
     					+ username + ", " 
     					+ nickname + ", " 
     					+ password);
-    	
-    	User emailCheck = userService.emailChk(user.getUserEmail());
-    	User nicknameCheck = userService.nicknameChk(user.getUserNickname());
-    	if(emailCheck != null && nicknameCheck != null) {
-    		result.setMessage("email/nickname");
-    		result.setStatusCode(HttpStatus.FORBIDDEN);
-    		return new ResponseEntity<Result>(result, HttpStatus.FORBIDDEN);
-    	}else if(emailCheck != null) {
-    		result.setMessage("email");
-    		result.setStatusCode(HttpStatus.FORBIDDEN);
-    		return new ResponseEntity<Result>(result, HttpStatus.FORBIDDEN);
-    	}else if(nicknameCheck != null) {
-    		result.setMessage("nickname");
-    		result.setStatusCode(HttpStatus.FORBIDDEN);
-    		return new ResponseEntity<Result>(result, HttpStatus.FORBIDDEN);
-    	}
-    	userService.join(email, username, nickname, password);    	
+    	userService.join(email, username, nickname, password);
     	String token = jwtService.create("user", user, email);
 		System.out.println(token);
 		result.setToken(token);
@@ -196,13 +180,13 @@ public class UserController {
 
     // 자신의 정보를 반환
     @ApiOperation(value="자신의 정보를 반환")
-    @GetMapping(value = "/myInfo")
-    public ResponseEntity<Result> getMe(@RequestHeader(value="config") Map<String, Object> header) {
+    @PostMapping(value = "/myinfo")
+    public ResponseEntity<Result> getMe(HttpServletRequest request) {
     	ResponseEntity<Result> response = null;
-    	String token = (String)header.get("authorization");
-    	System.out.println(token);
+    	Cookie[] myCookies = request.getCookies();
+    	System.out.println("token: " + myCookies[0].getValue());
     	Result result = Result.successInstance();
-    	User user = userService.authentication(token);
+    	User user = userService.authentication(myCookies[0].getValue());
     	if(user == null) {
     		response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     	} else {
@@ -213,15 +197,24 @@ public class UserController {
     }
 
     // 자신의 비밀번호를 갱신한 뒤 그 결과를 반환
-    @ApiOperation(value="자신의 회원정보를 갱신한 뒤 그 결과를 반환", response = User.class)
+    @ApiOperation(value="유저 정보 업데이트", response = User.class)
     @PutMapping(value = "/myInfo/update")
     public User updateInfo(@RequestHeader(value="config") Map<String, Object> header, @RequestBody User content) {
+<<<<<<< HEAD
     	String token = (String)header.get("authorization");
     	String username = content.getUserName();
     	String email = content.getUserEmail();
     	String nickname = content.getUserNickname();
     	String password = content.getUserPassword();
     	User user = new User(email, username, nickname, password);
+=======
+       String token = (String)header.get("authorization");
+       String username = content.getUserName();
+       String email = content.getUserEmail();
+       String nickname = content.getUserNickname();
+       String password = content.getUserPassword();
+       User user = new User(email, username, nickname, password);
+>>>>>>> 82e170df7d6284abdd894ac1819a59e753b665dd
         return userService.updateInfo(user);
     }
 
@@ -243,10 +236,18 @@ public class UserController {
     		String fileName = file.getOriginalFilename();
     		System.out.println(fileName);
     		System.out.println(request.getServletContext());
+<<<<<<< HEAD
 //    		File dest = new File(request.getServletContext().getRealPath("/") + fileName);
     		System.out.println(request.getServletContext().getRealPath("/"));
     		try {
 				save(file, request.getServletContext().getRealPath("/"));
+=======
+//    		File dest = new File(request.getServletContext().getRealPath("/") + fileName);
+    		System.out.println(request.getServletContext().getRealPath("/"));
+    		try {
+    			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+   			 	String uploadDate = simpleDateFormat.format(new Date());
+				save(file, request.getServletContext().getRealPath("/"), uploadDate);
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -258,6 +259,88 @@ public class UserController {
     	return response;
     }
     
+    @ApiOperation(value="스푼 결제")
+    @PostMapping(value = "/pay")
+    public ResponseEntity<KakaoPaymentReady> chargeSpoon(@RequestHeader String authorization, 
+    		@RequestBody Map<String, Integer> purchaseData) {
+    	
+    	int quantity = purchaseData.get("quantity");
+    	int price = purchaseData.get("price");
+    	User currentUser = userService.authentication(authorization);
+    	String userNickname = currentUser.getUserNickname();
+    	KakaoPaymentReady paymentInfo = null;
+    	ResponseEntity<KakaoPaymentReady> response;
+    	
+    	try {
+			paymentInfo = kakaoService.kakaoPayReady(userNickname, quantity, price);
+			response = new ResponseEntity<>(paymentInfo, HttpStatus.OK);
+			RECENT_TOTAL_AMOUNT = price;
+			RECENT_TID = paymentInfo.getTid();
+		} catch (Exception e) {
+			response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+    	
+    	return response;
+    }
+    
+    @ApiOperation(value="스푼 결제 승인 정보")
+    @PostMapping(value = "/paymentSuccess")
+    public ResponseEntity<KakaoPaymentApproval> paymentSuccess(@RequestHeader String authorization, 
+    		@RequestBody Map<String, String> paymentData) {
+    	
+    	String pgToken = paymentData.get("pgToken");
+    	User currentUser = userService.authentication(authorization);
+    	String userNickname = currentUser.getUserNickname();
+    	KakaoPaymentApproval approvalInfo = null;
+    	ResponseEntity<KakaoPaymentApproval> response;
+    	
+    	try {
+			approvalInfo = kakaoService.kakaoPaySuccess(userNickname, RECENT_TID, pgToken, RECENT_TOTAL_AMOUNT);
+			response = new ResponseEntity<>(approvalInfo, HttpStatus.OK);
+			currentUser.setUserSpoon(currentUser.getUserSpoon() + approvalInfo.getQuantity());
+			userService.updateInfo(currentUser);
+		} catch (Exception e) {
+			response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+    	
+    	return response;
+    }
+    
+    @ApiOperation(value="프로필 사진 업로드")
+    @PostMapping(value = "/profileUpload")
+    public ResponseEntity<Result> profileImageUpload(@RequestHeader Map<String, String> authorization, @RequestParam("userImage") MultipartFile[] files,
+    		HttpServletRequest request) {
+
+    	ResponseEntity<Result> response;
+    	User currUser = userService.authentication(authorization.get("authorization"));
+    	for(MultipartFile file : files)
+    	{
+    		String fileName = file.getOriginalFilename();
+    		System.out.println(fileName);
+    		System.out.println(request.getServletContext());
+//    		File dest = new File(request.getServletContext().getRealPath("/") + fileName);
+    		System.out.println(request.getServletContext().getRealPath("/"));
+    		try {
+    			 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+    			 String uploadDate = simpleDateFormat.format(new Date());
+				 save(file, request.getServletContext().getRealPath("/"), uploadDate);
+				 currUser.setUserProfile(uploadDate + fileName);
+				 userService.updateInfo(currUser);
+>>>>>>> 82e170df7d6284abdd894ac1819a59e753b665dd
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+				e.printStackTrace();
+			}
+    	}
+    	Result result = Result.successInstance();
+    	response = new ResponseEntity<>(result, HttpStatus.OK);
+    	return response;
+    }
+    
+<<<<<<< HEAD
     @ApiOperation(value="스푼 결제")
     @PostMapping(value = "/pay")
     public ResponseEntity<KakaoPaymentReady> chargeSpoon(@RequestHeader String authorization, 
@@ -333,6 +416,8 @@ public class UserController {
     	return response;
     }
     
+=======
+>>>>>>> 82e170df7d6284abdd894ac1819a59e753b665dd
     @ApiOperation(value="프로필 사진 가져오기")
     @GetMapping(value="/profileImage")
     public ResponseEntity<byte[]> getProfileImage(@RequestParam String authToken,
@@ -361,10 +446,13 @@ public class UserController {
     	return response;
     }
     
+<<<<<<< HEAD
     private String save(MultipartFile file, String contextPath) {
+=======
+    private String save(MultipartFile file, String contextPath, String uploadDate) {
+>>>>>>> 82e170df7d6284abdd894ac1819a59e753b665dd
         try {
-           SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-           String newFileName = simpleDateFormat.format(new Date()) + file.getOriginalFilename();
+           String newFileName = uploadDate + file.getOriginalFilename();
            byte[] bytes = file.getBytes();
            //윈도우에서는 폴더가 없으면 생성이안됨
            Path path = Paths.get(contextPath + newFileName);

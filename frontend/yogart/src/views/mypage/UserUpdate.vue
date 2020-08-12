@@ -3,7 +3,11 @@
         <div>{{ userName }} 정보 수정</div>
         <img :src="userImageUrl" alt="user profile image">
         <input @change="fileChange" type="file" ref="userImage" id="user-image" accept=".jpg, .jpeg, .png">
+<<<<<<< HEAD
         <button @click="imageSubmit">저장</button>
+=======
+        <button @click="imageSubmit" class="btn btn-primary mt-4 col-12">프로필 사진 변경</button>
+>>>>>>> 82e170df7d6284abdd894ac1819a59e753b665dd
 
         <div class="container d-flex justify-content-center text-left">
             <div class="d-block">

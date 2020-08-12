@@ -134,7 +134,7 @@ export default {
     margin-top: 100px !important;
 }
 
-.user-profile {
+/* .user-profile {
   display: inline-block;
   width: 150px;
   height: 150px;
@@ -143,7 +143,7 @@ export default {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-}
+} */
 
 .user-level {
   position: absolute;
