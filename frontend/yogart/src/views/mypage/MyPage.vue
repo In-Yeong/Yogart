@@ -43,6 +43,10 @@ export default {
         // const pt = document.getElementById('pt')
         // const exchis = document.getElementById('exc-his')
         // pt.style.backgroundColor = 'lightgray'
+        console.log(!this.$store.state.isLogin)
+        if (!this.$store.state.isLogin) {
+            $('#loginStaticBackdrop').modal('show')
+        }
     },
     methods : {
         // onDiary() {
@@ -93,10 +97,5 @@ export default {
     background-color: rgb(209, 236, 165);
 }
 
-.gray {
-    margin-left: 10vw;
-    margin-right: 10vw;
-    padding : 1rem;
-    border : 2px solid gray;
-}
+
 </style>

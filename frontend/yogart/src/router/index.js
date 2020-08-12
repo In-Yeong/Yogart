@@ -5,8 +5,8 @@ import Home from '../views/Home.vue'
 import SignupView from '../views/accounts/SignupView.vue'
 import GraphView from '../views/mypage/GraphView.vue'
 import Callback from '../components/sociallogin/naverLogin.vue'
-import QnaView from '../views/QnA/QnaView.vue'
-import QnaCreate from '../views/QnA/QnaCreate.vue'
+import QnaView from '../views/qna/QnaView.vue'
+import QnaCreate from '../views/qna/QnaCreate.vue'
 import NoticeListView from '../views/notice/NoticeListView.vue'
 import NoticeDetailView from '../views/notice/NoticeDetailView.vue'
 import NoticeFormView from '../views/notice/NoticeFormView.vue'
@@ -22,6 +22,12 @@ import YogaPoseListDetailPage from '../views/coaching/YogaPoseListDetailPage.vue
 import YogaPosePage from '../views/coaching/YogaPosePage.vue'
 import ClassSetting from '../components/teacher/ClassSetting.vue'
 import ClassList from '../views/ClassList.vue'
+import TeacherPage from '../views/teacher/TeacherPage.vue'
+import SpoonPurchase from '../views/spoon/SpoonPurchase.vue'
+import PayComplete from '../views/kakaopay/PayComplete.vue'
+import PayCancel from '../views/kakaopay/PayCancel.vue'
+import PayFail from '../views/kakaopay/PayFail.vue'
+
 
 const requireAuth = () => (from, to, next) => {
     // console.log(store.state.isLogin)
@@ -42,6 +48,33 @@ const requireAdmin = () => (from, to, next) => {
 Vue.use(VueRouter)
 
 const routes = [
+    // 카카오 페이 callback
+    {
+        path: '/kakaoPay/Success',
+        name: 'PayComplete',
+        component: PayComplete
+    },
+    {
+        path: '/kakaoPay/Cancel',
+        name: 'PayCancel',
+        component: PayCancel
+    },
+    {
+        path: '/kakaoPay/Fail',
+        name: 'PayFail',
+        component: PayFail
+    },
+    {
+        path: '/spoons',
+        name: 'SpoonPurchase',
+        component: SpoonPurchase,
+        beforeEnter: requireAuth()
+    },
+    {
+        path: '/teacherpage',
+        name: 'TeacherPage',
+        component: TeacherPage
+    },
     {
         path: '/teachers/class-setting',
         name: 'ClassSetting',
@@ -81,7 +114,8 @@ const routes = [
     {
         path: '/mypage',
         name: 'MyPage',
-        component: MyPage
+        component: MyPage,
+        beforeEnter: requireAuth(),
     },    
     {
         path: '/mypage/graph',

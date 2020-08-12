@@ -23,26 +23,30 @@
             return {
                 chartData: [
                 ['a','b'],// 데이터(날짜, 운동시간) 들어가는 부분
-                [ new Date(2020, 7, 21), 100 ],
-                [ new Date(2020, 7, 22), 50 ],
-                [ new Date(2020, 7, 23), 30 ],
-                [ new Date(2020, 7, 24), 70 ],
-                [ new Date(2020, 7, 27), 60 ]
-            ],
-            chartOptions: {
+                ],
+                chartOptions: {
 
-            title: "",
-            calendar: { cellSize: 14 },
-            height: 150
+                title: "",
+                calendar: { cellSize: 14 },
+                height: 150
 
-            }
+                }
             };
         },
-       
+        props: {
+            calendar: Object,
+        },
+        watch: {
+            calendar() {
+                var calendarArr = Object.entries(this.calendar)
+                calendarArr.forEach(e => {
+                    var date = e[0].split('-')
+                    var run = e[1]*1
+                    this.chartData.push([new Date(date[0]*1, date[1]*1, date[2]*1), run])
+                });
+            }
+        }
 
-
-
-        
     }
 </script>
 

@@ -22,6 +22,7 @@ import com.ssafy.yogart.aicoach.model.AicoachCourse;
 import com.ssafy.yogart.aicoach.model.CourseDetailResult;
 import com.ssafy.yogart.aicoach.repository.AicoachCourseRepository;
 import com.ssafy.yogart.aicoach.service.AicoachService;
+import com.ssafy.yogart.mypage.service.MyPageService;
 import com.ssafy.yogart.user.model.User;
 import com.ssafy.yogart.user.service.UserService;
 
@@ -45,7 +46,9 @@ public class AicoachController {
 	@Autowired
 	private AicoachCourseRepository aicoachcourseRepository;
 	
-	// test용
+	@Autowired
+	private MyPageService myPageService;
+	
 	@ApiOperation(value = "유저의 코스결과를 보낸다.", response = String.class)
 	@PostMapping(value="/result")
 	public ResponseEntity<String> showResult(@RequestBody Map<String, Object> courseData) throws Exception {
@@ -55,7 +58,7 @@ public class AicoachController {
 		User user = userService.authentication(token);
 		String nickname = user.getUserNickname();
 		String totalTime = (String)courseData.get("totalTime");
-		String startDateTime = (String)courseData.get("totalTime");
+		String startDateTime = (String)courseData.get("startDateTime");
 		String tagCounting = (String)courseData.get("tagCounting");
 		String result = "nickname:" + nickname + "," +
 						"totalTime:" + totalTime + "," +
