@@ -1,18 +1,20 @@
 <template>
 <div>
-    <div class="gray d-flex  my-5">
-        <img class="user-profile m-3" :src="require('@/assets/Hedgehog.jpg')">
+    <div class="profile-box d-flex  my-5">
+        <img class="user-profile-img m-3" :src="imgSrc">
         <div class="d-flex flex-column mt-3" >
             <div class="d-flex mb-5" >
-                <h5>{{ userName }}</h5>
+                <h5>{{ userName }}</h5> 
                 <div class="d-flex">
-                    
                     <router-link to="/mypage/update" class="w3-button w3-black w3-tiny update">회원정보 수정</router-link>
-                    <button class="w3-button w3-black w3-tiny delete">회원탈퇴</button>
                 </div>
             </div>
+    
+            <p v-if="spoons">보유중인 스푼 : {{spoons}}개</p>
+            <p v-else>보유중인 스푼이 없습니다.</p>
+         
             
-            <p>저는 요가를 좋아하는 요린이 입니다.</p>
+            <p>{{userIntro}}</p>
         </div>
     </div>
     
@@ -20,15 +22,52 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     name : 'UserProfile',
     data() {
         return {
-            userName: this.$store.state.userNickname
+            SERVER_URL : this.$store.state.SERVER_URL,
+            userName: this.$store.state.userNickname,
+            userProfile : '',
+            userIntro : '',
+            userId : undefined,
+            imgSrc : "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
+            spoons : this.$store.state.spoons
+
+
         }
     },
     mounted() {
-        // console.log(this.$store.state.userNickname)
+        this.getUserData()
+    },
+    methods : {
+        getUserData() {
+            const requestHeaders = {
+            headers: {
+                Authorization: this.$cookies.get('auth-token')
+            }
+        }
+        axios.get(this.SERVER_URL + '/api/users/myInfo', null, requestHeaders)
+        .then(res => {
+            console.log("UserProfile page 성공",res)
+
+            this.userName = res.data.userName
+            this.userId = res.data.userId
+            this.userNickname = res.data.userNickname
+            this.userProfile = res.data.userProfile
+            this.userIntro = res.data.userIntro
+
+            if (this.userProfile === undefined) {
+                this.userProfile = 'userDefault'
+            }
+            if (this.userIntro === undefined) {
+                this.userIntro = '상태 메세지를 적어보세요.'
+            }
+        })
+        .catch(err => console.error(err))
+        }
     }
 }
 </script>
@@ -45,5 +84,21 @@ export default {
     right : 13vw;
  
 
+}
+.user-profile-img {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+} 
+.profile-box {
+    margin-left: 10vw;
+    margin-right: 10vw;
+    padding : 1rem;
+    
 }
 </style>
