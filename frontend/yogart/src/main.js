@@ -9,10 +9,16 @@ import { required, email, min } from 'vee-validate/dist/rules'
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/vue-editor';
+<<<<<<< HEAD
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+=======
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+>>>>>>> 7614133e4672d66bb6a0459c2587c355c1f4298b
 // for google login
 // import GAuth from 'vue-google-oath2'
 // Vue.use(GAuth, {clientId: "464033788490-4n32ni2tto41a0j7crvvo8nuft697un6.apps.googleusercontent.com", scope: 'profile email https://www.googleapis.com/auth/plus.login'})
@@ -25,6 +31,7 @@ Vue.use(IconsPlugin)
 Vue.config.productionTip = false
 Vue.use(VueCookies)
 Vue.use(Editor)
+Vue.use(BootstrapVue)
 
 Vue.component(LoginModal.name, LoginModal)
 Vue.component('ValidationObserver', ValidationObserver)

@@ -93,6 +93,19 @@
          <version>2.9.2</version>
       </dependency>
       <dependency>
+<<<<<<< HEAD
+		<groupId>com.google.code.gson</groupId>
+		<artifactId>gson</artifactId>
+		<version>2.8.5</version>
+	  </dependency>
+	
+		<!-- Apache Commons IO -->
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.6</version>
+		</dependency>
+=======
     	<groupId>com.google.code.gson</groupId>
     	<artifactId>gson</artifactId>
     	<version>2.8.5</version>
@@ -103,6 +116,7 @@
 	    <artifactId>commons-io</artifactId>
 	    <version>2.6</version>
 	</dependency>
+>>>>>>> 82e170df7d6284abdd894ac1819a59e753b665dd
 	</dependencies>
 
 	<build>
