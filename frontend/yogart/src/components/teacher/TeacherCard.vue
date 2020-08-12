@@ -2,13 +2,12 @@
 <div class="card mb-3" style="max-width: 540px;">
   <div class="row no-gutters">
     <div class="col-md-4">
-      <img :src="teacher.imgUrl" class="card-img" alt="...">
+      <img :src="teacher.teacherImage" class="card-img" alt="...">
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">{{ teacher.name }}</h5>
-        <p class="card-text">{{ teacher.intro }}</p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        <h5 class="card-title">{{ teacher.teacherName }}</h5>
+        <p class="card-text">{{ teacher.teacherIntro }}</p>
       </div>
     </div>
   </div>
