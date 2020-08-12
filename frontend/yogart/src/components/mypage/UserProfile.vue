@@ -1,6 +1,15 @@
 <template>
 <div>
     <div class="profile-box d-flex  my-5">
+        <template>
+        <div style="font-size: 2rem">
+            <b-avatar badge="BV"></b-avatar>
+            <b-avatar badge="7" variant="primary" badge-variant="dark"></b-avatar>
+            <b-avatar badge-variant="info" src="https://placekitten.com/300/300">
+            <template v-slot:badge><b-icon icon="star-fill"></b-icon></template>
+            </b-avatar>
+        </div>
+        </template>
         <img class="user-profile-img m-3" :src="imgSrc">
         <div class="d-flex flex-column mt-3" >
             <div class="d-flex mb-5" >
