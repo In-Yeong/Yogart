@@ -1,5 +1,7 @@
 package com.ssafy.yogart.user.serviceimpl;
 
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,14 +41,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(new User(email, name, nickname, password));
     }
     
-    public User join(String email, String nickname, String loginMethod) {
+    public User joinSocial(String email, String nickname, String randPass, String loginMethod) {
     	User user = userRepository.findByUserEmailAndLoginMethod(email, loginMethod);
     	if (user != null)
     		throw new AlreadyExistsException("Duplicate useremail");
-    	return userRepository.save(new User(email, nickname, loginMethod));
+    	return userRepository.save(new User(email, nickname, nickname, randPass, loginMethod));
     }
 
-    // 인증 & 개인정보 조회
+
+	// 인증 & 개인정보 조회
     @Override
     public User authentication(String token) {
     	if(jwtService.isUsable(token)) {
@@ -68,7 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
 	@Override
-	public User login(String email, String loginMethod, String trash) {
+	public User loginSocial(String email, String loginMethod) {
 		User user = userRepository.findByUserEmailAndLoginMethod(email, loginMethod);
 		return user;
 	}

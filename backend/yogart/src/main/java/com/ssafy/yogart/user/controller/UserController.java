@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -109,10 +110,11 @@ public class UserController {
     	// jwtServiceImpl -> create  메서드 이용해서 토큰 생성
     	ResponseEntity<Result> response = null;
     	Result result = Result.successInstance();
-    	User user = userService.login(email, "kakao", "");
+    	User user = userService.loginSocial(email, "kakao");
     	if(user == null) {                                   
-        	user = new User(email, nickname, "kakao");
-        	userService.join(email, nickname, "kakao");
+    		String randPass = randomPassword();
+        	user = new User(email, nickname, nickname, randPass, "kakao");
+        	userService.joinSocial(email, nickname, randPass, "kakao");
     	} 
     		String token = jwtService.create("user", user, email);
     		System.out.println(token);
@@ -137,10 +139,11 @@ public class UserController {
     		String email = userProfile.get("email");
 //    		System.out.println("nickname : " + nickname + " / email : " + email);
         	Result result = Result.successInstance();
-        	User user = userService.login(email, "naver", "");
-        	if(user == null) {                                   
-            	user = new User(email, nickname, "naver");
-            	userService.join(email, nickname, "naver");
+        	User user = userService.loginSocial(email, "naver");
+        	if(user == null) {
+        		String randPass = randomPassword();
+            	user = new User(email, nickname, nickname, randPass, "naver");
+            	userService.joinSocial(email, nickname, randPass, "naver");
         	} 
         		String token = jwtService.create("user", user, email);
         		System.out.println(token);
@@ -307,7 +310,7 @@ public class UserController {
     	return response;
     }
     
-    @ApiOperation(value="이미지 업로드")
+    @ApiOperation(value="프로필 사진 업로드")
     @PostMapping(value = "/profileUpload")
     public ResponseEntity<Result> profileImageUpload(@RequestHeader String authorization, @RequestParam("files") MultipartFile[] files, HttpServletRequest request) {
 
@@ -376,4 +379,19 @@ public class UserController {
            return null;
         }
      }
+    
+    private String randomPassword() {
+		 int leftLimit = 48;
+		 int rightLimit = 122;
+		 int targetStringLength = 8;
+		 Random random = new Random();
+		 
+		 String generatedString = random.ints(leftLimit, rightLimit + 1)
+		   .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+		   .limit(targetStringLength)
+		   .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+		   .toString();
+		
+		 return generatedString;
+	}
 }
