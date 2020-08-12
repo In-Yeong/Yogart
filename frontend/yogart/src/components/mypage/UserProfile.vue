@@ -53,11 +53,11 @@ export default {
         .then(res => {
             console.log("UserProfile page 성공",res)
 
-            this.userName = res.data.userName
-            this.userId = res.data.Id
-            this.userNickname = res.data.userNickname
-            this.userProfile = res.data.userProfile
-            this.userIntro = res.data.userIntro
+            this.userName = res.data.user.userName
+            this.userId = res.data.user.Id
+            this.userNickname = res.data.user.userNickname
+            this.userProfile = res.data.user.userProfile
+            this.userIntro = res.data.user.userIntro
 
             if (this.userProfile === undefined) {
                 this.userProfile = 'userDefault'

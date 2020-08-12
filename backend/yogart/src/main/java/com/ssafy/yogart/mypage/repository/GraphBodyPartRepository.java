@@ -7,6 +7,5 @@ import com.ssafy.yogart.user.model.User;
 
 public interface GraphBodyPartRepository extends JpaRepository<GraphBodyPart, Integer> {
 	GraphBodyPart findByGraphBodyPartUserNickname(User user);
-	
 //	GraphBodyPart findByUserUserNickname(String nickname);
 }

@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
@@ -180,9 +179,10 @@ public class UserController {
 
     // 자신의 정보를 반환
     @ApiOperation(value="자신의 정보를 반환")
-    @GetMapping(value = "/myinfo")
-    public ResponseEntity<Result> getMe(HttpServletRequest request) {
-    	String token = request.getHeader("auth-token");
+    @GetMapping(value = "/myInfo")
+    public ResponseEntity<Result> getMe(@RequestHeader Map<String,String> data) {
+    	String token = data.get("authorization");
+//    	String token = request.getHeader("auth-token");
 		System.out.println("token:::" + token);
 		User user = userService.authentication(token);
     	Result result = Result.successInstance();
@@ -197,12 +197,13 @@ public class UserController {
     @ApiOperation(value="유저 정보 업데이트", response = User.class)
     @PutMapping(value = "/myInfo/update")
     public User updateInfo(@RequestHeader(value="config") Map<String, Object> header, @RequestBody User content) {
-       String token = (String)header.get("authorization");
-       String username = content.getUserName();
-       String email = content.getUserEmail();
-       String nickname = content.getUserNickname();
-       String password = content.getUserPassword();
-       User user = new User(email, username, nickname, password);
+    	String token = (String)header.get("authorization");
+    	String username = content.getUserName();
+    	String email = content.getUserEmail();
+    	String nickname = content.getUserNickname();
+    	String password = content.getUserPassword();
+    	User user = new User(email, username, nickname, password);
+
         return userService.updateInfo(user);
     }
 
@@ -321,6 +322,7 @@ public class UserController {
     	return response;
     }
     
+
     @ApiOperation(value="프로필 사진 가져오기")
     @GetMapping(value="/profileImage")
     public ResponseEntity<byte[]> getProfileImage(@RequestParam String authToken,
@@ -349,6 +351,7 @@ public class UserController {
     	return response;
     }
     
+
     private String save(MultipartFile file, String contextPath, String uploadDate) {
         try {
            String newFileName = uploadDate + file.getOriginalFilename();

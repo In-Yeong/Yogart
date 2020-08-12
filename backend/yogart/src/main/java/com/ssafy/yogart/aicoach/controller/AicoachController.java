@@ -1,5 +1,7 @@
 package com.ssafy.yogart.aicoach.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -58,19 +60,26 @@ public class AicoachController {
 		System.out.println(token);
 		User user = userService.authentication(token);
 		
-		GraphBodyPart bodypart = new GraphBodyPart();	
-		
-		String nickname = user.getUserNickname();
 		String totalTime = (String)courseData.get("totalTime");
-		String startDateTime = (String)courseData.get("totalTime");
-		String tagCounting = (String)courseData.get("tagCounting");
-		String result = "nickname:" + nickname + "," +
-						"totalTime:" + totalTime + "," +
+		// string local data ->>> 제대로 변환하기!!!
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	    LocalDateTime startDateTime = LocalDateTime.parse((String)courseData.get("startDateTime"), formatter);
+		String tags = (String)courseData.get("tagCounting");
+		String result = "totalTime:" + totalTime + "," +
 						"startDateTime:" + startDateTime + "," +
-						"tagCounting:" + tagCounting;
+						"tagCounting:" + tags;
 		
-		
-		
+		String[] tag = tags.split(",");
+		GraphBodyPart bodypart = new GraphBodyPart(user,Integer.parseInt(tag[0]),
+														Integer.parseInt(tag[1]),
+														Integer.parseInt(tag[2]),
+														Integer.parseInt(tag[3]),
+														Integer.parseInt(tag[4]),
+														Integer.parseInt(tag[5]),
+														Integer.parseInt(tag[6]),
+														startDateTime
+				);
+		bodypart = myPageService.saveTag(bodypart);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 	

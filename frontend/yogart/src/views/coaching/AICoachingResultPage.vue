@@ -45,7 +45,8 @@ export default {
             dougnutdata : [0,0,0,0,0,0,0],
             scores: {},
             minutes : 0,
-            seconds : 0,          
+            seconds : 0,
+            startDateTime : this.$cookies.get('startDateTime'),          
             SERVER_URL : this.$store.state.SERVER_URL
               
         }  
@@ -121,25 +122,25 @@ export default {
             this.course.forEach(function (poseID){
                 this.posefiles[poseID].tag.forEach(function(tag){
                     // console.log(tag,this.dougnutdata)
-                    if (tag === '팔') {
+                    if (tag === '전신') {
                         this.dougnutdata[0] ++       
                     }
-                    else if (tag === '다리') {
+                    else if (tag === '척추') {
                         this.dougnutdata[1] ++
                     }
                     else if (tag === '복근') {
                         this.dougnutdata[2] ++
                     }
-                    else if (tag === '척추') {
+                    else if (tag === '팔') {
                         this.dougnutdata[3] ++
                     }
-                    else if (tag === '전신') {
+                    else if (tag === '다리') {
                         this.dougnutdata[4] ++
                     }
-                    else if (tag === '에너지') {
+                    else if (tag === '릴렉싱') {
                         this.dougnutdata[5] ++
                     } 
-                    else if (tag === '릴렉싱') {
+                    else if (tag === '에너지') {
                         this.dougnutdata[6] ++
                     } 
                 }.bind(this))         
@@ -154,14 +155,16 @@ export default {
             //총 경과 시간
             const totalTime = String(60 * this.minutes + this.seconds)
             //부위별 태그 횟수
-            const tagCounting = this.dougnutdata.join(',')
-           
-            //db에 오늘날짜, 경과시간,부위별 태그횟수 보내서 저장
+            const tagCounting = this.$cookies.get('dougnutdataStr')
+            // console.log(tagCounting)
+            //db에 오늘날짜, 경과"시간,부위별 태그횟수 보내서 저장
+            
             axios.post(this.SERVER_URL + `/api/aicoach/result`,
                 { 'headers': { 'auth-token': window.$cookies.get('auth-token')},
                 'totalTime' : totalTime, 
                 'startDateTime': startDateTime, 
-                'tagCounting' : tagCounting 
+                'tagCounting' : tagCounting,
+                'startDateTime': startDateTime
                 }
             )
             .then(res => {
