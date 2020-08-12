@@ -58,7 +58,7 @@ public class AicoachController {
 		User user = userService.authentication(token);
 		String nickname = user.getUserNickname();
 		String totalTime = (String)courseData.get("totalTime");
-		String startDateTime = (String)courseData.get("totalTime");
+		String startDateTime = (String)courseData.get("startDateTime");
 		String tagCounting = (String)courseData.get("tagCounting");
 		String result = "nickname:" + nickname + "," +
 						"totalTime:" + totalTime + "," +
