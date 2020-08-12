@@ -109,6 +109,9 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+    background-image: url("./assets/back1.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
     color: #2c3e50;
     min-height: calc(100vh - 127.55px);
 }
