@@ -22,6 +22,7 @@ import com.ssafy.yogart.aicoach.model.AicoachCourse;
 import com.ssafy.yogart.aicoach.model.CourseDetailResult;
 import com.ssafy.yogart.aicoach.repository.AicoachCourseRepository;
 import com.ssafy.yogart.aicoach.service.AicoachService;
+import com.ssafy.yogart.mypage.model.GraphBodyPart;
 import com.ssafy.yogart.mypage.service.MyPageService;
 import com.ssafy.yogart.user.model.User;
 import com.ssafy.yogart.user.service.UserService;
@@ -56,6 +57,9 @@ public class AicoachController {
     	String token = headers.get("auth-token");
 		System.out.println(token);
 		User user = userService.authentication(token);
+		
+		GraphBodyPart bodypart = new GraphBodyPart();	
+		
 		String nickname = user.getUserNickname();
 		String totalTime = (String)courseData.get("totalTime");
 		String startDateTime = (String)courseData.get("totalTime");
@@ -64,6 +68,9 @@ public class AicoachController {
 						"totalTime:" + totalTime + "," +
 						"startDateTime:" + startDateTime + "," +
 						"tagCounting:" + tagCounting;
+		
+		
+		
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 	

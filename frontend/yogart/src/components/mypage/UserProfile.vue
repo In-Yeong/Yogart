@@ -49,12 +49,12 @@ export default {
                 Authorization: this.$cookies.get('auth-token')
             }
         }
-        axios.get(this.SERVER_URL + '/api/users/myInfo', null, requestHeaders)
+        axios.get(this.SERVER_URL + '/api/users/myInfo', requestHeaders)
         .then(res => {
             console.log("UserProfile page 성공",res)
 
             this.userName = res.data.userName
-            this.userId = res.data.userId
+            this.userId = res.data.Id
             this.userNickname = res.data.userNickname
             this.userProfile = res.data.userProfile
             this.userIntro = res.data.userIntro
