@@ -1,5 +1,5 @@
 <template>
-    <div class="navbar-area" style="margin-bottom=55px;">
+    <div >
 
         <nav class="navbar navbar-expand-lg navbar-light ">
             <a class="navbar-brand" href="/">Navbar</a>
@@ -26,7 +26,7 @@
                 </li>
                 
                 <li class="nav-item dropdown" v-if="isLogin">
-                    <!-- <img class="user-profile-img m-3" :src="userPic"> -->
+                    <img class="user-profile-img m-3" :src="userPic">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{userNickname}}님
                     </a>
@@ -93,5 +93,16 @@ export default {
 } 
 nav {
     background-color: rgba(255, 255, 255, 0.3) !important;
+    height: 8vh !important;
+    z-index: 100;
+}
+.dropdown-menu {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    border: none !important;
+    padding: 0 !important;
+}
+.dropdown-item {
+    padding: 0.5rem !important;
+    text-align: center !important;
 }
 </style>

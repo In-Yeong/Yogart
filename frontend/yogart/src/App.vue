@@ -2,19 +2,7 @@
     <div id="app">
         <login-modal @loginComplete="loginComplete"></login-modal>
         <NavBar @logout="logout" :isLogin="isLogin"/>
-        <div style="height:99px;"></div>
-        <div id="nav" v-if="false">
-            <router-link to="/login">login</router-link> |  
-            <router-link to="/">Home</router-link> | 
-            <router-link to="/mypage/graph">Graph</router-link> | 
-            <router-link to="/callback">callback</router-link> | 
-            <router-link to="/accounts/signup">Signup</router-link> |
-            <router-link to="/qna">Q&A</router-link> |
-            <router-link to="/notice">공지사항</router-link> |
-            <router-link to="/coaching">AICoachingPage</router-link> |
-            <router-link to="/coaching/yogaposelist">YogaPoseListPage</router-link> |
-            <router-link to="/coaching/yogapose">YogaPosePage</router-link>
-        </div>
+
             <router-view @submit-signup-data="signup" />
         <Footer/>
     </div>
@@ -109,24 +97,12 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+    background-color: #42b983;
     background-image: url("./assets/back1.jpg");
-    background-repeat: no-repeat;
+    /* background-repeat: no-repeat; */
     background-size: 100%;
     color: #2c3e50;
     min-height: calc(100vh - 127.55px);
-}
-
-#nav {
-    padding: 30px;
-}
-
-#nav a {
-    font-weight: bold;
-    color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-    color: #42b983;
 }
 
 .box {
@@ -137,7 +113,7 @@ export default {
     margin-top: 100px !important;
 }
 
-/* .user-profile {
+.user-profile {
   display: inline-block;
   width: 150px;
   height: 150px;
@@ -146,11 +122,53 @@ export default {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-} */
+}
 
 .user-level {
   position: absolute;
   top: 60px;
   left: 80px;
 }
+
+::selection {
+    background-color: rgba(242, 157, 143, 0.7);
+    ;
+    color: white;
+}
+
+::-webkit-scrollbar {
+    width: 16px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(242, 157, 143, 0.3);
+    background-clip: padding-box;
+    border: 0.05em solid rgba(235, 235, 235, 0.5);
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(235, 235, 235, 0.5);
+}
+
+/* Buttons */
+::-webkit-scrollbar-button:single-button {
+    background-color: rgba(235, 235, 235, 0.5);;
+    display: block;
+    border-style: solid;
+    height: 13px;
+    width: 16px;
+}
+
+/* Up */
+::-webkit-scrollbar-button:single-button:vertical:decrement {
+    border-width: 0 8px 8px 8px;
+    border-color: transparent transparent gray transparent;
+}
+
+/* Down */
+::-webkit-scrollbar-button:single-button:vertical:increment {
+    border-width: 8px 8px 0 8px;
+    border-color: gray transparent transparent transparent;
+}
+
 </style>
