@@ -127,7 +127,7 @@ export default {
     position: relative;
     font-size: 1.2rem;
     font-weight: 500;
-    padding: 1rem 1rem 0 1rem !important;
+    padding: 1rem !important;
 }
 .nav-link:after {    
   content: "";
