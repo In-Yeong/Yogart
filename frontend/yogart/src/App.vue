@@ -4,7 +4,7 @@
         <NavBar @logout="logout" :isLogin="isLogin"/>
 
             <router-view @submit-signup-data="signup" />
-        <Footer/>
+        <Footer :isLogin="isLogin"/>
     </div>
 </template>
 
@@ -97,7 +97,6 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    background-color: #42b983;
     background-image: url("./assets/back1.jpg");
     /* background-repeat: no-repeat; */
     background-size: 100%;

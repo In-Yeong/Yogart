@@ -1,20 +1,18 @@
 <template>
     <div >
 
-        <nav class="navbar navbar-expand-lg navbar-light ">
-            <a class="navbar-brand" href="/">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
+        <div class="navbar navbar-expand navbar-light fixed-top w-100">
+            <a class="navbar-brand" href="/">LOGO</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav nav-mid">
                 <li class="nav-item">
                     <a class="nav-link" href="/coaching/yogaposelist">AI coaching</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/class">1:1 PT</a>
                 </li>
+                </ul>
+                <ul class="navbar-nav nav-right">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     HELP
@@ -50,7 +48,7 @@
                 </li>
                 </ul>
             </div>
-        </nav>
+        </div>
     </div> 
 
 </template>
@@ -80,6 +78,17 @@ export default {
 </script>
 
 <style>
+
+.nav-link {
+    color: black !important;
+}
+.nav-right {
+    position: fixed;
+    right: 1rem;
+}
+.nav-mid {
+    position: fixed;
+}
 
 .user-profile-img {
   display: inline-block;
