@@ -1,6 +1,6 @@
 <template>   
     <div> 
-        <div id="AI" v-if="!loading && !aiPage" class="mx-5">
+        <div id="AI" v-if="!loading && !aiPage" class="mx-auto">
            
             <h1 class="m-5" style="font-size : 50px">AI COACHING SERVICE</h1>
             <h5>{{cur+1}}번째 {{course[cur].korean_pose_name}} 포즈부터 시작합니다</h5>
@@ -13,17 +13,17 @@
        
         <div id="loading" v-if="loading">
         <!-- <div id="loading" v-if="true"> -->
-            <h3 class="m-5">AI 요가 코칭 서비스를 시작합니다</h3>
-            <p>{{courseName}} 코스 준비중</p>
+            <h1 class="m-5">AI 요가 코칭 서비스를 시작합니다</h1>
+            <h5>{{courseName}} 코스 준비중</h5>
     
             <i class="fa fa-spinner fa-pulse fa-5x fa-fw m-5" ></i>
             <span class="sr-only">Loading...</span>
 
-            <h3 class="m-5">웹캠을 켜주시고 잠시만 기다려 주세요</h3>
-            <p> AI Yoga Coaching Service is running, Please turn on your webcam and wait</p>
+            <h1 class="m-5">웹캠을 켜주시고 잠시만 기다려 주세요</h1>
+            <h5> AI Yoga Coaching Service is running, Please turn on your webcam and wait</h5>
         </div>
         <div class="d-flex justify-content-around">
-            <div v-if="aiPage" class="shadow-box">
+            <div v-if="aiPage" class="box">
                 <div id="pose-data">
                     <img :src="require(`../../public/photos/${posefiles[course[cur]].file_reference}`)" alt="">
                     <h3 style="font-weight: 500; width : 300px; margin:auto;" class="my-3 highlight">{{ posefiles[course[cur]].korean_pose_name }} 포즈</h3>
@@ -39,7 +39,7 @@
                 </div>
                
             </div>
-            <div class="shadow-box">
+            <div class="box" id="tm-shadow-box">
                 <div ><canvas id="canvas" style="border : 7px solid #f29d8f"></canvas></div>
                 
                 <div id="label-container" class="m-auto" style="width : 400px;">
@@ -49,7 +49,7 @@
               
                
             </div>
-            <div class="shadow-box" id="coaching-data">
+            <div class="box" id="coaching-data">
                 <h2 class="watch highlight mx-auto" style="width:150px;">{{ watchMin }}:{{ watchSec}}</h2>
                 <div id="pie-chart" class="pie-chart my-5"><span class="center" id="seconds-counter">30</span></div>
                 <!-- <div>{{poseTimes}}</div> -->
@@ -89,9 +89,6 @@
                 cur : 0,
                 flag : false,
                 seconds : 30,
-                // hour : '',
-                // min : '',
-                // sec : '',
                 stopBtn : false,
                 restartBtn : false,
                 counter : undefined,
@@ -272,6 +269,7 @@
             async loop(timestamp) {
                 this.loading = false;
                 this.aiPage = true;
+                document.getElementById('tm-shadow-box').style.visibility= 'visible'
                 document.getElementById('coaching-data').style.visibility= 'visible'
                 
                 if (this.startTime){
@@ -335,11 +333,11 @@
                 if (webcam.canvas) {
                     ctx.drawImage(webcam.canvas, 0, 0);
                     // draw the keypoints and skeleton
-                    if (pose) {
-                        const minPartConfidence = 0.5;
-                        tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
-                        tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
-                    }
+                    // if (pose) {
+                    //     const minPartConfidence = 0.5;
+                    //     tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
+                    //     tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
+                    // }
                 }
             }
         }
@@ -352,7 +350,9 @@
 </script>
     
 <style scoped>
+
 .shadow-box{
+    padding:10px;
     width : 450px;
     margin : 5px;
     background-color: rgba(255,255,255,0.5);
@@ -386,11 +386,45 @@ span.center{
     font-size:70px;
     transform: translate(-50%, -50%);
 }
-#coaching-data {
+#coaching-data, #tm-shadow-box {
     visibility: hidden;
 }
 #pose-data > img {
     width : 300px;
     border : 7px solid #f29d8f;
+    border-radius : 10px;
+}
+.box {
+  position: relative;
+  display: inline-block;
+  width: 450px;
+  /* height: 100px; */
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Create the hidden pseudo-element */
+/* include the shadow for the end state */
+.box::after {
+  /* content: ''; */
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transition: opacity 0.3s ease-in-out;
+}
+/* Scale up the box */
+.box:hover {
+  transform: scale(1.2, 1.2);
+}
+
+/* Fade in the pseudo-element with the bigger shadow */
+.box:hover::after {
+  opacity: 1;
 }
 </style>

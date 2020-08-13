@@ -49,7 +49,7 @@ export default {
                         labels: {
                             // This more specific font property overrides the global property
                             fontColor: 'black',
-                            fontSize : 20,
+                            fontSize : 15,
                             
                             
                         },
@@ -57,7 +57,7 @@ export default {
                     },
                     title : {
                         display : true,
-                        fontSize : 25,
+                        fontSize : 20,
                         text : '태그별 비율'
                     } ,
                     plugins: {
@@ -65,13 +65,13 @@ export default {
                         labels: [
                             {
                             fontColor : 'black',
-                            fontSize : 20,
+                            fontSize : 13,
                             render: 'label',
                             position: 'outside'
                             },
                             {
                             fontColor : 'black',
-                            fontSize : 20,
+                            fontSize : 13,
                             render: 'percentage'
                             }
                         ]
@@ -88,7 +88,7 @@ export default {
 <style>
 #dougnutChart {
     height : 400px !important;
-    width : 800px !important;
+    width : 700px !important;
     margin : 0;
 }
 </style>

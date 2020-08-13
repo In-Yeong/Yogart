@@ -115,7 +115,8 @@ export default {
     /* font-family: 'Song Myung', serif; */
     color: #2c3e50;
     min-height: calc(100vh - 127.55px);
-    background-image: url('./assets/watercolor1.jpg');
+    background-color: white;
+    /* background-image: url('./assets/watercolor1.jpg'); */
     background-size: 100%;
     
 }
@@ -151,11 +152,19 @@ export default {
   background-position: center center;
   background-size: cover;
 } */
-.shadow-box{
+.shadow-box-pink{
     background-color: rgba(255,255,255,0.3);
     border: 1px solid;
     padding: 10px;
     box-shadow: 5px 10px #f29d8f;
+}
+.shadow-box{
+  
+    margin : 5px;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 10px;
+    border: 1px solid white;
+    box-shadow: 3px 3px rgba(0,0,0,0.1);
 }
 
 .user-level {
@@ -262,5 +271,37 @@ export default {
   width:100%;
   transition:800ms ease all;
 }
+.box {
+  position: relative;
+  display: inline-block;
+  width: 450px;
+  /* height: 100px; */
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  transition: all 0.3s ease-in-out;
+}
 
+/* Create the hidden pseudo-element */
+/* include the shadow for the end state */
+.box::after {
+  /* content: ''; */
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transition: opacity 0.3s ease-in-out;
+}
+/* Scale up the box */
+.box:hover {
+  transform: scale(1.2, 1.2);
+}
+
+/* Fade in the pseudo-element with the bigger shadow */
+.box:hover::after {
+  opacity: 1;
+}
 </style>

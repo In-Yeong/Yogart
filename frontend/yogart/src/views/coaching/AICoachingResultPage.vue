@@ -3,8 +3,10 @@
     <h2 class="m-3">{{this.courseName}}코스 AI 코칭 결과</h2>
     <h5>총 소요시간  |    {{this.minutes}} : {{this.seconds}}</h5>
     <div class="d-flex mx-auto pr-0">
-        <lineChart/>
-        <dougnutChart/>
+        <div class="box mr-2"><lineChart/></div>
+        <div class="box"><dougnutChart/></div>      
+        <!-- <lineChart/>
+        <dougnutChart/> -->
     </div>
     <table class="table">
         <thead>
@@ -178,6 +180,8 @@ export default {
 }
 </script>
 
-<style >
-
+<style scoped >
+.box{
+    width : 100%;
+}
 </style>
