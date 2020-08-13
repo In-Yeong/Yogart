@@ -10,7 +10,7 @@
                     <a class="nav-link" href="/class">1:1 PT</a>
                 </li>
                 </ul>
-                <a class="navbar-brand" href="/">LOGO</a>
+                <a class="navbar-brand" href="/"><img class="logo-img" src="../assets/logo.png" alt=""></a>
                 <ul class="navbar-nav nav-right">
                 <li class="nav-item dropdown">
                     <div class="nav-link" id="navbarDropdown"  data-toggle="dropdown" >
@@ -100,6 +100,9 @@ export default {
 </script>
 
 <style>
+.logo-img {
+    height: 8vh;
+}
 .navbar {
     transform: translate3d(0, 0, 0);
     transition: 0.1s all ease-out;
