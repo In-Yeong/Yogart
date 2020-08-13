@@ -170,7 +170,7 @@ export default {
     width: 11vw;
     height: 11vw;
     border-radius: 11vw;
-    border: 8px dashed rgba(255, 255, 255, 0.5);
+    border: 0.5vw dashed rgba(255, 255, 255, 0.5);
 
     -webkit-transform-origin: 50% 50%;
             transform-origin: 50% 50%;
@@ -186,7 +186,7 @@ export default {
     width: 11vw;
     height: 11vw;
     border-radius: 11vw;
-    border: 8px dashed rgba(255, 255, 255, 0.5);
+    border: 0.5vw dashed rgba(255, 255, 255, 0.5);
 
     -webkit-transform-origin: 50% 50%;
             transform-origin: 50% 50%;
