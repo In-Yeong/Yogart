@@ -115,8 +115,8 @@ export default {
     /* font-family: 'Song Myung', serif; */
     color: #2c3e50;
     min-height: calc(100vh - 127.55px);
-    background-color: white;
-    /* background-image: url('./assets/watercolor1.jpg'); */
+
+    background-image: url('./assets/marble1.jpg');
     background-size: 100%;
     
 }
@@ -177,9 +177,9 @@ export default {
   /* background-color:rgba(255,255,255,0.3);
   border: 3px solid #f29d8f;
   color: #f29d8f; */
-  background-color: #f29d8f;
+  background-color: rgba(242, 157, 143,0.3);
   border: 5px solid #f29d8f;
-  color: white;
+  color: #f29d8f;
   padding: 10px 32px;
   text-align: center;
   text-decoration: none;
@@ -209,7 +209,7 @@ export default {
   right:0;
   height:2px;
   width:0;
-  background: #f29d8f;
+  background: rgba(242, 157, 143,0.3);
   transition:400ms ease all;
 }
 .btn1:after{
@@ -258,7 +258,7 @@ export default {
   right:0;
   height:2px;
   width:0;
-  background: #f29d8f;
+  background: rgba(242, 157, 143,0.3);
   transition:400ms ease all;
 }
 .btn4:after{

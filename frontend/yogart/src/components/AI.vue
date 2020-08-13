@@ -23,24 +23,24 @@
             <h5> AI Yoga Coaching Service is running, Please turn on your webcam and wait</h5>
         </div>
         <div class="d-flex justify-content-around">
-            <div v-if="aiPage" class="box">
+            <div v-if="aiPage" class="shadow-box">
                 <div id="pose-data">
                     <img :src="require(`../../public/photos/${posefiles[course[cur]].file_reference}`)" alt="">
                     <h3 style="font-weight: 500; width : 300px; margin:auto;" class="my-3 highlight">{{ posefiles[course[cur]].korean_pose_name }} 포즈</h3>
                     <h4>
-                        <span class="badge mr-1" style="background-color : #2c3e50; color:white">#난이도</span>
-                        <span class="badge" style="background-color : #2c3e50; color:white">#{{posefiles[course[cur]].difficulty}}</span>
+                        <span class="badge mr-1" style="background-color : rgba(44, 62, 80,0.4); color:white">#난이도</span>
+                        <span class="badge" style="background-color : rgba(44, 62, 80,0.4); color:white">#{{posefiles[course[cur]].difficulty}}</span>
                     </h4>   
                     <h4>
-                        <span class="badge mr-1" style="background-color : #f29d8f">#부위</span>
-                        <span class="badge" style="background-color : #f29d8f">#{{posefiles[course[cur]].category}}</span>
+                        <span class="badge mr-1" style="background-color : rgba(242, 157, 143,0.3)">#부위</span>
+                        <span class="badge" style="background-color : rgba(242, 157, 143,0.3)">#{{posefiles[course[cur]].category}}</span>
                     </h4>   
                     
                 </div>
                
             </div>
-            <div class="box" id="tm-shadow-box">
-                <div ><canvas id="canvas" style="border : 7px solid #f29d8f"></canvas></div>
+            <div class="shadow-box" id="tm-shadow-box">
+                <div ><canvas id="canvas" style="border : 7px solid rgba(242, 157, 143,0.3)"></canvas></div>
                 
                 <div id="label-container" class="m-auto" style="width : 400px;">
                         <h2 id="good" style="color:green">GOOD</h2>
@@ -49,7 +49,7 @@
               
                
             </div>
-            <div class="box" id="coaching-data">
+            <div class="shadow-box" id="coaching-data">
                 <h2 class="watch highlight mx-auto" style="width:150px;">{{ watchMin }}:{{ watchSec}}</h2>
                 <div id="pie-chart" class="pie-chart my-5"><span class="center" id="seconds-counter">30</span></div>
                 <!-- <div>{{poseTimes}}</div> -->
@@ -163,7 +163,7 @@
             incrementSeconds() {
                 this.seconds--;
                 document.getElementById('seconds-counter').innerText = this.seconds
-                document.getElementById('pie-chart').style.background = `conic-gradient(rgba(256, 256, 256, 0.3) 0% ${100-100*(this.seconds/30)}%, #f29d8f ${100-100*(this.seconds/30)}% 100%)`
+                document.getElementById('pie-chart').style.background = `conic-gradient(rgba(256, 256, 256, 0.3) 0% ${100-100*(this.seconds/30)}%, rgba(242, 157, 143,0.3) ${100-100*(this.seconds/30)}% 100%)`
                 if (this.seconds===0) {
                     clearInterval(this.counter) 
                     this.next()
@@ -370,7 +370,7 @@
   height: 210px;
   border-radius: 50%;
   background: rgba(256, 256, 256, 0.3);
-  border: 7px solid #f29d8f;
+  border: 7px solid rgba(242, 157, 143,0.3);
   /* border: 7px solid #2c3e50; */
 }
 span.center{
@@ -391,8 +391,9 @@ span.center{
 }
 #pose-data > img {
     width : 300px;
-    border : 7px solid #f29d8f;
+    border : 7px solid rgba(242, 157, 143,0.3);
     border-radius : 10px;
+    
 }
 .box {
   position: relative;
@@ -400,7 +401,7 @@ span.center{
   width: 450px;
   /* height: 100px; */
   border-radius: 5px;
-  background-color: #fff;
+  background-color: rgba(255,255,255,0.5);
   box-shadow: 0 1px 2px rgba(0,0,0,0.15);
   transition: all 0.3s ease-in-out;
 }
