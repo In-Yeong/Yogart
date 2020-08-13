@@ -1,5 +1,7 @@
 package com.ssafy.yogart.user.service;
 
+import java.util.List;
+
 import com.ssafy.yogart.user.model.User;
 
 public interface UserService {
@@ -20,4 +22,8 @@ public interface UserService {
     User updateInfo(User user);
     // 탈퇴
     void withdraw(String token);
+    
+    List<User> showAllTeacherlist();
+    
+    User findUser(int id);
 }
