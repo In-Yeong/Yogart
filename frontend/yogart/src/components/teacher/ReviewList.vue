@@ -15,13 +15,18 @@ export default {
     data() {
         return {
             SERVER_URL: this.$store.state.SERVER_URL,
+            reviews: [],
         }
     },
     components: {
         ReviewItem,
     },
     mounted() {
-        axios.get()
+        axios.get(this.SERVER_URL + 'api/review/list')
+        .then(res => {
+            this.reviews = res.data.reviews
+        })
+        .catch(err => console.error(err))
     }
 }
 </script>

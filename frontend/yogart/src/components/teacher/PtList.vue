@@ -21,6 +21,7 @@ export default {
         }
     },
     mounted() {
+        // 아직 완료되지 않은 PT 내역을 보여줍니다.
         const requestHeaders = {
             headers: {
                 Authorization: this.$cookies.get('auth-token')
