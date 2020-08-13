@@ -141,6 +141,7 @@
             },
             clickStart() {
                 this.startDateTime = new Date();
+                this.$cookies.set('startDateTime', this.startDateTime)
                 this.init()
             },
             incrementSeconds() {
@@ -316,11 +317,11 @@
                 if (webcam.canvas) {
                     ctx.drawImage(webcam.canvas, 0, 0);
                     // draw the keypoints and skeleton
-                    // if (pose) {
-                    //     const minPartConfidence = 0.5;
-                    //     tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
-                    //     tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
-                    // }
+                    if (pose) {
+                        const minPartConfidence = 0.5;
+                        tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
+                        tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
+                    }
                 }
             }
         }

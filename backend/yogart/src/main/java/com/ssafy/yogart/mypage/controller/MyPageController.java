@@ -15,10 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RequestHeader;
-=======
->>>>>>> 82e170df7d6284abdd894ac1819a59e753b665dd
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,11 +48,6 @@ public class MyPageController {
 	@ApiOperation(value = "그래프 기록 데이터를 보낸다", response = GraphResult.class)
 	@GetMapping(value="/graph")
 	public ResponseEntity<GraphResult> showResult(HttpServletRequest request) throws Exception {
-<<<<<<< HEAD
-//		Map<String, String> headers = (Map<String, String>)courseData.get("headers");
-//		String token = headers.get("auth-token");
-=======
->>>>>>> 82e170df7d6284abdd894ac1819a59e753b665dd
 		String token = request.getHeader("auth-token");
 		System.out.println(token);
 		User user = userService.authentication(token);
@@ -84,9 +76,9 @@ public class MyPageController {
 	
 	@ApiOperation(value = "수업 내역을 보낸다", response = MyPagePtResult.class)
 	@GetMapping(value="/ptlist")
-	public ResponseEntity<MyPagePtResult> showPtList(HttpServletRequest request) throws Exception {
-		String token = request.getHeader("auth-token");
-		System.out.println("token:::" + token);
+	public ResponseEntity<MyPagePtResult> showPtList(@RequestHeader Map<String, String> header, HttpServletRequest request) throws Exception {
+		String token = header.get("authorization");
+		System.out.println("token / " + token);
 		User user = userService.authentication(token);
 		List<PtClicked> Courses = myPageService.showPTList(user);
 		List<PtClicked> pastCourses = new ArrayList<>();
@@ -96,9 +88,9 @@ public class MyPageController {
 		PtClicked pt = null;
 		for(int i = 0; i < Courses.size(); i++) {
 			pt = Courses.get(i);
-			if(local.isBefore(pt.getDateTime())) {
+			if(local.isAfter(pt.getDateTime())) {
 				pastCourses.add(pt);
-			} else if (local.isAfter(Courses.get(i).getDateTime())) {
+			} else if (local.isBefore(Courses.get(i).getDateTime())) {
 				futureCourses.add(pt);
 			} else {
 				todayCourses.add(pt);

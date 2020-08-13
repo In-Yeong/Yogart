@@ -17,7 +17,6 @@ export default {
   name: 'AICoachingPage',
   components: {
     AI,
-    
   },
   data() {
     return {
