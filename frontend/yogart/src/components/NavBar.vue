@@ -2,7 +2,7 @@
     <div >
         <div class="navbar navbar-expand navbar-light fixed-top w-100" :class="{ 'navbar--hidden': !showNavbar, 'change--color': lastScrollPosition > 100 }">
             <div class="collapse navbar-collapse">
-                <ul class="navbar-nav nav-mid">
+                <ul class="navbar-nav nav-left">
                 <li class="nav-item">
                     <a class="nav-link" href="/coaching/yogaposelist">AI coaching</a>
                 </li>
@@ -106,6 +106,7 @@ export default {
 .navbar {
     transform: translate3d(0, 0, 0);
     transition: 0.1s all ease-out;
+    padding: 0 !important;
 }
 .navbar.navbar--hidden {
   box-shadow: none;
@@ -118,15 +119,15 @@ export default {
 
 .navbar-brand {
     text-align: center;
-    /* width: 100vw; */
     margin: 0 auto !important;
 }
 
 .nav-link {
     color: gray !important;
+    position: relative;
     font-size: 1.2rem;
     font-weight: 500;
-    padding: 1rem !important;
+    padding: 1rem 1rem 0 1rem !important;
 }
 .nav-link:after {    
   content: "";
@@ -143,7 +144,7 @@ export default {
     position: fixed;
     right: 1rem;
 }
-.nav-mid {
+.nav-left {
     position: fixed;
 }
 
@@ -163,6 +164,7 @@ export default {
     background-color: rgba(255, 255, 255, 0) !important;
     border: none !important;
     padding: 0 !important;
+    top: 8vh !important;
 }
 .dropdown-menu-right {
     position: fixed !important;

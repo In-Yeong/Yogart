@@ -3,7 +3,7 @@
         <login-modal @loginComplete="loginComplete"></login-modal>
         <NavBar @logout="logout" :isLogin="isLogin"/>
         <router-view class="test" @submit-signup-data="signup" />
-        <Footer :isLogin="isLogin"/>
+        <Footer/>
     </div>
 </template>
 
