@@ -12,6 +12,9 @@ import { Editor } from '@toast-ui/vue-editor';
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import VueMomentLib from 'vue-moment-lib'
+Vue.use(VueMomentLib)
+
 // for google login
 // import GAuth from 'vue-google-oath2'
 // Vue.use(GAuth, {clientId: "464033788490-4n32ni2tto41a0j7crvvo8nuft697un6.apps.googleusercontent.com", scope: 'profile email https://www.googleapis.com/auth/plus.login'})

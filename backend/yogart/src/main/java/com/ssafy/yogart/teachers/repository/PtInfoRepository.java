@@ -9,4 +9,5 @@ import com.ssafy.yogart.user.model.User;
 
 public interface PtInfoRepository extends JpaRepository<PtInfo, Integer> {
 	List<PtInfo> findByPtTeacherId(User user);
+	PtInfo findByPtId(Integer ptId);
 }

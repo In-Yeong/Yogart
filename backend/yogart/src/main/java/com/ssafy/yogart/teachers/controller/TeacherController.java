@@ -1,5 +1,7 @@
 package com.ssafy.yogart.teachers.controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.yogart.aicoach.controller.AicoachController;
+import com.ssafy.yogart.teachers.model.PtClicked;
 import com.ssafy.yogart.teachers.model.PtInfo;
 import com.ssafy.yogart.teachers.model.TeacherDetailResult;
+import com.ssafy.yogart.teachers.model.TeacherPTInfoResult;
+import com.ssafy.yogart.teachers.model.Time;
 import com.ssafy.yogart.teachers.service.TeacherService;
 import com.ssafy.yogart.user.model.User;
 import com.ssafy.yogart.user.service.UserService;
@@ -58,6 +63,28 @@ public class TeacherController {
 		result.setPtList(teachersPT);
 		result.setTeacherInfo(teacher);
 		return new ResponseEntity<TeacherDetailResult>(result , HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "강사의 수업 정보와 이미 예약된 PT리스트를 가져온다.", response = TeacherPTInfoResult.class)
+	@GetMapping(value="/pt/{ptId}")
+	public ResponseEntity<TeacherPTInfoResult> teacherReservedPTList(@PathVariable int ptId) throws Exception {
+		System.out.println("ptId:" +  ptId);
+		PtInfo ptInfo = teacherService.showPTInfo(ptId);
+		List<PtClicked> clickedList = teacherService.showClassTime(ptInfo);
+		List<Time> timeList = new ArrayList<>();
+		List<LocalDate> soldOut = new ArrayList<>();
+		for(int i = 0; i < clickedList.size(); i++) {
+			PtClicked temp = clickedList.get(i);
+			Time time = new Time(temp.getPtDay(), temp.getPtTime());
+			timeList.add(time);
+			if(temp.getDateTime() == null) continue;
+			soldOut.add(LocalDate.from(temp.getDateTime()));
+		}
+		TeacherPTInfoResult result = new TeacherPTInfoResult();
+		result.setClicked(timeList);
+		result.setPtInfo(ptInfo);
+		result.setSoldOut(soldOut);
+		return new ResponseEntity<TeacherPTInfoResult>(result , HttpStatus.OK);
 	}
 
 }

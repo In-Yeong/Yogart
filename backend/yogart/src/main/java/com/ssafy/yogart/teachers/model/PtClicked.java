@@ -1,5 +1,6 @@
 package com.ssafy.yogart.teachers.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
@@ -31,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "pt_clicked")
-public class PtClicked {
+public class PtClicked implements Serializable {
 	@Id
 	@Column(name="pt_clicked_id")
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -63,5 +64,5 @@ public class PtClicked {
     @ManyToOne(fetch = FetchType.EAGER, optional=false, cascade = CascadeType.ALL)
 	@JoinColumn(name="pt_clicked_name", referencedColumnName = "pt_name")
     @ApiModelProperty(value="피티이름")
-    private PtInfo pt_clicked_name;   
+    private PtInfo ptClickedName;   
 }

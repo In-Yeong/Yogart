@@ -4,8 +4,8 @@
         <h3>{{ teacherInfo.teacherName }} 선생님</h3>
         <h5>{{ teacherInfo.teacherIntro }}</h5>
         <b-tabs content-class="mt-3">
-            <b-tab v-for="pt in ptList" :key="pt.id" :title="pt.ptName">
-                <ClassRegi :ptId="pt.id"/>
+            <b-tab v-for="pt in ptList" :key="pt.ptId" :title="pt.ptName">
+                <ClassRegi :ptId="pt.ptId"/>
             </b-tab>
         </b-tabs>
     </div>

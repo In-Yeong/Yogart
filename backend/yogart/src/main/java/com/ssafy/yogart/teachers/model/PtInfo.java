@@ -1,5 +1,7 @@
 package com.ssafy.yogart.teachers.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "pt_info")
-public class PtInfo {
+public class PtInfo implements Serializable{
 	@Id
 	@Column(name="pt_id")
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
