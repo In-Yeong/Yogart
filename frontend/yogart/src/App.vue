@@ -1,9 +1,9 @@
 <template>
     <div id="app">
         <login-modal @loginComplete="loginComplete"></login-modal>
-        <NavBar @logout="logout" :isLogin="isLogin"/>
+        <!-- <NavBar @logout="logout" :isLogin="isLogin"/> -->
         <div style="height:99px;"></div>
-        <div id="nav" v-if="false">
+        <div id="nav" v-if="true">
             <router-link to="/login">login</router-link> |  
             <router-link to="/">Home</router-link> | 
             <router-link to="/mypage/graph">Graph</router-link> | 
@@ -16,7 +16,7 @@
             <router-link to="/coaching/yogapose">YogaPosePage</router-link>
         </div>
             <router-view @submit-signup-data="signup" />
-        <Footer/>
+        <!-- <Footer/> -->
     </div>
 </template>
 
@@ -105,12 +105,19 @@ export default {
 
 
 <style>
+/* body{
+    font-family: 'Song Myung', serif;
+} */
 #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+    /* font-family: 'Song Myung', serif; */
     color: #2c3e50;
     min-height: calc(100vh - 127.55px);
+    background-image: url('./assets/watercolor1.jpg');
+    background-size: 100%;
+    
 }
 
 #nav {
@@ -144,10 +151,116 @@ export default {
   background-position: center center;
   background-size: cover;
 } */
+.shadow-box{
+    background-color: rgba(255,255,255,0.3);
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px #f29d8f;
+}
 
 .user-level {
   position: absolute;
   top: 60px;
   left: 80px;
 }
+.btn1 {
+  transition-duration: 0.4s;
+  /* background-color:rgba(255,255,255,0.3);
+  border: 3px solid #f29d8f;
+  color: #f29d8f; */
+  background-color: #f29d8f;
+  border: 5px solid #f29d8f;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+
+  font-size: 24px;
+  margin: 4px 2px;
+  transition:800ms ease all;
+  outline:none;
+}
+.btn1:hover {
+  background-color:  #2c3e50;
+  border: 5px solid #2c3e50;
+  color: #f29d8f;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 24px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.btn1:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #f29d8f;
+  transition:400ms ease all;
+}
+.btn1:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.btn1:hover:before,.btn1:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+.btn4 {
+  transition-duration: 0.4s;
+  /* background-color:rgba(255,255,255,0.3);
+  border: 3px solid #f29d8f;
+  color: #f29d8f; */
+  background-color:#f29d8f;
+  border: 3px solid #f29d8f;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+
+  font-size: 24px;
+  margin: 4px 2px;
+  transition:800ms ease all;
+  outline:none;
+}
+.btn4:hover {
+  background-color:  rgba(255,255,255,0.3);
+  color: #f29d8f;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 24px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.btn4:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #f29d8f;
+  transition:400ms ease all;
+}
+.btn4:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.btn4:hover:before,.btn4:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
 </style>
