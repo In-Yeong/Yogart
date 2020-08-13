@@ -34,5 +34,4 @@ export default {
 .outline-white{
     border : 2px solid white;
 }
-
 </style>

@@ -2,8 +2,7 @@
     <div id="app">
         <login-modal @loginComplete="loginComplete"></login-modal>
         <NavBar @logout="logout" :isLogin="isLogin"/>
-
-            <router-view @submit-signup-data="signup" />
+        <router-view class="test" @submit-signup-data="signup" />
         <Footer :isLogin="isLogin"/>
     </div>
 </template>
@@ -101,9 +100,10 @@ export default {
     /* background-repeat: no-repeat; */
     background-size: 100%;
     color: #2c3e50;
-    min-height: calc(100vh - 127.55px);
 }
-
+.test {
+    min-height: 100vh;
+}
 .box {
   margin-top : 3px;
 }

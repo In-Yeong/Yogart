@@ -1,8 +1,6 @@
 <template>
     <div >
-
-        <div class="navbar navbar-expand navbar-light fixed-top w-100">
-            <a class="navbar-brand" href="/">LOGO</a>
+        <div class="navbar navbar-expand navbar-light fixed-top w-100" :class="{ 'navbar--hidden': !showNavbar, 'change--color': lastScrollPosition > 100 }">
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav nav-mid">
                 <li class="nav-item">
@@ -12,39 +10,40 @@
                     <a class="nav-link" href="/class">1:1 PT</a>
                 </li>
                 </ul>
+                <a class="navbar-brand" href="/">LOGO</a>
                 <ul class="navbar-nav nav-right">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="nav-link" id="navbarDropdown"  data-toggle="dropdown" >
                     HELP
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/notice">공지사항</a>
-                        <a class="dropdown-item" href="/qna">Q&A</a>
+                    </div>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="sub-item nav-link" href="/notice">공지사항</a>
+                        <a class="sub-item nav-link" href="/qna">Q&A</a>
                     </div>
                 </li>
                 
                 <li class="nav-item dropdown" v-if="isLogin">
-                    <img class="user-profile-img m-3" :src="userPic">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <!-- <img class="user-profile-img m-3" :src="userPic"> -->
+                    <a class="nav-link" id="navbarDropdown" data-toggle="dropdown">
                     {{userNickname}}님
                     </a>
-                    <div v-if="isAdmin" class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/mypage">마이페이지</a>
-                        <a class="dropdown-item" href="/notice/form">공지작성</a>
-                        <a class="dropdown-item" @click="logoutEmmit">로그아웃</a>
+                    <div v-if="isAdmin" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="sub-item nav-link" href="/mypage">마이페이지</a>
+                        <a class="sub-item nav-link" href="/notice/form">공지작성</a>
+                        <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
                     </div>
-                    <div v-else-if="isTeacher" class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/mypage">마이페이지</a>
-                        <a class="dropdown-item" href="#">수업관리</a>
-                        <a class="dropdown-item" @click="logoutEmmit">로그아웃</a>
+                    <div v-else-if="isTeacher" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="sub-item nav-link" href="/mypage">마이페이지</a>
+                        <a class="sub-item nav-link" href="#">수업관리</a>
+                        <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
                     </div>
-                    <div v-else class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/mypage">마이페이지</a>
-                        <a class="dropdown-item" @click="logoutEmmit">로그아웃</a>
+                    <div v-else class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="sub-item nav-link" href="/mypage">마이페이지</a>
+                        <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
                     </div>
                 </li>
                 <li class="nav-item" v-else>
-                    <a class="nav-link" @click="openLoginModal">로그인</a>
+                    <a class="nav-link" @click="openLoginModal">LOGIN</a>
                 </li>
                 </ul>
             </div>
@@ -60,6 +59,8 @@ export default {
         return {
             userNickname: this.$cookies.get('userNickname'),
             userPic: "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
+            showNavbar: true,
+            lastScrollPosition: 0
         }
     },
     methods: {
@@ -70,17 +71,70 @@ export default {
         logoutEmmit() {
             this.$emit('logout')
         },
+        onScroll () {   // 스크롤 내리면 nav 사라지고 올리면 생기는 함수
+            const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+            if (currentScrollPosition < 0) {
+                return
+            }
+            // Stop executing this function if the difference between
+            // current scroll position and last scroll position is less than some offset
+            if (Math.abs(currentScrollPosition - this.lastScrollPosition) < 60) {
+                return
+            }
+            this.showNavbar = currentScrollPosition < this.lastScrollPosition
+            this.lastScrollPosition = currentScrollPosition
+        }
+
+    },
+    mounted () {
+        window.addEventListener('scroll', this.onScroll)
+    },
+    beforeDestroy () {
+        window.removeEventListener('scroll', this.onScroll)
     },
     props: {
         isLogin: Boolean
     },
 }
+
 </script>
 
 <style>
+.navbar {
+    transform: translate3d(0, 0, 0);
+    transition: 0.1s all ease-out;
+}
+.navbar.navbar--hidden {
+  box-shadow: none;
+  transform: translate3d(0, -100%, 0);
+}
+
+.navbar.change--color {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.navbar-brand {
+    text-align: center;
+    /* width: 100vw; */
+    margin: 0 auto !important;
+}
 
 .nav-link {
-    color: black !important;
+    color: gray !important;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 1rem !important;
+}
+.nav-link:after {    
+  content: "";
+  display: block;
+  height: 4px;
+  background: rgba(242, 157, 143, 1);
+  transition: width 0.7s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+.nav-link:hover:after { 
+  width: 8rem !important;
 }
 .nav-right {
     position: fixed;
@@ -100,18 +154,23 @@ export default {
   background-position: center center;
   background-size: cover;
 } 
-nav {
-    background-color: rgba(255, 255, 255, 0.3) !important;
-    height: 8vh !important;
-    z-index: 100;
-}
+
 .dropdown-menu {
-    background-color: rgba(255, 255, 255, 0.3) !important;
+    display: none;
+    background-color: rgba(255, 255, 255, 0) !important;
     border: none !important;
     padding: 0 !important;
 }
-.dropdown-item {
-    padding: 0.5rem !important;
-    text-align: center !important;
+.dropdown-menu-right {
+    position: fixed !important;
+     right: 0 !important;
+}
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+ }
+
+.sub-item {
+    text-align: center;
 }
 </style>
