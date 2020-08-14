@@ -9,7 +9,7 @@
                 <div class="col-3">{{ notice.createDate }}</div>
             </div>
             <div class="text-left border-bottom min-height-5 mb-3">
-                <pre class="m-3">{{ notice.noticeContent }}</pre>
+                <viewer :initialValue="notice.viewerText"/>
             </div>
             <!-- <div class="row m-0 border-top border-bottom">
                 <div class="col-2 bg-light">제목</div>
@@ -33,13 +33,20 @@
 <script>
 // @ is an alias to /src
 import axios from 'axios'
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+
+import { Viewer } from '@toast-ui/vue-editor';
+
 const API_URL = 'http://127.0.0.1:8000'
 
 export default {
     name: 'NoticeDetailView',
+    components: {
+        viewer: Viewer
+    },
     data() {
       return {
-        notice: null
+        notice: null,
       }
     },
     methods: {

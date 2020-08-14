@@ -20,6 +20,9 @@ export default {
             SERVER_URL: this.$store.state.SERVER_URL,
         }
     },
+    props: {
+        teacherInfo: Object,
+    },
     mounted() {
         // 아직 완료되지 않은 PT 내역을 보여줍니다.
         const requestHeaders = {
@@ -27,7 +30,7 @@ export default {
                 Authorization: this.$cookies.get('auth-token')
             }
         }
-        axios.get(this.SERVER_URL + '/api/teachers/pt-list', null, requestHeaders)
+        axios.get(this.SERVER_URL + '/api/teachers/pt-list', requestHeaders)
         .then(res => {
             this.ptList = res.data.ptList
         })

@@ -11,7 +11,7 @@
                 previewStyle="vertical"
             />
             <button type="submit">작성</button>
-            <span v-if="isEmpty">아무것도 묻지 않음으로 질문 할 수는 없어요.</span>
+            <p v-if="isEmpty">아무것도 묻지 않음으로 질문 할 수는 없어요.</p>
         </form>
     </div>
 </template>
@@ -32,7 +32,6 @@ export default {
         onSubmit(e) {
             e.preventDefault()
             this.getHtml()
-            console.log(this.questionContent)
             const requestHeaders = {
                 headers: {
                     Authorization: this.$cookies.get('auth-token')
@@ -65,7 +64,7 @@ export default {
         return {
             SERVER_URL: this.$store.state.SERVER_URL,
             questionTitle: null,
-            editorText: '울어도 괜찮다.',
+            editorText: null,
             questionContent: null,
             isEmpty: true,
         }

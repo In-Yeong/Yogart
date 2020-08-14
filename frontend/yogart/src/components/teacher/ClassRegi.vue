@@ -9,9 +9,6 @@
         <div v-for="time in showArray" :key="time.time">
             <PtListItem :ptInfo="ptInfo" :time="time" :clickedDate="clickedDate"></PtListItem>
         </div>
-        <div>
-
-        </div>
     </div>
 </template>
 
@@ -20,7 +17,7 @@ import axios from 'axios'
 import DatePicker from 'vuejs-datepicker'
 import { ko } from 'vuejs-datepicker/dist/locale'
 import PtListItem from './PtListItem.vue'
-import ReviewList from './ReviewList.vue'
+import ReviewList from '../review/ReviewList.vue'
 
 export default {
     name: 'ClassRegi',
@@ -72,26 +69,32 @@ export default {
     },
     mounted() {
         // 강사의 수업 정보와 이미 예약된 PT리스트를 가져옵니다.
-        // axios.get(this.SERVER_URL + '/api/teachers/pt', ptId)
-        // .then(res => {
-            let res = {
-                data: {
-                    ptTeacher: 12, // 요가강사 id값
-                    ptId: 1,
-                    ptName: '요가를 처음 하는 사람을 위함',
-                    ptPrice: 250,
-                    ptIntro: '편하게 시작해 봐요',
-                    clicked: [{day: 3, time:20}, {day:4, time: 19}, {day: 4, time:18}, {day:3, time: 18}],
-                    soldOut: [ new Date(2020, 7, 13, 19), new Date(2020, 7, 12, 18)]
-                }
-            }
+        axios.get(this.SERVER_URL + '/api/teachers/pt', ptId)
+        .then(res => {
+            // let res = {
+            //     data: {
+            //         ptTeacher: 12, // 요가강사 id값
+            //         ptId: 1,
+            //         ptName: '요가를 처음 하는 사람을 위함',
+            //         ptPrice: 250,
+            //         ptIntro: '편하게 시작해 봐요',
+            //         clicked: [{day: 3, time:20}, {day:4, time: 19}, {day: 4, time:18}, {day:3, time: 18}],
+            //         soldOut: [ new Date(2020, 7, 13, 19), new Date(2020, 7, 12, 18)]
+            //     }
+            // }
             this.ptTimes = res.data.clicked
             this.ptInfo.ptTeacher = res.data.ptTeacher
             this.ptInfo.ptId = res.data.ptId
             this.ptInfo.ptName = res.data.ptName
             this.ptInfo.ptPrice = res.data.ptPrice
             this.ptInfo.ptIntro = res.data.ptIntro
-            this.soldOut = res.data.soldOut
+            const self = this
+            res.data.soldOut.forEach(function(e){
+                let yyyy = Number(e.slice(0, 4))
+                let mm = Number(e.slice(5,7)) - 1
+                let dd = Number(e.slice(8, 10))
+                self.ptInfo.soldOut.push(new Date(yyyy, mm, dd))
+            })
             const today = new Date() // 오늘의 날짜
             for (let i = 0; i < 14; i++) {
                 let cnt = 0
@@ -112,6 +115,7 @@ export default {
                     this.highlighted.dates.push(nextDay)
                 }
             }
+        })
     }
 }
 </script>

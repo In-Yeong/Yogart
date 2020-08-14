@@ -28,6 +28,7 @@ import SpoonPurchase from '../views/spoon/SpoonPurchase.vue'
 import PayComplete from '../views/kakaopay/PayComplete.vue'
 import PayCancel from '../views/kakaopay/PayCancel.vue'
 import PayFail from '../views/kakaopay/PayFail.vue'
+import AdminPage from '../views/admin/AdminPage.vue'
 
 
 const requireAuth = () => (from, to, next) => {
@@ -236,6 +237,12 @@ const routes = [
         beforeEnter: requireAuth(),
       },
       // Admin
+      {
+          path: '/admin',
+          name: 'AdminPage',
+          component: AdminPage,
+          beforeEnter: requireAdmin()
+      }
       
 ]
 
