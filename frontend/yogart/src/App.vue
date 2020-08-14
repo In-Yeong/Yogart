@@ -105,7 +105,8 @@ export default {
     min-height: 100vh;
 }
 .padding-for-nav {  /* 다른 views에서 사용 */
-    padding-top: 15vh;
+    padding-top: 22vh;
+    padding-bottom: 6vh;
 }
 .box {
   margin-top : 3px;
