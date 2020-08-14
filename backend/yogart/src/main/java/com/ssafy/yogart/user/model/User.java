@@ -71,15 +71,9 @@ public class User implements Serializable {
     private String userIntro;
     
     @Column(name="user_spoon")
-<<<<<<< HEAD
-    @ApiModelProperty(value="스푼 갯수")
-    private Integer userSpoon;
-
-=======
     @ApiModelProperty(value="잔여스푼")
     private Integer userSpoon;
     
->>>>>>> 82e170df7d6284abdd894ac1819a59e753b665dd
     public User(String userEmail, String userName, String userNickname, String userPassword) {
        this.userEmail = userEmail;
         this.userName = userName;

@@ -1,6 +1,6 @@
 <template>
     <div class="NoticeListView">
-        <h1 class="m-5">공지사항</h1>
+        <h1 class="p-5">공지사항</h1>
         <button @click="callNoticeForm()">글 작성(관리자만 보이게 설정)</button>
         <table class="table m-auto">
             <thead class="thead-dark container p-0">

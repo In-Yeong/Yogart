@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-5" style="margin-top : 50px">
+    <div class="py-5">
         <UserProfile/>
         <div class="d-flex flex-column">
             <div class="w3-bar" style="margin-left: 10vw;">

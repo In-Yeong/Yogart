@@ -179,9 +179,6 @@ input {
     color: red;
     visibility: hidden;
 }
-.updateView {
-    background-color: #f5f6f7;
-}
 .input-box {
     border-style: solid;
     border-color: #dadada;
