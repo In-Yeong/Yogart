@@ -93,6 +93,7 @@ export default {
             axios.get(this.SERVER_URL + `/api/aicoach/list/${this.courseId}`)
             .then(res => {
                 //코스 이름과 코스 리스트 save
+                console.log("코칭결과 페이지 코스 가져오기성공",res)
                 this.courseName = res.data.courseName
                 
                 const Course =  res.data.course.split(',') 

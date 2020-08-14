@@ -6,12 +6,12 @@
             <h5>{{cur+1}}번째 {{course[cur].korean_pose_name}} 포즈부터 시작합니다</h5>
             <img class="round-image" :src="require(`../../public/photos/${posefiles[course[cur]].file_reference}`)" alt="">
             <div class="m-5">
-                <a v-if="startBtn" @click="clickStart()" class="btn2"  href="#">START</a>
+                <a v-if="startBtn" @click="clickStart()" class="btn2 m-3"  href="#">START</a>
             </div>
             <!-- <button v-if="startBtn" class="w3-btn w3-round-xlarge w3-red w3-xlarge m-5" type="button" @click="clickStart()">Get Start!</button> -->
         </div>
        
-        <div id="loading" v-if="loading">
+        <div id="loading m-5" v-if="loading">
         <!-- <div id="loading" v-if="true"> -->
             <h1 class="m-5">AI 요가 코칭 서비스를 시작합니다</h1>
             <h5>{{courseName}} 코스 준비중</h5>
@@ -22,7 +22,7 @@
             <h1 class="m-5">웹캠을 켜주시고 잠시만 기다려 주세요</h1>
             <h5> AI Yoga Coaching Service is running, Please turn on your webcam and wait</h5>
         </div>
-        <div class="d-flex justify-content-around">
+        <div class="d-flex justify-content-around mt-5">
             <div v-if="aiPage" class="shadow-box">
                 <div id="pose-data">
                     <img :src="require(`../../public/photos/${posefiles[course[cur]].file_reference}`)" alt="">
