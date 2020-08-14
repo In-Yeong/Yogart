@@ -1,12 +1,14 @@
 package com.ssafy.yogart.user.serviceimpl;
 
-import java.util.Random;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.yogart.user.error.AlreadyExistsException;
 import com.ssafy.yogart.user.model.User;
+import com.ssafy.yogart.user.model.UserFile;
+import com.ssafy.yogart.user.repository.UserFileRepository;
 import com.ssafy.yogart.user.repository.UserRepository;
 import com.ssafy.yogart.user.service.JwtService;
 import com.ssafy.yogart.user.service.UserService;
@@ -15,6 +17,9 @@ import com.ssafy.yogart.user.service.UserService;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private UserFileRepository userFileRepository;
 	
 	@Autowired
 	private JwtService jwtService;
@@ -92,5 +97,21 @@ public class UserServiceImpl implements UserService {
 		User user = userRepository.findByUserNickname(nickname);
 		return user;
 	}
+
+	@Override
+	public List<UserFile> getRegistrationUsers() {
+		return userFileRepository.getUsers();
+	}
+
+	@Override
+	public List<UserFile> getRegistrationImage(String userEmail) {
+		return userFileRepository.getImageName(userEmail);
+	}
+
+	@Override
+	public void registerUserToTeacher(String userEmail) {
+		userFileRepository.deleteByUserFileEmail(userEmail);
+	}
+	
 
 }

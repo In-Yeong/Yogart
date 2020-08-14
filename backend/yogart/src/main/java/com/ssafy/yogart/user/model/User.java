@@ -73,6 +73,10 @@ public class User implements Serializable {
     @Column(name="user_spoon")
     @ApiModelProperty(value="스푼 갯수")
     private Integer userSpoon = 0;
+    
+    @Column(name="teacher_code")
+    @ApiModelProperty(value="강사코드")
+    private String teacherCode;
 
     public User(String userEmail, String userName, String userNickname, String userPassword) {
        this.userEmail = userEmail;

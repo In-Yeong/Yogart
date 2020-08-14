@@ -8,10 +8,12 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
@@ -37,6 +39,8 @@ import com.ssafy.yogart.user.model.KakaoPaymentApproval;
 import com.ssafy.yogart.user.model.KakaoPaymentReady;
 import com.ssafy.yogart.user.model.Result;
 import com.ssafy.yogart.user.model.User;
+import com.ssafy.yogart.user.model.UserFile;
+import com.ssafy.yogart.user.repository.UserFileRepository;
 import com.ssafy.yogart.user.repository.UserRepository;
 import com.ssafy.yogart.user.service.JwtService;
 import com.ssafy.yogart.user.service.KakaoService;
@@ -64,6 +68,9 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private UserFileRepository userFileRepository;
 	
     @Autowired
     public UserController(UserService userService) {
@@ -235,11 +242,12 @@ public class UserController {
         userService.withdraw(authorization);
     }
     
-    @ApiOperation(value="이미지 업로드")
+    @ApiOperation(value="강사 인증 이미지 업로드")
     @PostMapping(value = "/imageUpload")
-    public ResponseEntity<Result> imageUpload(@RequestParam("files") MultipartFile[] files, HttpServletRequest request) {
+    public ResponseEntity<Result> imageUpload(@RequestHeader Map<String, String> header,
+    		@RequestParam("files") MultipartFile[] files, HttpServletRequest request) {
 
-    	System.out.println(files.length);
+    	User currUser = userService.authentication(header.get("authorization"));
     	ResponseEntity<Result> response;
     	for(MultipartFile file : files)
     	{
@@ -249,7 +257,11 @@ public class UserController {
 //    		File dest = new File(request.getServletContext().getRealPath("/") + fileName);
     		System.out.println(request.getServletContext().getRealPath("/"));
     		try {
-				save(file, request.getServletContext().getRealPath("/"));
+    			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+   			 	String uploadDate = simpleDateFormat.format(new Date());
+				save(file, request.getServletContext().getRealPath("/"), uploadDate);
+				UserFile userFile = new UserFile(currUser, uploadDate + fileName);
+				userFileRepository.save(userFile);
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -260,6 +272,7 @@ public class UserController {
     	response = new ResponseEntity<>(result, HttpStatus.OK);
     	return response;
     }
+
     
     @ApiOperation(value="스푼 결제")
     @PostMapping(value = "/pay")
@@ -312,10 +325,11 @@ public class UserController {
     
     @ApiOperation(value="프로필 사진 업로드")
     @PostMapping(value = "/profileUpload")
-    public ResponseEntity<Result> profileImageUpload(@RequestHeader String authorization, @RequestParam("files") MultipartFile[] files, HttpServletRequest request) {
+    public ResponseEntity<Result> profileImageUpload(@RequestHeader Map<String, String> authorization, @RequestParam("userImage") MultipartFile[] files,
+    		HttpServletRequest request) {
 
-    	System.out.println(files.length);
     	ResponseEntity<Result> response;
+    	User currUser = userService.authentication(authorization.get("authorization"));
     	for(MultipartFile file : files)
     	{
     		String fileName = file.getOriginalFilename();
@@ -324,7 +338,11 @@ public class UserController {
 //    		File dest = new File(request.getServletContext().getRealPath("/") + fileName);
     		System.out.println(request.getServletContext().getRealPath("/"));
     		try {
-				save(file, request.getServletContext().getRealPath("/"));
+    			 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+    			 String uploadDate = simpleDateFormat.format(new Date());
+				 save(file, request.getServletContext().getRealPath("/"), uploadDate);
+				 currUser.setUserProfile(uploadDate + fileName);
+				 userService.updateInfo(currUser);
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -335,6 +353,7 @@ public class UserController {
     	response = new ResponseEntity<>(result, HttpStatus.OK);
     	return response;
     }
+
     
     @ApiOperation(value="프로필 사진 가져오기")
     @GetMapping(value="/profileImage")
@@ -364,10 +383,77 @@ public class UserController {
     	return response;
     }
     
-    private String save(MultipartFile file, String contextPath) {
+    @ApiOperation(value="강사 등록대기 리스트")
+    @GetMapping(value="/registrationList")
+    public ResponseEntity<Set<User>> viewRegistrationList() {
+    	
+    	ResponseEntity<Set<User>> response = null;
+    	
+    	List<UserFile> userFileList = userService.getRegistrationUsers();
+    	Set<User> userList = new LinkedHashSet<User>();
+    	
+    	for(UserFile userFile : userFileList) {
+    		userList.add(userFile.getUserFileEmail());
+    	}
+    	
+    	response = new ResponseEntity<Set<User>>(userList, HttpStatus.OK);
+    	return response;
+    }
+    
+    @ApiOperation(value="강사 인증사진 가져오기")
+    @GetMapping(value="/registrationImage")
+    public ResponseEntity<byte[]> getRegistrationImage(@RequestParam String userEmail,
+    		HttpServletRequest request) {
+    	
+    	System.out.println(userEmail);
+    	ResponseEntity<byte[]> response = null;
+    	HttpHeaders header = new HttpHeaders();
+    	
+    	try {
+    		InputStream input = null;
+    		List<UserFile> userFile = userService.getRegistrationImage(userEmail);
+    		
+	    	String filePath = request.getServletContext().getRealPath("/") + userFile.get(0).getUserFile();
+	    	System.out.println(filePath);
+	    	String mimeType = Files.probeContentType(Paths.get(filePath));
+	    	System.out.println(mimeType);
+	    	input = new FileInputStream(filePath);
+			
+			header.setContentType(MediaType.IMAGE_PNG);
+			response = new ResponseEntity<byte[]>(IOUtils.toByteArray(input), header, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response = new ResponseEntity<byte[]>(null, header, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+    	
+    	return response;
+    }
+    
+    @ApiOperation(value="유저를 강사로 등록")
+    @GetMapping(value="/registration")
+    public ResponseEntity<Set<User>> registerTeacher(@RequestParam String userEmail) {
+    	
+    	ResponseEntity<Set<User>> response = null;
+    	
+    	User registrationUser = userRepository.findByUserEmail(userEmail);
+    	registrationUser.setUserAuthority("TEACHER");
+    	userService.updateInfo(registrationUser);
+    	userService.registerUserToTeacher(userEmail);
+    	
+    	List<UserFile> userFileList = userService.getRegistrationUsers();
+    	Set<User> userList = new LinkedHashSet<User>();
+    	
+    	for(UserFile userFile : userFileList) {
+    		userList.add(userFile.getUserFileEmail());
+    	}
+    	
+    	response = new ResponseEntity<Set<User>>(userList, HttpStatus.OK);
+    	return response;
+    }
+    
+    private String save(MultipartFile file, String contextPath, String uploadDate) {
         try {
-           SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-           String newFileName = simpleDateFormat.format(new Date()) + file.getOriginalFilename();
+           String newFileName = uploadDate + file.getOriginalFilename();
            byte[] bytes = file.getBytes();
            //윈도우에서는 폴더가 없으면 생성이안됨
            Path path = Paths.get(contextPath + newFileName);
@@ -379,6 +465,7 @@ public class UserController {
            return null;
         }
      }
+
     
     private String randomPassword() {
 		 int leftLimit = 48;
