@@ -1,6 +1,6 @@
 <template>
     <div class="NoticeDetailView">
-        <h1 class="m-5">공지사항 상세 페이지</h1>
+        <h1 class="p-5">공지사항 상세 페이지</h1>
         <div class="container">
             <div class="row m-0 border-top border-bottom">
                 <div class="col-2 bg-light">제목</div>

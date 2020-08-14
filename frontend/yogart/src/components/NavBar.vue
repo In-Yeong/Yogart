@@ -1,143 +1,68 @@
 <template>
-      <!-- 여기 네브바 넣음 -->
-    <!-- Start Navbar Area -->
-    <div class="navbar-area" style="margin-bottom=55px;">
-      <!-- Menu For Mobile Device -->
-      <div class="container">
-
-        <div class="mobile-nav">
-          <router-link to="/" class="logo">
-            Logo
-          </router-link>
-        </div>
-      </div>
-
-      <!-- Menu For Desktop Device -->
-      <div class="main-nav">
-        <div class="container">
-          <nav class="navbar navbar-expand-md navbar-light">
-            <router-link class="navbar-brand" to="/">
-              Logo
-            </router-link>
-            <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
-              <ul class="navbar-nav ml-auto">
-                <!-- <li class="nav-item">
-                  <a href="#" class="nav-link dropdown-toggle active">Service</a>
-                  <ul class="dropdown-menu">
-                    <li class="nav-item">
-                     
-                      <a href="#" class="nav-link">AI Coaching</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">1:1 Yoga PT</a>
-                    </li>
-                   
-                    </li>
-                  </ul>
-                </li> -->
+    <div >
+        <div class="navbar navbar-expand navbar-light fixed-top w-100" :class="{ 'navbar--hidden': !showNavbar, 'change--color': lastScrollPosition > 100 }">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav nav-left">
                 <li class="nav-item">
-                  <router-link to="/notice" class="nav-link">Notice</router-link>
-                </li>
-                <!-- 로그인과 사인업 로그인 중에는 안 보이도록 해야함. -> 로그아웃, 마이페이지 출력 -->
-                <template v-if="!isLogin">
-                  <li class="nav-item">
-                    <a @click="openLoginModal" style="cursor:pointer;" class="nav-link">Login</a>
-                  </li>
-                  <li class="nav-item">
-                    <router-link to="/accounts/signup" class="nav-link">Signup</router-link>
-                  </li>
-                </template>
-                <template v-else>
-                  <li class="nav-item">
-                    <router-link to="/mypage" class="nav-link">Mypage</router-link>
-                  </li>
-                  <li class="nav-item">
-                    <a @click="logoutEmmit" style="cursor:pointer;" class="nav-link">Logout</a>
-                  </li>
-                </template>
-
-                <li class="nav-item">
-                  <router-link to="#" class="nav-link dropdown-toggle">Pages</router-link>
-                  <ul class="dropdown-menu">
-                    <li class="nav-item">
-                      <router-link to="#" class="nav-link">About</router-link>
-                    </li>
-                    <li class="nav-item">
-                      <router-link to="#" class="nav-link">Services</router-link>
-                    </li>
-                    <li class="nav-item">
-                      <router-link to="#" class="nav-link">Team</router-link>
-                    </li>
-                    <li class="nav-item">
-                      <router-link to="#" class="nav-link">Testimonials</router-link>
-                    </li>
-                    <li class="nav-item">
-                      <router-link to="#" class="nav-link">Contact</router-link>
-                    </li>
-                  </ul>
+                    <a class="nav-link" href="/coaching/yogaposelist">AI coaching</a>
                 </li>
                 <li class="nav-item">
-                  <router-link to="#" class="nav-link dropdown-toggle">Service</router-link>
-                  <ul class="dropdown-menu">
-                    <li class="nav-item">
-                      <router-link to="#" class="nav-link dropdown-toggle">AI Coaching</router-link>
-                      <ul class="dropdown-menu">
-                        <li class="nav-item">
-                          <router-link to="/coaching" class="nav-link">AI Coaching Page</router-link>
-                        </li>
-                        <li class="nav-item">
-                          <router-link to="/coaching/result" class="nav-link">AI Coaching Result</router-link>
-                        </li>
-                        <li class="nav-item">
-                          <router-link to="/coaching/yogapose" class="nav-link">Yoga Pose</router-link>
-                        </li>
-                        <li class="nav-item">
-                          <router-link to="/coaching/yogaposelist" class="nav-link">Yoga Pose List</router-link>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="nav-item">
-                      <router-link to="#" class="nav-link dropdown-toggle">1:1 Yoga PT</router-link>
-                      <ul class="dropdown-menu">
-                        <li class="nav-item">
-                          <router-link to="#" class="nav-link">Yoga Teachers</router-link>
-                        </li>
-                        <li class="nav-item">
-                          <router-link to="/class" class="nav-link">Yoga Classes</router-link>
-                        </li>
-                        <li class="nav-item">
-                          <router-link to="#" class="nav-link dropdown-toggle">Submenu 3</router-link>
-                          <ul class="dropdown-menu">
-                            <li class="nav-item">
-                              <router-link to="#" class="nav-link">Item 1</router-link>
-                            </li>
-                            <li class="nav-item">
-                              <router-link to="#" class="nav-link">Item 2</router-link>
-                            </li>
-                            <li class="nav-item">
-                              <router-link to="#" class="nav-link">Item 3</router-link>
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="nav-item">
-                      <router-link to="/qna" class="nav-link">Q&A</router-link>
-                    </li>
-                  </ul>
+                    <a class="nav-link" href="/class">1:1 PT</a>
                 </li>
-              </ul>
+                </ul>
+                <a class="navbar-brand" href="/"><img class="logo-img" src="../assets/logo.png" alt=""></a>
+                <ul class="navbar-nav nav-right">
+                <li class="nav-item dropdown">
+                    <div class="nav-link" id="navbarDropdown"  data-toggle="dropdown" >
+                    HELP
+                    </div>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="sub-item nav-link" href="/notice">공지사항</a>
+                        <a class="sub-item nav-link" href="/qna">Q&A</a>
+                    </div>
+                </li>
+                
+                <li class="nav-item dropdown" v-if="isLogin">
+                    <!-- <img class="user-profile-img m-3" :src="userPic"> -->
+                    <a class="nav-link" id="navbarDropdown" data-toggle="dropdown">
+                    {{userNickname}}님
+                    </a>
+                    <div v-if="isAdmin" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="sub-item nav-link" href="/mypage">마이페이지</a>
+                        <a class="sub-item nav-link" href="/notice/form">공지작성</a>
+                        <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
+                    </div>
+                    <div v-else-if="isTeacher" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="sub-item nav-link" href="/mypage">마이페이지</a>
+                        <a class="sub-item nav-link" href="#">수업관리</a>
+                        <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
+                    </div>
+                    <div v-else class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="sub-item nav-link" href="/mypage">마이페이지</a>
+                        <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
+                    </div>
+                </li>
+                <li class="nav-item" v-else>
+                    <a class="nav-link" @click="openLoginModal">LOGIN</a>
+                </li>
+                </ul>
             </div>
-          </nav>
         </div>
-      </div>
-    </div>
-    <!-- End Navbar Area -->
-    <!-- 네브바 끝 -->
+    </div> 
+
 </template>
 
 <script>
 export default {
+    name: 'NavBar',
+    data() {
+        return {
+            userNickname: this.$cookies.get('userNickname'),
+            userPic: "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
+            showNavbar: true,
+            lastScrollPosition: 0
+        }
+    },
     methods: {
         openLoginModal() {
               if (this.isLogin) return
@@ -146,23 +71,111 @@ export default {
         logoutEmmit() {
             this.$emit('logout')
         },
+        onScroll () {   // 스크롤 내리면 nav 사라지고 올리면 생기는 함수
+            const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+            if (currentScrollPosition < 0) {
+                return
+            }
+            // Stop executing this function if the difference between
+            // current scroll position and last scroll position is less than some offset
+            if (Math.abs(currentScrollPosition - this.lastScrollPosition) < 60) {
+                return
+            }
+            this.showNavbar = currentScrollPosition < this.lastScrollPosition
+            this.lastScrollPosition = currentScrollPosition
+        }
+
+    },
+    mounted () {
+        window.addEventListener('scroll', this.onScroll)
+    },
+    beforeDestroy () {
+        window.removeEventListener('scroll', this.onScroll)
     },
     props: {
         isLogin: Boolean
     },
 }
+
 </script>
 
 <style>
-.mobile-nav {
-    background: #000;
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    width: 100%;
-    z-index: 999;
-    height: 99px;
+.logo-img {
+    height: 8vh;
+}
+.navbar {
+    transform: translate3d(0, 0, 0);
+    transition: 0.1s all ease-out;
+    padding: 0 !important;
+}
+.navbar.navbar--hidden {
+  box-shadow: none;
+  transform: translate3d(0, -100%, 0);
+}
+
+.navbar.change--color {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.navbar-brand {
+    text-align: center;
+    margin: 0 auto !important;
+}
+
+.nav-link {
+    color: gray !important;
+    position: relative;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 1rem !important;
+}
+.nav-link:after {    
+  content: "";
+  display: block;
+  height: 4px;
+  background: rgba(242, 157, 143, 1);
+  transition: width 0.7s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+.nav-link:hover:after { 
+  width: 8rem !important;
+}
+.nav-right {
+    position: fixed;
+    right: 1rem;
+}
+.nav-left {
+    position: fixed;
+}
+
+.user-profile-img {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+} 
+
+.dropdown-menu {
+    display: none;
+    background-color: rgba(255, 255, 255, 0) !important;
+    border: none !important;
+    padding: 0 !important;
+    top: 8vh !important;
+}
+.dropdown-menu-right {
+    position: fixed !important;
+     right: 0 !important;
+}
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+ }
+
+.sub-item {
+    text-align: center;
 }
 </style>
