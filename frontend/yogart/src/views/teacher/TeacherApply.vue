@@ -24,7 +24,7 @@ export default {
         onSubmit() {
             const requestHeaders = {
                 headers: {
-                    Authorization: 'Token ' + this.$cookies.get('auth-token'),
+                    Authorization: this.$cookies.get('auth-token'),
                     'Content-Type' : 'multipart/form-data',
                 }
             }
