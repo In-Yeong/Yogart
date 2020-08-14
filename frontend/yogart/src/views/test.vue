@@ -1,5 +1,36 @@
 <template>
   <div class="d-flex flex-column" style="height:700px;">
+
+        <form>
+            <input id="input-1" type="text" placeholder="코스명을 적어주세요" required autofocus />
+            <label for="input-1">
+                <span class="label-text" >코스 생성하기</span>
+                <span class="nav-dot"></span>
+                <div class="fill-button-trigger">CLick here and fill the form2323</div>
+            </label>
+                <!-- <input id="input-2" type="email" placeholder="email@address.com" required />
+            <label for="input-2">
+                <span class="label-text">Email</span>
+                <span class="nav-dot"></span>
+            </label>
+            <input id="input-3" type="text" placeholder="Company's name" required />
+            <label for="input-3">
+                <span class="label-text">Company</span>
+                <span class="nav-dot"></span>
+            </label>
+            <input id="input-4" type="text" placeholder="Requirement" required />
+            <label for="input-4">
+                <span class="label-text">Requirement</span>
+                <span class="nav-dot"></span>
+            </label> -->
+            <button class="submit-button" type="submit">생성하기</button>
+            <p class="tip">Press Tab</p>
+            <div class="fill-button">포즈는 선택하셨나요?(최대 7개)</div>
+        </form>
+
+
+
+
       <div id="startBtn" class="m-5">
           <h5>Button1</h5>
           <div class="btn1">BUTTON
@@ -23,16 +54,16 @@
         <button class="btn5" href="#">Button</button>
       </div>
       <div>
-        <h5>Button56/h5>
+        <h5>Button56</h5>
         <button class="btn6" href="#">Button</button>
       </div>
-    <button>Hover</button>
+       <button>Hover</button>
   </div>
 </template>
 
 <script>
 export default {
-
+  name : 'test',
 }
 </script>
 
@@ -262,5 +293,135 @@ export default {
 .btn6:hover:before,.btn6:hover:after{
   width:100%;
   transition:800ms ease all;
+}
+
+
+input, button {
+	 position: fixed;
+	 top: 50%;
+	 left: 50%;
+	 transform: translate(-50%, -300%);
+	 display: block;
+	 width: 500px;
+	 opacity: 0;
+	 pointer-events: none;
+	 transition: all 0.5s cubic-bezier(0.4, 0.25, 0.8, 0.3);
+}
+ input {
+	 padding: 0.25rem 0;
+	 border: 0;
+	 border-bottom: 1px solid #f29d8f;
+	 outline: 0;
+	 background: transparent;
+	 color: black;
+	 font-size: 1rem;
+	 line-height: 2rem;
+	 letter-spacing: 0.125rem;
+	 transition: all 0.5s cubic-bezier(0.4, 0.25, 0.8, 0.3);
+}
+ input::selection {
+	 background: rgba(249, 33, 74, 0.25);
+}
+ button, .fill-button {
+	 padding: 0.25em 0;
+	 border: 0;
+	 outline: 0;
+	 background: #f29d8f;
+	 color: rgba(255, 255, 255, 0.85);
+	 font-size: 2rem;
+	 line-height: 3.6rem;
+	 letter-spacing: 0.0625rem;
+	 box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.25);
+	 text-shadow: 0 -2px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+ input:focus, button:focus {
+	 opacity: 1;
+	 transform: translate(-50%, -100%);
+	 pointer-events: auto;
+	 transition: all 0.4s cubic-bezier(0.1, 0.45, 0.1, 0.85) 0.5s;
+	 z-index: 10;
+}
+ input:focus ~ label .label-text {
+	 transform: translate(-50%, 300%);
+	 transition: all 0.5s ease-in;
+}
+ input:focus ~ .tip {
+	 opacity: 1;
+}
+ input:focus ~ .fill-button, button:focus ~ .fill-button {
+	 opacity: 0;
+}
+ input:focus + label .label-text {
+	 opacity: 1;
+	 transform: translate(-50%, -100%);
+	 transition: all 0.3s cubic-bezier(0.1, 0.45, 0.1, 0.85) 0.4s;
+}
+ input:focus + label .nav-dot:before {
+	 background: #f29d8f;
+	 box-shadow: 0 0 0 0.15rem #111, 0 0 0.05rem 0.26rem #f29d8f;
+}
+ .tip {
+	 position: fixed;
+	 top: 52%;
+	 left: 38%;
+	 transform: translate(-50%, -50%);
+	 width: 70%;
+	 opacity: 0;
+	 color: black;
+	 font-size: 0.825rem;
+	 font-weight: 300;
+	 letter-spacing: 0.125rem;
+	 text-transform: uppercase;
+	 text-align: right;
+	 transition: opacity 0.25s 0.5s;
+}
+ .fill-button, .fill-button-trigger {
+	 position: fixed;
+	 top: 50%;
+	 left: 50%;
+	 transform: translate(-50%, -100%);
+	 width: 500px;
+	 padding: 0.1rem 0;
+	 line-height: 3.6rem;
+	 text-align: center;
+	 pointer-events: none;
+	 cursor: pointer;
+	 transition: opacity 0.4s 0.3s;
+}
+ .fill-button-trigger {
+	 opacity: 0;
+	 pointer-events: auto;
+}
+ .label-text {
+	 position: fixed;
+	 top: calc(50% - 4rem);
+	 left: 50%;
+	 transform: translate(-50%, -300%);
+	 width: 500px;
+	 padding: 3.125rem 0 1.5rem;
+	 text-transform: uppercase;
+	 color: black;
+	 opacity: 0;
+	 font-size: 1rem;
+	 font-weight: 500;
+	 letter-spacing: 0.125rem;
+	 pointer-events: none;
+	 transition: all 0.4s cubic-bezier(0.4, 0.25, 0.8, 0.3) 0.05s;
+ }
+ * {
+	 margin: 0;
+	 padding: 0;
+	 box-sizing: border-box;
+}
+ html, body {
+	 width: 100%;
+	 height: 100%;
+	 background-image: linear-gradient(to bottom right, #111e25 0%, #111 100%);
+	 font-family: 'Lato', sans-serif;
+}
+ form {
+	 width: 100%;
+	 height: 100%;
+	 overflow: hidden;
 }
 </style>

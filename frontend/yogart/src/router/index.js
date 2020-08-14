@@ -27,6 +27,7 @@ import SpoonPurchase from '../views/spoon/SpoonPurchase.vue'
 import PayComplete from '../views/kakaopay/PayComplete.vue'
 import PayCancel from '../views/kakaopay/PayCancel.vue'
 import PayFail from '../views/kakaopay/PayFail.vue'
+import test from '../views/test.vue'
 
 
 const requireAuth = () => (from, to, next) => {
@@ -49,6 +50,11 @@ Vue.use(VueRouter)
 
 const routes = [
     // 카카오 페이 callback
+    {
+        path: '/test',
+        name: 'test',
+        component: test
+    },
     {
         path: '/kakaoPay/Success',
         name: 'PayComplete',

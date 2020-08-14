@@ -1,7 +1,6 @@
 <template>
   <div>
       <h1 class="m-3" style="font-weight:700">요가 포즈 리스트</h1>
- 
       <!-- <YogartRecommend @clickSet="yogaListDetail"/> -->
       <BodyPartRecommend @clickSet="yogaListDetail"/>
       <UserDesign @clickSet="yogaListDetail"/>
@@ -26,6 +25,7 @@ export default {
     methods: {
         yogaListDetail(num) {
             // 쿠키에 저장
+            console.log("여긴 리스트페이지",num)
             this.$cookies.set('coaching-list', num)
             this.$router.push(`/coaching/yogaposelist/detail`)
         }
@@ -59,4 +59,8 @@ export default {
   background-color: rgba(0, 0, 0, 0);
   
 }
+.slide{
+    border-radius: 7px;
+}
+
 </style>
