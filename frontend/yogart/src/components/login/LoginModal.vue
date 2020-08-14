@@ -21,7 +21,7 @@
                     <br>
                     <ValidationProvider rules="required|min:6" v-slot="{ errors }">
                         <input class="password-input" type="password" v-model="loginData.userPassword" placeholder="비밀번호"><br>
-                        <span class="login-reject text-right">{{ errors[0] }}</span>
+                        <span class="login-reject">{{ errors[0] }}</span>
                     </ValidationProvider>
                     <br>
                     <button type="submit" class="login-btn" :disabled="invalid" @click="onSubmit">로그인</button>
@@ -135,6 +135,9 @@ export default {
     background: linear-gradient(153deg, rgba(242,157,143,0.8) 0%, rgba(143,160,242,0.8) 100%);
     outline:none;
     cursor: pointer;
+}
+.login-btn:hover {
+    background: linear-gradient(153deg, rgba(242,157,143,0.7) 0%, rgba(143,160,242,0.7) 100%);
 }
 .for-line {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
