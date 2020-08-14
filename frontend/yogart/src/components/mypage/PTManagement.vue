@@ -19,15 +19,13 @@
           </tr>
         </thead>
         <tbody>
-            <div v-for="todayCourse in todayCourses" :key="todayCourse.courseID">{{}} | 
-              <tr>
+            <tr v-for="todayCourse in todayCourses" :key="todayCourse.courseID">
                 <!-- <th scope="row">1</th> -->
-                <td>{{todayCourse.ptClickedName.ptTeacherId.userNickname}}</td>
-                <td>{{todayCourse.ptClickedName}}</td>
+                <td>{{todayCourse.ptClickedName.ptName}}</td>
+                <td>{{todayCourse.ptClickedName.ptIntro}}</td>
                 <td>{{todayCourse.dateTime}}</td>
                 <td><button class="w3-bar-item w3-button w3-red">입장하기</button></td>
-              </tr>
-            </div>
+            </tr>
         </tbody>
       </table>
       </div>
@@ -45,16 +43,14 @@
           </tr>
         </thead>
         <tbody>
-            <div v-for="pastCourse in pastCourses" :key="pastCourse.courseID">{{}} | 
-              <tr>
+            <tr v-for="pastCourse in pastCourses" :key="pastCourse.courseID">
                 <!-- <th scope="row">1</th> -->
-                <td>{{pastCourse.teacherName}}</td>
-                <td>{{pastCourse.courseName}}</td>
-                <td>{{pastCourse.courseDate}}</td>
+                <td>{{pastCourse.ptClickedName.ptTeacherId.userName}}</td>
+                <td>{{pastCourse.ptClickedName.ptName}}</td>
+                <td>{{pastCourse.dateTime}}</td>
                 <td>{{pastCourse.isAttend}}</td>
                 <td><button class="w3-bar-item w3-button w3-red">리뷰작성</button></td>
-              </tr>
-            </div>
+            </tr>
         </tbody>
       </table>
       </div>
@@ -70,14 +66,12 @@
           </tr>
         </thead>
         <tbody>
-            <div v-for="futureCourse in futureCourses" :key="futureCourse.courseID">{{}} | 
-              <tr>
+            <tr v-for="futureCourse in futureCourses" :key="futureCourse.courseID">
                 <!-- <th scope="row">1</th> -->
-                <td>{{futureCourse.teacherName}}</td>
-                <td>{{futureCourse.courseName}}</td>
-                <td>{{futureCourse.courseDate}}</td>
-              </tr>
-            </div>
+                <td>{{futureCourse.ptClickedName.ptTeacherId.userName}}</td>
+                <td>{{futureCourse.ptClickedName.ptName}}</td>
+                <td>{{futureCourse.dateTime}}</td>
+            </tr>
         </tbody>
       </table>
       </div> 
@@ -118,15 +112,17 @@ export default {
             Authorization : this.$cookies.get('auth-token')
           }
         }
-        axios.get(this.SERVER_URL + 'api/mypage/ptlist', RequestHeaders)
+        console.log('@@@@@@@@@@@@@@@@@@@', RequestHeaders)
+        axios.get(this.SERVER_URL + '/api/mypage/ptlist', RequestHeaders)
         .then(res => {
           console.log("PTManagement 성공",res)
           //과거 pt 기록들 날짜,시간순으로 배열로 넘겨주세요
-          this.pastCourses = pastCourses
+          this.pastCourses = res.data.pastCourses
           //오늘 pt 기록들 시간순으로 배열로 넘겨주세요
-          this.todayCourses = todayCourses
+          this.todayCourses = res.data.todayCourses
           //미래 pt 기록들 날짜,시간순으로 배열로 넘겨주세요
-          this.futureCourses = futureCourses
+          this.futureCourses = res.data.futureCourses
+          console.log(this.pastCourses,this.todayCourses,this.futureCourses)
         })
         .catch(err => console.log(err))
       },

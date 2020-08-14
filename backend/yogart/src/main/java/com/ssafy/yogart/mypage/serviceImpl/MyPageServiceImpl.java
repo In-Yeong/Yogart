@@ -44,5 +44,10 @@ public class MyPageServiceImpl implements MyPageService {
 	public List<PtClicked> showPTList(User user) {
 		return ptClickedRepository.findByPtStudentId(user);
 	}
+
+	@Override
+	public GraphBodyPart saveTag(GraphBodyPart bodypart) {
+		return graphBodyPartRepository.save(bodypart);
+	}
 	
 }

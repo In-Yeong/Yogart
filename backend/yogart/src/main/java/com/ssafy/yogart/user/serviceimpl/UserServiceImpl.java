@@ -1,5 +1,7 @@
 package com.ssafy.yogart.user.serviceimpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,12 +62,6 @@ public class UserServiceImpl implements UserService {
     	return null;
     }
 
-    // 비밀번호 업데이트
-    @Override
-    public User updateInfo(User user) {
-        return userRepository.save(user);
-    }
-
     // 탈퇴
     @Override
     public void withdraw(String token) {
@@ -94,6 +90,11 @@ public class UserServiceImpl implements UserService {
 	public User nicknameChk(String nickname) {
 		User user = userRepository.findByUserNickname(nickname);
 		return user;
+	}
+
+	@Override
+	public List<User> showAllTeacherlist() {
+		return userRepository.findByUserAuthority("TEACHER");
 	}
 
 }
