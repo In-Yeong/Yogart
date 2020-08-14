@@ -27,10 +27,10 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Table(name = "user")
 public class User implements Serializable {
-	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@ApiModelProperty(value="아이디")
+   @Id
+   @Column(name="id")
+   @GeneratedValue(strategy= GenerationType.IDENTITY)
+   @ApiModelProperty(value="아이디")
     private Integer id;
    
     @Column(name="user_email", unique = true)
@@ -62,11 +62,11 @@ public class User implements Serializable {
     @ApiModelProperty(value="생성일")
     private LocalDateTime createDate;
     
-    @Column(name="user_profile", columnDefinition = "text")
+    @Column(name="user_profile", columnDefinition="text")
     @ApiModelProperty(value="프로필사진")
     private String userProfile = "default.png";
     
-    @Column(name="user_intro", columnDefinition = "text")
+    @Column(name="user_intro", columnDefinition="text")
     @ApiModelProperty(value="자기소개")
     private String userIntro = "자기소개를 해주세요.";
     

@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
@@ -202,23 +203,7 @@ public class UserController {
     					+ username + ", " 
     					+ nickname + ", " 
     					+ password);
-    	
-    	User emailCheck = userService.emailChk(user.getUserEmail());
-    	User nicknameCheck = userService.nicknameChk(user.getUserNickname());
-    	if(emailCheck != null && nicknameCheck != null) {
-    		result.setMessage("email/nickname");
-    		result.setStatusCode(HttpStatus.FORBIDDEN);
-    		return new ResponseEntity<Result>(result, HttpStatus.FORBIDDEN);
-    	}else if(emailCheck != null) {
-    		result.setMessage("email");
-    		result.setStatusCode(HttpStatus.FORBIDDEN);
-    		return new ResponseEntity<Result>(result, HttpStatus.FORBIDDEN);
-    	}else if(nicknameCheck != null) {
-    		result.setMessage("nickname");
-    		result.setStatusCode(HttpStatus.FORBIDDEN);
-    		return new ResponseEntity<Result>(result, HttpStatus.FORBIDDEN);
-    	}
-    	userService.join(email, username, nickname, password);    	
+    	userService.join(email, username, nickname, password);
     	String token = jwtService.create("user", user, email);
 		System.out.println(token);
 		result.setToken(token);
@@ -227,13 +212,13 @@ public class UserController {
 
     // 자신의 정보를 반환
     @ApiOperation(value="자신의 정보를 반환")
-    @GetMapping(value = "/myInfo")
-    public ResponseEntity<Result> getMe(@RequestHeader(value="config") Map<String, Object> header) {
+    @PostMapping(value = "/myinfo")
+    public ResponseEntity<Result> getMe(HttpServletRequest request) {
     	ResponseEntity<Result> response = null;
-    	String token = (String)header.get("authorization");
-    	System.out.println(token);
+    	Cookie[] myCookies = request.getCookies();
+    	System.out.println("token: " + myCookies[0].getValue());
     	Result result = Result.successInstance();
-    	User user = userService.authentication(token);
+    	User user = userService.authentication(myCookies[0].getValue());
     	if(user == null) {
     		response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     	} else {
@@ -244,15 +229,15 @@ public class UserController {
     }
 
     // 자신의 비밀번호를 갱신한 뒤 그 결과를 반환
-    @ApiOperation(value="자신의 회원정보를 갱신한 뒤 그 결과를 반환", response = User.class)
+    @ApiOperation(value="유저 정보 업데이트", response = User.class)
     @PutMapping(value = "/myInfo/update")
     public User updateInfo(@RequestHeader(value="config") Map<String, Object> header, @RequestBody User content) {
-    	String token = (String)header.get("authorization");
-    	String username = content.getUserName();
-    	String email = content.getUserEmail();
-    	String nickname = content.getUserNickname();
-    	String password = content.getUserPassword();
-    	User user = new User(email, username, nickname, password);
+       String token = (String)header.get("authorization");
+       String username = content.getUserName();
+       String email = content.getUserEmail();
+       String nickname = content.getUserNickname();
+       String password = content.getUserPassword();
+       User user = new User(email, username, nickname, password);
         return userService.updateInfo(user);
     }
 

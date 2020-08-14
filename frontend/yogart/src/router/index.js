@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import axios from 'axios'
 import store from '../store'
 import Home from '../views/Home.vue'
 import SignupView from '../views/accounts/SignupView.vue'
@@ -21,13 +22,18 @@ import YogaPoseListPage from '../views/coaching/YogaPoseListPage.vue'
 import YogaPoseListDetailPage from '../views/coaching/YogaPoseListDetailPage.vue'
 import YogaPosePage from '../views/coaching/YogaPosePage.vue'
 import ClassSetting from '../components/teacher/ClassSetting.vue'
+import ClassList from '../views/ClassList.vue'
 import TeacherPage from '../views/teacher/TeacherPage.vue'
 import SpoonPurchase from '../views/spoon/SpoonPurchase.vue'
 import PayComplete from '../views/kakaopay/PayComplete.vue'
 import PayCancel from '../views/kakaopay/PayCancel.vue'
 import PayFail from '../views/kakaopay/PayFail.vue'
+import AdminPage from '../views/admin/AdminPage.vue'
 
-
+var getCookie = function(name) {
+    var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return value? value[2] : null;
+    }
 
 const requireAuth = () => (from, to, next) => {
     // console.log(store.state.isLogin)
@@ -38,17 +44,55 @@ const requireAuth = () => (from, to, next) => {
 const requireUNAuth = () => (from, to, next) => {
     // console.log(store.state.isLogin)
     if (!store.state.isLogin) return next()
-    return
+    return next('/')
+}
+
+const requireTeacher = () => (from, to, next) => {
+    // 해당 유저가 강사자격을 보유했는지 확인합니다.
+    const requestHeaders = {
+        headers: {
+            Authorization: getCookie('auth-token')
+        }
+    }
+    axios.get(store.state.SERVER_URL + '/api/users/isTeacher', requestHeaders)
+    .then(res => {
+        if (res.data.isTeacher) {
+            return next()
+        }
+    })
+    .catch(err => {
+        console.error(err)
+        next(false)
+    })
 }
 
 const requireAdmin = () => (from, to, next) => {
-    
+    const requestHeaders = {
+        headers: {
+            Authorization: getCookie('auth-token')
+        }
+    }
+    axios.get(store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
+    .then(res => {
+        if (res.data.isAdmin) {
+            return next()
+        }
+    })
+    .catch(err => {
+        console.error(err)
+        next(false)
+    })
 }
 
 Vue.use(VueRouter)
 
 const routes = [
-    // 카카오 페이 callback
+    {
+        path: '/',
+        name: 'Home',
+        component: Home
+    },
+    // Kakao pay
     {
         path: '/kakaoPay/Success',
         name: 'PayComplete',
@@ -64,21 +108,31 @@ const routes = [
         name: 'PayFail',
         component: PayFail
     },
+    // Spoon
     {
         path: '/spoons',
         name: 'SpoonPurchase',
         component: SpoonPurchase,
         beforeEnter: requireAuth()
     },
+    // All class
+    {
+        path: '/class',
+        name: 'ClassList',
+        component: ClassList
+    },
+    // Teacher
     {
         path: '/teacherpage',
         name: 'TeacherPage',
-        component: TeacherPage
+        component: TeacherPage,
+        beforeEnter: requireTeacher()
     },
     {
         path: '/teachers/class-setting',
         name: 'ClassSetting',
         component: ClassSetting,
+        beforeEnter: requireTeacher()
     },
     {
         path: '/teachers',
@@ -93,18 +147,15 @@ const routes = [
     {
         path: '/teacher-apply',
         name: 'TeacherApply',
-        component: TeacherApply
+        component: TeacherApply,
+        beforeEnter: requireAuth()
     },
     {
         path: '/naver/callback',
         name: 'Callback',
         component: Callback,
     },
-    {
-        path: '/',
-        name: 'Home',
-        component: Home
-    },
+   
     {
         path: '/accounts/signup',
         name: 'SignupView',
@@ -129,6 +180,7 @@ const routes = [
         component: UserUpdate,
         beforeEnter: requireAuth(),
     },
+    // Notice
     {
         path: '/notice',
         name: 'NoticeList',
@@ -137,14 +189,15 @@ const routes = [
     {
         path: '/notice/form',
         name: 'NoticeForm',
-        component: NoticeFormView
-        // 관리자만 접근가능
+        component: NoticeFormView,
+        beforeEnter: requireAdmin()
     },
     {
         path: '/notice/:notice_id',
         name: 'NoticeDetail',
         component: NoticeDetailView
     },
+    // Q&A
     {
         path: '/qna',
         name: 'QnaView',
@@ -156,31 +209,45 @@ const routes = [
         component: QnaCreate,
         beforeEnter: requireAuth(),
     },
+    // AI coaching
     {
         path: '/coaching',
         name: 'AICoachingPage',
-        component: AICoachingPage
-      },
+        component: AICoachingPage,
+        beforeEnter: requireAuth(),
+    },
     {
         path: '/coaching/result',
         name: 'AICoachingResultPage',
-        component: AICoachingResultPage
+        component: AICoachingResultPage,
+        beforeEnter: requireAuth(),
       },
       {
         path: '/coaching/yogaposelist',
         name: 'YogaPoseListPage',
-        component: YogaPoseListPage
+        component: YogaPoseListPage,
+        beforeEnter: requireAuth(),
       },
       {
         path: '/coaching/yogaposelist/detail',
         name: 'YogaPoseListDetailPage',
-        component: YogaPoseListDetailPage
+        component: YogaPoseListDetailPage,
+        beforeEnter: requireAuth(),
       },
       {
         path: '/coaching/yogapose',
         name: 'YogaPosePage',
-        component: YogaPosePage
+        component: YogaPosePage,
+        beforeEnter: requireAuth(),
       },
+      // Admin
+      {
+          path: '/admin',
+          name: 'AdminPage',
+          component: AdminPage,
+          beforeEnter: requireAdmin()
+      }
+      
 ]
 
     const router = new VueRouter({

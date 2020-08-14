@@ -9,8 +9,8 @@ import { required, email, min } from 'vee-validate/dist/rules'
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/vue-editor';
-import BootstrapVue from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueMomentLib from 'vue-moment-lib'
 Vue.use(VueMomentLib)
@@ -18,6 +18,11 @@ Vue.use(VueMomentLib)
 // for google login
 // import GAuth from 'vue-google-oath2'
 // Vue.use(GAuth, {clientId: "464033788490-4n32ni2tto41a0j7crvvo8nuft697un6.apps.googleusercontent.com", scope: 'profile email https://www.googleapis.com/auth/plus.login'})
+
+// Install BootstrapVue
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
+
 
 Vue.config.productionTip = false
 Vue.use(VueCookies)

@@ -60,9 +60,9 @@ export default {
             //         ]
             //     }
             // }
-            this.teacherInfo.teacherName = res.data.teacherInfo.userName
-            this.teacherInfo.teacherIntro = res.data.teacherInfo.userIntro
-            this.teacherInfo.teacherImage = res.data.teacherInfo.userProfile
+            this.teacherInfo.teacherName = res.data.teacherInfo.teacherName
+            this.teacherInfo.teacherIntro = res.data.teacherInfo.teacherIntro
+            this.teacherInfo.teacherImage = res.data.teacherInfo.teacherImage
             this.ptList = res.data.ptList
         })
         .catch(err => console.error(err))

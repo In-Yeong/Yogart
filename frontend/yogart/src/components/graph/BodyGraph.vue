@@ -18,12 +18,17 @@
             return {
             }
         },
-        mounted () {
-        this.fillData()
+        props: {
+            body: Object,
+        },
+        watch: {
+            body() {
+                this.fillData()
+            }
         },
         methods: {
         fillData () {
-            var bodydata = [0,0,0,0,0,0,0]
+            var bodydata = [this.body.spine,this.body.abs,this.body.arm,this.body.leg,this.body.wholeBody,this.body.energy,this.body.relaxing]
             var ctx = document.getElementById('bodyChart').getContext("2d");
 
             var birdsData = {

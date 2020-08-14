@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h1 class="m-5">요가 포즈 리스트</h1>
+      <h1 class="p-5">요가 포즈 리스트</h1>
       <YogartRecommend @clickSet="yogaListDetail"/>
       <BodyPartRecommend @clickSet="yogaListDetail"/>
       <UserDesign @clickSet="yogaListDetail"/>

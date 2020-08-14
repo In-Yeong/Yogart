@@ -1,6 +1,6 @@
 <template>
     <div class="NoticeListView">
-        <h1 class="m-5">공지사항</h1>
+        <h1 class="p-5">공지사항</h1>
         <button @click="callNoticeForm()">글 작성(관리자만 보이게 설정)</button>
         <table class="table m-auto">
             <thead class="thead-dark container p-0">
@@ -16,16 +16,16 @@
                     <td class="col-8 title">{{ notice.noticeTitle }}</td>
                     <td class="col-3">{{ notice.createDate }}</td>
                 </tr>
-                <!-- <tr class="row m-0" @click="callNoticeDetail(2)">
-                    <th class="col-1">2</th>
+                <tr class="row m-0" @click="callNoticeDetail(2)">
+                    <td class="col-1">2</td>
                     <td class="col-8 title">요가트 오픈 이벤트22222222222222!!!!!!!!!!</td>
                     <td class="col-3">2020.07.28</td>
                 </tr>
                 <tr class="row m-0" @click="callNoticeDetail(1)">
-                    <th class="col-1">1</th>
+                    <td class="col-1">1</td>
                     <td class="col-8 title">요가트 오픈 이벤트!!!!!!!!!!</td>
                     <td class="col-3">2020.07.27</td>
-                </tr> -->
+                </tr>
             </tbody>
         </table>
 
@@ -96,10 +96,14 @@ table {
 }
 
 tr:hover {
-    color: blue;
+    background-color: #e8e6e5;
+    cursor: pointer;
 }
 .NoticeListView{
     height : 600px;
+}
+th{
+    background-color: #0C1C5A !important;
 }
 
 </style>
