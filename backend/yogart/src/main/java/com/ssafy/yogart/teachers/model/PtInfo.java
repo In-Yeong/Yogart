@@ -51,5 +51,13 @@ public class PtInfo implements Serializable{
     @ManyToOne(fetch = FetchType.EAGER, optional=false, cascade = CascadeType.ALL)
 	@JoinColumn(name="pt_teacher_id", referencedColumnName = "id")
     @ApiModelProperty(value="선생님아이디")
-    private User ptTeacherId;        
+    private User ptTeacherId;
+
+	public PtInfo(String ptName, Integer ptPrice, String ptIntro, User ptTeacherId) {
+		super();
+		this.ptName = ptName;
+		this.ptPrice = ptPrice;
+		this.ptIntro = ptIntro;
+		this.ptTeacherId = ptTeacherId;
+	}
 }

@@ -47,7 +47,9 @@ export default {
                 ptInfo: this.ptInfo,
                 time: this.clickedDate
             }
-            axios.post(this.SERVER_URL + '/api/pt-regist', ptData, requestHeaders)
+            console.log(requestHeaders)
+            console.log(ptData)
+            axios.post(this.SERVER_URL + '/api/teachers/pt-regist', ptData, requestHeaders)
             .then(res => {
                 this.$refs['my-modal'].hide()
                 this.$router.push('/mypage')

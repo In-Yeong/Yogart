@@ -39,11 +39,11 @@ export default {
             this.showArray = this.ptTimes.filter(pt => {
                 let isSoldOut = true
                 for (let k = 0; k < self.soldOut.length; k++) {
-                    if (date.getDate() === self.soldOut[k].getDate() && pt.time === self.soldOut[k].getHours()) {
+                    if (date.getDate() === self.soldOut[k].getDate() && pt.ptTime === self.soldOut[k].getHours()) {
                         isSoldOut = false
                     }
                 }
-                return pt.day === day && isSoldOut
+                return pt.ptDay === day && isSoldOut
             })
         }
     },
@@ -71,7 +71,7 @@ export default {
         // 강사의 수업 정보와 이미 예약된 PT리스트를 가져옵니다.
         axios.get(this.SERVER_URL + `/api/teachers/pt/${this.ptId}`, this.ptId)
         .then(res => {
-            console.log(res)
+            // console.log(res)
             // let res = {
             //     data: {
             //         ptTeacher: 12, // 요가강사 id값
@@ -89,25 +89,31 @@ export default {
             this.ptInfo.ptName = res.data.ptInfo.ptName
             this.ptInfo.ptPrice = res.data.ptInfo.ptPrice
             this.ptInfo.ptIntro = res.data.ptInfo.ptIntro
-            this.soldOut = res.data.soldOut
+            const self = this
+            res.data.soldOut.forEach(function(e){
+                let yyyy = Number(e.slice(0, 4))
+                let mm = Number(e.slice(5,7)) - 1
+                let dd = Number(e.slice(8, 10))
+                self.soldOut.push(new Date(yyyy, mm, dd))
+            })
             const today = new Date() // 오늘의 날짜
             for (let i = 0; i < 14; i++) {
                 let cnt = 0
                 let nextDay = new Date(today)
                 nextDay.setDate(today.getDate() + i) // 오늘 + i 날
                 let day = nextDay.getDay()
-                for (let j = 0; j < this.ptTimes.length; j++) {
-                    if (this.ptTimes[j].day === day) {
+                for (let j = 0; j < self.ptTimes.length; j++) {
+                    if (self.ptTimes[j].ptDay === day) {
                         cnt++
                     }
                 }
-                for (let j = 0; j < this.soldOut.length; j++) {
-                    if (nextDay.getDate() === this.soldOut[j].getDate()) {
+                for (let j = 0; j < self.soldOut.length; j++) {
+                    if (nextDay.getDate() === self.soldOut[j].getDate()) {
                         cnt--
                     }
                 }
                 if (cnt > 0) {
-                    this.highlighted.dates.push(nextDay)
+                    self.highlighted.dates.push(nextDay)
                 }
             }
         })
