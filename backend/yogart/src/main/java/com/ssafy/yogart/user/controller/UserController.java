@@ -77,9 +77,30 @@ public class UserController {
         this.userService = userService;
     }
     
-    
     private static int RECENT_TOTAL_AMOUNT;
     private static String RECENT_TID;
+
+    @ApiOperation(value = "관리자 여부 판단")
+    @GetMapping(value = "/isAdmin")
+    public ResponseEntity<Boolean> isAdmin(@RequestHeader Map<String,String> header) {
+    	String token = header.get("authorization");
+		User user = userService.authentication(token);
+		if("ADMIN".equals(user.getUserAuthority())) {
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		} 
+        return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+    }
+    
+    @ApiOperation(value = "강사 여부 판단")
+    @GetMapping(value = "/isTeacher")
+    public ResponseEntity<Boolean> isTeacher(@RequestHeader Map<String,String> header) {
+    	String token = header.get("authorization");
+		User user = userService.authentication(token);
+		if("TEACHER".equals(user.getUserAuthority())) {
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		} 
+        return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+    }
     
     //로그인
     @ApiOperation(value = "로그인")

@@ -6,8 +6,8 @@
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">{{ teacher.teacherName }}</h5>
-        <p class="card-text">{{ teacher.teacherIntro }}</p>
+        <h5 class="card-title">{{ teacher.userName }}</h5>
+        <p class="card-text">{{ teacher.userIntro }}</p>
       </div>
     </div>
   </div>

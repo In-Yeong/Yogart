@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.yogart.teachers.repository.PtInfoRepository;
 import com.ssafy.yogart.user.error.AlreadyExistsException;
 import com.ssafy.yogart.user.model.User;
 import com.ssafy.yogart.user.model.UserFile;
@@ -20,6 +21,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserFileRepository userFileRepository;
+
+	@Autowired
+	private PtInfoRepository ptInfoRepository;
 	
 	@Autowired
 	private JwtService jwtService;
@@ -113,5 +117,13 @@ public class UserServiceImpl implements UserService {
 		userFileRepository.deleteByUserFileEmail(userEmail);
 	}
 	
+	public List<User> showAllTeacherlist() {
+		return userRepository.findByUserAuthority("TEACHER");
+	}
+	
+	@Override
+	public User findUser(int id) {
+		return userRepository.findById(id);
+	}
 
 }

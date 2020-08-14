@@ -30,4 +30,8 @@ public interface UserService {
     void registerUserToTeacher(String userEmail);
     
     void withdraw(String token);
+    
+    List<User> showAllTeacherlist();
+    
+    User findUser(int id);
 }
