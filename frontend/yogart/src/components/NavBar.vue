@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div id="navbar-container">
         <div class="navbar navbar-expand navbar-light fixed-top w-100" :class="{ 'navbar--hidden': !showNavbar, 'change--color': lastScrollPosition > 100 }">
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav nav-left">
@@ -100,6 +100,9 @@ export default {
 </script>
 
 <style>
+#navbar-container{
+    height: 8vh;
+}
 .logo-img {
     height: 8vh;
 }
