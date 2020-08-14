@@ -2,7 +2,7 @@
     <div id="app">
         <login-modal @loginComplete="loginComplete"></login-modal>
         <NavBar @logout="logout" :isLogin="isLogin"/>
-        <router-view class="test" @submit-signup-data="signup" />
+        <router-view class="full-page" @submit-signup-data="signup" />
         <Footer/>
     </div>
 </template>
@@ -101,8 +101,12 @@ export default {
     background-size: 100%;
     color: #2c3e50;
 }
-.test {
+.full-page {
     min-height: 100vh;
+}
+.padding-for-nav {  /* 다른 views에서 사용 */
+    padding-top: 22vh;
+    padding-bottom: 6vh;
 }
 .box {
   margin-top : 3px;
