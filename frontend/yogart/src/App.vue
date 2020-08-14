@@ -1,13 +1,8 @@
 <template>
     <div id="app">
-        <div>
-            <login-modal @loginComplete="loginComplete"></login-modal>
-            <NavBar @logout="logout" :isLogin="isLogin"/>
-            <router-view class="test" @submit-signup-data="signup" />
-        </div>
-        <!-- <div v-else>
-            <div>PC에 최적화 되어 있습니다.</div>
-        </div> -->
+        <login-modal @loginComplete="loginComplete"></login-modal>
+        <NavBar @logout="logout" :isLogin="isLogin"/>
+        <router-view class="full-page" @submit-signup-data="signup" />
         <Footer/>
     </div>
 </template>
@@ -121,8 +116,12 @@ export default {
     min-width: 640px;
     min-height: 600px;
 }
-.test {
+.full-page {
     min-height: 100vh;
+}
+.padding-for-nav {  /* 다른 views에서 사용 */
+    padding-top: 22vh;
+    padding-bottom: 6vh;
 }
 .box {
   margin-top : 3px;
@@ -188,11 +187,6 @@ export default {
 ::-webkit-scrollbar-button:single-button:vertical:increment {
     border-width: 8px 8px 0 8px;
     border-color: gray transparent transparent transparent;
-}
-
-.page-body {
-    height:100%;
-    width:100%
 }
 
 </style>
