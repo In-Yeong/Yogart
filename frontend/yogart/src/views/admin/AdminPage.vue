@@ -1,24 +1,32 @@
 <template>
     <div>
         <h2>요가 강사 자격증명</h2>
-        <h4>Top and Bottom</h4>
-        <b-card v-for="application in applications" :key="application.id" :img-src="application.img" img-alt="Card image" img-top>
-            <b-card-text>
-                {{ application.userName }}
-            </b-card-text>
-        </b-card>
+        <ApplicationList @permit="setTeacher" :applications="applications"/>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import ApplicationList from '@/components/admin/ApplicationList.vue'
 
 export default {
     name: 'AdminPage',
+    components: {
+        ApplicationList,
+    },
     data() {
         return {
             SERVER_URL: this.$store.state.SERVER_URL,
             applications: [],
+        }
+    },
+    methods: {
+        setTeacher(userEmail) {
+            axios.get(this.SERVER_URL + '/api/users/registration/?userEmail=' + userEmail)
+            .then(res => {
+                this.applications = res.data.applications
+            })
+            .catch(err => console.error(err))
         }
     },
     mounted() {
@@ -27,7 +35,7 @@ export default {
                 Authorization: this.$cookies.get('auth-token')
             }
         }
-        axios.get(this.SERVER_URL + '/api/admin', requestHeaders)
+        axios.get(this.SERVER_URL + '/api/users/registrationList', requestHeaders)
         .then(res => {
             this.applications = res.data.applications
         })

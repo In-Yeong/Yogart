@@ -36,6 +36,10 @@ export default {
             let day = date.getDay()
             this.showArray.length = 0
             let self = this
+            if (Math.abs(this.clickedDate.getDate() - new Date().getDate()) > 15) {
+                self.clickedDate = null
+                return
+            }
             this.showArray = this.ptTimes.filter(pt => {
                 let isSoldOut = true
                 for (let k = 0; k < self.soldOut.length; k++) {

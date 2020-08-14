@@ -1,8 +1,13 @@
 <template>
     <div id="app">
-        <login-modal @loginComplete="loginComplete"></login-modal>
-        <NavBar @logout="logout" :isLogin="isLogin"/>
-        <router-view class="full-page" @submit-signup-data="signup" />
+        <div v-if="isPC">
+            <login-modal @loginComplete="loginComplete"></login-modal>
+            <NavBar @logout="logout" :isLogin="isLogin"/>
+            <router-view class="full-page" @submit-signup-data="signup" />
+        </div>
+        <div v-else>
+            안녕
+        </div>
         <Footer/>
     </div>
 </template>
@@ -19,7 +24,7 @@ export default {
         return {
             isLogin: this.$store.state.isLogin,
             SERVER_URL: this.$store.state.SERVER_URL,
-            isPC: null,
+            isPC: true,
         }
     },
     components: {
@@ -85,8 +90,8 @@ export default {
         },
         setSize() {
             let size = window.innerWidth
-            console.log(size)
-            console.log(this.isPC)
+            // console.log(size)
+            // console.log(this.isPC)
             if (size < 660) {
                 this.isPC = false
             } else {

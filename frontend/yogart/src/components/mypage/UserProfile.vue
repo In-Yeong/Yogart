@@ -43,9 +43,7 @@ export default {
             userIntro : '',
             userId : undefined,
             imgSrc : "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
-            spoons : this.$store.state.spoons
-
-
+            spoons : null,
         }
     },
     mounted() {
@@ -67,7 +65,7 @@ export default {
             this.userNickname = res.data.userNickname
             this.userProfile = res.data.userProfile
             this.userIntro = res.data.userIntro
-
+            this.spoons = res.data.userSpoon
             if (this.userProfile === undefined) {
                 this.userProfile = 'userDefault'
             }

@@ -30,6 +30,10 @@ import PayCancel from '../views/kakaopay/PayCancel.vue'
 import PayFail from '../views/kakaopay/PayFail.vue'
 import AdminPage from '../views/admin/AdminPage.vue'
 
+var getCookie = function(name) {
+    var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return value? value[2] : null;
+    }
 
 const requireAuth = () => (from, to, next) => {
     // console.log(store.state.isLogin)
@@ -47,7 +51,7 @@ const requireTeacher = () => (from, to, next) => {
     // 해당 유저가 강사자격을 보유했는지 확인합니다.
     const requestHeaders = {
         headers: {
-            Authorization: this.$cookies.get('auth-token')
+            Authorization: getCookie('auth-token')
         }
     }
     axios.get(store.state.SERVER_URL + '/api/users/isTeacher', requestHeaders)
@@ -65,7 +69,7 @@ const requireTeacher = () => (from, to, next) => {
 const requireAdmin = () => (from, to, next) => {
     const requestHeaders = {
         headers: {
-            Authorization: this.$cookies.get('auth-token')
+            Authorization: getCookie('auth-token')
         }
     }
     axios.get(store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
