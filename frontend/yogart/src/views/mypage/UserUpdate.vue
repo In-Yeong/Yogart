@@ -1,6 +1,6 @@
 <template>
-    <div class="updateView pb-5">
-        <div>{{ userName }} 정보 수정</div>
+    <div class="updateView padding-for-nav">
+        <div class="page-name">프로필 변경</div>
         <img :src="userImageUrl" alt="user profile image">
         <input @change="fileChange" type="file" ref="userImage" id="user-image" accept=".jpg, .jpeg, .png">
         <button @click="imageSubmit" class="btn btn-primary mt-4 col-12">프로필 사진 변경</button>
@@ -169,6 +169,13 @@ export default {
 </script>
 
 <style>
+.page-name {
+    margin: -4rem auto 2rem;
+    font-size: 4vh;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.6);
+}
+
 input:focus {
     outline: none;
 }
