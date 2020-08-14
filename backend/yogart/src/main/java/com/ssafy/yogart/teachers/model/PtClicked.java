@@ -64,5 +64,13 @@ public class PtClicked implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER, optional=false, cascade = CascadeType.ALL)
 	@JoinColumn(name="pt_clicked_name", referencedColumnName = "pt_name")
     @ApiModelProperty(value="피티이름")
-    private PtInfo ptClickedName;   
+    private PtInfo ptClickedName;
+
+	public PtClicked(Integer ptDay, Integer ptTime, PtInfo ptClickedName) {
+		super();
+		this.ptDay = ptDay;
+		this.ptTime = ptTime;
+		this.ptClickedName = ptClickedName;
+	}   
+    
 }

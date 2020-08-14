@@ -35,4 +35,14 @@ public class TeacherServiceImpl implements TeacherService {
 	public List<PtClicked> showClassTime(PtInfo ptinfo) {
 		return ptClickedRepository.findByPtClickedName(ptinfo);
 	}
+	
+	@Override
+    public PtClicked updatePtClickedInfo(PtClicked ptClicked) {
+        return ptClickedRepository.save(ptClicked);
+    }
+
+	@Override
+	public PtClicked updatePtClickedInfo(int ptDay, int ptTime, PtInfo ptinfo) {
+		return ptClickedRepository.save(new PtClicked(ptDay,ptTime,ptinfo));
+	}
 }

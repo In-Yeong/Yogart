@@ -1,7 +1,10 @@
 package com.ssafy.yogart.teachers.controller;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -92,18 +95,44 @@ public class TeacherController {
 	// 서비스에 맞게 데이터 처리하는지 확인하고 만들 것
 	@ApiOperation(value = "신청완료시 수업에 대한 정보와 유저정보 가져온다.", response = String.class)
 	@PostMapping(value="/pt-regist")
-	public ResponseEntity<String> teacherReserved(@RequestHeader Map<String,String> header, @RequestBody Map<String, String> data) throws Exception {
+	public ResponseEntity<String> teacherReserved(@RequestHeader Map<String,String> header, @RequestBody Map<String, Object> data) throws Exception {
 		String token = header.get("authorization");
 		User user = userService.authentication(token);
-		/**
-		// 일단 제대로 받아온다고 치고
-		// 스푼 차감
-		user.setUserSpoon(user.getUserSpoon() - data.get("ptInfo").get("ptPrice") );
-		String ptName = data.get("ptInfo").get("ptName");
-		// 
-		PtInfo ptinfo = new PtInfo("name",300,"intro", user);
-		// time을 받아서 pt_clicked에  [user.getId() -> student_id, time은 새로 할필요가 없음..!]
-		**/			
+		Map<String,Object> ptInfo = (Map<String, Object>) data.get("ptInfo");
+		int day = (int)data.get("day");
+		
+		String temp = (String)data.get("time");
+		String time = temp.substring(0, 19);
+		LocalDateTime timeSet = LocalDateTime.parse(time);
+		timeSet = timeSet.plusHours(9);
+		System.out.println(timeSet);
+		
+		int minusSpoon = (int)ptInfo.get("ptPrice");
+		System.out.println("-" + minusSpoon + " 스푼 차감되었습니다.");
+		user.setUserSpoon(user.getUserSpoon() -  minusSpoon);
+		System.out.println("잔여 스푼: " + user.getUserSpoon());
+		userService.updateInfo(user);
+		PtInfo ptinfo = new PtInfo((int)ptInfo.get("ptId"),
+									(String)ptInfo.get("ptName"),
+									(int)ptInfo.get("ptPrice"),
+									(String)ptInfo.get("ptIntro"),
+									(User)ptInfo.get("ptTeacherId"));
+		List<PtClicked> clickedList = teacherService.showClassTime(ptinfo);
+		PtClicked click = null;
+		go:
+		for(int i = 0; i < clickedList.size(); i++) {
+			click = clickedList.get(i);
+			if(click.getDateTime() == null && click.getPtStudentId() == null) {
+				if(day == click.getPtDay() && timeSet.getHour() == click.getPtTime()) {
+					break go;
+				}
+			}
+		}
+		click.setDateTime(timeSet);
+		teacherService.updatePtClickedInfo(click);
+
+		teacherService.updatePtClickedInfo(day,timeSet.getHour(),ptinfo);
+		
 		return new ResponseEntity<String>(SUCCESS , HttpStatus.OK);
 	}
 
