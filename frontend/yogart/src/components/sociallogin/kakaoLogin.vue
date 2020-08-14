@@ -13,9 +13,8 @@ export default {
         return {
             JavaScriptApiKey : JavaScriptApiKey,
             SERVER_URL: this.$store.state.SERVER_URL,
+
         }
-    },
-    created() {
     },
     mounted() {
         const axiosVue = this
@@ -56,13 +55,18 @@ export default {
                 }
             });
         });
+        
     },
     methods: {
-
+        
     }
 }
 </script>
 
 <style>
+
+/* #kakao-login-btn > img {
+    src: url('../../assets/socialLogin/kakao.png');
+} */
 
 </style>

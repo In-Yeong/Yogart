@@ -65,8 +65,8 @@ export default {
     },
     methods: {
         openLoginModal() {
-              if (this.isLogin) return
-              $('#loginStaticBackdrop').modal('show')
+            if (this.isLogin) return
+            $('#loginStaticBackdrop').modal('show')
         },
         logoutEmmit() {
             this.$emit('logout')

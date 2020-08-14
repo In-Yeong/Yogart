@@ -1,5 +1,5 @@
 <template>
-    <div class="signupView pb-5">
+    <div class="padding-for-nav">
         <h1 class="py-3">회원가입</h1>
         <div class="container d-flex justify-content-center text-left">
             <div class="d-block">
@@ -164,9 +164,6 @@ input {
 .allIcon {
     color: red;
     visibility: hidden;
-}
-.signupView {
-    background-color: #f5f6f7;
 }
 .input-box {
     border-style: solid;
