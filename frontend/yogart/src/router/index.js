@@ -155,12 +155,10 @@ const routes = [
         name: 'Callback',
         component: Callback,
     },
-   
     {
         path: '/accounts/signup',
         name: 'SignupView',
         component: SignupView,
-        beforeEnter: requireUNAuth(),
     },
     {
         path: '/mypage',

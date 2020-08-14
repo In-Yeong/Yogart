@@ -30,7 +30,7 @@
                 <div class="my-5"></div>
                 <kakaoLogin @loginComplete="setUserData"></kakaoLogin>
                 <naverLogin @loginComplete="setUserData"></naverLogin>
-                <a href="/accounts/signup" class="btn btn-primary">회원가입</a>
+                <router-link to="/accounts/signup" class="btn btn-primary">회원가입</router-link>
                 <div class="my-5"></div>
             </div>
         </div>

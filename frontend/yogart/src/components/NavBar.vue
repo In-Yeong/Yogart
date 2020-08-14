@@ -30,6 +30,7 @@
                     <div v-if="isAdmin" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="sub-item nav-link" href="/mypage">마이페이지</a>
                         <a class="sub-item nav-link" href="/notice/form">공지작성</a>
+                        <a class="sub-item nav-link" href="/admin">강사지원관리</a>
                         <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
                     </div>
                     <div v-else-if="isTeacher" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

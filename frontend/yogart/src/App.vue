@@ -1,13 +1,13 @@
 <template>
     <div id="app">
-        <div v-if="isPC">
+        <div>
             <login-modal @loginComplete="loginComplete"></login-modal>
             <NavBar @logout="logout" :isLogin="isLogin"/>
             <router-view class="full-page" @submit-signup-data="signup" />
         </div>
-        <div v-else>
+        <!-- <div v-else>
             안녕
-        </div>
+        </div> -->
         <Footer/>
     </div>
 </template>
@@ -118,8 +118,6 @@ export default {
     /* background-repeat: no-repeat; */
     background-size: 100%;
     color: #2c3e50;
-    min-width: 640px;
-    min-height: 600px;
 }
 .full-page {
     min-height: 100vh;
