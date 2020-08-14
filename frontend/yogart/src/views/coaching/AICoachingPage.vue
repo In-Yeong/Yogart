@@ -1,5 +1,5 @@
 <template>
-  <div class="AICoachingPage">
+  <div class="AICoachingPage m-5">
 
     <AI/>
   
@@ -52,25 +52,27 @@ export default {
   
 } */
 #AI{
-  background-color: rgba(255, 255, 255, 0.3);
+  padding : 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
   width : 50%;
-  height :470px;
+  height :550px;
   font-weight: 500;
   letter-spacing: 2px;
   line-height: 1.2;
-  margin : 0;
-  margin-bottom: 10px;
+  /* margin : 0;
+  margin-bottom: 10px; */
+  margin : 10px;
 }
 .btn2{
-    
     position: absolute;
     /* top: 50%;
     left: 50%; */
     transform: translate(-50%,-50%);
-    width: 150px;
-    height: 60px;
+    width: 300px;
+    height: 50px;
     text-align: center;
-    line-height: 60px;
+    line-height: 50px;
     color: #fff;
     font-size: 24px;
     text-transform: uppercase;
