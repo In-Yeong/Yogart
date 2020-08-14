@@ -52,7 +52,7 @@ export default {
   
 } */
 #AI{
-  background-color: rgba(256, 256, 256, 0.3);
+  background-color: rgba(255, 255, 255, 0.3);
   width : 50%;
   height :470px;
   font-weight: 500;

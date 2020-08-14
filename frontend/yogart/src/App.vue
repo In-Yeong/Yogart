@@ -105,9 +105,7 @@ export default {
 
 
 <style>
-/* body{
-    font-family: 'Song Myung', serif;
-} */
+
 #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -277,7 +275,7 @@ export default {
   width: 450px;
   /* height: 100px; */
   border-radius: 5px;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.0);
   box-shadow: 0 1px 2px rgba(0,0,0,0.15);
   transition: all 0.3s ease-in-out;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="container my-5" >
+  <div class=" my-5" >
       <h1 class="my-5">나만의 코스 만들기</h1>
         <h5>코스명</h5>
         <span>
@@ -10,20 +10,21 @@
         <p>{{poseList}}</p>
         <!-- <p>{{poseIndexList}}</p> -->
        <div class="d-flex flex-column">
-            <div class="w3-bar" >
+           <div>
+            <div class="d-flex justify-content-around" >
             <!-- <button class="w3-bar-item w3-button w3-black" @click="onDiary">다이어리</button> -->
-            <button class="w3-bar-item w3-button w3-black" style="width:150px;" @click="allBtn">전체</button>
-            <button class="w3-bar-item w3-button w3-gray" style="width:150px;" @click="beginnerBtn">초급</button>
-            <button class="w3-bar-item w3-button w3-teal" style="width:150px;" @click="intermediateBtn">중급</button>
-            <button class="w3-bar-item w3-button w3-red" style="width:150px;"  @click="expertBtn">고급</button>
+            <button class="btn4" style="width:150px;" @click="allBtn">전체</button>
+            <button class="btn4" style="width:150px;" @click="beginnerBtn">초급</button>
+            <button class="btn4" style="width:150px;" @click="intermediateBtn">중급</button>
+            <button class="btn4" style="width:150px;"  @click="expertBtn">고급</button>
             </div>
-            <div class="pose-box">
+           
             
-                <div v-if="all">
+                <div v-if="all" class="container">
                     <div class="row">
                        
-                    <div class="col-sm-2" id="poses" v-for="posefile in posefiles" :key="posefile.pose_name">  
-                       <div class="pose-img">
+                    <div class="col-sm-2 box" id="poses" v-for="posefile in posefiles" :key="posefile.pose_name">  
+                       <div class="pose-img" @click="selected(this)">
                         <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                         <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
                         </div> 
@@ -31,11 +32,11 @@
                     </div>      
                     </div>
                 </div>
-                <div v-if="beginner">
+                <div v-if="beginner" class="container">
                     <div class="row">
                        
-                    <div class="col-sm-2" id="poses" v-for="posefile in beginnerPosefiles" :key="posefile.pose_name">  
-                         <div class="pose-img">
+                    <div class="col-sm-2 box" id="poses" v-for="posefile in beginnerPosefiles" :key="posefile.pose_name">  
+                         <div class="pose-img" @click="selected(this)">
                             <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                             <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
                         </div> 
@@ -44,12 +45,12 @@
                     </div>      
                     </div>
                 </div>
-                <div v-if="intermediate">
+                <div v-if="intermediate" class="container">
                     <div class="row">
                        
-                    <div class="col-sm-2" id="poses" v-for="posefile in intermediatePosefiles" :key="posefile.pose_name">  
+                    <div class="col-sm-2 box" id="poses" v-for="posefile in intermediatePosefiles" :key="posefile.pose_name">  
                         
-                         <div class="pose-img">
+                         <div class="pose-img" @click="selected(this)">
                             <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                             <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
                         </div> 
@@ -58,12 +59,12 @@
                     </div>      
                     </div>
                 </div>
-                <div v-if="expert">
+                <div v-if="expert" class="container">
                     <div class="row">
                        
-                    <div class="col-sm-2" id="poses" v-for="posefile in expertPosefiles" :key="posefile.pose_name">  
+                    <div class="col-sm-2 box" id="poses" v-for="posefile in expertPosefiles" :key="posefile.pose_name">  
                         
-                         <div class="pose-img">
+                         <div class="pose-img" @click="selected(this)">
                             <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
                             <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
                         </div> 
@@ -80,7 +81,7 @@
 <script>
 import posefiles from '../../../public/json.js'
 import axios from 'axios'
-
+var divItems = document.getElementsByClassName("pose-img");
 // console.log(posefiles)
 export default {
     name : 'YogaPosePage',
@@ -110,6 +111,17 @@ export default {
         // this.tagDistribution()
     },
     methods : {
+        selected(item) {
+            this.clear();
+            item.style.backgroundColor = 'red';
+        },
+
+        clear() {
+            for(var i=0; i < divItems.length; i++) {
+                var item = divItems[i];
+                item.style.backgroundColor = 'white';
+            }
+        },
         difficultyDistribution() {
             this.posefiles.forEach(function(posefile) {
      
@@ -245,6 +257,18 @@ export default {
 </script>
 
 <style>
+.box{
+    margin : 5px;
+    background-color: rgba(255, 255, 255, 0.0);
+}
+.box:hover{
+    border : 2px solid white;
+    cursor: pointer;
+}
+.box:active{
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
 .user-profile {
   display: inline-block;
   width: 80px;
@@ -256,9 +280,7 @@ export default {
   background-position: center center;
   background-size: cover;
 }
-.pose-box {
-    background-color: lightgray;
-}
+
 .user-profile:hover{
     background: url("../../../public/css/heart.png") no-repeat;
    
