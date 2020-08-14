@@ -77,7 +77,7 @@ export default {
                 ptIntro: this.ptIntro,
                 clicked: this.clicked,
             }
-            console.log(ptData)
+            // console.log(ptData)
             // 데이터 저장을 요청합니다. 데이터를 저장하며 clicked에 맞춰 수업을 생성해야 합니다.
             axios.post(this.SERVER_URL + '/api/teachers/pt-create', ptData, requestHeaders)
             .then(res => {

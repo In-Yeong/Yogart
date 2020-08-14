@@ -1,6 +1,9 @@
 package com.ssafy.yogart.user.service;
 
+import java.util.List;
+
 import com.ssafy.yogart.user.model.User;
+import com.ssafy.yogart.user.model.UserFile;
 
 public interface UserService {
 	// email 중복 체크
@@ -10,14 +13,25 @@ public interface UserService {
 	
 	// 로그인
 	User login(String username, String password);
-	User login(String email, String loginMethod, String trash);
+	User loginSocial(String email, String loginMethod);
 	// 가입
     User join(String email, String name, String nickname, String password);
-    User join(String email, String nickname, String password);
+    User joinSocial(String email, String nickname, String randPass, String loginMethod);
     // 인증 & 개인정보 조회
     User authentication(String token);
     // 비밀번호 변경
     User updateInfo(User user);
     // 탈퇴
+    
+    List<UserFile> getRegistrationUsers(); // 강사 등록대기 유저 리스트 출력
+    
+    List<UserFile> getRegistrationImage(String userEmail);
+    
+    void registerUserToTeacher(String userEmail);
+    
     void withdraw(String token);
+    
+    List<User> showAllTeacherlist();
+    
+    User findUser(int id);
 }

@@ -10,6 +10,6 @@ import com.ssafy.yogart.qna.model.QnA;
 import com.ssafy.yogart.qna.model.QnAReply;
 
 public interface QnAReplyRepository extends JpaRepository<QnAReply, Integer> {
-	@Query(value="SELECT * FROM qna_reply WHERE qna_reply_qna_id = :qna_reply_qna_Id", nativeQuery=true)
-	List<QnAReply> findByReplyQnaId(@Param("qna_reply_qna_Id") int qna_reply_qna_Id);
+	@Query(value="SELECT * FROM qna_reply WHERE qna_reply_qna_id = :qna_reply_qna_id", nativeQuery=true)
+	List<QnAReply> findByReplyQnaId(@Param("qna_reply_qna_id") int qna_reply_qna_id);
 }

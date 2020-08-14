@@ -53,6 +53,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     name: 'NavBar',
     data() {
@@ -96,12 +98,12 @@ export default {
                 Authorization: this.$cookies.get('auth-token')
             }
         }
-        axios.get(store.state.SERVER_URL + '/api/users/isTeacher', requestHeaders)
+        axios.get(this.$store.state.SERVER_URL + '/api/users/isTeacher', requestHeaders)
         .then(res => {
             this.isTeacher = res.data.isTeacher
         })
         .catch(err =>  console.error(err))
-        axios.get(store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
+        axios.get(this.$store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
         .then(res => {
             this.isAdmin = res.data.isAdmin
         })

@@ -64,16 +64,19 @@ public class User implements Serializable {
     
     @Column(name="user_profile", columnDefinition="text")
     @ApiModelProperty(value="프로필사진")
-    private String userProfile;
+    private String userProfile = "default.png";
     
     @Column(name="user_intro", columnDefinition="text")
     @ApiModelProperty(value="자기소개")
-    private String userIntro;
+    private String userIntro = "자기소개를 해주세요.";
     
-    @Column(name="user_spoon")
-    @ApiModelProperty(value="잔여스푼")
-    private Integer userSpoon;
+    @ApiModelProperty(value="스푼 갯수")
+    private Integer userSpoon = 0;
     
+    @Column(name="teacher_code")
+    @ApiModelProperty(value="강사코드")
+    private String teacherCode;
+
     public User(String userEmail, String userName, String userNickname, String userPassword) {
        this.userEmail = userEmail;
         this.userName = userName;

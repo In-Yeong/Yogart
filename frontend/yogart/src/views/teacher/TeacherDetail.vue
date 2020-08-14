@@ -4,8 +4,8 @@
         <h3>{{ teacherInfo.teacherName }} 선생님</h3>
         <h5>{{ teacherInfo.teacherIntro }}</h5>
         <b-tabs content-class="mt-3">
-            <b-tab v-for="pt in ptList" :key="pt.id" :title="pt.ptName">
-                <ClassRegi :ptId="pt.id"/>
+            <b-tab v-for="pt in ptList" :key="pt.ptId" :title="pt.ptName">
+                <ClassRegi :ptId="pt.ptId"/>
             </b-tab>
         </b-tabs>
     </div>
@@ -33,13 +33,14 @@ export default {
         }
     },
     mounted() {
-        const requestHeaders = {
-            headers: {
-                Authorization: 'Token ' + this.$cookies.get('auth-token')
-            }
-        }
-        axios.get(this.SERVER_URL + '/api/teacher-detail', this.teacherId, requestHeaders)
+        // const requestHeaders = {
+        //     headers: {
+        //         Authorization: this.$cookies.get('auth-token')
+        //     }
+        // }
+        axios.get(this.SERVER_URL + `/api/teachers/list/detail/${this.teacherId}`, this.teacherId)
         .then(res => {
+            // console.log(res)
             // const res = {
             //     data: {
             //         teacherInfo: {
@@ -59,9 +60,9 @@ export default {
             //         ]
             //     }
             // }
-            this.teacherInfo.teacherName = res.data.teacherInfo.teacherName
-            this.teacherInfo.teacherIntro = res.data.teacherInfo.teacherIntro
-            this.teacherInfo.teacherImage = res.data.teacherInfo.teacherImage
+            this.teacherInfo.teacherName = res.data.teacherInfo.userName
+            this.teacherInfo.teacherIntro = res.data.teacherInfo.userIntro
+            this.teacherInfo.teacherImage = res.data.teacherInfo.userProfile
             this.ptList = res.data.ptList
         })
         .catch(err => console.error(err))

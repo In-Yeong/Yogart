@@ -56,7 +56,7 @@ export default {
                 Authorization: this.$cookies.get('auth-token')
             }
         }
-        axios.get(this.SERVER_URL + '/api/users/myInfo', null, requestHeaders)
+        axios.get(this.SERVER_URL + '/api/users/myInfo', requestHeaders)
         .then(res => {
             console.log("UserProfile page 성공",res)
 
