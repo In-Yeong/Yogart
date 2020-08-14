@@ -15,10 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RequestHeader;
-=======
->>>>>>> 82e170df7d6284abdd894ac1819a59e753b665dd
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,11 +48,6 @@ public class MyPageController {
 	@ApiOperation(value = "그래프 기록 데이터를 보낸다", response = GraphResult.class)
 	@GetMapping(value="/graph")
 	public ResponseEntity<GraphResult> showResult(HttpServletRequest request) throws Exception {
-<<<<<<< HEAD
-//		Map<String, String> headers = (Map<String, String>)courseData.get("headers");
-//		String token = headers.get("auth-token");
-=======
->>>>>>> 82e170df7d6284abdd894ac1819a59e753b665dd
 		String token = request.getHeader("auth-token");
 		System.out.println(token);
 		User user = userService.authentication(token);

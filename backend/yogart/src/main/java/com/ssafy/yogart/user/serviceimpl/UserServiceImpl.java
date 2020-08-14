@@ -60,15 +60,12 @@ public class UserServiceImpl implements UserService {
     	return null;
     }
 
-<<<<<<< HEAD
-=======
     // 비밀번호 업데이트
     @Override
     public User updateInfo(User user) {
         return userRepository.save(user);
     }
 
->>>>>>> 82e170df7d6284abdd894ac1819a59e753b665dd
     // 탈퇴
     @Override
     public void withdraw(String token) {
