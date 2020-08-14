@@ -1,21 +1,21 @@
 <template>
-    <div class="signupView pb-5">
-        <h1 class="py-3">수업 조회</h1>
-        <select name="cars" id="cars" onchange="resorting()">
-            <option value="new">최신순</option>
-            <option value="low">낮은가격순</option>
-            <option value="high">높은가격순</option>
-        </select>
-        <div class="border my-3 mx-auto class-box row align-items-center" v-for="yogaClass in yogaList" :key="yogaClass.id">
+    <div class="padding-for-nav">
+        <div class="page-index">
+            <h1 class="page-name">수업 목록</h1>
+            <select class="page-select" name="cars" id="cars" onchange="resorting()">
+                <option value="new">최신순</option>
+                <option value="low">낮은가격순</option>
+                <option value="high">높은가격순</option>
+            </select>
+        </div>
+        
+        <div class="class-box row align-items-center" @click="btnClick(yogaClass.id)" v-for="yogaClass in yogaList" :key="yogaClass.id">
             <div class="d-inline-block col-2">
                 <img class="user-profile m-3" :src="require('@/assets/Hedgehog.jpg')">
             </div>
-            <div class="d-inline-block col-8">
+            <div class="d-inline-block col-10">
                 <div class="h3">{{ yogaClass.name }}</div>
                 <div>{{ yogaClass.teacher_nickName}} | {{ yogaClass.price}} 스푼</div>
-            </div>
-            <div class="d-inline-block col-2">
-                <button class="btn btn-primary" @click="btnClick(yogaClass.id)">신청하기</button>
             </div>
         </div>
         <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
@@ -91,6 +91,20 @@ export default {
 </script>
 
 <style scoped>
+.page-index {
+    height: 8vh;
+    width: 90vh;
+    margin: auto;
+    border-bottom: 3px solid rgba(143, 160, 242, 1);
+}
+.page-name {
+    float: left;
+    margin-left: 1vh;
+}
+.page-select {
+    float: right;
+    margin-right: 1vh;
+}
 .user-profile {
   display: inline-block;
   width: 80px;
@@ -103,7 +117,15 @@ export default {
   background-size: cover;
 }
 .class-box {
-    width: 60rem;
+    width: 90vh;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin: 3rem auto;
+    border-bottom: 3px solid rgba(143, 160, 242, 1);
+    border-radius: 5rem;
+}
+.class-box:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 </style>
