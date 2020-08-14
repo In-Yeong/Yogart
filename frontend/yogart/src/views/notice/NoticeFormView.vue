@@ -1,6 +1,6 @@
 <template>
     <div class="NoticeFormView">
-        <h1 class="m-5">공지사항 작성 페이지</h1>
+        <h1 class="p-5">공지사항 작성 페이지</h1>
         <div id="app">
             <!-- <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor> -->
         </div>
