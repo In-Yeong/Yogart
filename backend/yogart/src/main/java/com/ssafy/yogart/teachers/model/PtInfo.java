@@ -48,7 +48,7 @@ public class PtInfo implements Serializable{
     @ApiModelProperty(value="피티소개")
     private String ptIntro = "PT를 소개해주세요.";
    
-    @ManyToOne(fetch = FetchType.EAGER, optional=false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, optional=false)
 	@JoinColumn(name="pt_teacher_id", referencedColumnName = "id")
     @ApiModelProperty(value="선생님아이디")
     private User ptTeacherId;

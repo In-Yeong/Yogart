@@ -1,14 +1,14 @@
 <template>
     <div>
         <span>수업이름: {{ ptInfo.ptName }}</span>
-        <span> 시간: {{ time.time }}시 시작</span>
+        <span> 시간: {{ time.ptTime }}시 시작</span>
         <span> 가격: {{ ptInfo.ptPrice }}스푼</span>
         <span> 소개: {{ ptInfo.ptIntro }}</span>
         <b-button id="show-btn" @click="showModal">신청</b-button>
         <b-modal ref="my-modal" hide-footer :title="modalTitle">
             <div class="d-block text-center">
                 <h3>{{ptInfo.ptName}}<br>
-                {{ dDay }} {{ time.time }}시</h3>
+                {{ dDay }} {{ time.ptTime }}시</h3>
             </div>
                 <b-button class="mt-3" variant="outline-danger" block @click="ptRegi">신청하기</b-button>
         </b-modal>
@@ -32,7 +32,8 @@ export default {
         }
     },
     mounted() {
-        this.clickedDate.setHours(this.time.time)
+        this.clickedDate.setHours(this.time.ptTime)
+        console.log(this.time)
     },
     methods: {
         ptRegi() {
@@ -43,9 +44,11 @@ export default {
                     Authorization: this.$cookies.get('auth-token')
                 }
             }
+            console.log(this.clickedDate.getDay())
             const ptData = {
                 ptInfo: this.ptInfo,
-                time: this.clickedDate
+                day: this.clickedDate.getDay(),
+                time: this.clickedDate,
             }
             console.log(requestHeaders)
             console.log(ptData)
