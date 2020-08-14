@@ -200,6 +200,57 @@ export default {
   width:100%;
   transition:800ms ease all;
 }
+
+
+.btn-white {
+  transition-duration: 0.4s;
+  /* background-color:rgba(255,255,255,0.3);
+  border: 3px solid #f29d8f;
+  color: #f29d8f; */
+  background-color:rgba(255,255,255,0.3);
+  border: 3px solid #f29d8f;
+  color: #f29d8f;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 24px;
+  margin: 4px 2px;
+  transition:800ms ease all;
+  outline:none;
+}
+.btn-white:hover {
+  background-color: #f29d8f;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 24px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.btn-white:before,.btn-white:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: rgba(242, 157, 143,0.3);
+  transition:400ms ease all;
+}
+.btn-white:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.btn-white:hover:before,.btn-white:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
 .btn4 {
   transition-duration: 0.4s;
   /* background-color:rgba(255,255,255,0.3);
