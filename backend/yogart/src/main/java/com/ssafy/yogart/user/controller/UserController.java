@@ -350,10 +350,6 @@ public class UserController {
     	return response;
     }
     
-<<<<<<< HEAD
-
-=======
->>>>>>> ea6714833e7e660339005cd5e7be758d9a889127
     private String save(MultipartFile file, String contextPath, String uploadDate) {
         try {
            String newFileName = uploadDate + file.getOriginalFilename();
