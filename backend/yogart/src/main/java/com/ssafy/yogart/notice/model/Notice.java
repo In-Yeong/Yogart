@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -32,9 +33,10 @@ public class Notice {
     @ApiModelProperty(value="이름")
 	private String noticeTitle;
 	
-	@Column(name="notice_content", columnDefinition = "text")
+	@Lob
+	@Column(name="notice_content")
     @ApiModelProperty(value="이름")
-	private String noticeContent;
+	private byte[] noticeContent;
 	
 	@Column(insertable = false, updatable = false)
     @ApiModelProperty(value="생성일")

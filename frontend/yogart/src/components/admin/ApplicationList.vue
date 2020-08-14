@@ -9,6 +9,9 @@ import ApplicationListItem from './ApplicationListItem.vue'
 
 export default {
     name: 'ApplicationList',
+    components: {
+        ApplicationListItem,
+    },
     props: {
         applications: Array,
     },

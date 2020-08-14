@@ -97,6 +97,8 @@ function gotStream(stream) {
 }
 
 function vidMute() {
+  // localVideo.pause();
+  // localVideo.src = "";
   localStream.getTracks().forEach(track => track.enabled = !track.enabled);
   isLocalOn = !isLocalOn;
 }

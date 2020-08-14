@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     name: 'NavBar',
     data() {
@@ -60,7 +61,9 @@ export default {
             userNickname: this.$cookies.get('userNickname'),
             userPic: "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
             showNavbar: true,
-            lastScrollPosition: 0
+            lastScrollPosition: 0,
+            isTeacher: null,
+            isAdmin: null,
         }
     },
     methods: {
@@ -88,6 +91,26 @@ export default {
     },
     mounted () {
         window.addEventListener('scroll', this.onScroll)
+            // 해당 유저가 강사자격을 보유했는지 확인합니다.
+        const requestHeaders = {
+            headers: {
+                Authorization: this.$cookies.get('auth-token')
+            }
+        }
+        axios.get(this.$store.state.SERVER_URL + '/api/users/isTeacher', requestHeaders)
+        .then(res => {
+            this.isTeacher = res.data
+        })
+        .catch(err => {
+            console.error(err)
+        })
+        axios.get(this.$store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
+        .then(res => {
+            this.isAdmin = res.data
+        })
+        .catch(err => {
+            console.error(err)
+        })
     },
     beforeDestroy () {
         window.removeEventListener('scroll', this.onScroll)
