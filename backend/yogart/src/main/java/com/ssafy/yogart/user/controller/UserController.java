@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
@@ -180,20 +179,18 @@ public class UserController {
 
     // 자신의 정보를 반환
     @ApiOperation(value="자신의 정보를 반환")
-    @PostMapping(value = "/myinfo")
-    public ResponseEntity<Result> getMe(HttpServletRequest request) {
-    	ResponseEntity<Result> response = null;
-    	Cookie[] myCookies = request.getCookies();
-    	System.out.println("token: " + myCookies[0].getValue());
+    @GetMapping(value = "/myInfo")
+    public ResponseEntity<Result> getMe(@RequestHeader Map<String,String> data) {
+    	String token = data.get("authorization");
+//    	String token = request.getHeader("auth-token");
+		System.out.println("token:::" + token);
+		User user = userService.authentication(token);
     	Result result = Result.successInstance();
-    	User user = userService.authentication(myCookies[0].getValue());
     	if(user == null) {
-    		response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-    	} else {
-    		result.setUser(user);
-    		response = new ResponseEntity<>(result, HttpStatus.OK);
+    		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     	}
-        return response;
+    	result.setUser(user);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     // 자신의 비밀번호를 갱신한 뒤 그 결과를 반환
@@ -353,6 +350,10 @@ public class UserController {
     	return response;
     }
     
+<<<<<<< HEAD
+
+=======
+>>>>>>> ea6714833e7e660339005cd5e7be758d9a889127
     private String save(MultipartFile file, String contextPath, String uploadDate) {
         try {
            String newFileName = uploadDate + file.getOriginalFilename();
