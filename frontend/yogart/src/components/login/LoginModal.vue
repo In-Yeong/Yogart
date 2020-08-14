@@ -31,6 +31,7 @@
                 </div>
                 <div class="my-5">
                     <kakaoLogin @loginComplete="setUserData"></kakaoLogin>
+                    <br>
                     <naverLogin @loginComplete="setUserData"></naverLogin>
                 </div>
                 <div>

@@ -175,12 +175,9 @@ export default {
     font-weight: bold;
     color: rgba(0, 0, 0, 0.6);
 }
-
-input:focus {
-    outline: none;
-}
 input {
     width: 30rem;
+    outline: none;
 }
 .allIcon {
     color: red;

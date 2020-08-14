@@ -1,7 +1,7 @@
 <template>
-  <div class="box">
-        <div id="kakao-login-btn"></div>
-  </div>
+
+    <div id="kakao-login-btn"></div>
+
 </template>
 
 <script>
@@ -62,11 +62,3 @@ export default {
     }
 }
 </script>
-
-<style>
-
-/* #kakao-login-btn > img {
-    src: url('../../assets/socialLogin/kakao.png');
-} */
-
-</style>
