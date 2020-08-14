@@ -63,6 +63,9 @@ export default {
     components: {
         InfiniteLoading
     },
+    created() {
+        window.scrollTo(0,0);
+    },
     methods: {
         resorting(str) {
             var options = document.getElementsByClassName('option')
