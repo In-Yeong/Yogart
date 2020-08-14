@@ -2,14 +2,14 @@
   <div class=" my-5" >
       <h1 style="font-weight:700px;" class="my-5">나만의 코스 만들기</h1>
       <!-- <div class="d-flex flex-column" style="background-color: rgba(242, 157, 143, 0.5);"> -->
-      <div class="" style="background-color: rgba(242, 157, 143,0.5)">
+      <div id="course-list">
         <div class="field-row mx-5">
-            <input name="courseName" id="courseName" v-model="courseName" type="text" required @keyboard-enter="makeList(courseName)"/>
-            <label for="courseName">코스명</label>
-            <button @click="makeList(courseName)" class="btn-white">생성</button>
+            <input name="courseName" id="courseName" v-model="courseName" type="text" required @keyup-enter="makeList(courseName)"/>
+            <label for="courseName">코스명 + Enter</label>
+            <!-- <button @click="makeList(courseName)" class="btn-white">생성</button> -->
         </div>
        
-        <h5>포즈를 선택해 주세요( 최대 7개 ) </h5>
+        <p style="color:#888; margin-top:5px;">포즈를 선택해 주세요( 최대 7개 )<span @click="reset" class="reset-btn">Reset</span></p>
         <div class="d-flex justify-content-around">
 
                 <div v-for="idx in poseIndexList" :key="idx">
@@ -135,6 +135,10 @@ export default {
         this.expertSelected()
     },
     methods : {
+        reset(){
+            this.poseList = []
+            this.poseIndexList = []
+        },
         allSelected() {
             console.log("allSelected implemented",this.poseIndexList)
             for(var i=0; i < allItems.length; i++) {
@@ -251,21 +255,23 @@ export default {
         console.log(tags_idx,tags_val,"오타:",error)
         },
         poseChoose(btnPose) {
-            if (this.poseList.length < this.max ) {
-                if (this.poseList.includes(btnPose.korean_pose_name)){
-
-                    var idx = this.poseList.indexOf(btnPose.korean_pose_name)
-                    this.poseList.splice(idx,1);
+            
+            if (this.poseList.includes(btnPose.korean_pose_name)){
+                var idx = this.poseList.indexOf(btnPose.korean_pose_name)
+                this.poseList.splice(idx,1);
                     this.poseIndexList.splice(idx,1);
-                }
-                else {
+                
+            }
+            else{
+                if (this.poseList.length < this.max ) {
                     this.poseList.push(btnPose.korean_pose_name)
                     this.poseIndexList.push(btnPose.id)
                 }
+                else {
+                    alert('최대 7개의 동작만 가능합니다.')
+                }
             }
-            else {
-                alert('최대 7개의 동작만 가능합니다.')
-            }
+            
             this.allSelected()
             this.beginnerSelected()
             this.intermediateSelected()
@@ -363,6 +369,22 @@ p {
     background-color: #f29d8f;
     color : white;
 }
+.reset-btn{
+    padding : 3px;
+    background-color:  rgba(255, 255, 255, 0.5);
+    border : 1.5px solid #f29d8f;
+    color : #f29d8f;
+    font-size:10px;
+    border-radius: 5px;
+    height:20px; 
+    width:50px; 
+    line-height:10px;
+}
+.reset-btn:hover{
+    cursor: pointer;
+    background-color: #f29d8f;
+    color : white;
+}
 
 .box{
     /* margin : 5px; */
@@ -408,9 +430,9 @@ label {
 	font-size:16px;
 	color:#888;
 	position:absolute;
-	top: 15px;
+	top: 10px;
     bottom: 0;
-    left: 180px;
+    left: 310px;
 	transition: .3s ease;
 	cursor:text;
 }
@@ -429,7 +451,15 @@ input:focus {
 }
 input:focus ~ label, input:valid ~ label {
 	font-size:15px;
-	color:#d79fd7;
+	/* color:#d79fd7; */
+	color:black;
 	transform: translate3d(0, -30px, 0);
+}
+#course-list{
+    width:1140px; 
+    background-color: rgba(242, 157, 143,0.5);
+    margin : auto;
+    margin-bottom: 3rem;
+    padding-top: 5px;
 }
 </style>
