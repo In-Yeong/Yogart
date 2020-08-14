@@ -378,5 +378,26 @@ export default {
     border-width: 8px 8px 0 8px;
     border-color: gray transparent transparent transparent;
 }
+.user-profile-small {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border : 2px solid rgba(242, 157, 143);
 
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+.user-profile-mid {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border : 2px solid rgba(242, 157, 143);
+
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
 </style>

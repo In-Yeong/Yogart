@@ -3,14 +3,14 @@
     <div class="m-5">
         <h3 style="font-weight:500px;">사용자 지정 코스</h3>
         <carousel-3d :controls-visible="true" :clickable="true">
-           <slide :index="0">
+           <slide class="slide" :index="0">
             <figure>
                 <figcaption class="text-center" style="font-size:100px;" @click="newCourse()">
                      +
                 </figcaption>
             </figure>
             </slide>
-            <slide v-for="(slide, i) in slides" :key="i" :index="i+1">
+            <slide class="slide" v-for="(slide, i) in slides" :key="i" :index="i+1">
                 {{i+1}}
             <figure>
                 <img src="https://placehold.it/360x270">
@@ -22,9 +22,9 @@
          
         </carousel-3d>
         
-        <div id="mylist" class="row">
+        <!-- <div id="mylist" class="row">
             <div class="col-4 rect create-list row align-items-center" @click="newCourse()"><h1 class="col align-self-center">+</h1></div>
-        </div>
+        </div> -->
     </div>
 </template>
 
