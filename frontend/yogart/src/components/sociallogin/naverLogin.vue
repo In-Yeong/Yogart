@@ -56,7 +56,6 @@ export default {
                         accessToken: accessToken
                     })
                     .then(res => {
-                        // console.log(res)
                         axiosVue.$emit('loginComplete', res.data)
                     })
                     .catch(err => console.error(err))
