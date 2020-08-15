@@ -76,14 +76,17 @@ public class TeacherController {
 		System.out.println("ptId:" +  ptId);
 		PtInfo ptInfo = teacherService.showPTInfo(ptId);
 		List<PtClicked> clickedList = teacherService.showClassTime(ptInfo);
-		List<Time> timeList = new ArrayList<>();
-		List<LocalDate> soldOut = new ArrayList<>();
+		List<Time> timeList = new ArrayList<>(); 
+		List<LocalDateTime> soldOut = new ArrayList<>();
 		for(int i = 0; i < clickedList.size(); i++) {
 			PtClicked temp = clickedList.get(i);
 			Time time = new Time(temp.getPtDay(), temp.getPtTime());
-			timeList.add(time);
-			if(temp.getDateTime() == null) continue;
-			soldOut.add(LocalDate.from(temp.getDateTime()));
+			if(temp.getDateTime() == null) {
+				timeList.add(time);
+				System.out.println(temp.getPtClickedId());
+				continue;
+			}
+			soldOut.add(temp.getDateTime());
 		}
 		TeacherPTInfoResult result = new TeacherPTInfoResult();
 		result.setClicked(timeList);
@@ -98,41 +101,48 @@ public class TeacherController {
 	public ResponseEntity<String> teacherReserved(@RequestHeader Map<String,String> header, @RequestBody Map<String, Object> data) throws Exception {
 		String token = header.get("authorization");
 		User user = userService.authentication(token);
+		System.out.println(user.getUserNickname());
 		Map<String,Object> ptInfo = (Map<String, Object>) data.get("ptInfo");
-		int day = (int)data.get("day");
-		
+		Integer day = (Integer)data.get("day");
 		String temp = (String)data.get("time");
-		String time = temp.substring(0, 19);
+		String time = temp.substring(0, 23);
 		LocalDateTime timeSet = LocalDateTime.parse(time);
 		timeSet = timeSet.plusHours(9);
 		System.out.println(timeSet);
-		
 		int minusSpoon = (int)ptInfo.get("ptPrice");
 		System.out.println("-" + minusSpoon + " 스푼 차감되었습니다.");
 		user.setUserSpoon(user.getUserSpoon() -  minusSpoon);
 		System.out.println("잔여 스푼: " + user.getUserSpoon());
 		userService.updateInfo(user);
-		PtInfo ptinfo = new PtInfo((int)ptInfo.get("ptId"),
+		Map<String,Object> t = (Map<String, Object>) ptInfo.get("ptTeacher"); 
+		int teacherId = (Integer)t.get("id");
+		User teacher = userService.findUser(teacherId);
+		System.out.println(teacher);
+
+		PtInfo ptinfo = new PtInfo((Integer)ptInfo.get("ptId"),
 									(String)ptInfo.get("ptName"),
-									(int)ptInfo.get("ptPrice"),
+									(Integer)ptInfo.get("ptPrice"),
 									(String)ptInfo.get("ptIntro"),
-									(User)ptInfo.get("ptTeacherId"));
+									teacher);
 		List<PtClicked> clickedList = teacherService.showClassTime(ptinfo);
-		PtClicked click = null;
+		PtClicked click2 = null; PtClicked click = null;
 		go:
 		for(int i = 0; i < clickedList.size(); i++) {
-			click = clickedList.get(i);
-			if(click.getDateTime() == null && click.getPtStudentId() == null) {
-				if(day == click.getPtDay() && timeSet.getHour() == click.getPtTime()) {
+			click2 = clickedList.get(i);
+			if(click2.getDateTime() == null) {
+				if((day == click2.getPtDay()) && (timeSet.getHour() == click2.getPtTime())) {
+					click = click2;
 					break go;
 				}
 			}
 		}
 		click.setDateTime(timeSet);
+		click.setPtStudentId(user);
+		click.setIsAttend(false);
 		teacherService.updatePtClickedInfo(click);
-
-		teacherService.updatePtClickedInfo(day,timeSet.getHour(),ptinfo);
-		
+		PtClicked clickNull = new PtClicked(click.getPtDay(),click.getPtTime(),userService.findUser(7),
+				false,null,click.getPtClickedName());
+		teacherService.updatePtClickedInfo(clickNull);
 		return new ResponseEntity<String>(SUCCESS , HttpStatus.OK);
 	}
 

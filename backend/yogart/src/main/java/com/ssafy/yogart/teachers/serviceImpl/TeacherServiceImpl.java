@@ -11,6 +11,7 @@ import com.ssafy.yogart.teachers.repository.PtClickedRepository;
 import com.ssafy.yogart.teachers.repository.PtInfoRepository;
 import com.ssafy.yogart.teachers.service.TeacherService;
 import com.ssafy.yogart.user.model.User;
+import com.ssafy.yogart.user.repository.UserRepository;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -20,6 +21,9 @@ public class TeacherServiceImpl implements TeacherService {
 	
 	@Autowired
 	PtClickedRepository ptClickedRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 	
 	@Override
 	public List<PtInfo> showAllTeacherPTlist(User user) {
@@ -41,8 +45,4 @@ public class TeacherServiceImpl implements TeacherService {
         return ptClickedRepository.save(ptClicked);
     }
 
-	@Override
-	public PtClicked updatePtClickedInfo(int ptDay, int ptTime, PtInfo ptinfo) {
-		return ptClickedRepository.save(new PtClicked(ptDay,ptTime,ptinfo));
-	}
 }

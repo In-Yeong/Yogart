@@ -15,6 +15,4 @@ public interface TeacherService {
 	List<PtClicked> showClassTime(PtInfo ptinfo);
 	
 	PtClicked updatePtClickedInfo(PtClicked ptClicked);
-	
-	PtClicked updatePtClickedInfo(int ptDay, int ptTime, PtInfo ptinfo);
 }
