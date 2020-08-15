@@ -1,10 +1,9 @@
 <template>
     <div class="padding-for-nav">
-        <div class="page-name">{{ notice.noticeTitle }}제목들어가는곳</div>
+        <div class="page-name">{{ notice.noticeTitle }}</div>
         <div class="notice-date-content">
-            <div class="notice-date">등록일 : {{ notice.createDate }}2020-08-15</div>
+            <div class="notice-date">등록일 : {{ notice.createDate }}</div>
             <div class="notice-content">
-                여기가 뷰어
                 <viewer v-if="notice.noticeContent !== null" :initialValue="notice.noticeContent"/>
             </div>
         </div>

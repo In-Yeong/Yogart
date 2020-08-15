@@ -1,7 +1,6 @@
 <template>
     <div class="padding-for-nav">
         <h1 class="page-name">공지사항</h1>
-        <!-- <button @click="callNoticeForm()">글 작성(관리자만 보이게 설정)</button> -->
         <table class="table m-auto">
             <thead class="container p-0">
                 <tr class="head-tr row m-0">
@@ -13,14 +12,6 @@
                 <tr class="table-list row m-0" v-for="notice in notices" :key="notice.noticeId" @click="callNoticeDetail(notice.noticeId)">
                     <td class="col-9 title">{{ notice.noticeTitle }}</td>
                     <td class="col-3">{{ notice.createDate }}</td>
-                </tr>
-                <tr class="table-list row m-0" @click="callNoticeDetail(2)">
-                    <td class="col-9 title">요가트 오픈 이벤트22222222222222!!!!!!!!!!</td>
-                    <td class="col-3">2020.07.28</td>
-                </tr>
-                <tr class="table-list row m-0" @click="callNoticeDetail(1)">
-                    <td class="col-9 title">요가트 오픈 이벤트!!!!!!!!!!</td>
-                    <td class="col-3">2020.07.27</td>
                 </tr>
             </tbody>
         </table>
