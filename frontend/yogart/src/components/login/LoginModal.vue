@@ -104,6 +104,7 @@ export default {
     border-width: 0px 0px 1.2px;
     width: 70%;
     padding-top: 1rem;
+    outline: none;
 }
 .login-reject {
     background-color: rgba(242,157,143,0.2);
