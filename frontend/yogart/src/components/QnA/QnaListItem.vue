@@ -37,6 +37,9 @@ export default {
             if (target.id !='title') {
                 target = target.parentElement
             }
+            if (target.id !='title') {
+                target = target.parentElement
+            }
             console.log(this.isClicked)
             if (this.isClicked) {
                 target.style = "background-color: rgba(215, 159, 215, 1);"

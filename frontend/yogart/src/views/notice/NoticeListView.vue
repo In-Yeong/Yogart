@@ -1,6 +1,6 @@
 <template>
-    <div class="NoticeListView">
-        <h1 class="p-5">공지사항</h1>
+    <div class="padding-for-nav">
+        <h1 class="page-name">공지사항</h1>
         <button @click="callNoticeForm()">글 작성(관리자만 보이게 설정)</button>
         <table class="table m-auto">
             <thead class="thead-dark container p-0">
@@ -28,16 +28,22 @@
                 </tr>
             </tbody>
         </table>
+        <div class="page">
+            <div class="page-left" @click="clickPrev()"><i class="fas fa-chevron-left"></i></div>
+            <div class="page-num">{{page}}</div>
+            <div class="page-right" @click="clickNext()"><i class="fas fa-chevron-right"></i></div>
+        </div>
 
         <paginate v-model="page" 
         :page-count="totalPages" 
-        :page-range="3" 
-        :margin-pages="2" 
+        :page-range="0" 
+        :margin-pages="0" 
         :click-handler="getNotices" 
-        :prev-text="'Prev'" 
-        :next-text="'Next'" 
+        :prev-text="'이전 페이지'" 
+        :next-text="'다음 페이지'" 
         :container-class="'pagination'" 
-        :page-class="'page-item'"> </paginate>
+        :page-class="'page-item'"
+        style="display: none;"> </paginate>
 
 
     </div>
@@ -62,6 +68,14 @@ export default {
         }
     },
     methods: {
+        clickPrev() {
+            var target = document.getElementsByClassName('pagination')[0].firstElementChild.firstElementChild
+            target.click()
+        },
+        clickNext() {
+            var target = document.getElementsByClassName('pagination')[0].lastElementChild.firstElementChild
+            target.click()
+        },
         getNotices(pageNum) {
             // console.log(this.page)
             axios.get(`${this.SERVER_URL}/api/notice/list/${pageNum}`)
@@ -71,6 +85,7 @@ export default {
                 this.totalPages = response.data.totalPages
                 this.notices.forEach(element => element.createDate = element.createDate.substr(0,10))
             })
+            .catch(err => console.log(err))
 
         },
         callNoticeDetail(noticeId) {
@@ -91,6 +106,26 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.page-name {
+    margin: -4rem auto 2rem;
+    font-size: 4vh;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.6);
+}
+.page {
+    padding: 1.8rem 0rem;
+}
+.page-left, .page-right {
+    display: inline-block;
+    cursor: pointer;
+}
+.page-num {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: bold;
+    color: rgba(215, 159, 215, 1);
+    padding: 0rem 1rem;
+}
 table {
     width: 80%;
 }
