@@ -63,6 +63,9 @@ export default {
             SERVER_URL: this.$store.state.SERVER_URL,
         }
     },
+    created() {
+        window.scrollTo(0,0);
+    },
     methods: {
         clickPrev() {
             var target = document.getElementsByClassName('pagination')[0].firstElementChild.firstElementChild
