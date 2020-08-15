@@ -28,8 +28,13 @@ import SpoonPurchase from '../views/spoon/SpoonPurchase.vue'
 import PayComplete from '../views/kakaopay/PayComplete.vue'
 import PayCancel from '../views/kakaopay/PayCancel.vue'
 import PayFail from '../views/kakaopay/PayFail.vue'
+// import AdminPage from '../views/admin/AdminPage.vue'
 import test from '../views/test.vue'
 
+var getCookie = function(name) {
+    var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return value? value[2] : null;
+    }
 
 const requireAuth = () => (from, to, next) => {
     // console.log(store.state.isLogin)
@@ -47,12 +52,12 @@ const requireTeacher = () => (from, to, next) => {
     // 해당 유저가 강사자격을 보유했는지 확인합니다.
     const requestHeaders = {
         headers: {
-            Authorization: this.$cookies.get('auth-token')
+            Authorization: getCookie('auth-token')
         }
     }
     axios.get(store.state.SERVER_URL + '/api/users/isTeacher', requestHeaders)
     .then(res => {
-        if (res.data.isTeacher) {
+        if (res.data) {
             return next()
         }
     })
@@ -65,12 +70,12 @@ const requireTeacher = () => (from, to, next) => {
 const requireAdmin = () => (from, to, next) => {
     const requestHeaders = {
         headers: {
-            Authorization: this.$cookies.get('auth-token')
+            Authorization: getCookie('auth-token')
         }
     }
     axios.get(store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
     .then(res => {
-        if (res.data.isAdmin) {
+        if (res.data) {
             return next()
         }
     })
@@ -127,13 +132,13 @@ const routes = [
         path: '/teacherpage',
         name: 'TeacherPage',
         component: TeacherPage,
-        // beforeEnter: requireTeacher()
+        beforeEnter: requireTeacher()
     },
     {
         path: '/teachers/class-setting',
         name: 'ClassSetting',
         component: ClassSetting,
-        // beforeEnter: requireTeacher()
+        beforeEnter: requireTeacher()
     },
     {
         path: '/teachers',
@@ -156,12 +161,10 @@ const routes = [
         name: 'Callback',
         component: Callback,
     },
-   
     {
         path: '/accounts/signup',
         name: 'SignupView',
         component: SignupView,
-        beforeEnter: requireUNAuth(),
     },
     {
         path: '/mypage',
@@ -242,6 +245,12 @@ const routes = [
         beforeEnter: requireAuth(),
       },
       // Admin
+    //   {
+    //       path: '/admin',
+    //       name: 'AdminPage',
+    //       component: AdminPage,
+    //       beforeEnter: requireAdmin()
+    //   }
       
 ]
 
