@@ -1,6 +1,6 @@
 <template>
     <div class="noticeList">
-        <div v-for="item in items" :key="item.qnaId">
+        <div class="big-piece" v-for="item in items" :key="item.qnaId">
             <QnaListItem :item="item"/>
         </div>
     </div>
@@ -22,6 +22,11 @@ export default {
 
 <style>
 .noticeList{
+    width: 75vw;
     height : 600px;
+    margin: auto;
+}
+.big-piece {
+    /* background-color: aqua; */
 }
 </style>

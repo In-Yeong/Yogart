@@ -9,7 +9,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="h3">로그인</div>
                 <span class="login-reject" v-if="errorState">이메일 혹은 비밀번호를 다시 확인하세요.</span>
                 <span class="login-reject" v-if="serverState">연결할 수 없습니다. 잠시 후 다시 시도해주세요.</span>
                 <ValidationObserver v-slot="{ invalid }">
@@ -30,8 +29,7 @@
                     <div class="social-text">소셜 계정으로 간편하게 로그인하세요!</div>
                 </div>
                 <div class="my-5">
-                    <kakaoLogin @loginComplete="setUserData"></kakaoLogin>
-                    <br>
+                    <kakaoLogin class="mb-1" @loginComplete="setUserData"></kakaoLogin>
                     <naverLogin @loginComplete="setUserData"></naverLogin>
                 </div>
                 <div>
@@ -120,6 +118,7 @@ export default {
     border-width: 0px 0px 1.2px;
     width: 70%;
     padding-top: 1rem;
+    outline: none;
 }
 .login-reject {
     background-color: rgba(242,157,143,0.2);
