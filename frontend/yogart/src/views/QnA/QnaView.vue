@@ -97,7 +97,7 @@ export default {
 }
 </script>
 
-<style scouped>
+<style scoped>
 .page-name {
     margin: -4rem auto 2rem;
     font-size: 4vh;

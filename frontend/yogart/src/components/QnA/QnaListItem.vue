@@ -2,7 +2,7 @@
     <div class="container p-0">
         <div id="title" class="title row" @click="itemClick">
             <div class="col-1 p-0"><i class="fas fa-caret-right fa-2x"></i></div>
-            <pre class="col-7 p-0 custom-break-word">{{ item.qnaTitle }}</pre>
+            <pre class="col-7 p-0 custom-break-word h6">{{ item.qnaTitle }}</pre>
             <pre class="col-2 p-0 custom-break-word">admin</pre>
             <pre class="col-2 pl-0 text-right custom-break-word">{{ item.createDate }}</pre>
         </div>
