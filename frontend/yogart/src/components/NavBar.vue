@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div id="navbar-container">
         <div class="navbar navbar-expand navbar-light fixed-top w-100" :class="{ 'navbar--hidden': !showNavbar, 'change--color': lastScrollPosition > 100 }">
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav nav-left">
@@ -30,6 +30,7 @@
                     <div v-if="isAdmin" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="sub-item nav-link" href="/mypage">마이페이지</a>
                         <a class="sub-item nav-link" href="/notice/form">공지작성</a>
+                        <a class="sub-item nav-link" href="/admin">강사지원관리</a>
                         <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
                     </div>
                     <div v-else-if="isTeacher" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -68,8 +69,8 @@ export default {
     },
     methods: {
         openLoginModal() {
-              if (this.isLogin) return
-              $('#loginStaticBackdrop').modal('show')
+            if (this.isLogin) return
+            $('#loginStaticBackdrop').modal('show')
         },
         logoutEmmit() {
             this.$emit('logout')
@@ -91,7 +92,7 @@ export default {
     },
     mounted () {
         window.addEventListener('scroll', this.onScroll)
-            // 해당 유저가 강사자격을 보유했는지 확인합니다.
+        // 해당 유저가 강사자격을 보유했는지 확인합니다.
         const requestHeaders = {
             headers: {
                 Authorization: this.$cookies.get('auth-token')
@@ -123,6 +124,9 @@ export default {
 </script>
 
 <style>
+#navbar-container{
+    height: 8vh;
+}
 .logo-img {
     height: 8vh;
 }
@@ -151,6 +155,7 @@ export default {
     font-size: 1.2rem;
     font-weight: 500;
     padding: 1rem !important;
+    cursor: pointer;
 }
 .nav-link:after {    
   content: "";

@@ -78,7 +78,7 @@ export default {
         // 강사의 수업 정보와 이미 예약된 PT리스트를 가져옵니다.
         axios.get(this.SERVER_URL + `/api/teachers/pt/${this.ptId}`, this.ptId)
         .then(res => {
-            console.log(res)
+            // console.log(res)
             // let res = {
             //     data: {
             //         ptTeacher: 12, // 요가강사 id값

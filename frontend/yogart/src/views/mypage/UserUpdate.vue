@@ -1,34 +1,31 @@
 <template>
-    <div class="updateView pb-5">
-        <div>{{ userName }} 정보 수정</div>
-        <img :src="userImageUrl" alt="user profile image">
-        <input @change="fileChange" type="file" ref="userImage" id="user-image" accept=".jpg, .jpeg, .png">
-        <button @click="imageSubmit" class="btn btn-primary mt-4 col-12">프로필 사진 변경</button>
+    <div class="updateView padding-for-nav">
+        <div class="page-name">프로필 변경</div>
+        <div class="img-wrap">
+            <img v-if="userImageUrl" @click="callImgChangeBtn()" class="user-profile-img" :src="userImageUrl" alt="user profile image">
+            <img v-else @click="callImgChangeBtn()" class="user-profile-img" src="../../assets/userDefault.jpg" alt="user profile image">
+        </div>
+        <i @click="callImgChangeBtn()" class="camera fas fa-camera fa-3x"></i>
+        <div class="input-wrap">
+            <input @change="fileChange" type="file" ref="userImage" class="img-change-btn" id="user-image" accept=".jpg, .jpeg, .png">
+        </div>
 
-        <div class="container d-flex justify-content-center text-left">
+        <div class="info-pack container justify-content-center">
             <div class="d-block">
                 <div class="form-group">
-                    <label for="userEmail">닉네임</label>
-                    <br>
-                    <div class="input-box">
-                        <input class="border-0" type="text" id="userEmail" v-model="userNickname">
-                        <span class="allIcon" id="userEmailCheckIcon">아이콘</span>
-                    </div>
+                    <label for="userNickname">닉네임</label>
+                    <input class="info-input-box" type="text" id="userNickname" v-model="userNickname">
                     <label for="userIntro">한마디</label>
-                    <br>
-                    <div class="input-box">
-                        <input class="border-0" type="text" id="userIntro" v-model="userIntro">
-                        <span class="allIcon" id="userEmailCheckIcon">아이콘</span>
-                    </div>
+                    <input class="info-input-box" type="text" id="userIntro" v-model="userIntro">
                 </div>
-                <button @click="update" class="btn btn-primary mt-4 col-12">수정</button>
-                <a class="my-3" style="color : red; text-decoration : underline;" @click="withdrawl">회원 탈퇴를 원하시나요?</a>
+                <button @click="update" class="update-btn">수정</button>
+                <div class="leave" @click="withdrawl">회원 탈퇴를 원하시나요?</div>
             </div> 
         </div>
 
 
-        <b-modal ref="my-modal" hide-footer title="회원 탈퇴를 원하시나요?">
-            <div class="d-block text-center">
+        <b-modal ref="my-modal" hide-footer hide-header>
+            <div class="ment-box">
                 <h3>{{ ment }}</h3>
             </div>
             <b-button v-if="leave" class="mt-3" variant="outline-info" block @click="cancelDelete">남는다</b-button>
@@ -76,6 +73,10 @@ export default {
         .catch(err => console.error(err))
     },
     methods: {
+        callImgChangeBtn() {
+            var myinput = document.getElementById('user-image')
+            myinput.click()
+        },
         withdrawl() {
             this.$refs['my-modal'].show()
             // alert("")
@@ -147,6 +148,7 @@ export default {
                 this.userImageUrl = window.URL.createObjectURL(file)
             }
             this.userImage = this.$refs.userImage.files[0]
+            this.imageSubmit(e)
         },
         imageSubmit(e) {
             const requestHeaders = {
@@ -168,25 +170,82 @@ export default {
 }
 </script>
 
-<style>
-input:focus {
+<style scouped>
+.page-name {
+    margin: -4rem auto 2rem;
+    font-size: 4vh;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.6);
+}
+.user-profile-img {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    cursor: pointer;
+}
+.camera {
+    position: relative;
+    padding: 15px;
+    border-radius: 45px;
+    background-color: white;
+    top: -10vh;
+    left: 10vh;
+    cursor: pointer;
+}
+.camera:hover {
+    background-color: rgba(190, 190, 190, 1);
+}
+.info-pack {
+    margin-top: -5rem;
+    width: 500px !important;
+    text-align: left;
+}
+
+.input-wrap {
+    display: none;
+}
+
+.info-input-box {
+    background-color: rgba(0, 0, 0, 0);
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.7);
+    border-width: 0px 0px 1.2px;
+    width: 500px;
+    padding-top: 0rem;
+    margin-bottom: 1rem;
     outline: none;
 }
-input {
-    width: 30rem;
+.update-btn {
+    width: 500px;
+    height: 3rem;
+    color: white;
+    font-size: 17px;
+    margin-top: 1rem;
+    border-radius: 3rem;
+    border-width: 0px 0px 1.2px;
+    border-color: rgba(255, 255 255, 0.2);
+    background: linear-gradient(153deg, rgba(242,157,143,0.8) 0%, rgba(143,160,242,0.8) 100%);
+    outline:none !important;
+    cursor: pointer;
 }
-.allIcon {
-    color: red;
-    visibility: hidden;
+.update-btn:hover {
+    background: linear-gradient(153deg, rgba(242,157,143,0.7) 0%, rgba(143,160,242,0.7) 100%);
 }
-.input-box {
-    border-style: solid;
-    border-color: #dadada;
-    border-width: 0.1rem;
-    padding: 0.5rem;
-    background-color: white;
+.leave {
+    color : gray;
+    text-decoration: underline;
+    cursor: pointer;
+    text-align: right;
 }
-a:hover {
-    cursor:pointer;
+.ment-box {
+    text-align: center;
 }
+
+
+
 </style>

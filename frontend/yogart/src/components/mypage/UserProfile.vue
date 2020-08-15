@@ -10,8 +10,9 @@
             </b-avatar>
         </div>
         </template>
-        <img class="user-profile-img m-3" :src="imgSrc">
-        <div class="d-flex flex-column mt-3" >
+        <img v-if="imgSrc" class="user-profile-img" :src="imgSrc" alt="user profile image">
+        <img v-else class="user-profile-img" src="../../assets/userDefault.jpg" alt="user profile image">
+        <div class="profile-content" >
             <div class="d-flex mb-5" >
                 <h5>{{ userName }}</h5> 
                 <div class="d-flex">
@@ -56,16 +57,16 @@ export default {
                 Authorization: this.$cookies.get('auth-token')
             }
         }
-        axios.get(this.SERVER_URL + '/api/users/myInfo', null, requestHeaders)
+        axios.get(this.SERVER_URL + '/api/users/myInfo', requestHeaders)
         .then(res => {
             console.log("UserProfile page 성공",res)
 
-            this.userName = res.data.userName
-            this.userId = res.data.userId
-            this.userNickname = res.data.userNickname
-            this.userProfile = res.data.userProfile
-            this.userIntro = res.data.userIntro
-            this.spoons = res.data.userSpoon
+            this.userName = res.data.user.userName
+            this.userId = res.data.user.Id
+            this.userNickname = res.data.user.userNickname
+            this.userProfile = res.data.user.userProfile
+            this.userIntro = res.data.user.userIntro
+
             if (this.userProfile === undefined) {
                 this.userProfile = 'userDefault'
             }

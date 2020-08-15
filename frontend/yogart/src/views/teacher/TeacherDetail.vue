@@ -15,7 +15,7 @@
 import axios from 'axios'
 import ClassRegi from '@/components/teacher/ClassRegi.vue'
 
-export default {
+export default {  
     name: 'TeacherDetail',
     components: {
         ClassRegi,

@@ -22,6 +22,7 @@ export default {
     methods : {
         createChart() {
             var ctx = document.getElementById('lineChart').getContext('2d');
+            // ctx.style.backgroundColor = 'rgba(255,255,255,0.5)';
             var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
             gradientStroke.addColorStop(0, "#80b6f4");
             gradientStroke.addColorStop(1, "#f49080");
@@ -66,7 +67,7 @@ export default {
                         xAxes: [{
                         scaleLabel: {
                             fontWeight : 'bold',
-                            fontSize : 20,
+                            fontSize : 15,
                             display: true,
                             labelString: '요가 동작'
                         }
@@ -74,7 +75,7 @@ export default {
                         yAxes: [{
                         scaleLabel: {
                             fontWeight : 'bold',
-                            fontSize : 20,
+                            fontSize : 15,
                             display: true,
                             labelString: '소요시간(초)'
                         }
@@ -84,13 +85,13 @@ export default {
                         labels: {
                             // This more specific font property overrides the global property
                             fontColor: 'black',
-                            fontSize : 20,
+                            fontSize : 15,
                         },
 
                     },
                     title : {
                         display : true,
-                        fontSize : 25,
+                        fontSize : 20,
                         text : '동작 별 소요시간'
                     } ,
                     scaleLabel : {

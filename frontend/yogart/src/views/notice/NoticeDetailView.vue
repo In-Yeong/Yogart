@@ -65,7 +65,6 @@ export default {
             this.notice.noticeId = response.data.noticeId
             this.notice.createDate = response.data.createDate
             this.notice.createDate = this.notice.createDate.substr(0,10)
-            // console.log(this.notice.createDate.substr(0,10))
             })
         },
         toNoticeList() {

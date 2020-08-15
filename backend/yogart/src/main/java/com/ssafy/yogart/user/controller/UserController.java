@@ -212,20 +212,18 @@ public class UserController {
 
     // 자신의 정보를 반환
     @ApiOperation(value="자신의 정보를 반환")
-    @PostMapping(value = "/myinfo")
-    public ResponseEntity<Result> getMe(HttpServletRequest request) {
-    	ResponseEntity<Result> response = null;
-    	Cookie[] myCookies = request.getCookies();
-    	System.out.println("token: " + myCookies[0].getValue());
+    @GetMapping(value = "/myInfo")
+    public ResponseEntity<Result> getMe(@RequestHeader Map<String,String> data) {
+    	String token = data.get("authorization");
+//    	String token = request.getHeader("auth-token");
+		System.out.println("token:::" + token);
+		User user = userService.authentication(token);
     	Result result = Result.successInstance();
-    	User user = userService.authentication(myCookies[0].getValue());
     	if(user == null) {
-    		response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-    	} else {
-    		result.setUser(user);
-    		response = new ResponseEntity<>(result, HttpStatus.OK);
+    		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     	}
-        return response;
+    	result.setUser(user);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     // 자신의 비밀번호를 갱신한 뒤 그 결과를 반환
@@ -278,7 +276,6 @@ public class UserController {
     	response = new ResponseEntity<>(result, HttpStatus.OK);
     	return response;
     }
-
     
     @ApiOperation(value="스푼 결제")
     @PostMapping(value = "/pay")
@@ -358,8 +355,7 @@ public class UserController {
     	Result result = Result.successInstance();
     	response = new ResponseEntity<>(result, HttpStatus.OK);
     	return response;
-    }
-
+    }  
     
     @ApiOperation(value="프로필 사진 가져오기")
     @GetMapping(value="/profileImage")

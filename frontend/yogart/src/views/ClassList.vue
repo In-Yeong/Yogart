@@ -93,6 +93,8 @@ export default {
 }
 .page-name {
     float: left;
+    position: relative;
+    top: 8.5vh;
     margin-left: 1vh;
     font-size: 4vh;
     font-weight: bold;

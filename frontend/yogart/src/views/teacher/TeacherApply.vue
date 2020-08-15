@@ -42,7 +42,9 @@ export default {
             // console.log(file);
             console.log(fd);
             axios.post(this.SERVER_URL + '/api/users/imageUpload', fd, requestHeaders)
-            .then(res => console.log(res)) //다른 곳으로 이동 필요
+            .then(res => {
+                this.$router.push('/')
+            }) //다른 곳으로 이동 필요
             .catch(err => console.error(err))
         },
     }

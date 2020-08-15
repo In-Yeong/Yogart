@@ -1,87 +1,116 @@
 <template>
-  <div class="container my-5" >
-      <h1 class="my-5">나만의 코스 만들기</h1>
-        <h5>코스명</h5>
-        <span>
-            <input class="w-25" v-model="courseName">
-            <button @click="makeList(courseName)" class="w3-btn w3-round-xlarge w3-red w3-small m-3">생성</button>
-        </span>
-        <h5>선택한 포즈 :</h5>
-        <p>{{poseList}}</p>
-        <!-- <p>{{poseIndexList}}</p> -->
-       <div class="d-flex flex-column">
-            <div class="w3-bar" >
-            <!-- <button class="w3-bar-item w3-button w3-black" @click="onDiary">다이어리</button> -->
-            <button class="w3-bar-item w3-button w3-black" style="width:150px;" @click="allBtn">전체</button>
-            <button class="w3-bar-item w3-button w3-gray" style="width:150px;" @click="beginnerBtn">초급</button>
-            <button class="w3-bar-item w3-button w3-teal" style="width:150px;" @click="intermediateBtn">중급</button>
-            <button class="w3-bar-item w3-button w3-red" style="width:150px;"  @click="expertBtn">고급</button>
-            </div>
-            <div class="pose-box">
+  <div class=" my-5" >
+      <h1 style="font-weight:700px;" class="my-5">나만의 코스 만들기</h1>
+      <!-- <div class="d-flex flex-column" style="background-color: rgba(242, 157, 143, 0.5);"> -->
+         
+
+      <div id="course-list">
+          <!-- <form class="d-flex flex-column">
+            <input id="input-1" type="text" placeholder="코스명을 적어주세요" required autofocus />
+            <label for="input-1">
+                <span class="label-text" >코스 생성하기</span>
+                <div class="fill-button-trigger">CLick here and fill the form2323</div>
+            </label>
+            <button class="submit-button" type="submit">생성하기</button>
+            <p class="tip">Press Tab</p>
+            <div class="fill-button">포즈는 선택하셨나요?(최대 7개)</div>
+        </form> -->
+
+        <div class="field-row mx-5">
+            <input name="courseName" id="courseName" v-model="courseName" type="text" required @keyup-enter="makeList(courseName)"/>
+            <label for="courseName">코스명 + Enter</label>
             
-                <div v-if="all">
-                    <div class="row">
-                       
-                    <div class="col-sm-2" id="poses" v-for="posefile in posefiles" :key="posefile.pose_name">  
+        </div>
+       
+        <p style="color:#888; margin-top:5px;">포즈를 선택해 주세요( 최대 7개 )<span @click="reset" class="reset-btn">Reset</span></p>
+        <div class="d-flex justify-content-around">
+
+                <div v-for="idx in poseIndexList" :key="idx">
+                 <div class="pose-img">
+                    <img class="user-profile-small m-2" :src="require(`../../../public/photos/${posefiles[idx].file_reference}`)">
+                    <span id="delete" @click="deleteItem(posefiles[idx])">x</span>
+                </div> 
+                <p>{{posefiles[idx].korean_pose_name}}</p>
+                </div>
+          
+        </div>
+    </div>
+        <!-- <p>{{poseList}}</p> -->
+        <!-- <p>{{poseIndexList}}</p> -->
+       <div class="container">
+           <div>
+            <div class="d-flex justify-content-around" >
+            <div id="all-btn" class="btn-white"  @click="allBtn">전체</div>
+            <div id="beg-btn" class="btn-white"  @click="beginnerBtn">초급</div>
+            <div id="int-btn" class="btn-white"  @click="intermediateBtn">중급</div>
+            <div id="exp-btn" class="btn-white"  @click="expertBtn">고급</div>
+            </div>
+           
+            
+                <div v-if="all" class="row" >       
+                    <div @click="poseChoose(posefile)" class="col-sm-2 box all-box" :id="posefile.id" v-for="posefile in posefiles" :key="posefile.pose_name">  
                        <div class="pose-img">
-                        <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-                        <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
+                        <img :title="posefile.korean_pose_name"  class="user-profile-mid m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                        <!-- <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')"> -->
                         </div> 
                         <p>{{posefile.korean_pose_name}}</p>
                     </div>      
                     </div>
                 </div>
-                <div v-if="beginner">
+                <div v-if="beginner" >
                     <div class="row">
                        
-                    <div class="col-sm-2" id="poses" v-for="posefile in beginnerPosefiles" :key="posefile.pose_name">  
-                         <div class="pose-img">
-                            <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-                            <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
+                    <div @click="poseChoose(posefile)" class="col-sm-2 box beginner-box" :id="posefile.id" v-for="posefile in beginnerPosefiles" :key="posefile.pose_name">  
+                         <div class="pose-img" >
+                            <img  class="user-profile-mid m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                            <!-- <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')"> -->
                         </div> 
                         <p>{{posefile.korean_pose_name}}</p>
-                        <!-- <p>{{posefile.id}}</p> -->
+                       
                     </div>      
                     </div>
                 </div>
                 <div v-if="intermediate">
                     <div class="row">
                        
-                    <div class="col-sm-2" id="poses" v-for="posefile in intermediatePosefiles" :key="posefile.pose_name">  
+                    <div @click="poseChoose(posefile)" class="col-sm-2 box intermediate-box" :id="posefile.id" v-for="posefile in intermediatePosefiles" :key="posefile.pose_name">  
                         
                          <div class="pose-img">
-                            <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-                            <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
+                            <img class="user-profile-mid m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                            <!-- <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')"> -->
                         </div> 
                         <p>{{posefile.korean_pose_name}}</p>
-                        <!-- <p>{{posefile.id}}</p> -->
+                      
                     </div>      
                     </div>
                 </div>
-                <div v-if="expert">
+                <div v-if="expert" >
                     <div class="row">
                        
-                    <div class="col-sm-2" id="poses" v-for="posefile in expertPosefiles" :key="posefile.pose_name">  
+                    <div @click="poseChoose(posefile)" class="col-sm-2 box expert-box" :id="posefile.id" v-for="posefile in expertPosefiles" :key="posefile.pose_name">  
                         
                          <div class="pose-img">
-                            <img @click="poseChoose(posefile)" class="user-profile m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-                            <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')">
+                            <img class="user-profile-mid m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                            <!-- <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')"> -->
                         </div> 
                         <p>{{posefile.korean_pose_name}}</p>
-                        <!-- <p>{{posefile.id}}</p> -->
+                      
                     </div>      
                 </div>
             </div>  
         </div>
     </div>
-  </div>
+
 </template>
 
 <script>
 import posefiles from '../../../public/json.js'
 import axios from 'axios'
+var allItems = document.getElementsByClassName("all-box");
+var beginnerItems = document.getElementsByClassName("beginner-box");
+var intermediateItems = document.getElementsByClassName("intermediate-box");
+var expertItems = document.getElementsByClassName("expert-box");
 
-// console.log(posefiles)
 export default {
     name : 'YogaPosePage',
 
@@ -107,14 +136,90 @@ export default {
     },
     mounted() {
         this.difficultyDistribution()
-        // this.tagDistribution()
+        this.allSelected()
+        this.beginnerSelected()
+        this.intermediateSelected()
+        this.expertSelected()
     },
     methods : {
+        renew(){
+            this.allSelected()
+            this.beginnerSelected()
+            this.intermediateSelected()
+            this.expertSelected()
+        },
+        deleteItem(btnPose) {
+            var idx = this.poseList.indexOf(btnPose.korean_pose_name)
+            this.poseList.splice(idx,1);
+            this.poseIndexList.splice(idx,1);
+            this.renew()
+        },
+        reset(){
+            this.poseList = []
+            this.poseIndexList = []
+            this.renew()
+        },
+        allSelected() {
+            console.log("allSelected implemented",this.poseIndexList)
+            for(var i=0; i < allItems.length; i++) {
+                //만약 이미 리스트에 있으면
+                if (this.poseIndexList.includes(parseInt(allItems[i].id))){
+                    console.log("여긴 올셀렉트",allItems[i].id)
+                     allItems[i].style.backgroundColor = 'rgba(242, 157, 143,0.5)'
+                    //  allItems[i].style.backgroundColor = 'rgba(255, 255, 255, 0.9)'
+                    }
+                else{
+                    allItems[i].style.backgroundColor = 'rgba(0,0,0,0)'
+                }       
+            }
+        },
+        beginnerSelected() {
+            console.log("beginnerItems implemented",this.poseIndexList)
+            for(var i=0; i < beginnerItems.length; i++) {
+                //만약 이미 리스트에 있으면
+                console.log(beginnerItems[i].id)
+                if (this.poseIndexList.includes(parseInt(beginnerItems[i].id))){
+                    console.log(beginnerItems[i].id)
+                    beginnerItems[i].style.backgroundColor = 'rgba(242, 157, 143,0.5)'
+                    console.log("바꿨다!")
+                    }
+                else{
+                    beginnerItems[i].style.backgroundColor = 'rgba(0,0,0,0)'
+                }       
+            }
+        },
+        intermediateSelected() {
+            console.log("intermediateItems implemented",this.poseIndexList)
+            for(var i=0; i < intermediateItems.length; i++) {
+                //만약 이미 리스트에 있으면
+                console.log(intermediateItems[i].id)
+                if (this.poseIndexList.includes(parseInt(intermediateItems[i].id))){
+                    console.log(intermediateItems[i].id)
+                     intermediateItems[i].style.backgroundColor = 'rgba(242, 157, 143,0.5)'
+                    }
+                else{
+                    intermediateItems[i].style.backgroundColor = 'rgba(0,0,0,0)'
+                }       
+            }
+        },
+        expertSelected() {
+            console.log("allSelected implemented",this.poseIndexList)
+            for(var i=0; i < expertItems.length; i++) {
+                //만약 이미 리스트에 있으면
+                console.log(expertItems[i].id)
+                if (this.poseIndexList.includes(parseInt(expertItems[i].id))){
+                    console.log(expertItems[i].id)
+                     expertItems[i].style.backgroundColor = 'rgba(242, 157, 143,0.5)'
+                    }
+                else{
+                    expertItems[i].style.backgroundColor = 'rgba(0,0,0,0)'
+                }       
+            }
+        },
+
         difficultyDistribution() {
             this.posefiles.forEach(function(posefile) {
-     
             if (posefile.difficulty === 'Beginner') {
-              
                     this.beginnerPosefiles.push(posefile)
                 }
                 else if (posefile.difficulty === 'Intermediate') {
@@ -167,21 +272,25 @@ export default {
         console.log(tags_idx,tags_val,"오타:",error)
         },
         poseChoose(btnPose) {
-            if (this.poseList.length < this.max ) {
-                if (this.poseList.includes(btnPose.korean_pose_name)){
-
-                    var idx = this.poseList.indexOf(btnPose.korean_pose_name)
-                    this.poseList.splice(idx,1);
+            
+            if (this.poseList.includes(btnPose.korean_pose_name)){
+                var idx = this.poseList.indexOf(btnPose.korean_pose_name)
+                this.poseList.splice(idx,1);
                     this.poseIndexList.splice(idx,1);
-                }
-                else {
+                
+            }
+            else{
+                if (this.poseList.length < this.max ) {
                     this.poseList.push(btnPose.korean_pose_name)
                     this.poseIndexList.push(btnPose.id)
                 }
+                else {
+                    alert('최대 7개의 동작만 가능합니다.')
+                }
             }
-            else {
-                alert('최대 7개의 동작만 가능합니다.')
-            }
+            
+            this.renew()
+
         },
         makeList(courseName) {
             let poseCourse = this.poseIndexList.join(',')
@@ -197,46 +306,40 @@ export default {
                 this.$cookies.set('coaching-list', res.data)
                 this.$router.push(`/coaching/yogaposelist`)
             })
-            .catch(err => {console.log(err)})
-            
-
+            .catch(err => {console.log(err)})   
         },
         allBtn() {
-            console.log('all버튼을 눌렀습니다.')
-           this.all = true
-           this.beginner = false
-           this.intermediate = false
-           this.expert = false
-           console.log(this.all,this.beginner,this.intermediate,this.expert)
-        }
-        ,
+            this.all = true
+            this.beginner = false
+            this.intermediate = false
+            this.expert = false
+            this.allSelected()
+        },
         beginnerBtn() {
-            console.log('beginner버튼을 눌렀습니다.')
-           this.all = false
-           this.beginner = true
-           this.intermediate = false
-           this.expert = false
-
-        console.log(this.all,this.beginner,this.intermediate,this.expert) 
+            this.all = false
+            this.beginner = true
+            this.intermediate = false
+            this.expert = false
+            this.beginnerSelected()
+            
         },
         intermediateBtn() {
-            console.log('intermediate버튼을 눌렀습니다.')
-           this.all = false
-           this.beginner = false
-           this.intermediate = true
-           this.expert = false
-           console.log(this.all,this.beginner,this.intermediate,this.expert) 
-             
+            this.all = false
+            this.beginner = false
+            this.intermediate = true
+            this.expert = false
+            this.intermediateSelected()
+                 
         },
         expertBtn() {
-            console.log('expert버튼을 눌렀습니다.')
-            
             this.all = false
             this.beginner = false
             this.intermediate = false
             this.expert = true
-            console.log(this.all,this.beginner,this.intermediate,this.expert)  
+            this.expertSelected()
+           
         },
+        
     }
 }
 
@@ -244,39 +347,109 @@ export default {
 
 </script>
 
-<style>
-.user-profile {
-  display: inline-block;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border : 2px solid black;
+<style scoped>
+/* .container{
+    padding: 40px;
+    border : 2px solid rgba(242, 157, 143, 0.5);
+} */
+.box{
+    /* margin : 5px; */
+    background-color: rgba(255, 255, 255, 0.0);
+}
+.box:hover{
+    border : 2px solid white;
+    cursor: pointer;
+}
+p {
+    font-weight: 500;
+}
+.btn-white{
+    margin-bottom : 10px;
+    font-size:20px;
+    border-radius: 5px;
+    width : 150px;
+    height: 40px;
+    line-height: 15px;
+}
+.btn-white:visited{
+    background-color: #f29d8f;
+    color : white;
+}
+#delete{
+    position : relative;
+    top : 0;
+    right : 0;
+    background-color:  lightgray;
+    border : 1.5px solid black;
+    color:black;
+    font-size : 5px;
+    min-width: 6px;
+    min-height: 6px;
+}
+#delete:hover{
+    cursor: pointer;
+}
+.reset-btn{
+    padding : 3px;
+    background-color:  rgba(255, 255, 255, 0.5);
+    border : 1.5px solid #f29d8f;
+    color : #f29d8f;
+    font-size:10px;
+    border-radius: 5px;
+    height:20px; 
+    width:50px; 
+    line-height:10px;
+}
+.reset-btn:hover{
+    cursor: pointer;
+    background-color: #f29d8f;
+    color : white;
+}
 
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
+
+#course-list{
+    width:1140px; 
+    background-color: rgba(242, 157, 143,0.5);
+    margin : auto;
+    margin-bottom: 3rem;
+    padding-top: 5px;
 }
-.pose-box {
-    background-color: lightgray;
+
+
+@import 'https://fonts.googleapis.com/css?family=Titillium+Web';
+.field-row {
+	font-family: 'Titillium Web', sans-serif;
+	margin:30px 0 0 10px;
+	position:relative;
 }
-.user-profile:hover{
-    background: url("../../../public/css/heart.png") no-repeat;
-   
+label {
+	font-size:16px;
+	color:#888;
+	position:absolute;
+	top: 10px;
+    bottom: 0;
+    left: 310px;
+	transition: .3s ease;
+	cursor:text;
 }
-.pose-img {
-    position: relative;
-    display: inline-block;
-  
+input {
+    background :rgba(255, 255, 255, 0.5);
+	font-size:16px;
+	line-height:18px;
+	padding: 10px 10px 10px 0;
+	border:0;
+	border-bottom:1px solid #ccc;
+	outline:none;
+	
 }
-.pose-img .pose-img-top {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 99;
-    cursor:pointer;
+input:focus {
+	border-color:#888;
 }
-.pose-img:hover .pose-img-top {
-    display: inline;
+input:focus ~ label, input:valid ~ label {
+	font-size:15px;
+	
+	color:black;
+	transform: translate3d(0, -30px, 0);
 }
+
 </style>
