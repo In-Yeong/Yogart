@@ -141,7 +141,7 @@ public class UserController {
     	Result result = Result.successInstance();
     	User user = userService.loginSocial(email, "kakao");
     	if(user == null) {                                   
-    		String randPass = randomPassword();
+    		String randPass = generateRandomCode(8);
         	user = new User(email, nickname, nickname, randPass, "kakao");
         	userService.joinSocial(email, nickname, randPass, "kakao");
     	} 
@@ -170,7 +170,7 @@ public class UserController {
         	Result result = Result.successInstance();
         	User user = userService.loginSocial(email, "naver");
         	if(user == null) {
-        		String randPass = randomPassword();
+        		String randPass = generateRandomCode(8);
             	user = new User(email, nickname, nickname, randPass, "naver");
             	userService.joinSocial(email, nickname, randPass, "naver");
         	} 
@@ -443,6 +443,7 @@ public class UserController {
     	
     	User registrationUser = userRepository.findByUserEmail(userEmail);
     	registrationUser.setUserAuthority("TEACHER");
+    	registrationUser.setTeacherCode(generateRandomCode(12));
     	userService.updateInfo(registrationUser);
     	userService.registerUserToTeacher(userEmail);
     	
@@ -473,10 +474,10 @@ public class UserController {
      }
 
     
-    private String randomPassword() {
+    private String generateRandomCode(int length) {
 		 int leftLimit = 48;
 		 int rightLimit = 122;
-		 int targetStringLength = 8;
+		 int targetStringLength = length;
 		 Random random = new Random();
 		 
 		 String generatedString = random.ints(leftLimit, rightLimit + 1)
