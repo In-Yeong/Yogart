@@ -1,10 +1,8 @@
 package com.ssafy.yogart.teachers.controller;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -76,14 +74,17 @@ public class TeacherController {
 		System.out.println("ptId:" +  ptId);
 		PtInfo ptInfo = teacherService.showPTInfo(ptId);
 		List<PtClicked> clickedList = teacherService.showClassTime(ptInfo);
-		List<Time> timeList = new ArrayList<>();
-		List<LocalDate> soldOut = new ArrayList<>();
+		List<Time> timeList = new ArrayList<>(); 
+		List<LocalDateTime> soldOut = new ArrayList<>();
 		for(int i = 0; i < clickedList.size(); i++) {
 			PtClicked temp = clickedList.get(i);
 			Time time = new Time(temp.getPtDay(), temp.getPtTime());
-			timeList.add(time);
-			if(temp.getDateTime() == null) continue;
-			soldOut.add(LocalDate.from(temp.getDateTime()));
+			if(temp.getDateTime() == null) {
+				timeList.add(time);
+				System.out.println(temp.getPtClickedId());
+				continue;
+			}
+			soldOut.add(temp.getDateTime());
 		}
 		TeacherPTInfoResult result = new TeacherPTInfoResult();
 		result.setClicked(timeList);
@@ -98,42 +99,77 @@ public class TeacherController {
 	public ResponseEntity<String> teacherReserved(@RequestHeader Map<String,String> header, @RequestBody Map<String, Object> data) throws Exception {
 		String token = header.get("authorization");
 		User user = userService.authentication(token);
+		System.out.println(user.getUserNickname());
 		Map<String,Object> ptInfo = (Map<String, Object>) data.get("ptInfo");
-		int day = (int)data.get("day");
-		
+		Integer day = (Integer)data.get("day");
 		String temp = (String)data.get("time");
-		String time = temp.substring(0, 19);
+		String time = temp.substring(0, 23);
 		LocalDateTime timeSet = LocalDateTime.parse(time);
 		timeSet = timeSet.plusHours(9);
 		System.out.println(timeSet);
-		
 		int minusSpoon = (int)ptInfo.get("ptPrice");
 		System.out.println("-" + minusSpoon + " 스푼 차감되었습니다.");
 		user.setUserSpoon(user.getUserSpoon() -  minusSpoon);
 		System.out.println("잔여 스푼: " + user.getUserSpoon());
 		userService.updateInfo(user);
-		PtInfo ptinfo = new PtInfo((int)ptInfo.get("ptId"),
+		Map<String,Object> t = (Map<String, Object>) ptInfo.get("ptTeacher"); 
+		int teacherId = (Integer)t.get("id");
+		User teacher = userService.findUser(teacherId);
+		System.out.println(teacher);
+
+		PtInfo ptinfo = new PtInfo((Integer)ptInfo.get("ptId"),
 									(String)ptInfo.get("ptName"),
-									(int)ptInfo.get("ptPrice"),
+									(Integer)ptInfo.get("ptPrice"),
 									(String)ptInfo.get("ptIntro"),
-									(User)ptInfo.get("ptTeacherId"));
+									teacher);
 		List<PtClicked> clickedList = teacherService.showClassTime(ptinfo);
-		PtClicked click = null;
+		PtClicked click2 = null; PtClicked click = null;
 		go:
 		for(int i = 0; i < clickedList.size(); i++) {
-			click = clickedList.get(i);
-			if(click.getDateTime() == null && click.getPtStudentId() == null) {
-				if(day == click.getPtDay() && timeSet.getHour() == click.getPtTime()) {
+			click2 = clickedList.get(i);
+			if(click2.getDateTime() == null) {
+				if((day == click2.getPtDay()) && (timeSet.getHour() == click2.getPtTime())) {
+					click = click2;
 					break go;
 				}
 			}
 		}
 		click.setDateTime(timeSet);
+		click.setPtStudentId(user);
+		click.setIsAttend(false);
 		teacherService.updatePtClickedInfo(click);
-
-		teacherService.updatePtClickedInfo(day,timeSet.getHour(),ptinfo);
-		
+		PtClicked clickNull = new PtClicked(click.getPtDay(),click.getPtTime(),userService.findUser(7),
+				false,null,click.getPtClickedName());
+		teacherService.updatePtClickedInfo(clickNull);
 		return new ResponseEntity<String>(SUCCESS , HttpStatus.OK);
 	}
-
+	
+	@ApiOperation(value = "강사의 수업개설", response = String.class)
+	@PostMapping(value="/pt-create")
+	public ResponseEntity<String> teacherClassCreate(@RequestHeader Map<String,String> header, @RequestBody Map<String, Object> data) throws Exception {
+		String token = header.get("authorization");
+		User user = userService.authentication(token);
+		List clickedList = (ArrayList) data.get("clicked");
+		String ptName = (String)data.get("ptName");
+		String ptIntro = (String)data.get("ptIntro");
+		int ptPrice = Integer.parseInt((String)data.get("ptPrice"));
+		System.out.println(clickedList); // 원하는 시간대 받기 완료
+		System.out.println(ptName); // 피티명 받기 완료 	
+		System.out.println(ptIntro);
+		System.out.println(ptPrice); // 가격 받기 완료
+		PtInfo ptinfo = new PtInfo();
+		ptinfo.setPtName(ptName);
+		ptinfo.setPtPrice(ptPrice);
+		ptinfo.setPtIntro(ptIntro);
+		ptinfo.setPtTeacherId(user);
+		PtInfo ptInfo = teacherService.updatePtInfo(ptinfo);
+		for(int i = 0; i < clickedList.size(); i++) {
+			Map<String,Integer> click = (Map<String, Integer>) clickedList.get(i);
+			PtClicked clickNull = new PtClicked(click.get("day"),click.get("time"),
+					userService.findUser(7), // default 계정이 7번자리에 필요 -> 나중에 1번자리로 바꾸기
+					false,null,ptInfo);
+			teacherService.updatePtClickedInfo(clickNull);
+		}
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
 }

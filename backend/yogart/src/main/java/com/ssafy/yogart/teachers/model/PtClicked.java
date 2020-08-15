@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.ssafy.yogart.user.model.User;
@@ -56,12 +57,11 @@ public class PtClicked implements Serializable {
     @ApiModelProperty(value="참석여부")
     private Boolean isAttend;
     
-    @CreationTimestamp
-    @Column(insertable = false, updatable = false)
+    @Column(name="date_time")
     @ApiModelProperty(value="예약된날짜")
     private LocalDateTime dateTime;
     
-    @ManyToOne(fetch = FetchType.EAGER, optional=false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, optional=false, cascade = CascadeType.DETACH)
 	@JoinColumn(name="pt_clicked_name", referencedColumnName = "pt_name")
     @ApiModelProperty(value="피티이름")
     private PtInfo ptClickedName;
@@ -71,6 +71,19 @@ public class PtClicked implements Serializable {
 		this.ptDay = ptDay;
 		this.ptTime = ptTime;
 		this.ptClickedName = ptClickedName;
+	}
+
+	public PtClicked(Integer ptDay, Integer ptTime, User ptStudentId, Boolean isAttend, LocalDateTime dateTime,
+			PtInfo ptClickedName) {
+		super();
+		this.ptDay = ptDay;
+		this.ptTime = ptTime;
+		this.ptStudentId = ptStudentId;
+		this.isAttend = isAttend;
+		this.dateTime = dateTime;
+		this.ptClickedName = ptClickedName;
 	}   
+	
+	
     
 }

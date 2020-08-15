@@ -29,11 +29,12 @@ export default {
         return {
             modalTitle: `${ this.ptInfo.ptPrice } 스푼을 사용하시겠습니까?`,
             SERVER_URL: this.$store.state.SERVER_URL,
+            ptDate: null,
         }
     },
     mounted() {
         this.clickedDate.setHours(this.time.ptTime)
-        console.log(this.time)
+        this.ptDate = new Date(this.clickedDate.getYear()+1900, this.clickedDate.getMonth(), this.clickedDate.getDate(),this.clickedDate.getHours())
     },
     methods: {
         ptRegi() {
@@ -44,14 +45,12 @@ export default {
                     Authorization: this.$cookies.get('auth-token')
                 }
             }
-            console.log(this.clickedDate.getDay())
             const ptData = {
                 ptInfo: this.ptInfo,
                 day: this.clickedDate.getDay(),
-                time: this.clickedDate,
+                time: this.ptDate,
             }
-            console.log(requestHeaders)
-            console.log(ptData)
+            console.log('@@@@@@@@', ptData)
             axios.post(this.SERVER_URL + '/api/teachers/pt-regist', ptData, requestHeaders)
             .then(res => {
                 this.$refs['my-modal'].hide()

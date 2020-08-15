@@ -12,8 +12,6 @@ import { Editor } from '@toast-ui/vue-editor';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import VueMomentLib from 'vue-moment-lib'
-Vue.use(VueMomentLib)
 
 // for google login
 // import GAuth from 'vue-google-oath2'
