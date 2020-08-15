@@ -1,21 +1,13 @@
 <template>
     <div id="app">
-        <login-modal @loginComplete="loginComplete"></login-modal>
-        <NavBar @logout="logout" :isLogin="isLogin"/>
-        <div style="height:99px;"></div>
-        <div id="nav" v-if="false">
-            <router-link to="/login">login</router-link> |  
-            <router-link to="/">Home</router-link> | 
-            <router-link to="/mypage/graph">Graph</router-link> | 
-            <router-link to="/callback">callback</router-link> | 
-            <router-link to="/accounts/signup">Signup</router-link> |
-            <router-link to="/qna">Q&A</router-link> |
-            <router-link to="/notice">공지사항</router-link> |
-            <router-link to="/coaching">AICoachingPage</router-link> |
-            <router-link to="/coaching/yogaposelist">YogaPoseListPage</router-link> |
-            <router-link to="/coaching/yogapose">YogaPosePage</router-link>
+        <div v-if="isPC">
+            <login-modal @loginComplete="loginComplete"></login-modal>
+            <NavBar @logout="logout" :isLogin="isLogin"/>
+            <router-view class="full-page" @submit-signup-data="signup" />
         </div>
-            <router-view @submit-signup-data="signup" />
+        <div v-else>
+            안녕
+        </div>
         <Footer/>
     </div>
 </template>
@@ -32,6 +24,7 @@ export default {
         return {
             isLogin: this.$store.state.isLogin,
             SERVER_URL: this.$store.state.SERVER_URL,
+            isPC: true,
         }
     },
     components: {
@@ -94,12 +87,24 @@ export default {
 		},
 		removeCookie() {
 			this.$cookies.remove('auth-token')
-		},
+        },
+        setSize() {
+            let size = window.innerWidth
+            // console.log(size)
+            // console.log(this.isPC)
+            if (size < 660) {
+                this.isPC = false
+            } else {
+                this.isPC = true
+            }
+        }
     },
     created() {
         Kakao.init('688de69414ec5331cee58badb1cad1ea');
+    },
+    mounted() {
+        window.addEventListener('resize', this.setSize)
     }
-
 }
 </script>
 
@@ -109,23 +114,20 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+    background-image: url("./assets/back1.jpg");
+    /* background-repeat: no-repeat; */
+    background-size: 100%;
     color: #2c3e50;
-    min-height: calc(100vh - 127.55px);
+    min-width: 640px;
+    min-height: 600px;
 }
-
-#nav {
-    padding: 30px;
+.full-page {
+    min-height: 100vh;
 }
-
-#nav a {
-    font-weight: bold;
-    color: #2c3e50;
+.padding-for-nav {  /* 다른 views에서 사용 */
+    padding-top: 22vh;
+    padding-bottom: 6vh;
 }
-
-#nav a.router-link-exact-active {
-    color: #42b983;
-}
-
 .box {
   margin-top : 3px;
 }
@@ -150,4 +152,46 @@ export default {
   top: 60px;
   left: 80px;
 }
+
+::selection {
+    background-color: rgba(242, 157, 143, 0.7);
+    ;
+    color: white;
+}
+
+::-webkit-scrollbar {
+    width: 16px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(242, 157, 143, 0.3);
+    background-clip: padding-box;
+    border: 0.05em solid rgba(235, 235, 235, 0.5);
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(235, 235, 235, 0.5);
+}
+
+/* Buttons */
+::-webkit-scrollbar-button:single-button {
+    background-color: rgba(235, 235, 235, 0.5);;
+    display: block;
+    border-style: solid;
+    height: 13px;
+    width: 16px;
+}
+
+/* Up */
+::-webkit-scrollbar-button:single-button:vertical:decrement {
+    border-width: 0 8px 8px 8px;
+    border-color: transparent transparent gray transparent;
+}
+
+/* Down */
+::-webkit-scrollbar-button:single-button:vertical:increment {
+    border-width: 8px 8px 0 8px;
+    border-color: gray transparent transparent transparent;
+}
+
 </style>

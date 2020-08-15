@@ -27,7 +27,7 @@ export default new Vuex.Store({
 
         },
         setUserData(state, payload) {
-            // console.log(state)
+            console.log(state,payload)
             // console.log(payload.user.userNickname)
             state.userNickname = payload.user.userNickname
             state.spoons = payload.spoons

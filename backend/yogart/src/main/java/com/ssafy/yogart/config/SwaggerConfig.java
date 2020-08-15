@@ -21,7 +21,7 @@ public class SwaggerConfig {
             .groupName("yogartBoard")
             .apiInfo(apiInfo())
             .select()
-            .apis(RequestHandlerSelectors.basePackage("com.ssafy.yogart.user.controller"))
+            .apis(RequestHandlerSelectors.basePackage("com.ssafy.yogart.notice.controller"))
             .paths(PathSelectors.ant("/api/**"))
             .build();
    }

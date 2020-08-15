@@ -3,13 +3,11 @@
         <h2>{{ ptInfo.ptName }}</h2>
         <h5>{{ ptInfo.ptPrice }}스푼으로 함께해요</h5>
         <h5>{{ ptInfo.ptIntro }}</h5>
+        <ReviewList :ptInfo="ptInfo"></ReviewList>
         <!-- 데이터 피커를 이용해 날짜를 받으면, 그 날짜에 열리는 모든 수업을 리스팅한다. -->
         <DatePicker format="yyyy-MM-dd-D" :highlighted="highlighted" @selected="selectDate" :language="ko"></DatePicker>
         <div v-for="time in showArray" :key="time.time">
             <PtListItem :ptInfo="ptInfo" :time="time" :clickedDate="clickedDate"></PtListItem>
-        </div>
-        <div>
-
         </div>
     </div>
 </template>
@@ -19,12 +17,14 @@ import axios from 'axios'
 import DatePicker from 'vuejs-datepicker'
 import { ko } from 'vuejs-datepicker/dist/locale'
 import PtListItem from './PtListItem.vue'
+import ReviewList from '../review/ReviewList.vue'
 
 export default {
     name: 'ClassRegi',
     components: {
         DatePicker,
         PtListItem,
+        ReviewList,
     },
     props: {
         ptId: Number,
@@ -36,6 +36,10 @@ export default {
             let day = date.getDay()
             this.showArray.length = 0
             let self = this
+            if (Math.abs(this.clickedDate.getDate() - new Date().getDate()) > 15) {
+                self.clickedDate = null
+                return
+            }
             this.showArray = this.ptTimes.filter(pt => {
                 let isSoldOut = true
                 for (let k = 0; k < self.soldOut.length; k++) {

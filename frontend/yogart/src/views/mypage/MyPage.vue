@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-5" style="margin-top : 50px">
+    <div class="py-5">
         <UserProfile/>
         <div class="d-flex flex-column">
             <div class="w3-bar" style="margin-left: 10vw;">
@@ -97,10 +97,5 @@ export default {
     background-color: rgb(209, 236, 165);
 }
 
-.gray {
-    margin-left: 10vw;
-    margin-right: 10vw;
-    padding : 1rem;
-    border : 2px solid gray;
-}
+
 </style>
