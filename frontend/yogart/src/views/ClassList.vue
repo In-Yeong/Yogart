@@ -10,13 +10,13 @@
             </div>
         </div>
         
-        <div class="class-box row align-items-center" @click="btnClick(yogaClass.id)" v-for="yogaClass in yogaList" :key="yogaClass.id">
+        <div class="class-box row align-items-center" @click="btnClick(yogaClass.ptId)" v-for="yogaClass in yogaList" :key="yogaClass.ptId">
             <div class="d-inline-block col-2">
                 <img class="user-profile m-3" :src="require('@/assets/Hedgehog.jpg')">
             </div>
             <div class="d-inline-block col-10">
-                <div class="h3">{{ yogaClass.name }}</div>
-                <div>{{ yogaClass.teacher_nickName}} | <span class="price">{{ yogaClass.price}}</span> 스푼</div>
+                <div class="h3">{{ yogaClass.ptName }}</div>
+                <div>{{ yogaClass.ptTeacherId.userNickname}} | <span class="price">{{ yogaClass.ptPrice}}</span> 스푼</div>
             </div>
         </div>
         <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
@@ -33,31 +33,7 @@ export default {
         return {
             SERVER_URL: this.$store.state.SERVER_URL,
             limit: 0,
-            yogaList : [{
-                id: 1,
-                name: '상욱쌤과 함께하는 스프링 요가',
-                price: 10,
-                teacher_nickName: 'ㅇㅅㅇ'
-            },
-            {
-                id: 2,
-                name: '[초급] 아침을 여는 요가',
-                price: 20,
-                teacher_nickName: '또희'
-                
-            },
-            {
-                id: 3,
-                name: '상급자 요가 클래스',
-                price: 300,
-                teacher_nickName: '규동도롱'
-            },
-            {
-                id: 4,
-                name: '심야 릴렉싱 요가 클래스',
-                price: 40,
-                teacher_nickName: '요갓두'
-            }]
+            yogaList : []
         }
     },
     components: {
@@ -81,11 +57,13 @@ export default {
             // 해당 수업 상세 페이지로 이동
         },
         infiniteHandler($state) {
-            axios.get(`${this.SERVER_URL}/api/class/list/${this.limit + 10}`)
+            axios.get(`${this.SERVER_URL}/api/teachers/class/list/${this.limit + 10}`)
             .then(res => {
+                console.log(res)
                 setTimeout(()=> {
-                    if (res.data.length) {
-                        this.yogaList = this.yogaList.concat(res.data);
+                    if (res.data.content.length) {
+                        this.yogaList = this.yogaList.concat(res.data.content);
+                        console.log(this.yogaList);
                         $state.loaded();
                         this.limit += 10
                         if (this.yogaList.length / 10 === 0){
