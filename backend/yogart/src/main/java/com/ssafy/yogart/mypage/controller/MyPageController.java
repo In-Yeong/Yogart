@@ -89,7 +89,7 @@ public class MyPageController {
 			pt = Courses.get(i);
 			if(local.isBefore(LocalDate.from(pt.getDateTime()))) {
 				pastCourses.add(pt);
-			} else if (local.isAfter(LocalDate.from(Courses.get(i).getDateTime()))) {
+			} else if (local.isAfter(LocalDate.from(pt.getDateTime()))) {
 				futureCourses.add(pt);
 			} else {
 				todayCourses.add(pt);
