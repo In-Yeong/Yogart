@@ -98,25 +98,26 @@ export default {
                 Authorization: this.$cookies.get('auth-token')
             }
         }
-        if (requestHeaders.headers.Authorization !== null) {
-            axios.get(this.$store.state.SERVER_URL + '/api/users/isTeacher', requestHeaders)
-            .then(res => {
-                this.isTeacher = res.data
-            })
-            .catch(err => {
+        const self = this
+        async function getIsTeacher() {
+            try {
+                const res = await axios.get(self.$store.state.SERVER_URL + '/api/users/isTeacher', requestHeaders)
+                self.isTeacher = res.data
+            } catch(err) {
                 console.error(err)
-            })
-            axios.get(this.$store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
-            .then(res => {
-                if (res.data) {
-                    this.isAdmin = res.data
-                    this.isTeacher = res.data
-                }
-            })
-            .catch(err => {
-                console.error(err)
-            })
+            }
         }
+        async function getIsAdmin() {
+            try {
+                const res = await axios.get(self.$store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
+                self.isAdmin = res.data
+                self.isTeacher = res.data
+            } catch (err) {
+                console.error(err)
+            }
+        }
+        getIsAdmin()
+        getIsTeacher()
     },
     beforeDestroy () {
         window.removeEventListener('scroll', this.onScroll)

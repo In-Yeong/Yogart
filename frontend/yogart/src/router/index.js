@@ -60,6 +60,7 @@ const requireTeacher = () => (from, to, next) => {
         if (res.data) {
             return next()
         }
+        return next('/')
     })
     .catch(err => {
         console.error(err)
@@ -78,6 +79,7 @@ const requireAdmin = () => (from, to, next) => {
         if (res.data) {
             return next()
         }
+        return next('/')
     })
     .catch(err => {
         console.error(err)

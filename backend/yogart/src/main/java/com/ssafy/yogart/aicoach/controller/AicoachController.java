@@ -64,6 +64,9 @@ public class AicoachController {
 		// string local data ->>> 제대로 변환하기!!!
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	    LocalDateTime startDateTime = LocalDateTime.parse((String)courseData.get("startDateTime"), formatter);
+//		String times = (String)courseData.get("startDateTime");
+//		LocalDateTime startDateTime = times.substring(0, 22);
+		
 		String tags = (String)courseData.get("tagCounting");
 		String result = "totalTime:" + totalTime + "," +
 						"startDateTime:" + startDateTime + "," +

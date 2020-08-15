@@ -1,7 +1,6 @@
 <template>
   <div>
       <h1 class="m-3" style="font-weight:700">요가 포즈 리스트</h1>
-      <!-- <YogartRecommend @clickSet="yogaListDetail"/> -->
       <BodyPartRecommend @clickSet="yogaListDetail"/>
       <UserDesign @clickSet="yogaListDetail"/>
       
@@ -9,14 +8,12 @@
 </template>
 
 <script>
-// import YogartRecommend from '@/components/YogaPoseList/YogartRecommend.vue'
 import BodyPartRecommend from '@/components/YogaPoseList/BodyPartRecommend.vue'
 import UserDesign from '@/components/YogaPoseList/UserDesign.vue'
 
 export default {
     name : 'YogaPoseListPage',
     components: {
-        // YogartRecommend,
         BodyPartRecommend,
         UserDesign
         

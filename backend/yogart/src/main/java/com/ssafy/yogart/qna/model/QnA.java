@@ -39,7 +39,7 @@ public class QnA implements Serializable {
 	@ApiModelProperty(value="질문아이디")
 	private Integer qnaId;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional=false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional=false, cascade = CascadeType.DETACH)
 	@JoinColumn(name="qna_user_email", referencedColumnName = "user_email")
     @ApiModelProperty(value="email")
     private User userEmail;
@@ -48,7 +48,7 @@ public class QnA implements Serializable {
     @ApiModelProperty(value="제목")
 	private String qnaTitle;
 	
-	@Column(name="qna_content", columnDefinition = "text")
+	@Column(name="qna_content", columnDefinition = "longtext")
     @ApiModelProperty(value="내용")
 	private String qnaContent;
 	

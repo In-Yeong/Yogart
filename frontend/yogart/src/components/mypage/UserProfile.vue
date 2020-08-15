@@ -66,6 +66,7 @@ export default {
             this.userNickname = res.data.user.userNickname
             this.userProfile = res.data.user.userProfile
             this.userIntro = res.data.user.userIntro
+            this.spoons = res.data.user.userSpoon
 
             if (this.userProfile === undefined) {
                 this.userProfile = 'userDefault'

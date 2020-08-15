@@ -100,8 +100,7 @@ public class QnAController {
    		User user = userService.authentication((String)header.get("authorization"));
    		if(user.getUserAuthority().equals("ADMIN")) {
    			QnAReply qnaReply = new QnAReply();
-   			QnA qna = new QnA();
-   			qna.setQnaId((Integer)content.get("qnaId"));
+   			QnA qna = qnaService.detailQnA((Integer)content.get("qnaId"));
    			qnaReply.setQnaId(qna);
    	   		qnaReply.setUserEmail(user);
    	   		qnaReply.setQnaReplyContent((String)content.get("ReplyContent"));

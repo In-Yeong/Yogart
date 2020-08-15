@@ -17,7 +17,7 @@
         </form> -->
 
         <div class="field-row mx-5">
-            <input name="courseName" id="courseName" v-model="courseName" type="text" required @keyup-enter="makeList(courseName)"/>
+            <input name="courseName" id="courseName" v-model="courseName" type="text" required @keyup.enter="makeList(courseName)"/>
             <label for="courseName">코스명 + Enter</label>
             
         </div>
@@ -433,6 +433,7 @@ label {
 	cursor:text;
 }
 input {
+    width : 450px;
     background :rgba(255, 255, 255, 0.5);
 	font-size:16px;
 	line-height:18px;
