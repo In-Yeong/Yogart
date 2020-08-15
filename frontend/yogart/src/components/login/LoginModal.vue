@@ -9,7 +9,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="h3">로그인</div>
                 <span class="login-reject" v-if="errorState">이메일 혹은 비밀번호를 다시 확인하세요.</span>
                 <span class="login-reject" v-if="serverState">연결할 수 없습니다. 잠시 후 다시 시도해주세요.</span>
                 <ValidationObserver v-slot="{ invalid }">
@@ -30,9 +29,8 @@
                     <div class="social-text">소셜 계정으로 간편하게 로그인하세요!</div>
                 </div>
                 <div class="my-5">
-                    <kakaoLogin @loginComplete="setUserData"></kakaoLogin>
-                    <br>
-                    <naverLogin @loginComplete="setUserData"></naverLogin>
+                    <kakaoLogin @loginComplete="login" class="mb-2"></kakaoLogin>
+                    <naverLogin @loginComplete="login"></naverLogin>
                 </div>
                 <div>
                     아직 회원이 아니신가요? <a class="signup-link" href="/accounts/signup">회원 가입하기</a>
@@ -45,10 +43,8 @@
 
 <script>
 import axios from 'axios'
-import googleLogin from '@/components/googleLogin.vue'
 import naverLogin from '@/components/sociallogin/naverLogin.vue'
 import kakaoLogin from '@/components/sociallogin/kakaoLogin.vue'
-import facebookLoginCom from '@/components/facebookLogin.vue'
 
 export default {
     name: 'login-modal',
@@ -64,39 +60,27 @@ export default {
         }
     },
     components: {
-        googleLogin,
         naverLogin,
         kakaoLogin,
-        facebookLoginCom,
     },
     methods: {
         onSubmit(e) {
             e.preventDefault()
             axios.post(this.API_URL + '/api/users/login', this.loginData)
             .then(res => {
-                console.log('then')
-                console.log(res);
                 // 로그인이 실패했다면 errorState에 status code를 저장해 오류를 출력합니다.
-                this.setUserData(res.data)
+                this.login(res.data)
             })
             .catch(err => {
-                console.log('catch')
-                console.error(err)
                 this.errorState = true
                 this.loginData.userPassword = null
             })
         },
-        setCookie(token) {
-            this.$cookies.set('auth-token', token)
-        },
-        setUserData(data) {
-            if (data.token !== null){
-                this.setCookie(data.token)
-            } else {
+        login(data) {
+            if (data.token === null){
                 this.serverState = true
             }
-            // console.log('setUserData', data)
-            this.$store.commit('setUserData', data)
+            this.$store.commit('storeLogin', data)
             this.$emit('loginComplete')
         }
     },

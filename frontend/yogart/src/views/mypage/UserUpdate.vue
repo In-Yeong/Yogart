@@ -115,9 +115,10 @@ export default {
                         Authorization: 'Token ' + this.$cookies.get('auth-token'),
                     }
                 }
-                axios.delete(this.SERVER_URL + '/api/users', null, requestHeaders)
+                axios.delete(this.SERVER_URL + '/api/users', requestHeaders)
                 .then(res => {
                     console.log(res)
+			        this.$store.commit('storeLogout')
                     this.$router.push('/')
                 })
                 .catch(err => console.error(err))

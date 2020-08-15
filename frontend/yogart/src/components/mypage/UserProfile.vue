@@ -14,7 +14,7 @@
         <img v-else class="user-profile-img" src="../../assets/userDefault.jpg" alt="user profile image">
         <div class="profile-content" >
             <div class="d-flex mb-5" >
-                <h5>{{ userName }}</h5> 
+                <h5>{{ userNickname }}</h5> 
                 <div class="d-flex">
                     <router-link to="/mypage/update" class="w3-button w3-black w3-tiny update">회원정보 수정</router-link>
                 </div>
@@ -39,7 +39,7 @@ export default {
     data() {
         return {
             SERVER_URL : this.$store.state.SERVER_URL,
-            userName: this.$store.state.userNickname,
+            userNickname: this.$store.state.userNickname,
             userProfile : '',
             userIntro : '',
             userId : undefined,

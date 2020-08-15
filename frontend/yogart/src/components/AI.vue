@@ -6,7 +6,7 @@
             <h5>{{cur+1}}번째 {{course[cur].korean_pose_name}} 포즈부터 시작합니다</h5>
             <img class="round-image" :src="require(`../../public/photos/${posefiles[course[cur]].file_reference}`)" alt="">
             <div class="m-5">
-                <a v-if="startBtn" @click="clickStart()" class="btn2 m-3"  href="#">START</a>
+                <a v-if="startBtn" @click="clickStart()" class="btn2 m-3">START</a>
             </div>
             <!-- <button v-if="startBtn" class="w3-btn w3-round-xlarge w3-red w3-xlarge m-5" type="button" @click="clickStart()">Get Start!</button> -->
         </div>
