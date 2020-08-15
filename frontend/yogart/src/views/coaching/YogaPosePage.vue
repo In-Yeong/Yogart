@@ -17,7 +17,7 @@
         </form> -->
 
         <div class="field-row mx-5">
-            <input name="courseName" id="courseName" v-model="courseName" type="text" required @keyup-enter="makeList(courseName)"/>
+            <input name="courseName" id="courseName" v-model="courseName" type="text" required @keyup.enter="makeList(courseName)"/>
             <label for="courseName">코스명 + Enter</label>
             
         </div>
@@ -58,7 +58,7 @@
             <div id="all-btn" class="btn-white"  :class="{ active: all }" @click="allBtn">전체</div>
             <div id="beg-btn" class="btn-white" :class="{ active: beginner }" @click="beginnerBtn">초급</div>
             <div id="int-btn" class="btn-white" :class="{ active: intermediate }" @click="intermediateBtn">중급</div>
-            <div id="exp-btn" class="btn-white"  :class="{ active: expert }"@click="expertBtn">고급</div>
+            <div id="exp-btn" class="btn-white"  :class="{ active: expert }" @click="expertBtn">고급</div>
             </div>
            
             
@@ -437,6 +437,7 @@ label {
 	cursor:text;
 }
 input {
+    width : 450px;
     background :rgba(255, 255, 255, 0.5);
 	font-size:16px;
 	line-height:18px;

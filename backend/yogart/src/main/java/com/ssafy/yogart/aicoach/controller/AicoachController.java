@@ -61,14 +61,15 @@ public class AicoachController {
 		User user = userService.authentication(token);
 		
 		String totalTime = (String)courseData.get("totalTime");
-		// string local data ->>> 제대로 변환하기!!!
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-	    LocalDateTime startDateTime = LocalDateTime.parse((String)courseData.get("startDateTime"), formatter);
+		String times = (String)courseData.get("startDateTime");
+		String time = (String)times.substring(0, 19);
+		System.out.println(time);
+		LocalDateTime startDateTime = LocalDateTime.parse(time);
+		
 		String tags = (String)courseData.get("tagCounting");
 		String result = "totalTime:" + totalTime + "," +
 						"startDateTime:" + startDateTime + "," +
 						"tagCounting:" + tags;
-		
 		String[] tag = tags.split(",");
 		GraphBodyPart bodypart = new GraphBodyPart(user,Integer.parseInt(tag[0]),
 														Integer.parseInt(tag[1]),
@@ -125,4 +126,5 @@ public class AicoachController {
     	String ID = idx.toString();
         return new ResponseEntity<String>(ID, HttpStatus.OK);
     }
+    
 }

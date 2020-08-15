@@ -3,6 +3,9 @@ package com.ssafy.yogart.teachers.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.yogart.teachers.model.PtClicked;
@@ -31,6 +34,12 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
+	public Page<PtInfo> showAllClassList(int limit) {
+		Pageable page = PageRequest.of((limit-1)/10, 10);
+		return ptInfoRepository.findAll(page);
+	}
+	
+	@Override
 	public PtInfo showPTInfo(int ptId) {
 		return ptInfoRepository.findByPtId(ptId);
 	}
@@ -54,6 +63,12 @@ public class TeacherServiceImpl implements TeacherService {
     public PtClicked updatePtClickedInfo(PtClicked ptClicked) {
         return ptClickedRepository.save(ptClicked);
     }
+
+	@Override
+	public List<PtClicked> showOrderByTimeDESC() {
+		return ptClickedRepository.findAllByOrderByDateTimeDesc();
+	}
+
 
 
 }

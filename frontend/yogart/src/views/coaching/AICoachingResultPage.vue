@@ -59,8 +59,7 @@ export default {
             dougnutdata : [0,0,0,0,0,0,0],
             scores: {},
             minutes : 0,
-            seconds : 0,
-            startDateTime : this.$cookies.get('startDateTime'),          
+            seconds : 0,        
             SERVER_URL : this.$store.state.SERVER_URL
               
         }  
@@ -166,7 +165,7 @@ export default {
         
         saveResult() {
             //오늘 날짜
-            const startDateTime = new Date();
+            const startDateTime = this.$cookies.get('startDateTime');
             //총 경과 시간
             const totalTime = String(60 * this.minutes + this.seconds)
             //부위별 태그 횟수
@@ -179,7 +178,6 @@ export default {
                 'totalTime' : totalTime, 
                 'startDateTime': startDateTime, 
                 'tagCounting' : tagCounting,
-                'startDateTime': startDateTime
                 }
             )
             .then(res => {

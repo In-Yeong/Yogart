@@ -2,13 +2,13 @@ package com.ssafy.yogart.teachers.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.yogart.aicoach.controller.AicoachController;
+import com.ssafy.yogart.aicoach.model.AicoachCourse;
 import com.ssafy.yogart.teachers.model.PtClicked;
 import com.ssafy.yogart.teachers.model.PtInfo;
 import com.ssafy.yogart.teachers.model.TeacherDetailResult;
@@ -172,4 +173,30 @@ public class TeacherController {
 		}
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "요가 수업 리스트 인피니트 핸들러", response = List.class)
+	@GetMapping(value="/class/list/{limit}")
+	public ResponseEntity<Page<PtInfo>> teacherClassList(@PathVariable int limit) throws Exception {
+		Page<PtInfo> allList = teacherService.showAllClassList(limit);
+		return new ResponseEntity<Page<PtInfo>>(allList, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "요가 수업 1:1 PT 방 개설", response = PtClicked.class)
+	@GetMapping(value="/pt-now")
+	public ResponseEntity<PtClicked> TeacherPTroomOpen(@RequestHeader Map<String,String> header) {
+    	String token = header.get("authorization");
+		User user = userService.authentication(token);
+		List<PtClicked> timeList = teacherService.showOrderByTimeDESC();
+		PtClicked ptOpen = null;
+		for(PtClicked pt : timeList) {
+			String temp = pt.getPtClickedName().getPtTeacherId().getUserNickname();
+			if(temp.equals(user.getUserNickname())) {
+				ptOpen = pt;
+				break;
+			}
+		}
+		if(ptOpen == null) return new ResponseEntity<PtClicked>(ptOpen, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<PtClicked>(ptOpen, HttpStatus.OK);
+	}
+	
 }

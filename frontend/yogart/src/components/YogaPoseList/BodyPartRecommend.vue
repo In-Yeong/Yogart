@@ -2,8 +2,8 @@
     
     <div class="m-5">
         <div id="example">
-        <!-- <h1>3d images gallery</h1> -->
-  <!-- <div class="container">
+        <!-- <h1>3d images gallery</h1>
+  <div class="container">
         <div id="carousel">
             <figure><img  :src="require('../../../public/yogaList/legs.jpg')"/></figure>
             <figure><img  :src="require('../../../public/yogaList/arm.jpg')"/></figure>
@@ -21,7 +21,7 @@
             <slide class="slide" :index="0">
                 <figure>
                     <img :src="require('../../../public/yogaList/legs.jpg')"/>
-                     <figcaption @click="clickSet(3)">
+                     <figcaption @click="clickSet(1)">
                          다리 요가 코스
                     </figcaption>
                 </figure>
@@ -62,7 +62,7 @@
             <slide class="slide" :index="5">
                 <figure>
                     <img :src="require('../../../public/yogaList/relax.jpg')"/>
-                     <figcaption @click="clickSet(1)">
+                     <figcaption @click="clickSet(3)">
                          바디 릴렉싱 요가
                     </figcaption>
                 </figure>

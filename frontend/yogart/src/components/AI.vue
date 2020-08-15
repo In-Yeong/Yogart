@@ -1,5 +1,5 @@
 <template>   
-    <div> 
+    <div class="m-5"> 
         <div id="AI" v-if="!loading && !aiPage" class="mx-auto">
            
             <h1 class="m-5" style="font-size : 50px">AI COACHING SERVICE</h1>
