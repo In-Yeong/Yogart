@@ -93,7 +93,7 @@ export default {
             } else {
                 this.serverState = true
             }
-            console.log('setUserData')
+            // console.log('setUserData', data)
             this.$store.commit('setUserData', data)
             this.$emit('loginComplete')
         }

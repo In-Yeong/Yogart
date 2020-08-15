@@ -2,13 +2,13 @@
 <div>
     <div class="profile-box d-flex  my-5">
         <template>
-        <div style="font-size: 2rem">
+        <!-- <div style="font-size: 2rem">
             <b-avatar badge="BV"></b-avatar>
             <b-avatar badge="7" variant="primary" badge-variant="dark"></b-avatar>
             <b-avatar badge-variant="info" src="https://placekitten.com/300/300">
             <template v-slot:badge><b-icon icon="star-fill"></b-icon></template>
             </b-avatar>
-        </div>
+        </div> -->
         </template>
         <img v-if="imgSrc" class="user-profile-img" :src="imgSrc" alt="user profile image">
         <img v-else class="user-profile-img" src="../../assets/userDefault.jpg" alt="user profile image">
@@ -44,9 +44,7 @@ export default {
             userIntro : '',
             userId : undefined,
             imgSrc : "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
-            spoons : this.$store.state.spoons
-
-
+            spoons : null,
         }
     },
     mounted() {

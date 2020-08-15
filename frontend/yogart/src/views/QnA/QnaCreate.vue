@@ -34,7 +34,6 @@ export default {
         onSubmit(e) {
             e.preventDefault()
             this.getHtml()
-            console.log(this.questionContent)
             const requestHeaders = {
                 headers: {
                     Authorization: this.$cookies.get('auth-token')

@@ -32,7 +32,7 @@ public class Notice {
     @ApiModelProperty(value="이름")
 	private String noticeTitle;
 	
-	@Column(name="notice_content", columnDefinition = "text")
+	@Column(name="notice_content", columnDefinition = "longtext")
     @ApiModelProperty(value="이름")
 	private String noticeContent;
 	

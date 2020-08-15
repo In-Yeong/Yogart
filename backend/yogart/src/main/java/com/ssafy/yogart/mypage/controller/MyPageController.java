@@ -24,8 +24,8 @@ import com.ssafy.yogart.mypage.model.GraphBodyPart;
 import com.ssafy.yogart.mypage.model.GraphResult;
 import com.ssafy.yogart.mypage.model.GraphTime;
 import com.ssafy.yogart.mypage.model.MyPagePtResult;
-import com.ssafy.yogart.mypage.model.PtClicked;
 import com.ssafy.yogart.mypage.service.MyPageService;
+import com.ssafy.yogart.teachers.model.PtClicked;
 import com.ssafy.yogart.user.model.User;
 import com.ssafy.yogart.user.service.UserService;
 
@@ -88,9 +88,9 @@ public class MyPageController {
 		PtClicked pt = null;
 		for(int i = 0; i < Courses.size(); i++) {
 			pt = Courses.get(i);
-			if(local.isAfter(pt.getDateTime())) {
+			if(local.isAfter(LocalDate.from(pt.getDateTime()))) {
 				pastCourses.add(pt);
-			} else if (local.isBefore(Courses.get(i).getDateTime())) {
+			} else if (local.isBefore(LocalDate.from(pt.getDateTime()))) {
 				futureCourses.add(pt);
 			} else {
 				todayCourses.add(pt);
