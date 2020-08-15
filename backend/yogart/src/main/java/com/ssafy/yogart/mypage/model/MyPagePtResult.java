@@ -3,6 +3,8 @@ package com.ssafy.yogart.mypage.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ssafy.yogart.teachers.model.PtClicked;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;

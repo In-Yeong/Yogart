@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.yogart.mypage.model.GraphBodyPart;
 import com.ssafy.yogart.mypage.model.GraphTime;
-import com.ssafy.yogart.mypage.model.PtClicked;
 import com.ssafy.yogart.mypage.repository.GraphBodyPartRepository;
 import com.ssafy.yogart.mypage.repository.GraphTimeRepository;
-import com.ssafy.yogart.mypage.repository.PtClickedRepository;
-import com.ssafy.yogart.mypage.repository.PtInfoRepository;
 import com.ssafy.yogart.mypage.service.MyPageService;
+import com.ssafy.yogart.teachers.model.PtClicked;
+import com.ssafy.yogart.teachers.repository.PtClickedRepository;
+import com.ssafy.yogart.teachers.repository.PtInfoRepository;
 import com.ssafy.yogart.user.model.User;
 
 @Service

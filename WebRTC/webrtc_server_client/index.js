@@ -1,24 +1,24 @@
 const http = require('http');
-const https = require('https');
+// const https = require('https');
 const os = require('os');
 const socketIO = require('socket.io');
 const nodeStatic = require('node-static');
 const fs = require('fs');
 const url = require('url');
 const querystring = require('querystring');
-const options = {
-	ca: fs.readFileSync('/etc/letsencrypt/live/i3d202.p.ssafy.io/fullchain.pem'),
-	key: fs.readFileSync('/etc/letsencrypt/live/i3d202.p.ssafy.io/privkey.pem'),
-	cert: fs.readFileSync('/etc/letsencrypt/live/i3d202.p.ssafy.io/cert.pem')};
+// const options = {
+// 	ca: fs.readFileSync('/etc/letsencrypt/live/i3d202.p.ssafy.io/fullchain.pem'),
+// 	key: fs.readFileSync('/etc/letsencrypt/live/i3d202.p.ssafy.io/privkey.pem'),
+// 	cert: fs.readFileSync('/etc/letsencrypt/live/i3d202.p.ssafy.io/cert.pem')};
 
 let fileServer = new(nodeStatic.Server)();
 
-let app = https.createServer(options,(req,res)=>{
-    fileServer.serve(req,res);
-}).listen(8080);
-// let app = http.createServer((req,res)=>{
+// let app = https.createServer(options,(req,res)=>{
 //     fileServer.serve(req,res);
 // }).listen(8080);
+let app = http.createServer((req,res)=>{
+    fileServer.serve(req,res);
+}).listen(8080);
 
 let io = socketIO.listen(app);
 
@@ -57,6 +57,4 @@ io.sockets.on('connection',socket=>{
             socket.emit('full',room);
         }
     });
-
-
 });

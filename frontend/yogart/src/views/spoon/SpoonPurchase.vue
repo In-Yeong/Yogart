@@ -33,13 +33,14 @@ export default {
                 }
             }
             const purchaseData = {
-                quantity: this.spoons[this.selected],
-                price: this.price[this.selected],
+                quantity: String(this.spoons[this.selected]),
+                price: String(this.price[this.selected]),
             }
             axios.post(this.SERVER_URL + '/api/users/pay', purchaseData, requestHeaders)
             .then(res => {
                 // 카카오페이 결제창 오픈
-                window.open(res.data.next_redirect_pc_url)
+                this.$cookies.set(' ', res.data.tid)
+                window.open(res.next_redirect_pc_url)
             })
             .catch(err => console.error(err))
         }
