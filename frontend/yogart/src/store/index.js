@@ -10,7 +10,7 @@ export default new Vuex.Store({
         isLogin: !!window.$cookies.get('auth-token'),
         SERVER_URL: 'http://localhost:8000',
         LOCAL_URL: 'http://localhost:3000',
-        userNickname: null,
+        userNickname: window.$cookies.get('userNickname'),
         spoons: null,
         imageUrl: null,
     },
@@ -18,18 +18,20 @@ export default new Vuex.Store({
         storeLogin(state) {
             // console.log('login complete')
             state.isLogin = true
+            state.userNickname = window.$cookies.get('userNickname')
             // console.log(state)
         },
         storeLogout(state) {
             // console.log('logout complete')
             state.isLogin = false
+            state.userNickname = null
             // console.log('@@@@@@@', state)
 
         },
         setUserData(state, payload) {
-            console.log(state,payload)
+            console.log('!@!@!@', state,payload)
             // console.log(payload.user.userNickname)
-            window.$cookies.set('auth-token', userNickname)
+            window.$cookies.set('userNickname', payload.user.userNickname)
             state.userNickname = payload.user.userNickname
             state.spoons = payload.spoons
             state.imageUrl = payload.user.imageUrl

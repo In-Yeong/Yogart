@@ -73,31 +73,33 @@ export default {
 		},
 		loginComplete() {
 			this.$store.commit('storeLogin')
-            this.isLogin = true
-            $('#loginStaticBackdrop').modal('hide')
-			this.$router.replace({ name: 'Home' })
+      this.isLogin = true
+      $('#loginStaticBackdrop').modal('hide')
+      this.$router.replace({ name: 'Home' })
+      window.location.reload()
 		},
 		logout() {
 			// 로그아웃은 쿠키를 삭제하는 것으로 마무리합니다.
 			this.$store.commit('storeLogout')
-            this.isLogin = false
-            this.removeCookie()
+      this.isLogin = false
+      this.removeCookie()
 			// 로그아웃이 완료되면 사용자를 홈페이지로 던집니다.
 			this.$router.replace({ name: 'Home' })
 		},
 		removeCookie() {
-			this.$cookies.remove('auth-token')
-        },
-        setSize() {
-            let size = window.innerWidth
-            // console.log(size)
-            // console.log(this.isPC)
-            if (size < 660) {
-                this.isPC = false
-            } else {
-                this.isPC = true
-            }
+      this.$cookies.remove('auth-token')
+      this.$cookies.remove('userNickname')
+    },
+    setSize() {
+        let size = window.innerWidth
+        // console.log(size)
+        // console.log(this.isPC)
+        if (size < 660) {
+            this.isPC = false
+        } else {
+            this.isPC = true
         }
+    }
     },
     created() {
         Kakao.init('688de69414ec5331cee58badb1cad1ea');
