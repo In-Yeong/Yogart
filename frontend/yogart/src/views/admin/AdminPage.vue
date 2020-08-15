@@ -22,7 +22,7 @@ export default {
     },
     methods: {
         setTeacher(userEmail) {
-            axios.get(this.SERVER_URL + '/api/users/registration/?userEmail=' + userEmail)
+            axios.get(this.SERVER_URL + '/api/users/registration?userEmail=' + userEmail)
             .then(res => {
                 this.applications = res.data.applications
             })

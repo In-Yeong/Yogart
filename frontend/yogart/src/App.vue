@@ -110,10 +110,18 @@ export default {
 
 
 <style>
+
 #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+    /* font-family: 'Song Myung', serif; */
+    /* color: #2c3e50;
+    min-height: calc(100vh - 127.55px);
+
+    background-image: url('./assets/marble1.jpg');
+    background-size: 100%;
+     */
     background-image: url("./assets/back1.jpg");
     /* background-repeat: no-repeat; */
     background-size: 100%;
@@ -143,12 +151,209 @@ export default {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+} */
+.shadow-box-pink{
+    background-color: rgba(255,255,255,0.3);
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px #f29d8f;
+}
+.shadow-box{
+  
+    margin : 5px;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 10px;
+    border: 1px solid white;
+    box-shadow: 3px 3px rgba(0,0,0,0.1);
 }
 
 .user-level {
   position: absolute;
   top: 60px;
   left: 80px;
+}
+.btn1 {
+  transition-duration: 0.4s;
+  /* background-color:rgba(255,255,255,0.3);
+  border: 3px solid #f29d8f;
+  color: #f29d8f; */
+  background-color: rgba(242, 157, 143,0.3);
+  border: 5px solid #f29d8f;
+  color: #f29d8f;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+
+  font-size: 24px;
+  margin: 4px 2px;
+  transition:800ms ease all;
+  outline:none;
+}
+.btn1:hover {
+  background-color:  #2c3e50;
+  border: 5px solid #2c3e50;
+  color: #f29d8f;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 24px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.btn1:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: rgba(242, 157, 143,0.3);
+  transition:400ms ease all;
+}
+.btn1:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.btn1:hover:before,.btn1:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+
+.btn-white {
+  transition-duration: 0.4s;
+  /* background-color:rgba(255,255,255,0.3);
+  border: 3px solid #f29d8f;
+  color: #f29d8f; */
+  background-color:rgba(255,255,255,0.3);
+  border: 3px solid #f29d8f;
+  color: #f29d8f;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 24px;
+  margin: 4px 2px;
+  transition:800ms ease all;
+  outline:none;
+}
+.btn-white:hover {
+  background-color: #f29d8f;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 24px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.btn-white:before,.btn-white:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: rgba(242, 157, 143,0.3);
+  transition:400ms ease all;
+}
+.btn-white:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.btn-white:hover:before,.btn-white:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+.btn4 {
+  transition-duration: 0.4s;
+  /* background-color:rgba(255,255,255,0.3);
+  border: 3px solid #f29d8f;
+  color: #f29d8f; */
+  background-color:#f29d8f;
+  border: 3px solid #f29d8f;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+
+  font-size: 24px;
+  margin: 4px 2px;
+  transition:800ms ease all;
+  outline:none;
+}
+.btn4:hover {
+  background-color:  rgba(255,255,255,0.3);
+  color: #f29d8f;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 24px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.btn4:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: rgba(242, 157, 143,0.3);
+  transition:400ms ease all;
+}
+.btn4:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.btn4:hover:before,.btn4:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+.box {
+  position: relative;
+  display: inline-block;
+  width: 450px;
+  /* height: 100px; */
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.0);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Create the hidden pseudo-element */
+/* include the shadow for the end state */
+.box::after {
+  /* content: ''; */
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transition: opacity 0.3s ease-in-out;
+}
+/* Scale up the box */
+.box:hover {
+  transform: scale(1.2, 1.2);
+}
+
+/* Fade in the pseudo-element with the bigger shadow */
+.box:hover::after {
+  opacity: 1;
 }
 
 ::selection {
@@ -191,5 +396,26 @@ export default {
     border-width: 8px 8px 0 8px;
     border-color: gray transparent transparent transparent;
 }
+.user-profile-small {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border : 2px solid rgba(242, 157, 143);
 
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+.user-profile-mid {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border : 2px solid rgba(242, 157, 143);
+
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
 </style>
