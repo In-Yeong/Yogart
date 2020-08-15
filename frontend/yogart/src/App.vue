@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div>
-            <login-modal @loginComplete="loginComplete"></login-modal>
+            <login-modal v-if="!isLogin" @loginComplete="loginComplete"></login-modal>
             <NavBar @logout="logout" :isLogin="isLogin"/>
             <router-view class="full-page" @submit-signup-data="signup" />
         </div>
@@ -32,26 +32,21 @@ export default {
         Footer,
     },
     methods: {
-        setCookie(key) {
-          this.$cookies.set('auth-token', key)
-          this.isLogin = true
-        },
         signup(signupData) {
         // console.log(signupData)
         axios.post(`${this.SERVER_URL}/api/users/signup`, signupData)
             .then(response => {
                 if (response.data.statusCode === 200) {
-                    this.setCookie(response.data.token)
-                    this.$store.commit('storeLogin')
-                    this.$router.push({name: 'Home'})
+                    console.log(response)
+                    this.$store.commit('storeLogin', response.data)
+                    this.loginComplete()
                } 
                else {
                    alert('회원가입 실패')
                }
             })
             .catch(err => {
-
-                console.log(err.response)
+                console.log(err)
                 if (err.response.data.statusCode === 403) {
                    if (err.response.data.message === 'email') {
                        alert('이메일이 이미 존재합니다.')
@@ -72,34 +67,28 @@ export default {
 			$('#loginStaticBackdrop').modal('show')
 		},
 		loginComplete() {
-			this.$store.commit('storeLogin')
-      this.isLogin = true
-      $('#loginStaticBackdrop').modal('hide')
-      this.$router.replace({ name: 'Home' })
-      window.location.reload()
+			this.isLogin = true
+			$('#loginStaticBackdrop').modal('hide')
+			this.$router.push({ name: 'Home' })
+			window.location.reload()
 		},
 		logout() {
 			// 로그아웃은 쿠키를 삭제하는 것으로 마무리합니다.
+			this.isLogin = false
 			this.$store.commit('storeLogout')
-      this.isLogin = false
-      this.removeCookie()
 			// 로그아웃이 완료되면 사용자를 홈페이지로 던집니다.
-			this.$router.replace({ name: 'Home' })
+			this.$router.push({ name: 'Home' })
 		},
-		removeCookie() {
-      this.$cookies.remove('auth-token')
-      this.$cookies.remove('userNickname')
-    },
-    setSize() {
-        let size = window.innerWidth
-        // console.log(size)
-        // console.log(this.isPC)
-        if (size < 660) {
-            this.isPC = false
-        } else {
-            this.isPC = true
-        }
-    }
+		setSize() {
+			let size = window.innerWidth
+			// console.log(size)
+			// console.log(this.isPC)
+			if (size < 660) {
+				this.isPC = false
+			} else {
+				this.isPC = true
+			}
+		}
     },
     created() {
         Kakao.init('688de69414ec5331cee58badb1cad1ea');
@@ -135,6 +124,26 @@ export default {
 .padding-for-nav {  /* 다른 views에서 사용 */
     padding-top: 22vh;
     padding-bottom: 6vh;
+}
+.custom-break-word { /* 글자가 박스를 벗어나지 않도록 하기위해 사용 */
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-break: break-all;
+}
+.tui-editor-contents > p { /* 글자가 박스를 벗어나지 않도록 하기위해 사용 */
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-break: break-all;
+    padding: 0rem 1rem;
+}
+pre {
+    margin: 0.5rem 0rem 0rem;
 }
 .box {
   margin-top : 3px;

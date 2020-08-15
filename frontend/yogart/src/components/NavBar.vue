@@ -35,7 +35,7 @@
                     </div>
                     <div v-else-if="isTeacher" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="sub-item nav-link" href="/mypage">마이페이지</a>
-                        <a class="sub-item nav-link" href="#">수업관리</a>
+                        <a class="sub-item nav-link" href="/teachers/class-settings">수업관리</a>
                         <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
                     </div>
                     <div v-else class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

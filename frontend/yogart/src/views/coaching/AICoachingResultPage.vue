@@ -2,6 +2,16 @@
 <div style="margin: 50px; ">
     <h2 class="m-3">{{this.courseName}}코스 AI 코칭 결과</h2>
     <h5>총 소요시간  |    {{this.minutes}} : {{this.seconds}}</h5>
+     <!-- <carousel-3d :controls-visible="true"  :controls-prev-html="'&#10092;'" :controls-next-html="'&#10093;'">
+       
+            <slide class="slide" :index="0">
+                <figure>
+                    <div class="box mr-2"><lineChart/></div>
+                </figure>
+              
+            </slide>
+    </carousel-3d> -->
+
     <div class="d-flex mx-auto pr-0">
         <div class="box mr-2"><lineChart/></div>
         <div class="box"><dougnutChart/></div>      
@@ -31,12 +41,14 @@ import 'chartjs-plugin-labels'
 import lineChart from '../../components/aiResult/lineChart.vue'
 import dougnutChart from '../../components/aiResult/dougnutChart.vue'
 import axios from 'axios'
-
+import {Carousel3d, Slide} from 'vue-carousel-3d';
 export default {
     name : 'AICoachingResultPage',
     components : {
         lineChart,
         dougnutChart,
+        Carousel3d,
+        Slide
     },
     data() {
         return {
@@ -182,5 +194,33 @@ export default {
 <style scoped >
 .box{
     width : 100%;
+}
+ 
+.carousel-3d-container figure {
+  margin: 0;
+}
+
+.carousel-3d-container figcaption {
+  
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  bottom: 0;
+  position: absolute;
+  bottom: 0;
+  padding: 15px;
+  font-size: 30px;
+  min-width: 100%;
+  min-height:100%;
+  line-height : 270px;
+  box-sizing: border-box;
+}
+.carousel-3d-container figcaption:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
+  
+}
+.slide{
+    border-radius: 7px;
 }
 </style>

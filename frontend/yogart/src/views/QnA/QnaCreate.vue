@@ -1,17 +1,16 @@
 <template>
-    <div>
-        <h1>질문 작성</h1>
+    <div class="padding-for-nav">
+        <div class="qna-page-name">질문 작성</div>
         <form @submit="onSubmit">
-            <input type="text" v-model="questionTitle">
-            <editor
+            <input class="title" type="text" v-model="questionTitle" placeholder="제목을 입력해 주세요.">
+            <editor class="editor"
                 :initialValue="editorText"
                 ref="toastuiEditor"
                 height="500px"
                 initialEditType="wysiwyg"
                 previewStyle="vertical"
             />
-            <button type="submit">작성</button>
-            <p v-if="isEmpty">아무것도 묻지 않음으로 질문 할 수는 없어요.</p>
+            <button class="write-btn" type="submit">작성완료</button>
         </form>
     </div>
 </template>
@@ -27,6 +26,9 @@ export default {
     name: 'QnaCreate',
     components: {
         editor: Editor,
+    },
+    created() {
+        window.scrollTo(0,0);
     },
     methods: {
         onSubmit(e) {
@@ -64,7 +66,7 @@ export default {
         return {
             SERVER_URL: this.$store.state.SERVER_URL,
             questionTitle: null,
-            editorText: null,
+            editorText: '',
             questionContent: null,
             isEmpty: true,
         }
@@ -72,8 +74,39 @@ export default {
 }
 </script>
 
-<style>
-.ck-content {
-    height: 50vh;
+<style scoped>
+.qna-page-name {
+    margin: -8rem auto 2rem;
+    font-size: 4vh;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.6);
+}
+.title {
+    outline: none;
+    width: 80%;
+    height: 3rem;
+    padding: 0rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.editor {
+    width: 80%;
+    margin: 0.5rem auto;
+}
+.write-btn {
+    width: 15rem;
+    height: 3rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    color: white;
+    font-size: 17px;
+    border-radius: 3rem;
+    border-width: 0px 0px 1.2px;
+    border-color: rgba(255, 255 255, 0.2);
+    background: rgba(215, 159, 215, 1);
+    outline:none;
+    cursor: pointer;
+}
+.write-btn:hover {
+    background: rgba(215, 159, 215, 0.9);
 }
 </style>

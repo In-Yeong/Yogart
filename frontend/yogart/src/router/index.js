@@ -253,7 +253,6 @@ const routes = [
           component: AdminPage,
           beforeEnter: requireAdmin()
       }
-      
 ]
 
     const router = new VueRouter({
