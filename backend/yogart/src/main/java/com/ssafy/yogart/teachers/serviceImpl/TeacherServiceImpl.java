@@ -36,6 +36,16 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
+	public PtInfo showPTInfoByName(String name) {
+		return ptInfoRepository.findByPtName(name);
+	}
+	
+	@Override
+	public PtInfo updatePtInfo(PtInfo ptinfo) {
+		return ptInfoRepository.save(ptinfo);
+	}
+	
+	@Override
 	public List<PtClicked> showClassTime(PtInfo ptinfo) {
 		return ptClickedRepository.findByPtClickedName(ptinfo);
 	}
@@ -44,5 +54,6 @@ public class TeacherServiceImpl implements TeacherService {
     public PtClicked updatePtClickedInfo(PtClicked ptClicked) {
         return ptClickedRepository.save(ptClicked);
     }
+
 
 }

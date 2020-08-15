@@ -2,6 +2,7 @@ package com.ssafy.yogart.teachers.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -142,5 +143,33 @@ public class TeacherController {
 		teacherService.updatePtClickedInfo(clickNull);
 		return new ResponseEntity<String>(SUCCESS , HttpStatus.OK);
 	}
-
+	
+	@ApiOperation(value = "강사의 수업개설", response = String.class)
+	@PostMapping(value="/pt-create")
+	public ResponseEntity<String> teacherClassCreate(@RequestHeader Map<String,String> header, @RequestBody Map<String, Object> data) throws Exception {
+		String token = header.get("authorization");
+		User user = userService.authentication(token);
+		List clickedList = (ArrayList) data.get("clicked");
+		String ptName = (String)data.get("ptName");
+		String ptIntro = (String)data.get("ptIntro");
+		int ptPrice = Integer.parseInt((String)data.get("ptPrice"));
+		System.out.println(clickedList); // 원하는 시간대 받기 완료
+		System.out.println(ptName); // 피티명 받기 완료 	
+		System.out.println(ptIntro);
+		System.out.println(ptPrice); // 가격 받기 완료
+		PtInfo ptinfo = new PtInfo();
+		ptinfo.setPtName(ptName);
+		ptinfo.setPtPrice(ptPrice);
+		ptinfo.setPtIntro(ptIntro);
+		ptinfo.setPtTeacherId(user);
+		PtInfo ptInfo = teacherService.updatePtInfo(ptinfo);
+		for(int i = 0; i < clickedList.size(); i++) {
+			Map<String,Integer> click = (Map<String, Integer>) clickedList.get(i);
+			PtClicked clickNull = new PtClicked(click.get("day"),click.get("time"),
+					userService.findUser(7), // default 계정이 7번자리에 필요 -> 나중에 1번자리로 바꾸기
+					false,null,ptInfo);
+			teacherService.updatePtClickedInfo(clickNull);
+		}
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
 }

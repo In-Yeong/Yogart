@@ -12,6 +12,10 @@ public interface TeacherService {
 	
 	PtInfo showPTInfo(int ptId);
 	
+	PtInfo showPTInfoByName(String name);
+	
+	PtInfo updatePtInfo(PtInfo ptinfo);
+	
 	List<PtClicked> showClassTime(PtInfo ptinfo);
 	
 	PtClicked updatePtClickedInfo(PtClicked ptClicked);

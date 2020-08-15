@@ -34,7 +34,7 @@ public class Notice {
 	private String noticeTitle;
 	
 	@Lob
-	@Column(name="notice_content")
+	@Column(name="notice_content", columnDefinition="text")
     @ApiModelProperty(value="이름")
 	private byte[] noticeContent;
 	
