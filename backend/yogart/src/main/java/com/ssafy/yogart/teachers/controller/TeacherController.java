@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.yogart.aicoach.controller.AicoachController;
+import com.ssafy.yogart.aicoach.model.AicoachCourse;
 import com.ssafy.yogart.teachers.model.PtClicked;
 import com.ssafy.yogart.teachers.model.PtInfo;
 import com.ssafy.yogart.teachers.model.TeacherDetailResult;
@@ -179,4 +180,23 @@ public class TeacherController {
 		Page<PtInfo> allList = teacherService.showAllClassList(limit);
 		return new ResponseEntity<Page<PtInfo>>(allList, HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "요가 수업 1:1 PT 방 개설", response = PtClicked.class)
+	@GetMapping(value="/pt-now")
+	public ResponseEntity<PtClicked> TeacherPTroomOpen(@RequestHeader Map<String,String> header) {
+    	String token = header.get("authorization");
+		User user = userService.authentication(token);
+		List<PtClicked> timeList = teacherService.showOrderByTimeDESC();
+		PtClicked ptOpen = null;
+		for(PtClicked pt : timeList) {
+			String temp = pt.getPtClickedName().getPtTeacherId().getUserNickname();
+			if(temp.equals(user.getUserNickname())) {
+				ptOpen = pt;
+				break;
+			}
+		}
+		if(ptOpen == null) return new ResponseEntity<PtClicked>(ptOpen, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<PtClicked>(ptOpen, HttpStatus.OK);
+	}
+	
 }

@@ -23,4 +23,6 @@ public interface TeacherService {
 	List<PtClicked> showClassTime(PtInfo ptinfo);
 	
 	PtClicked updatePtClickedInfo(PtClicked ptClicked);
+	
+	List<PtClicked> showOrderByTimeDESC();
 }

@@ -91,27 +91,6 @@ public class QnAController {
 	}
     
     @ApiOperation(value = "새로운 QnA reply를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-<<<<<<< HEAD
-   	@PostMapping(value="/reply/make", produces = "application/json; charset=UTF-8")
-   	public ResponseEntity<String> createQnaReply(@RequestHeader(value="config") Map<String, Object> header, @RequestBody Map<String, Object> content) {
-    	System.out.println("success::");
-   		logger.debug("createQnA - 호출");
-   		System.out.println((String)header.get("authorization"));
-   		System.out.println(content);
-   		User user = userService.authentication((String)header.get("authorization"));
-   		if(user.getUserAuthority().equals("ADMIN")) {
-   			QnAReply qnaReply = new QnAReply();
-   			QnA qna = qnaService.detailQnA((Integer)content.get("qnaId"));
-   			qnaReply.setQnaId(qna);
-   	   		qnaReply.setUserEmail(user);
-   	   		qnaReply.setQnaReplyContent((String)content.get("ReplyContent"));
-   	   		if (qnaService.createReplyQnA(qnaReply) != null) {
-   	   			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-   	   		}
-   		}
-   		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-   	}
-=======
     @PostMapping(value="/reply/make", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> createQnaReply(@RequestHeader(value="config") Map<String, Object> header, @RequestBody Map<String, Object> content) {
      System.out.println("success::");
@@ -131,8 +110,7 @@ public class QnAController {
        }
        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
     }
->>>>>>> 8487096d9117aa01af48cdc0f57f42ba4811c709
-
+    
     @ApiOperation(value = "글번호에 해당하는 QnA의 정보를 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String> updateQna(@RequestBody QnA qna) {
