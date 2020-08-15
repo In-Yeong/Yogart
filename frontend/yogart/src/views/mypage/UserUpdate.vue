@@ -24,8 +24,8 @@
         </div>
 
 
-        <b-modal ref="my-modal" hide-footer title="회원 탈퇴를 원하시나요?">
-            <div class="d-block text-center">
+        <b-modal ref="my-modal" hide-footer hide-header>
+            <div class="ment-box">
                 <h3>{{ ment }}</h3>
             </div>
             <b-button v-if="leave" class="mt-3" variant="outline-info" block @click="cancelDelete">남는다</b-button>
@@ -241,6 +241,9 @@ export default {
     text-decoration: underline;
     cursor: pointer;
     text-align: right;
+}
+.ment-box {
+    text-align: center;
 }
 
 
