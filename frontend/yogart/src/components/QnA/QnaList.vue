@@ -23,7 +23,7 @@ export default {
 <style>
 .noticeList{
     width: 75vw;
-    height : 600px;
+    height : 100%;
     margin: auto;
 }
 </style>

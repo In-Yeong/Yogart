@@ -67,10 +67,10 @@ export default {
     border-top: 2px solid rgba(215, 159, 215, 1);
     background-color: rgba(255, 255, 255, 0.7);
 }
-.fa-caret-right {
-    color: rgba(215, 159, 215, 1);
-}
 pre {
     margin: 0.5rem 0rem 0rem;
+}
+.fa-caret-right {
+    color: rgba(215, 159, 215, 1);
 }
 </style>

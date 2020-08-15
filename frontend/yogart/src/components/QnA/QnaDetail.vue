@@ -33,6 +33,6 @@ export default {
 
 <style scoped>
 .bottom-piece {
-    padding: 1rem 0rem;
+    padding: 1rem 0rem 0rem;
 }
 </style>

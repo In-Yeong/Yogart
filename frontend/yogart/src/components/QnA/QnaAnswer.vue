@@ -3,12 +3,12 @@
     <!-- 질문 상세 하단에 댓글 방식으로 달리는 답변과, 답변을 다는 기능을 가지는 component // 답변 작성은 관리자 혹은 질문글 작성자만 -->
     <div class="answer-box container">
         <div class="row" v-for="answer in answers" :key="answer.qnaReplyId">
-            <pre class="col-9 text-left custom-break-word">{{ answer.qnaReplyContent }}</pre>
-            <pre class="col-3 text-right custom-break-word">{{ answer.createDate }}</pre>  
+            <pre class="col-10 text-left custom-break-word">{{ answer.qnaReplyContent }}</pre>
+            <pre class="col-2 text-right custom-break-word">{{ answer.createDate }}</pre>  
         </div>
-        <form v-if="isAdmin" @submit="onSubmit">
-            <input type="text" v-model="ReplyContent">
-            <button type="submit">작성</button>
+        <form class="row" v-if="isAdmin" @submit="onSubmit">
+            <textarea class="answer-input col-10 col-xl-11" v-model="ReplyContent"></textarea>
+            <button class="answer-input-btn col-2 col-xl-1" type="submit">작성</button>
         </form>
     </div>
 </template>
@@ -85,8 +85,22 @@ export default {
 
 <style scoped>
 .answer-box {
-    margin: 3rem 0rem 1rem;
+    margin: 3rem 0rem 0rem;
     padding-top: 2rem;
     border-top: 1px solid rgba(215, 159, 215, 1);
+}
+.answer-input {
+    height: 5rem;
+    border: none;
+    border-top: 1px solid rgba(215, 159, 215, 1);
+    outline: none;
+}
+.answer-input-btn {
+    outline: none;
+    border: none;
+    background-color: rgba(215, 159, 215, 0.6);
+}
+.answer-input-btn:hover {
+    background-color: rgba(215, 159, 215, 0.5);
 }
 </style>

@@ -1,14 +1,14 @@
 <template>
-    <div class="padding-for-nav">
+    <div class="padding-for-nav h-100">
         <div class="page-name">Q & A</div>
         <div class="btn-wrap">
             <button class="write-btn" @click="clickWriteBtn()">글 작성</button>
         </div>
         <QnaList :items="items"></QnaList>
-        <div style="margin-top: -10rem;">
-            <button @click="clickPrev()">이전 페이지</button>
-            <div>{{page}}</div>
-            <button @click="clickNext()">다음 페이지</button>
+        <div class="page">
+            <div class="page-left" @click="clickPrev()"><i class="fas fa-chevron-left"></i></div>
+            <div class="page-num">{{page}}</div>
+            <div class="page-right" @click="clickNext()"><i class="fas fa-chevron-right"></i></div>
         </div>
         
         
@@ -126,5 +126,18 @@ export default {
     margin: auto;
     text-align: right;
 }
-
+.page {
+    padding: 1.8rem 0rem;
+}
+.page-left, .page-right {
+    display: inline-block;
+    cursor: pointer;
+}
+.page-num {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: bold;
+    color: rgba(215, 159, 215, 1);
+    padding: 0rem 1rem;
+}
 </style>
