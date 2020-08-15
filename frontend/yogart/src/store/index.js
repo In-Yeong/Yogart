@@ -10,29 +10,23 @@ export default new Vuex.Store({
         isLogin: !!window.$cookies.get('auth-token'),
         SERVER_URL: 'http://localhost:8000',
         LOCAL_URL: 'http://localhost:3000',
-        userNickname: null,
-        spoons: null,
-        imageUrl: null,
+        userNickname: window.$cookies.get('userNickname'),
     },
     mutations: {
-        storeLogin(state) {
+        storeLogin(state, payload) {
             // console.log('login complete')
+            window.$cookies.set('auth-token', payload.token)
+            window.$cookies.set('userNickname', payload.user.userNickname)
             state.isLogin = true
-            // console.log(state)
+            state.userNickname = payload.user.userNickname
+            state.imageUrl = payload.user.imageUrl
         },
         storeLogout(state) {
-            // console.log('logout complete')
             state.isLogin = false
-            // console.log('@@@@@@@', state)
-
-        },
-        setUserData(state, payload) {
-            console.log(state,payload)
-            // console.log(payload.user.userNickname)
-            window.$cookies.set('auth-token', userNickname)
-            state.userNickname = payload.user.userNickname
-            state.spoons = payload.spoons
-            state.imageUrl = payload.user.imageUrl
+            state.userNickname = null
+            state.imageUrl = null
+            window.$cookies.remove('auth-token')
+            window.$cookies.remove('userNickname')
         },
     },
     actions: {

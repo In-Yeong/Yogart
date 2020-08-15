@@ -35,7 +35,7 @@
                     </div>
                     <div v-else-if="isTeacher" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="sub-item nav-link" href="/mypage">마이페이지</a>
-                        <a class="sub-item nav-link" href="#">수업관리</a>
+                        <a class="sub-item nav-link" href="/teachers/class-settings">수업관리</a>
                         <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
                     </div>
                     <div v-else class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -59,7 +59,7 @@ export default {
     name: 'NavBar',
     data() {
         return {
-            userNickname: this.$cookies.get('userNickname'),
+            userNickname: this.$store.state.userNickname,
             userPic: "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
             showNavbar: true,
             lastScrollPosition: 0,
@@ -98,20 +98,25 @@ export default {
                 Authorization: this.$cookies.get('auth-token')
             }
         }
-        axios.get(this.$store.state.SERVER_URL + '/api/users/isTeacher', requestHeaders)
-        .then(res => {
-            this.isTeacher = res.data
-        })
-        .catch(err => {
-            console.error(err)
-        })
-        axios.get(this.$store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
-        .then(res => {
-            this.isAdmin = res.data
-        })
-        .catch(err => {
-            console.error(err)
-        })
+        if (requestHeaders.headers.Authorization !== null) {
+            axios.get(this.$store.state.SERVER_URL + '/api/users/isTeacher', requestHeaders)
+            .then(res => {
+                this.isTeacher = res.data
+            })
+            .catch(err => {
+                console.error(err)
+            })
+            axios.get(this.$store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
+            .then(res => {
+                if (res.data) {
+                    this.isAdmin = res.data
+                    this.isTeacher = res.data
+                }
+            })
+            .catch(err => {
+                console.error(err)
+            })
+        }
     },
     beforeDestroy () {
         window.removeEventListener('scroll', this.onScroll)

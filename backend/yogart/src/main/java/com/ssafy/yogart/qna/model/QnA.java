@@ -48,7 +48,7 @@ public class QnA implements Serializable {
     @ApiModelProperty(value="제목")
 	private String qnaTitle;
 	
-	@Column(name="qna_content", columnDefinition = "text")
+	@Column(name="qna_content", columnDefinition = "longtext")
     @ApiModelProperty(value="내용")
 	private String qnaContent;
 	

@@ -1,9 +1,13 @@
 <template>
-    <div @click="getImage">
-        <span>{{ application.userEmail }}</span>
-        <span>{{ application.userName }}</span>
-        <span>{{ application.userNickname }}</span>
-        <img v-if="isClicked" :src="getImageUrl"/>
+    <div>
+        <div @click="getImage">
+            <div>
+                <span>{{ application.userEmail }}</span>
+                <span>{{ application.userName }}</span>
+                <span>{{ application.userNickname }}</span>
+            </div>
+            <img v-if="isClicked" :src="getImageUrl"/>
+        </div>
         <button v-if="isClicked" @click="permit">강사승인</button>
     </div>
 </template>
@@ -35,6 +39,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+img {
+    max-height: 500px;
+}
 </style>
