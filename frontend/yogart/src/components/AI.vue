@@ -1,46 +1,61 @@
 <template>   
     <div> 
-        <div id="AI"  v-if="!loading">
-            <h1>AI Coaching Service</h1>
-
-            <h5>{{cur+1}}번째 동작 :{{course[cur].korean_pose_name}}</h5>
-            <button v-if="startBtn" class="w3-btn w3-round-xlarge w3-red w3-xlarge m-5" type="button" @click="clickStart()">Get Start!</button>
+        <div id="AI" v-if="!loading && !aiPage" class="mx-auto">
+           
+            <h1 class="m-5" style="font-size : 50px">AI COACHING SERVICE</h1>
+            <h5>{{cur+1}}번째 {{course[cur].korean_pose_name}} 포즈부터 시작합니다</h5>
+            <img class="round-image" :src="require(`../../public/photos/${posefiles[course[cur]].file_reference}`)" alt="">
+            <div class="m-5">
+                <a v-if="startBtn" @click="clickStart()" class="btn2 m-3"  href="#">START</a>
+            </div>
+            <!-- <button v-if="startBtn" class="w3-btn w3-round-xlarge w3-red w3-xlarge m-5" type="button" @click="clickStart()">Get Start!</button> -->
         </div>
        
-        <div id="loading" v-if="loading">
+        <div id="loading m-5" v-if="loading">
         <!-- <div id="loading" v-if="true"> -->
-            <h3 class="m-5">AI 요가 코칭 서비스를 시작합니다</h3>
-            <p>{{courseName}} 코스 준비중</p>
+            <h1 class="m-5">AI 요가 코칭 서비스를 시작합니다</h1>
+            <h5>{{courseName}} 코스 준비중</h5>
     
             <i class="fa fa-spinner fa-pulse fa-5x fa-fw m-5" ></i>
             <span class="sr-only">Loading...</span>
 
-            <h3 class="m-5">웹캠을 켜주시고 잠시만 기다려 주세요</h3>
-            <p> AI Yoga Coaching Service is running, Please turn on your webcam and wait</p>
+            <h1 class="m-5">웹캠을 켜주시고 잠시만 기다려 주세요</h1>
+            <h5> AI Yoga Coaching Service is running, Please turn on your webcam and wait</h5>
         </div>
-        <div class="row">
-            <div v-if="aiPage" class="col-4">
+        <div class="d-flex justify-content-around mt-5">
+            <div v-if="aiPage" class="shadow-box">
                 <div id="pose-data">
-                    <!-- <p>{{time}}</p> -->
-                    <div>포즈 이름: {{ posefiles[course[cur]].korean_pose_name }}</div>
-                    <div>카테고리: {{posefiles[course[cur]].category }}</div>
-                    <div>난이도: {{posefiles[course[cur]].difficulty }}</div>
                     <img :src="require(`../../public/photos/${posefiles[course[cur]].file_reference}`)" alt="">
+                    <h3 style="font-weight: 500; width : 300px; margin:auto;" class="my-3 highlight">{{ posefiles[course[cur]].korean_pose_name }} 포즈</h3>
+                    <h4>
+                        <span class="badge mr-1" style="background-color : rgba(44, 62, 80,0.4); color:white">#난이도</span>
+                        <span class="badge" style="background-color : rgba(44, 62, 80,0.4); color:white">#{{posefiles[course[cur]].difficulty}}</span>
+                    </h4>   
+                    <h4>
+                        <span class="badge mr-1" style="background-color : rgba(242, 157, 143,0.3)">#부위</span>
+                        <span class="badge" style="background-color : rgba(242, 157, 143,0.3)">#{{posefiles[course[cur]].category}}</span>
+                    </h4>   
+                    
                 </div>
-                <div>
-                    <button @click="next" class="w3-btn w3-round-xlarge w3-red w3-large m-5" type="button">Next Yoga Posture</button>
+               
+            </div>
+            <div class="shadow-box" id="tm-shadow-box">
+                <div ><canvas id="canvas" style="border : 7px solid rgba(242, 157, 143,0.3)"></canvas></div>
+                
+                <div id="label-container" class="m-auto" style="width : 400px;">
+                        <h2 id="good" style="color:green">GOOD</h2>
+                        <h2 id="bad" style="color:red">BAD</h2>
+                    </div>
+              
+               
+            </div>
+            <div class="shadow-box" id="coaching-data">
+                <h2 class="watch highlight mx-auto" style="width:150px;">{{ watchMin }}:{{ watchSec}}</h2>
+                <div id="pie-chart" class="pie-chart my-5"><span class="center" id="seconds-counter">30</span></div>
+                <!-- <div>{{poseTimes}}</div> -->
+                 <div>
+                    <div @click="next" class="btn4">Next Yoga Posture</div>
                 </div>
-            </div>
-            <div class="col-4">
-                <div><canvas id="canvas"></canvas></div>
-                <div id="label-container"></div>
-                <h2 id="good">GOOD</h2>
-                <h2 id="bad">BAD</h2>
-            </div>
-            <div class="col-4 coaching-data" id="coaching-data">
-                <div class="watch m-5">{{ watchMin }}:{{ watchSec}}</div>
-                <div id="pie-chart" class="pie-chart m-5"><span class="center" id="seconds-counter">30</span></div>
-                <div>{{poseTimes}}</div>
             </div>
         </div>
         
@@ -69,13 +84,11 @@
                 startTime : true,
                 endTime : true,
                 requestId : undefined,
-                // course : this.$cookies.get('course').split(','),
                 course : [1,2,3],
                 courseName : 'courseName',
                 cur : 0,
                 flag : false,
                 seconds : 30,
-                time : '',
                 stopBtn : false,
                 restartBtn : false,
                 counter : undefined,
@@ -141,12 +154,16 @@
             },
             clickStart() {
                 this.startDateTime = new Date();
+                // this.hour = this.startDateTime.getHours();
+                // this.min = this.startDateTime.getMinutes();
+                // this.sec = this.startDateTime.getSeconds();
+                this.$cookies.set('startDateTime', this.startDateTime)
                 this.init()
             },
             incrementSeconds() {
                 this.seconds--;
                 document.getElementById('seconds-counter').innerText = this.seconds
-                document.getElementById('pie-chart').style.background = `conic-gradient(#ffffff 0% ${100-100*(this.seconds/30)}%, red ${100-100*(this.seconds/30)}% 100%)`
+                document.getElementById('pie-chart').style.background = `conic-gradient(rgba(256, 256, 256, 0.3) 0% ${100-100*(this.seconds/30)}%, rgba(242, 157, 143,0.3) ${100-100*(this.seconds/30)}% 100%)`
                 if (this.seconds===0) {
                     clearInterval(this.counter) 
                     this.next()
@@ -162,7 +179,7 @@
                     this.poseTimes.push(t)
                     this.watchStamp = this.watch
                     document.getElementById('seconds-counter').innerText = 30
-                    document.getElementById('pie-chart').style.background = "red"
+                    document.getElementById('pie-chart').style.background = "rgba(256, 256, 256, 0.3)"
                     this.init(this.course[this.cur])
 
                 }
@@ -171,7 +188,6 @@
                     this.poseTimes.push(t)
                     const runTime = this.watchMin+'.'+this.watchSec
                     this.calculateScores()
-                    console.log(this.startDateTime.getDate() )
                     this.$cookies.set('resultScores', this.scores.join("."))
                     this.$cookies.set('resultPoseTimes', this.poseTimes.join("."))
                     this.$cookies.set('resultRunTime', runTime )
@@ -253,6 +269,7 @@
             async loop(timestamp) {
                 this.loading = false;
                 this.aiPage = true;
+                document.getElementById('tm-shadow-box').style.visibility= 'visible'
                 document.getElementById('coaching-data').style.visibility= 'visible'
                 
                 if (this.startTime){
@@ -333,30 +350,82 @@
 </script>
     
 <style scoped>
+
+.shadow-box{
+    padding:10px;
+    width : 450px;
+    margin : 5px;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 10px;
+    border: 1px solid white;
+    box-shadow: 3px 3px rgba(0,0,0,0.1);
+}
 .watch {
     font-size: 2rem;
 }
 .pie-chart {
   position: relative;
   display:inline-block;
-  width: 160px;
-  height: 160px;
+  width: 210px;
+  height: 210px;
   border-radius: 50%;
-  background: red;
+  background: rgba(256, 256, 256, 0.3);
+  border: 7px solid rgba(242, 157, 143,0.3);
+  /* border: 7px solid #2c3e50; */
 }
 span.center{
-  background: #fff;
-  display : block;
-  position: absolute;
-  top:50%; left:50%;
-  width:150px; height:150px;
-  border-radius: 50%;
-  text-align:center; line-height: 150px;
-  font-size:30px;
-   transform: translate(-50%, -50%);
+    /* color : #f29d8f; */
+    display : block;
+    position: absolute;
+    top:50%; left:50%;
+    width:200px; 
+    height:200px;
+    border-radius: 50%;
+    text-align:center; 
+    line-height: 200px;
+    font-size:70px;
+    transform: translate(-50%, -50%);
 }
-.coaching-data {
+#coaching-data, #tm-shadow-box {
     visibility: hidden;
 }
+#pose-data > img {
+    width : 300px;
+    border : 7px solid rgba(242, 157, 143,0.3);
+    border-radius : 10px;
+    
+}
+.box {
+  position: relative;
+  display: inline-block;
+  width: 450px;
+  /* height: 100px; */
+  border-radius: 5px;
+  background-color: rgba(255,255,255,0.5);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  transition: all 0.3s ease-in-out;
+}
 
+/* Create the hidden pseudo-element */
+/* include the shadow for the end state */
+.box::after {
+  /* content: ''; */
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transition: opacity 0.3s ease-in-out;
+}
+/* Scale up the box */
+.box:hover {
+  transform: scale(1.2, 1.2);
+}
+
+/* Fade in the pseudo-element with the bigger shadow */
+.box:hover::after {
+  opacity: 1;
+}
 </style>

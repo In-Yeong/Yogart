@@ -24,8 +24,8 @@ import com.ssafy.yogart.mypage.model.GraphBodyPart;
 import com.ssafy.yogart.mypage.model.GraphResult;
 import com.ssafy.yogart.mypage.model.GraphTime;
 import com.ssafy.yogart.mypage.model.MyPagePtResult;
-import com.ssafy.yogart.mypage.model.PtClicked;
 import com.ssafy.yogart.mypage.service.MyPageService;
+import com.ssafy.yogart.teachers.model.PtClicked;
 import com.ssafy.yogart.user.model.User;
 import com.ssafy.yogart.user.service.UserService;
 
@@ -76,9 +76,9 @@ public class MyPageController {
 	
 	@ApiOperation(value = "수업 내역을 보낸다", response = MyPagePtResult.class)
 	@GetMapping(value="/ptlist")
-	public ResponseEntity<MyPagePtResult> showPtList(HttpServletRequest request) throws Exception {
-		String token = request.getHeader("auth-token");
-		System.out.println("token:::" + token);
+	public ResponseEntity<MyPagePtResult> showPtList(@RequestHeader Map<String, String> header, HttpServletRequest request) throws Exception {
+		String token = header.get("authorization");
+		System.out.println("token / " + token);
 		User user = userService.authentication(token);
 		List<PtClicked> Courses = myPageService.showPTList(user);
 		List<PtClicked> pastCourses = new ArrayList<>();
@@ -88,9 +88,9 @@ public class MyPageController {
 		PtClicked pt = null;
 		for(int i = 0; i < Courses.size(); i++) {
 			pt = Courses.get(i);
-			if(local.isBefore(pt.getDateTime())) {
+			if(local.isAfter(LocalDate.from(pt.getDateTime()))) {
 				pastCourses.add(pt);
-			} else if (local.isAfter(Courses.get(i).getDateTime())) {
+			} else if (local.isBefore(LocalDate.from(pt.getDateTime()))) {
 				futureCourses.add(pt);
 			} else {
 				todayCourses.add(pt);

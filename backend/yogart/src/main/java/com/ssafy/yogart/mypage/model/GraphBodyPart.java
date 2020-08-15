@@ -69,4 +69,25 @@ public class GraphBodyPart implements Serializable {
 	@Column(name="energy")
 	@ApiModelProperty(value="에너지")
 	private Integer energy;
+	
+	@CreationTimestamp
+    @Column(name="start_date_time", updatable = false)
+	@ApiModelProperty(value="시작시간")
+	private LocalDateTime startDateTime;
+
+	public GraphBodyPart(User graphBodyPartUserNickname, Integer wholeBody, Integer spine, Integer abs, Integer arm,
+			Integer leg, Integer relaxing, Integer energy, LocalDateTime startDateTime) {
+		super();
+		this.graphBodyPartUserNickname = graphBodyPartUserNickname;
+		this.wholeBody = wholeBody;
+		this.spine = spine;
+		Abs = abs;
+		this.arm = arm;
+		this.leg = leg;
+		this.relaxing = relaxing;
+		this.energy = energy;
+		this.startDateTime = startDateTime;
+	}
+	
+	
 }

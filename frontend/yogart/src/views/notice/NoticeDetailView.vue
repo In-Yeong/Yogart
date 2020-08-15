@@ -9,7 +9,7 @@
                 <div class="col-3">{{ notice.createDate }}</div>
             </div>
             <div class="text-left border-bottom min-height-5 mb-3">
-                <viewer :initialValue="notice.viewerText"/>
+                <viewer v-if="notice.noticeContent !== null" :initialValue="notice.noticeContent"/>
             </div>
             <!-- <div class="row m-0 border-top border-bottom">
                 <div class="col-2 bg-light">제목</div>
@@ -46,7 +46,12 @@ export default {
     },
     data() {
       return {
-        notice: null,
+         notice: {
+            noticeTitle: null,
+            noticeContent: null,
+            noticeId: null,
+            createDate: null,
+        },
       }
     },
     methods: {
@@ -55,10 +60,11 @@ export default {
 
             axios.get(`${API_URL}/api/notice/${noticeId}/`)
             .then(response => {
-            console.log(response)
-            this.notice = response.data
+            this.notice.noticeTitle = response.data.noticeTitle
+            this.notice.noticeContent = response.data.noticeContent
+            this.notice.noticeId = response.data.noticeId
+            this.notice.createDate = response.data.createDate
             this.notice.createDate = this.notice.createDate.substr(0,10)
-            console.log(this.notice.createDate.substr(0,10))
             })
         },
         toNoticeList() {

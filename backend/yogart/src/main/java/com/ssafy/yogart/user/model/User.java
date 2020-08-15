@@ -70,7 +70,8 @@ public class User implements Serializable {
     @ApiModelProperty(value="자기소개")
     private String userIntro = "자기소개를 해주세요.";
     
-    @ApiModelProperty(value="스푼 갯수")
+    @Column(name="user_spoon")
+    @ApiModelProperty(value="잔여스푼")
     private Integer userSpoon = 0;
     
     @Column(name="teacher_code")

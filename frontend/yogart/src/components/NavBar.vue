@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div id="navbar-container">
         <div class="navbar navbar-expand navbar-light fixed-top w-100" :class="{ 'navbar--hidden': !showNavbar, 'change--color': lastScrollPosition > 100 }">
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav nav-left">
@@ -70,8 +70,8 @@ export default {
     },
     methods: {
         openLoginModal() {
-              if (this.isLogin) return
-              $('#loginStaticBackdrop').modal('show')
+            if (this.isLogin) return
+            $('#loginStaticBackdrop').modal('show')
         },
         logoutEmmit() {
             this.$emit('logout')
@@ -121,6 +121,9 @@ export default {
 </script>
 
 <style>
+#navbar-container{
+    height: 8vh;
+}
 .logo-img {
     height: 8vh;
 }
@@ -149,6 +152,7 @@ export default {
     font-size: 1.2rem;
     font-weight: 500;
     padding: 1rem !important;
+    cursor: pointer;
 }
 .nav-link:after {    
   content: "";

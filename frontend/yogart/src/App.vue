@@ -418,4 +418,15 @@ export default {
   background-position: center center;
   background-size: cover;
 }
+.user-profile-mid {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border : 2px solid rgba(242, 157, 143);
+
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
 </style>
