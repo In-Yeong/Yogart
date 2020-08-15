@@ -1,10 +1,10 @@
 
 <template>
     <!-- 질문 상세 하단에 댓글 방식으로 달리는 답변과, 답변을 다는 기능을 가지는 component // 답변 작성은 관리자 혹은 질문글 작성자만 -->
-    <div>
-        <div v-for="answer in answers" :key="answer.qnaReplyId">
-            <p>{{ answer.qnaReplyContent }}</p>
-            <p>{{ answer.createDate }}</p>  
+    <div class="answer-box container">
+        <div class="row" v-for="answer in answers" :key="answer.qnaReplyId">
+            <pre class="col-9 text-left custom-break-word">{{ answer.qnaReplyContent }}</pre>
+            <pre class="col-3 text-right custom-break-word">{{ answer.createDate }}</pre>  
         </div>
         <form v-if="isAdmin" @submit="onSubmit">
             <input type="text" v-model="ReplyContent">
@@ -24,7 +24,18 @@ export default {
     data() {
         return {
             ReplyContent: '',
-            answers: [],
+            answers: [{
+                "qnaReplyId": 1,
+                "qnaReplyContent": '댓글~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
+                "createDate": '2020-08-15'
+
+            },
+            {
+                "qnaReplyId": 2,
+                "qnaReplyContent": '댓글2dfsfsdgbrwwedefrwefewfefejdkdls;jcfksd;chsdjk;fhscjk;dszjkj hjklhjlkyi;yhi;hujil;hjlghkfghdjcgfj',
+                "createDate": '2020-08-15'
+
+            }],
             isAdmin: true,
             SERVER_URL: this.$store.state.SERVER_URL,
             answerData: this.ReplyContent,
@@ -73,7 +84,9 @@ export default {
 </script>
 
 <style scoped>
-div {
-    z-index: 50 !important;
+.answer-box {
+    margin: 3rem 0rem 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(215, 159, 215, 1);
 }
 </style>

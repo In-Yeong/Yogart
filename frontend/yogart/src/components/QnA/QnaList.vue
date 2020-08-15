@@ -26,7 +26,4 @@ export default {
     height : 600px;
     margin: auto;
 }
-.big-piece {
-    /* background-color: aqua; */
-}
 </style>
