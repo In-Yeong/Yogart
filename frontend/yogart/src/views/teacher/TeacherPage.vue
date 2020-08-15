@@ -19,6 +19,8 @@ import ClassSetting from '@/components/teacher/ClassSetting.vue'
 export default {
     name: 'TeacherPage',
     components: {
+        PtAdmin,
+        PtList,
         ClassSetting,
     }
 }

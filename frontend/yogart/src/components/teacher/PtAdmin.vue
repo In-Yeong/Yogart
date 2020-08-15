@@ -1,14 +1,15 @@
 <template>
     <!-- Pt를 진행하는 페이지 입니다. 가장 가까운 시간의 PT를 보여줍니다. -->
     <div>
-        <span>{{ pt.ptName }}</span>
-        <span>{{ pt.studentName }}</span>
-        <span>{{ pt.dateTime }}</span>
+        <span>{{ ptData.ptName }}</span>
+        <span>{{ ptData.studentName }}</span>
+        <span>{{ ptData.dateTime }}</span>
         <a :href="ptUrl">수업 시작하기</a>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     name: 'PtAdmin',
     data() {
@@ -26,6 +27,7 @@ export default {
         }
         axios.get(this.SERVER_URL + '/api/teachers/pt-now', null, requestHeaders)
         .then(res => {
+            console.log("최근 수업 가져오기 성공",res)
             this.ptData = res.data.ptData
         })
         .catch(err => console.error(err))

@@ -41,7 +41,6 @@
 <script>
 import InfiniteLoading from 'vue-infinite-loading'
 import axios from 'axios'
-import selectBox from './selectBox'
 
 export default {
     name: 'ClassList',

@@ -127,13 +127,13 @@ const routes = [
         path: '/teacherpage',
         name: 'TeacherPage',
         component: TeacherPage,
-        beforeEnter: requireTeacher()
+        // beforeEnter: requireTeacher()
     },
     {
         path: '/teachers/class-setting',
         name: 'ClassSetting',
         component: ClassSetting,
-        beforeEnter: requireTeacher()
+        // beforeEnter: requireTeacher()
     },
     {
         path: '/teachers',
