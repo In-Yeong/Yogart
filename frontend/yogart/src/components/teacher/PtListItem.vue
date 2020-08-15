@@ -1,14 +1,14 @@
 <template>
     <div>
         <span>수업이름: {{ ptInfo.ptName }}</span>
-        <span> 시간: {{ time.time }}시 시작</span>
+        <span> 시간: {{ time.ptTime }}시 시작</span>
         <span> 가격: {{ ptInfo.ptPrice }}스푼</span>
         <span> 소개: {{ ptInfo.ptIntro }}</span>
         <b-button id="show-btn" @click="showModal">신청</b-button>
         <b-modal ref="my-modal" hide-footer :title="modalTitle">
             <div class="d-block text-center">
                 <h3>{{ptInfo.ptName}}<br>
-                {{ dDay }} {{ time.time }}시</h3>
+                {{ dDay }} {{ time.ptTime }}시</h3>
             </div>
                 <b-button class="mt-3" variant="outline-danger" block @click="ptRegi">신청하기</b-button>
         </b-modal>
@@ -29,10 +29,12 @@ export default {
         return {
             modalTitle: `${ this.ptInfo.ptPrice } 스푼을 사용하시겠습니까?`,
             SERVER_URL: this.$store.state.SERVER_URL,
+            ptDate: null,
         }
     },
     mounted() {
-        this.clickedDate.setHours(this.time.time)
+        this.clickedDate.setHours(this.time.ptTime)
+        this.ptDate = new Date(this.clickedDate.getYear()+1900, this.clickedDate.getMonth(), this.clickedDate.getDate(),this.clickedDate.getHours())
     },
     methods: {
         ptRegi() {
@@ -45,9 +47,11 @@ export default {
             }
             const ptData = {
                 ptInfo: this.ptInfo,
-                time: this.clickedDate
+                day: this.clickedDate.getDay(),
+                time: this.ptDate,
             }
-            axios.post(this.SERVER_URL + '/api/pt-regist', ptData, requestHeaders)
+            console.log('@@@@@@@@', ptData)
+            axios.post(this.SERVER_URL + '/api/teachers/pt-regist', ptData, requestHeaders)
             .then(res => {
                 this.$refs['my-modal'].hide()
                 this.$router.push('/mypage')

@@ -1,7 +1,7 @@
 <template>
-  <div class="box">
-        <div id="kakao-login-btn"></div>
-  </div>
+
+    <div id="kakao-login-btn"></div>
+
 </template>
 
 <script>
@@ -13,9 +13,8 @@ export default {
         return {
             JavaScriptApiKey : JavaScriptApiKey,
             SERVER_URL: this.$store.state.SERVER_URL,
+
         }
-    },
-    created() {
     },
     mounted() {
         const axiosVue = this
@@ -56,13 +55,10 @@ export default {
                 }
             });
         });
+        
     },
     methods: {
-
+        
     }
 }
 </script>
-
-<style>
-
-</style>

@@ -1,7 +1,6 @@
 <template>
     <div>
-        <h1>QnA List</h1>
-        <router-link to="/qna/question">글 작성</router-link>
+        <router-link class="btn" to="/qna/question">글 작성</router-link>
         <QnaList :items="items"></QnaList>
         <paginate v-model="page" 
         :page-count="totalPages" 
@@ -17,7 +16,7 @@
 </template>
 
 <script>
-import QnaList from '@/components/QnA/QnaList.vue'
+import QnaList from '@/components/qna/QnaList.vue'
 import axios from 'axios'
 import Paginate from 'vuejs-paginate'
 import Vue from 'vue'

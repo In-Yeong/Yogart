@@ -1,8 +1,13 @@
 <template>
     <div id="app">
-        <login-modal @loginComplete="loginComplete"></login-modal>
-        <NavBar @logout="logout" :isLogin="isLogin"/>
-        <router-view class="full-page" @submit-signup-data="signup" />
+        <div>
+            <login-modal @loginComplete="loginComplete"></login-modal>
+            <NavBar @logout="logout" :isLogin="isLogin"/>
+            <router-view class="full-page" @submit-signup-data="signup" />
+        </div>
+        <!-- <div v-else>
+            안녕
+        </div> -->
         <Footer/>
     </div>
 </template>
@@ -19,6 +24,7 @@ export default {
         return {
             isLogin: this.$store.state.isLogin,
             SERVER_URL: this.$store.state.SERVER_URL,
+            isPC: true,
         }
     },
     components: {
@@ -81,12 +87,24 @@ export default {
 		},
 		removeCookie() {
 			this.$cookies.remove('auth-token')
-		},
+        },
+        setSize() {
+            let size = window.innerWidth
+            // console.log(size)
+            // console.log(this.isPC)
+            if (size < 660) {
+                this.isPC = false
+            } else {
+                this.isPC = true
+            }
+        }
     },
     created() {
         Kakao.init('688de69414ec5331cee58badb1cad1ea');
+    },
+    mounted() {
+        window.addEventListener('resize', this.setSize)
     }
-
 }
 </script>
 
@@ -382,6 +400,17 @@ export default {
   display: inline-block;
   width: 60px;
   height: 60px;
+  border-radius: 50%;
+  border : 2px solid rgba(242, 157, 143);
+
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+.user-profile-mid {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   border : 2px solid rgba(242, 157, 143);
 

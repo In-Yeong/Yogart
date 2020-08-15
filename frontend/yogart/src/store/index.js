@@ -29,6 +29,7 @@ export default new Vuex.Store({
         setUserData(state, payload) {
             console.log(state,payload)
             // console.log(payload.user.userNickname)
+            window.$cookies.set('auth-token', userNickname)
             state.userNickname = payload.user.userNickname
             state.spoons = payload.spoons
             state.imageUrl = payload.user.imageUrl

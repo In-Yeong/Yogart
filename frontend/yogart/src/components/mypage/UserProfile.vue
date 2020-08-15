@@ -10,8 +10,9 @@
             </b-avatar>
         </div>
         </template>
-        <img class="user-profile-img m-3" :src="imgSrc">
-        <div class="d-flex flex-column mt-3" >
+        <img v-if="imgSrc" class="user-profile-img" :src="imgSrc" alt="user profile image">
+        <img v-else class="user-profile-img" src="../../assets/userDefault.jpg" alt="user profile image">
+        <div class="profile-content" >
             <div class="d-flex mb-5" >
                 <h5>{{ userName }}</h5> 
                 <div class="d-flex">
@@ -43,9 +44,7 @@ export default {
             userIntro : '',
             userId : undefined,
             imgSrc : "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
-            spoons : this.$store.state.spoons
-
-
+            spoons : null,
         }
     },
     mounted() {

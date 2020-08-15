@@ -9,7 +9,7 @@
                 <div class="col-3">{{ notice.createDate }}</div>
             </div>
             <div class="text-left border-bottom min-height-5 mb-3">
-                <pre class="m-3">{{ notice.noticeContent }}</pre>
+                <viewer v-if="notice.noticeContent !== null" :initialValue="notice.noticeContent"/>
             </div>
             <!-- <div class="row m-0 border-top border-bottom">
                 <div class="col-2 bg-light">제목</div>
@@ -33,25 +33,38 @@
 <script>
 // @ is an alias to /src
 import axios from 'axios'
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+
+import { Viewer } from '@toast-ui/vue-editor';
+
 const API_URL = 'http://127.0.0.1:8000'
 
 export default {
     name: 'NoticeDetailView',
+    components: {
+        viewer: Viewer
+    },
     data() {
       return {
-        notice: null
+        notice: {
+            noticeTitle: null,
+            noticeContent: null,
+            noticeId: null,
+            createDate: null,
+        },
       }
     },
     methods: {
         getNotice() {
             var noticeId = document.location.href.split("notice/")[1]
 
-            axios.get(`${API_URL}/api/notice/${noticeId}/`)
+            axios.get(`${API_URL}/api/notice/${noticeId}`)
             .then(response => {
-            console.log(response)
-            this.notice = response.data
+            this.notice.noticeTitle = response.data.noticeTitle
+            this.notice.noticeContent = response.data.noticeContent
+            this.notice.noticeId = response.data.noticeId
+            this.notice.createDate = response.data.createDate
             this.notice.createDate = this.notice.createDate.substr(0,10)
-            console.log(this.notice.createDate.substr(0,10))
             })
         },
         toNoticeList() {

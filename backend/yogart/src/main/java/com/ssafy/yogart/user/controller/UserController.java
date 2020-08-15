@@ -8,8 +8,13 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
@@ -35,6 +40,8 @@ import com.ssafy.yogart.user.model.KakaoPaymentApproval;
 import com.ssafy.yogart.user.model.KakaoPaymentReady;
 import com.ssafy.yogart.user.model.Result;
 import com.ssafy.yogart.user.model.User;
+import com.ssafy.yogart.user.model.UserFile;
+import com.ssafy.yogart.user.repository.UserFileRepository;
 import com.ssafy.yogart.user.repository.UserRepository;
 import com.ssafy.yogart.user.service.JwtService;
 import com.ssafy.yogart.user.service.KakaoService;
@@ -63,14 +70,38 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private UserFileRepository userFileRepository;
+	
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
     
-    
     private static int RECENT_TOTAL_AMOUNT;
     private static String RECENT_TID;
+
+    @ApiOperation(value = "관리자 여부 판단")
+    @GetMapping(value = "/isAdmin")
+    public ResponseEntity<Boolean> isAdmin(@RequestHeader Map<String,String> header) {
+    	String token = header.get("authorization");
+		User user = userService.authentication(token);
+		if("ADMIN".equals(user.getUserAuthority())) {
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		} 
+        return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+    }
+    
+    @ApiOperation(value = "강사 여부 판단")
+    @GetMapping(value = "/isTeacher")
+    public ResponseEntity<Boolean> isTeacher(@RequestHeader Map<String,String> header) {
+    	String token = header.get("authorization");
+		User user = userService.authentication(token);
+		if("TEACHER".equals(user.getUserAuthority())) {
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		} 
+        return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+    }
     
     //로그인
     @ApiOperation(value = "로그인")
@@ -108,10 +139,11 @@ public class UserController {
     	// jwtServiceImpl -> create  메서드 이용해서 토큰 생성
     	ResponseEntity<Result> response = null;
     	Result result = Result.successInstance();
-    	User user = userService.login(email, "kakao", "");
+    	User user = userService.loginSocial(email, "kakao");
     	if(user == null) {                                   
-        	user = new User(email, nickname, "kakao");
-        	userService.join(email, nickname, "kakao");
+    		String randPass = generateRandomCode(8);
+        	user = new User(email, nickname, nickname, randPass, "kakao");
+        	userService.joinSocial(email, nickname, randPass, "kakao");
     	} 
     		String token = jwtService.create("user", user, email);
     		System.out.println(token);
@@ -136,10 +168,11 @@ public class UserController {
     		String email = userProfile.get("email");
 //    		System.out.println("nickname : " + nickname + " / email : " + email);
         	Result result = Result.successInstance();
-        	User user = userService.login(email, "naver", "");
-        	if(user == null) {                                   
-            	user = new User(email, nickname, "naver");
-            	userService.join(email, nickname, "naver");
+        	User user = userService.loginSocial(email, "naver");
+        	if(user == null) {
+        		String randPass = generateRandomCode(8);
+            	user = new User(email, nickname, nickname, randPass, "naver");
+            	userService.joinSocial(email, nickname, randPass, "naver");
         	} 
         		String token = jwtService.create("user", user, email);
         		System.out.println(token);
@@ -213,11 +246,12 @@ public class UserController {
         userService.withdraw(authorization);
     }
     
-    @ApiOperation(value="이미지 업로드")
+    @ApiOperation(value="강사 인증 이미지 업로드")
     @PostMapping(value = "/imageUpload")
-    public ResponseEntity<Result> imageUpload(@RequestParam("files") MultipartFile[] files, HttpServletRequest request) {
+    public ResponseEntity<Result> imageUpload(@RequestHeader Map<String, String> header,
+    		@RequestParam("files") MultipartFile[] files, HttpServletRequest request) {
 
-    	System.out.println(files.length);
+    	User currUser = userService.authentication(header.get("authorization"));
     	ResponseEntity<Result> response;
     	for(MultipartFile file : files)
     	{
@@ -230,6 +264,8 @@ public class UserController {
     			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
    			 	String uploadDate = simpleDateFormat.format(new Date());
 				save(file, request.getServletContext().getRealPath("/"), uploadDate);
+				UserFile userFile = new UserFile(currUser, uploadDate + fileName);
+				userFileRepository.save(userFile);
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -319,8 +355,7 @@ public class UserController {
     	Result result = Result.successInstance();
     	response = new ResponseEntity<>(result, HttpStatus.OK);
     	return response;
-    }
-
+    }  
     
     @ApiOperation(value="프로필 사진 가져오기")
     @GetMapping(value="/profileImage")
@@ -350,6 +385,75 @@ public class UserController {
     	return response;
     }
     
+    @ApiOperation(value="강사 등록대기 리스트")
+    @GetMapping(value="/registrationList")
+    public ResponseEntity<Set<User>> viewRegistrationList() {
+    	
+    	ResponseEntity<Set<User>> response = null;
+    	
+    	List<UserFile> userFileList = userService.getRegistrationUsers();
+    	Set<User> userList = new LinkedHashSet<User>();
+    	
+    	for(UserFile userFile : userFileList) {
+    		userList.add(userFile.getUserFileEmail());
+    	}
+    	
+    	response = new ResponseEntity<Set<User>>(userList, HttpStatus.OK);
+    	return response;
+    }
+    
+    @ApiOperation(value="강사 인증사진 가져오기")
+    @GetMapping(value="/registrationImage")
+    public ResponseEntity<byte[]> getRegistrationImage(@RequestParam String userEmail,
+    		HttpServletRequest request) {
+    	
+    	System.out.println(userEmail);
+    	ResponseEntity<byte[]> response = null;
+    	HttpHeaders header = new HttpHeaders();
+    	
+    	try {
+    		InputStream input = null;
+    		List<UserFile> userFile = userService.getRegistrationImage(userEmail);
+    		
+	    	String filePath = request.getServletContext().getRealPath("/") + userFile.get(0).getUserFile();
+	    	System.out.println(filePath);
+	    	String mimeType = Files.probeContentType(Paths.get(filePath));
+	    	System.out.println(mimeType);
+	    	input = new FileInputStream(filePath);
+			
+			header.setContentType(MediaType.IMAGE_PNG);
+			response = new ResponseEntity<byte[]>(IOUtils.toByteArray(input), header, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response = new ResponseEntity<byte[]>(null, header, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+    	
+    	return response;
+    }
+    
+    @ApiOperation(value="유저를 강사로 등록")
+    @GetMapping(value="/registration")
+    public ResponseEntity<Set<User>> registerTeacher(@RequestParam String userEmail) {
+    	
+    	ResponseEntity<Set<User>> response = null;
+    	
+    	User registrationUser = userRepository.findByUserEmail(userEmail);
+    	registrationUser.setUserAuthority("TEACHER");
+    	registrationUser.setTeacherCode(generateRandomCode(12));
+    	userService.updateInfo(registrationUser);
+    	userService.registerUserToTeacher(userEmail);
+    	
+    	List<UserFile> userFileList = userService.getRegistrationUsers();
+    	Set<User> userList = new LinkedHashSet<User>();
+    	
+    	for(UserFile userFile : userFileList) {
+    		userList.add(userFile.getUserFileEmail());
+    	}
+    	
+    	response = new ResponseEntity<Set<User>>(userList, HttpStatus.OK);
+    	return response;
+    }
+    
     private String save(MultipartFile file, String contextPath, String uploadDate) {
         try {
            String newFileName = uploadDate + file.getOriginalFilename();
@@ -364,4 +468,20 @@ public class UserController {
            return null;
         }
      }
+
+    
+    private String generateRandomCode(int length) {
+		 int leftLimit = 48;
+		 int rightLimit = 122;
+		 int targetStringLength = length;
+		 Random random = new Random();
+		 
+		 String generatedString = random.ints(leftLimit, rightLimit + 1)
+		   .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+		   .limit(targetStringLength)
+		   .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+		   .toString();
+		
+		 return generatedString;
+	}
 }

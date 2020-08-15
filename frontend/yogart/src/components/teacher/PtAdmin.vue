@@ -18,13 +18,16 @@ export default {
             ptUrl: null,
         }
     },
+    props: {
+        teacherInfo: Object,
+    },
     mounted() {
         const requestHeaders = {
             headers: {
                 Authorization: this.$cookies.get('auth-token')
             }
         }
-        axios.get(this.SERVER_URL + '/api/teachers/pt-now', null, requestHeaders)
+        axios.get(this.SERVER_URL + '/api/teachers/pt-now', requestHeaders)
         .then(res => {
             this.ptData = res.data.ptData
         })

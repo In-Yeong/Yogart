@@ -3,35 +3,40 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Login Modal</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+                <img class="logo-img" src="../../assets/logo.png" alt="">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <span v-if="errorState">아이디 혹은 비밀번호를 다시 확인하세요.</span>
-                <span v-if="serverState">연결할 수 없습니다. 잠시 후 다시 시도해주세요.</span>
+                <div class="h3">로그인</div>
+                <span class="login-reject" v-if="errorState">이메일 혹은 비밀번호를 다시 확인하세요.</span>
+                <span class="login-reject" v-if="serverState">연결할 수 없습니다. 잠시 후 다시 시도해주세요.</span>
                 <ValidationObserver v-slot="{ invalid }">
                     <br>
                     <ValidationProvider name="email" rules="required|email" v-slot="{ errors }">
-                        <input v-model="loginData.userEmail" type="text" placeholder="아이디"><br>
-                        <span>{{ errors[0] }}</span>
+                        <input class="id-input" v-model="loginData.userEmail" type="text" placeholder="이메일"><br>
+                        <span class="login-reject text-right">{{ errors[0] }}</span>
                     </ValidationProvider>
                     <br>
                     <ValidationProvider rules="required|min:6" v-slot="{ errors }">
-                        <input type="password" v-model="loginData.userPassword" placeholder="비밀번호"><br>
-                        <span>{{ errors[0] }}</span>
+                        <input class="password-input" type="password" v-model="loginData.userPassword" placeholder="비밀번호"><br>
+                        <span class="login-reject">{{ errors[0] }}</span>
                     </ValidationProvider>
                     <br>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" :disabled="invalid" @click="onSubmit">Login</button>
+                    <button type="submit" class="login-btn" :disabled="invalid" @click="onSubmit">로그인</button>
                 </ValidationObserver>
-                <hr>
-                <div class="my-5"></div>
-                <kakaoLogin @loginComplete="setUserData"></kakaoLogin>
-                <naverLogin @loginComplete="setUserData"></naverLogin>
-                <a href="/accounts/signup" class="btn btn-primary">회원가입</a>
-                <div class="my-5"></div>
+                <div class="for-line">
+                    <div class="social-text">소셜 계정으로 간편하게 로그인하세요!</div>
+                </div>
+                <div class="my-5">
+                    <kakaoLogin @loginComplete="setUserData"></kakaoLogin>
+                    <br>
+                    <naverLogin @loginComplete="setUserData"></naverLogin>
+                </div>
+                <div>
+                    아직 회원이 아니신가요? <a class="signup-link" href="/accounts/signup">회원 가입하기</a>
+                </div>
             </div>
         </div>
     </div>
@@ -99,11 +104,59 @@ export default {
 </script>
 
 <style scoped>
-  div {
-    padding: 0px
-  }
-
-  div span {
-    margin: 20px
-  }
+.modal-header {
+    padding-bottom: 4rem;
+    border: none;
+}
+.logo-img {
+    position: absolute;
+    text-align: center;
+    height: 8vh;
+    top: 3rem;
+    left: calc(234px - 9vh);
+}
+.id-input, .password-input {
+    border-color: rgba(0, 0, 0, 0.2);
+    border-width: 0px 0px 1.2px;
+    width: 70%;
+    padding-top: 1rem;
+}
+.login-reject {
+    background-color: rgba(242,157,143,0.2);
+}
+.login-btn {
+    width: 70%;
+    height: 3rem;
+    color: white;
+    font-size: 17px;
+    margin-top: 1rem;
+    border-radius: 3rem;
+    border-width: 0px 0px 1.2px;
+    border-color: rgba(255, 255 255, 0.2);
+    background: linear-gradient(153deg, rgba(242,157,143,0.8) 0%, rgba(143,160,242,0.8) 100%);
+    outline:none;
+    cursor: pointer;
+}
+.login-btn:hover {
+    background: linear-gradient(153deg, rgba(242,157,143,0.7) 0%, rgba(143,160,242,0.7) 100%);
+}
+.for-line {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    width: 70%;
+    margin: auto;
+    padding-top: 1rem;
+}
+.social-text {
+    display: inline;
+    position: relative;
+    color: rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+    top: 0.8rem;
+    background-color: white;
+    padding: 0px 2px;
+}
+.signup-link {
+    color: rgba(242,157,143,1);
+    font-weight: bold;
+}
 </style>
