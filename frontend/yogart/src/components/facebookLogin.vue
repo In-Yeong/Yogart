@@ -23,7 +23,6 @@ export default {
     components : {
         facebookLogin
     },
-
     methods : {
         getUserData() {
             this.FB.init()

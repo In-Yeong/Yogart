@@ -17,7 +17,7 @@
         </form> -->
 
         <div class="field-row mx-5">
-            <input name="courseName" id="courseName" v-model="courseName" type="text" required @keyup-enter="makeList(courseName)"/>
+            <input name="courseName" id="courseName" v-model="courseName" type="text" required @keyup.enter="makeList(courseName)"/>
             <label for="courseName">코스명 + Enter</label>
             
         </div>
@@ -25,29 +25,45 @@
         <p style="color:#888; margin-top:5px;">포즈를 선택해 주세요( 최대 7개 )<span @click="reset" class="reset-btn">Reset</span></p>
         <div class="d-flex justify-content-around">
 
-                <div v-for="idx in poseIndexList" :key="idx">
-                 <div class="pose-img">
-                    <img class="user-profile-small m-2" :src="require(`../../../public/photos/${posefiles[idx].file_reference}`)">
+                <div class="d-flex flex-column" v-for="idx in poseIndexList" :key="idx">
+                    <!-- <div class=" overlay-image _b1 "><a href="LINK_URL">
+                        <img class=" image _b2 " src="IMAGE" alt="Alt text" />
+                        <div class=" normal _b4 ">
+                        <div class=" text _2 ">Image + text
+                        ORIGINAL</div>
+                        </div>
+                        <div class=" hover _b3 ">
+                        <div class=" text _2 ">Background + text
+                        HOVER</div>
+                        </div>
+                        </a></div> -->
+
+
+                 <div>
+                    <img class="image user-profile-small m-2" :src="require(`../../../public/photos/${posefiles[idx].file_reference}`)">
                     <span id="delete" @click="deleteItem(posefiles[idx])">x</span>
-                </div> 
-                <p>{{posefiles[idx].korean_pose_name}}</p>
                 </div>
+                <p>{{posefiles[idx].korean_pose_name}}</p>
+                </div> 
+                    
+            </div>
           
         </div>
-    </div>
+
         <!-- <p>{{poseList}}</p> -->
         <!-- <p>{{poseIndexList}}</p> -->
        <div class="container">
            <div>
             <div class="d-flex justify-content-around" >
-            <div id="all-btn" class="btn-white"  @click="allBtn">전체</div>
-            <div id="beg-btn" class="btn-white"  @click="beginnerBtn">초급</div>
-            <div id="int-btn" class="btn-white"  @click="intermediateBtn">중급</div>
-            <div id="exp-btn" class="btn-white"  @click="expertBtn">고급</div>
+            <div id="all-btn" class="btn-white"  :class="{ active: all }" @click="allBtn">전체</div>
+            <div id="beg-btn" class="btn-white" :class="{ active: beginner }" @click="beginnerBtn">초급</div>
+            <div id="int-btn" class="btn-white" :class="{ active: intermediate }" @click="intermediateBtn">중급</div>
+            <div id="exp-btn" class="btn-white"  :class="{ active: expert }" @click="expertBtn">고급</div>
             </div>
            
             
-                <div v-if="all" class="row" >       
+                <div v-if="all">
+                    <div  class="row" >       
                     <div @click="poseChoose(posefile)" class="col-sm-2 box all-box" :id="posefile.id" v-for="posefile in posefiles" :key="posefile.pose_name">  
                        <div class="pose-img">
                         <img :title="posefile.korean_pose_name"  class="user-profile-mid m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
@@ -87,7 +103,7 @@
                 <div v-if="expert" >
                     <div class="row">
                        
-                    <div @click="poseChoose(posefile)" class="col-sm-2 box expert-box" :id="posefile.id" v-for="posefile in expertPosefiles" :key="posefile.pose_name">  
+                    <div @click="poseChoose(posefile)"  class="col-sm-2 box expert-box" :id="posefile.id" v-for="posefile in expertPosefiles" :key="posefile.pose_name">  
                         
                          <div class="pose-img">
                             <img class="user-profile-mid m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
@@ -95,6 +111,7 @@
                         </div> 
                         <p>{{posefile.korean_pose_name}}</p>
                       
+                    </div>
                     </div>      
                 </div>
             </div>  
@@ -136,10 +153,7 @@ export default {
     },
     mounted() {
         this.difficultyDistribution()
-        this.allSelected()
-        this.beginnerSelected()
-        this.intermediateSelected()
-        this.expertSelected()
+        this.renew()
     },
     methods : {
         renew(){
@@ -160,13 +174,10 @@ export default {
             this.renew()
         },
         allSelected() {
-            console.log("allSelected implemented",this.poseIndexList)
             for(var i=0; i < allItems.length; i++) {
                 //만약 이미 리스트에 있으면
                 if (this.poseIndexList.includes(parseInt(allItems[i].id))){
-                    console.log("여긴 올셀렉트",allItems[i].id)
                      allItems[i].style.backgroundColor = 'rgba(242, 157, 143,0.5)'
-                    //  allItems[i].style.backgroundColor = 'rgba(255, 255, 255, 0.9)'
                     }
                 else{
                     allItems[i].style.backgroundColor = 'rgba(0,0,0,0)'
@@ -174,14 +185,10 @@ export default {
             }
         },
         beginnerSelected() {
-            console.log("beginnerItems implemented",this.poseIndexList)
             for(var i=0; i < beginnerItems.length; i++) {
                 //만약 이미 리스트에 있으면
-                console.log(beginnerItems[i].id)
                 if (this.poseIndexList.includes(parseInt(beginnerItems[i].id))){
-                    console.log(beginnerItems[i].id)
                     beginnerItems[i].style.backgroundColor = 'rgba(242, 157, 143,0.5)'
-                    console.log("바꿨다!")
                     }
                 else{
                     beginnerItems[i].style.backgroundColor = 'rgba(0,0,0,0)'
@@ -189,12 +196,9 @@ export default {
             }
         },
         intermediateSelected() {
-            console.log("intermediateItems implemented",this.poseIndexList)
             for(var i=0; i < intermediateItems.length; i++) {
                 //만약 이미 리스트에 있으면
-                console.log(intermediateItems[i].id)
                 if (this.poseIndexList.includes(parseInt(intermediateItems[i].id))){
-                    console.log(intermediateItems[i].id)
                      intermediateItems[i].style.backgroundColor = 'rgba(242, 157, 143,0.5)'
                     }
                 else{
@@ -203,12 +207,9 @@ export default {
             }
         },
         expertSelected() {
-            console.log("allSelected implemented",this.poseIndexList)
             for(var i=0; i < expertItems.length; i++) {
                 //만약 이미 리스트에 있으면
-                console.log(expertItems[i].id)
                 if (this.poseIndexList.includes(parseInt(expertItems[i].id))){
-                    console.log(expertItems[i].id)
                      expertItems[i].style.backgroundColor = 'rgba(242, 157, 143,0.5)'
                     }
                 else{
@@ -238,7 +239,6 @@ export default {
             var error = 0
             this.posefiles.forEach(function(posefile) {
                 // var pose = posefile
-                console.log(posefile)
                 posefile.tag.forEach(function(tag){
 
                 if (tag === '전신') {
@@ -294,8 +294,6 @@ export default {
         },
         makeList(courseName) {
             let poseCourse = this.poseIndexList.join(',')
-            console.log(this.poseIndexList)
-            console.log(courseName,poseCourse)
             window.confirm(`${courseName} 리스트를 만드시겠습니까?`);
             axios.post(this.SERVER_URL + '/api/aicoach/list/create',
             { 'headers': { 'auth-token': window.$cookies.get('auth-token')},'courseName' : courseName, 'poseCourse': poseCourse } )
@@ -348,9 +346,14 @@ export default {
 </script>
 
 <style scoped>
-/* .container{
-    padding: 40px;
-    border : 2px solid rgba(242, 157, 143, 0.5);
+/* .overlay-image .normal {
+ transition: .5s ease;
+}
+.overlay-image:hover .normal {
+ opacity: 0;
+}
+.overlay-image .hover {
+ background-color: rgba(0,0,0,0.5);
 } */
 .box{
     /* margin : 5px; */
@@ -376,10 +379,10 @@ p {
     color : white;
 }
 #delete{
-    position : relative;
+    /* position : relative;
     top : 0;
-    right : 0;
-    background-color:  lightgray;
+    right : 0; */
+    background-color:  red;
     border : 1.5px solid black;
     color:black;
     font-size : 5px;
@@ -388,6 +391,7 @@ p {
 }
 #delete:hover{
     cursor: pointer;
+
 }
 .reset-btn{
     padding : 3px;
@@ -433,6 +437,7 @@ label {
 	cursor:text;
 }
 input {
+    width : 450px;
     background :rgba(255, 255, 255, 0.5);
 	font-size:16px;
 	line-height:18px;
@@ -451,5 +456,8 @@ input:focus ~ label, input:valid ~ label {
 	color:black;
 	transform: translate3d(0, -30px, 0);
 }
-
+.active{
+    background :#f29d8f;
+    color : white;
+}
 </style>

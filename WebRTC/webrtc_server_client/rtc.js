@@ -13,7 +13,8 @@ let pcConfig = {
         'urls': 'stun:stun.l.google.com:19302'
       }]
 }
-let isLocalOn = true;
+let isVidOn = true;
+let isAudOn = true;
 
 var currentURL = document.URL;
 var params = {};
@@ -81,7 +82,7 @@ function sendMessage(message){
 navigator.mediaDevices
   .getUserMedia({
     video: true,
-    audio: false,
+    audio: true,
   })
   .then(gotStream)
   .catch((error) => console.error(error));
@@ -96,11 +97,21 @@ function gotStream(stream) {
   }
 }
 
+// function vidMute() {
+//   localStream.getTracks().forEach(track => 
+//     track.enabled = !track.enabled
+//     );
+//   isLocalOn = !isLocalOn;
+// }
+
 function vidMute() {
-  // localVideo.pause();
-  // localVideo.src = "";
-  localStream.getTracks().forEach(track => track.enabled = !track.enabled);
-  isLocalOn = !isLocalOn;
+  localStream.getVideoTracks()[0].enabled = isVidOn;
+  isVidOn = !isVidOn;
+}
+
+function audMute() {
+  localStream.getAudioTracks()[0].enabled = isAudOn;
+  isAudOn2 = !isAudOn;
 }
 
 function createPeerConnection() {

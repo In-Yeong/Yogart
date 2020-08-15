@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="">
         <h1 class="m-5">{{courseName}} 코스</h1>
          
-        <p>다음 동작 순서대로 AI 코칭이 진행됩니다.</p>
+        <p class="mb-5">다음 동작 순서대로 AI 코칭이 진행됩니다.</p>
      
         <div class="box d-flex justify-content-around">
             <div v-for="poseId in yogaList" :key="poseId">
@@ -18,7 +18,6 @@
             <!-- <div class="box-btn m-5">다른 코스 둘러보기</div>
             <div class="box-btn  m-5">AI 코칭 시작할래요</div> -->
         </div>
-      
     </div>
 </template>
 
@@ -83,7 +82,7 @@ export default {
 .box{
     padding : 10px;
     margin : auto;
-    width : 70%;
+    width : 80%;
     background-color: rgba(255, 255, 255, 0.5);
 }
 .box:hover{

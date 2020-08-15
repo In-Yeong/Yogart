@@ -2,6 +2,8 @@ package com.ssafy.yogart.teachers.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.ssafy.yogart.teachers.model.PtClicked;
 import com.ssafy.yogart.teachers.model.PtInfo;
 import com.ssafy.yogart.user.model.User;
@@ -9,6 +11,8 @@ import com.ssafy.yogart.user.model.User;
 public interface TeacherService {
 	
 	List<PtInfo> showAllTeacherPTlist(User user);
+	
+	Page<PtInfo> showAllClassList(int limit);
 	
 	PtInfo showPTInfo(int ptId);
 	
@@ -19,4 +23,6 @@ public interface TeacherService {
 	List<PtClicked> showClassTime(PtInfo ptinfo);
 	
 	PtClicked updatePtClickedInfo(PtClicked ptClicked);
+	
+	List<PtClicked> showOrderByTimeDESC();
 }

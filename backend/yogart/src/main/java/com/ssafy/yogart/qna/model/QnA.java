@@ -39,7 +39,7 @@ public class QnA implements Serializable {
 	@ApiModelProperty(value="질문아이디")
 	private Integer qnaId;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional=false, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional=false, cascade = CascadeType.DETACH)
 	@JoinColumn(name="qna_user_email", referencedColumnName = "user_email")
     @ApiModelProperty(value="email")
     private User userEmail;
