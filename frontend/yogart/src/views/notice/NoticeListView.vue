@@ -1,29 +1,25 @@
 <template>
     <div class="padding-for-nav">
         <h1 class="page-name">공지사항</h1>
-        <button @click="callNoticeForm()">글 작성(관리자만 보이게 설정)</button>
+        <!-- <button @click="callNoticeForm()">글 작성(관리자만 보이게 설정)</button> -->
         <table class="table m-auto">
-            <thead class="thead-dark container p-0">
-                <tr class="row m-0">
-                    <th class="col-1">#</th>
-                    <th class="col-8">제목</th>
-                    <th class="col-3">작성일</th>
+            <thead class="container p-0">
+                <tr class="head-tr row m-0">
+                    <th class="col-9">제목</th>
+                    <th class="col-3">등록일</th>
                 </tr>
             </thead>
             <tbody class="container p-0">
-                <tr class="row m-0" v-for="notice in notices" :key="notice.noticeId" @click="callNoticeDetail(notice.noticeId)">
-                    <th class="col-1">{{ notice.noticeId }}</th>
-                    <td class="col-8 title">{{ notice.noticeTitle }}</td>
+                <tr class="table-list row m-0" v-for="notice in notices" :key="notice.noticeId" @click="callNoticeDetail(notice.noticeId)">
+                    <td class="col-9 title">{{ notice.noticeTitle }}</td>
                     <td class="col-3">{{ notice.createDate }}</td>
                 </tr>
-                <tr class="row m-0" @click="callNoticeDetail(2)">
-                    <td class="col-1">2</td>
-                    <td class="col-8 title">요가트 오픈 이벤트22222222222222!!!!!!!!!!</td>
+                <tr class="table-list row m-0" @click="callNoticeDetail(2)">
+                    <td class="col-9 title">요가트 오픈 이벤트22222222222222!!!!!!!!!!</td>
                     <td class="col-3">2020.07.28</td>
                 </tr>
-                <tr class="row m-0" @click="callNoticeDetail(1)">
-                    <td class="col-1">1</td>
-                    <td class="col-8 title">요가트 오픈 이벤트!!!!!!!!!!</td>
+                <tr class="table-list row m-0" @click="callNoticeDetail(1)">
+                    <td class="col-9 title">요가트 오픈 이벤트!!!!!!!!!!</td>
                     <td class="col-3">2020.07.27</td>
                 </tr>
             </tbody>
@@ -129,16 +125,19 @@ export default {
 table {
     width: 80%;
 }
-
-tr:hover {
-    background-color: #e8e6e5;
+.table-list {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+.table-list:hover {
+    background-color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
 }
-.NoticeListView{
-    height : 600px;
+th {
+    border: none !important;
+    /* background-color: rgba(215, 159, 215, 1) !important; */
 }
-th{
-    background-color: #0C1C5A !important;
+.head-tr {
+    background-color: rgba(215, 159, 215, 1) !important;
 }
 
 </style>
