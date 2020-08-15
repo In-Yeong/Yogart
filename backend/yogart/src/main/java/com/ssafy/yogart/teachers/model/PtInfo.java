@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "pt_info")
-public class PtInfo implements Serializable{
+public class PtInfo implements Serializable {
 	@Id
 	@Column(name="pt_id")
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -48,7 +48,7 @@ public class PtInfo implements Serializable{
     @ApiModelProperty(value="피티소개")
     private String ptIntro = "PT를 소개해주세요.";
    
-    @ManyToOne(fetch = FetchType.EAGER, optional=false)
+    @ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name="pt_teacher_id", referencedColumnName = "id")
     @ApiModelProperty(value="선생님아이디")
     private User ptTeacherId;

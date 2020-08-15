@@ -55,7 +55,6 @@
 
 <script>
 import axios from 'axios'
-
 export default {
     name: 'NavBar',
     data() {
@@ -64,8 +63,8 @@ export default {
             userPic: "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
             showNavbar: true,
             lastScrollPosition: 0,
-            isAdmin: false,
-            isTeacher: false,
+            isTeacher: null,
+            isAdmin: null,
         }
     },
     methods: {
@@ -101,14 +100,18 @@ export default {
         }
         axios.get(this.$store.state.SERVER_URL + '/api/users/isTeacher', requestHeaders)
         .then(res => {
-            this.isTeacher = res.data.isTeacher
+            this.isTeacher = res.data
         })
-        .catch(err =>  console.error(err))
+        .catch(err => {
+            console.error(err)
+        })
         axios.get(this.$store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
         .then(res => {
-            this.isAdmin = res.data.isAdmin
+            this.isAdmin = res.data
         })
-        .catch(err => console.error(err))
+        .catch(err => {
+            console.error(err)
+        })
     },
     beforeDestroy () {
         window.removeEventListener('scroll', this.onScroll)

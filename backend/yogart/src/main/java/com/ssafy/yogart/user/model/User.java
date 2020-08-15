@@ -60,7 +60,7 @@ public class User implements Serializable {
     @CreationTimestamp
     @Column(insertable = false, updatable = false)
     @ApiModelProperty(value="생성일")
-    private LocalDateTime createDate;
+    private LocalDateTime createDate = null;
     
     @Column(name="user_profile", columnDefinition="text")
     @ApiModelProperty(value="프로필사진")
@@ -71,7 +71,7 @@ public class User implements Serializable {
     private String userIntro = "자기소개를 해주세요.";
     
     @Column(name="user_spoon")
-    @ApiModelProperty(value="잔여스푼")
+    @ApiModelProperty(value="스푼 갯수")
     private Integer userSpoon = 0;
     
     @Column(name="teacher_code")
@@ -98,5 +98,5 @@ public class User implements Serializable {
        this.userName = userNickname;
         this.userNickname = userNickname;
         this.loginMethod = loginMethod;
-    }
+    }  
 }

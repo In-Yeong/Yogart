@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
@@ -140,7 +141,7 @@ public class UserController {
     	Result result = Result.successInstance();
     	User user = userService.loginSocial(email, "kakao");
     	if(user == null) {                                   
-    		String randPass = randomPassword();
+    		String randPass = generateRandomCode(8);
         	user = new User(email, nickname, nickname, randPass, "kakao");
         	userService.joinSocial(email, nickname, randPass, "kakao");
     	} 
@@ -169,7 +170,7 @@ public class UserController {
         	Result result = Result.successInstance();
         	User user = userService.loginSocial(email, "naver");
         	if(user == null) {
-        		String randPass = randomPassword();
+        		String randPass = generateRandomCode(8);
             	user = new User(email, nickname, nickname, randPass, "naver");
             	userService.joinSocial(email, nickname, randPass, "naver");
         	} 
@@ -263,6 +264,8 @@ public class UserController {
     			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
    			 	String uploadDate = simpleDateFormat.format(new Date());
 				save(file, request.getServletContext().getRealPath("/"), uploadDate);
+				UserFile userFile = new UserFile(currUser, uploadDate + fileName);
+				userFileRepository.save(userFile);
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				response = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -436,6 +439,7 @@ public class UserController {
     	
     	User registrationUser = userRepository.findByUserEmail(userEmail);
     	registrationUser.setUserAuthority("TEACHER");
+    	registrationUser.setTeacherCode(generateRandomCode(12));
     	userService.updateInfo(registrationUser);
     	userService.registerUserToTeacher(userEmail);
     	
@@ -466,10 +470,10 @@ public class UserController {
      }
 
     
-    private String randomPassword() {
+    private String generateRandomCode(int length) {
 		 int leftLimit = 48;
 		 int rightLimit = 122;
-		 int targetStringLength = 8;
+		 int targetStringLength = length;
 		 Random random = new Random();
 		 
 		 String generatedString = random.ints(leftLimit, rightLimit + 1)

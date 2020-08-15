@@ -57,7 +57,7 @@ const requireTeacher = () => (from, to, next) => {
     }
     axios.get(store.state.SERVER_URL + '/api/users/isTeacher', requestHeaders)
     .then(res => {
-        if (res.data.isTeacher) {
+        if (res.data) {
             return next()
         }
     })
@@ -75,7 +75,7 @@ const requireAdmin = () => (from, to, next) => {
     }
     axios.get(store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
     .then(res => {
-        if (res.data.isAdmin) {
+        if (res.data) {
             return next()
         }
     })

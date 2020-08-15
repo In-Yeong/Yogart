@@ -49,6 +49,9 @@ export default {
                 }
                 return pt.ptDay === day && isSoldOut
             })
+            console.log('ptTimes', this.ptTimes)
+            console.log('showArray', this.showArray)
+            console.log('soldOut', this.soldOut)
         }
     },
     data() {
@@ -98,8 +101,10 @@ export default {
                 let yyyy = Number(e.slice(0, 4))
                 let mm = Number(e.slice(5,7)) - 1
                 let dd = Number(e.slice(8, 10))
-                self.soldOut.push(new Date(yyyy, mm, dd))
+                let hh = Number(e.slice(11, 13))
+                self.soldOut.push(new Date(yyyy, mm, dd, hh))
             })
+            console.log(this.soldOut)
             const today = new Date() // 오늘의 날짜
             for (let i = 0; i < 14; i++) {
                 let cnt = 0

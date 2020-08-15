@@ -46,7 +46,7 @@ export default {
     },
     data() {
       return {
-         notice: {
+        notice: {
             noticeTitle: null,
             noticeContent: null,
             noticeId: null,
@@ -58,7 +58,7 @@ export default {
         getNotice() {
             var noticeId = document.location.href.split("notice/")[1]
 
-            axios.get(`${API_URL}/api/notice/${noticeId}/`)
+            axios.get(`${API_URL}/api/notice/${noticeId}`)
             .then(response => {
             this.notice.noticeTitle = response.data.noticeTitle
             this.notice.noticeContent = response.data.noticeContent

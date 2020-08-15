@@ -36,6 +36,7 @@ export default {
         return {
             noticeTitle: null,
             noticeContent: '',
+            editorText: null,
             SERVER_URL: this.$store.state.SERVER_URL,
         }
     },
@@ -52,6 +53,7 @@ export default {
                 noticeTitle: this.noticeTitle,
                 noticeContent: this.noticeContent,
             }
+            console.log(noticeData)
             if (this.noticeContent !== null && this.noticeTitle !== null) {
                 this.isEmpty = false
             }

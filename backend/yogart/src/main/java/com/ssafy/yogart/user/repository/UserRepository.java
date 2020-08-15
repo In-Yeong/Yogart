@@ -17,6 +17,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	
 	List<User> findByUserAuthority(String teacher);
 	
-	User findById(int id);
+	User findOneById(Integer id);
 //	List<PtInfo> findByUserUserAuthority();	
 }

@@ -86,11 +86,6 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-    public User updateInfo(User user) {
-        return userRepository.save(user);
-    }
-
-	@Override
 	public User emailChk(String email) {
 		User user = userRepository.findByUserEmail(email);
 		return user;
@@ -123,7 +118,12 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User findUser(int id) {
-		return userRepository.findById(id);
+		return userRepository.findOneById(id);
+	}
+
+	@Override
+	public User updateInfo(User user) {
+		return userRepository.save(user);
 	}
 
 }
