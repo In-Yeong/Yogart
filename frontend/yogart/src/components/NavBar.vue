@@ -65,8 +65,8 @@ export default {
     },
     methods: {
         openLoginModal() {
-              if (this.isLogin) return
-              $('#loginStaticBackdrop').modal('show')
+            if (this.isLogin) return
+            $('#loginStaticBackdrop').modal('show')
         },
         logoutEmmit() {
             this.$emit('logout')
@@ -131,6 +131,7 @@ export default {
     font-size: 1.2rem;
     font-weight: 500;
     padding: 1rem !important;
+    cursor: pointer;
 }
 .nav-link:after {    
   content: "";
