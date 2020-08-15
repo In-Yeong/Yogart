@@ -136,6 +136,26 @@ export default {
     padding-top: 22vh;
     padding-bottom: 6vh;
 }
+.custom-break-word { /* 글자가 박스를 벗어나지 않도록 하기위해 사용 */
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-break: break-all;
+}
+.tui-editor-contents > p { /* 글자가 박스를 벗어나지 않도록 하기위해 사용 */
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-break: break-all;
+    padding: 0rem 1rem;
+}
+pre {
+    margin: 0.5rem 0rem 0rem;
+}
 .box {
   margin-top : 3px;
 }
