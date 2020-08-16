@@ -1,18 +1,18 @@
 <template>
 <div class="padding-for-nav">
     <div class="profile-box">
-        <div class="img-wrap d-inline-block">
+        <div class="img-wrap">
             <img v-if="imgSrc" class="user-profile-img" :src="imgSrc" alt="user profile image">
             <img v-else class="user-profile-img" src="../../assets/userDefault.jpg" alt="user profile image">
         </div>
-        <div class="intro-wrap d-inline-block">
+        <div class="intro-wrap">
             <div class="box sb2">{{userIntro}}</div>
         </div>
         <div class="profile-content">
             <div class="nickname">{{ userNickname }}</div>
             <i class="fas fa-pencil-alt fa-2x" @click="clickUpdate()"></i>
             <div class="email">{{ userEmail }}</div>
-            <div class="spoon-wrap">
+            <div class="spoon-wrap" @click="clickSpoon()">
                 <i class="fas fa-utensil-spoon fa-1x d-inline-block"></i><div class="spoon d-inline-block">{{spoons}}개</div>
             </div>
         </div>
@@ -57,6 +57,9 @@ export default {
         clickUpdate() {
             this.$router.push(`/mypage/update`)
         },
+        clickSpoon() {
+            this.$router.push(`/spoons`)
+        },
         getUserData() {
             const requestHeaders = {
             headers: {
@@ -90,12 +93,11 @@ export default {
 
 <style scoped>
 .profile-box {
-    margin-top: -5rem;
-    padding: 3rem;
+    margin: -5rem auto 0rem;
+    padding: 30px;
     background-color: rgba(143, 160, 242, 0.1);
-    margin-left: 30vw;
-    margin-right: 30vw;
-    border-radius: 20rem;
+    width: 500px;
+    border-radius: 200px;
 }
 .box {
     width: 300px;
@@ -132,12 +134,13 @@ export default {
 } 
 .img-wrap {
     position: relative;
-    left: 10rem;
+    display: inline-block;
     margin-bottom: 1rem;
 }
 .intro-wrap {
-    position: relative;
-    left: 10rem;
+    position: absolute;
+    display: inline-block;
+    margin: 2rem -1.5rem;
 }
 .nickname {
     font-size: 20px;
@@ -164,6 +167,10 @@ export default {
     padding: 0.3rem;
     background-color: rgba(242, 157, 143, 1);
     border-radius: 1rem;
+}
+.spoon-wrap:hover {
+    background-color: rgba(242, 157, 143, 0.8);
+    cursor: pointer;
 }
 
 

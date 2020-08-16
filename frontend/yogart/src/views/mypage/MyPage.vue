@@ -1,7 +1,7 @@
 <template>
     <div class="py-5">
         <UserProfile/>
-        <div class="d-flex flex-column">
+        <div class="">
             <div class="w3-bar" style="margin-left: 10vw;">
                 <button class="w3-bar-item w3-button w3-teal" @click="onPTMang">PT관리</button>
                 <button class="w3-bar-item w3-button w3-red" @click="onExerHis">운동기록</button>
