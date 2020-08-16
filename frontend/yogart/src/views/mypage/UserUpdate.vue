@@ -112,7 +112,7 @@ export default {
             } else if (this.confirm === 2) {
                 const requestHeaders = {
                     headers: {
-                        Authorization: 'Token ' + this.$cookies.get('auth-token'),
+                        Authorization: this.$cookies.get('auth-token'),
                     }
                 }
                 axios.delete(this.SERVER_URL + '/api/users', requestHeaders)
@@ -154,7 +154,7 @@ export default {
         imageSubmit(e) {
             const requestHeaders = {
                 headers: {
-                    Authorization: 'Token ' + this.$cookies.get('auth-token'),
+                    Authorization: this.$cookies.get('auth-token'),
                     'Content-Type' : 'multipart/form-data',
                 }
             }
