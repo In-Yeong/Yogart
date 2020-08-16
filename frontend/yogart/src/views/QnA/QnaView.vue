@@ -41,27 +41,7 @@ export default {
     data() {
         return {
             // items: null,
-            items: [{
-                'qnaId': 1,
-                'qnaTitle': '제목~~~~~',
-                'qnaContent': '내용~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`',
-                'createDate': '2020.07.30'
-
-            },
-            {
-                'qnaId': 2,
-                'qnaTitle': '제목2~~~~~',
-                'qnaContent': '내용2~~~~~~~~~~~',
-                'createDate': '2020.07.30'
-
-            },
-            {
-                'qnaId': 3,
-                'qnaTitle': '제목3~~~~~',
-                'qnaContent': '내용3~~~~~~~~~~~',
-                'createDate': '2020.07.30'
-
-            }],
+            items: [],
             page: 1,
             totalPages: 10,
             SERVER_URL: this.$store.state.SERVER_URL

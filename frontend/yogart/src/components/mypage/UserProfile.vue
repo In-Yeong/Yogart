@@ -36,22 +36,14 @@ export default {
         return {
             SERVER_URL : this.$store.state.SERVER_URL,
             introDown: false,
-            // userName: '',
-            // userNickname: this.$store.state.userNickname,
-            // userEmail: '',
-            // userProfile : '',
-            // userIntro : '',
-            // userId : undefined,
-            // imgSrc : "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
-            // spoons : 0,
-            userName: '박인영',
-            userNickname: 'IN.0',
-            userEmail: 'in0_2015@naver.com',
-            userProfile : '대충사진들어가는곳',
-            userIntro : '안녕하세요, 박인영입니다.',
-            userId : 1,
+            userName: '',
+            userNickname: this.$store.state.userNickname,
+            userEmail: '',
+            userProfile : '',
+            userIntro : '',
+            userId : undefined,
             imgSrc : "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
-            spoons : 100,
+            spoons : 0,
         }
     },
     mounted() {
@@ -85,11 +77,10 @@ export default {
                 this.userProfile = res.data.user.userProfile
                 this.userIntro = res.data.user.userIntro
                 this.spoons = res.data.user.userSpoon
-
-                if (this.userProfile === undefined) {
+                if (this.userProfile === null) {
                     this.userProfile = 'userDefault'
                 }
-                if (this.userIntro === undefined) {
+                if (this.userIntro === null) {
                     this.userIntro = '상태 메세지를 적어보세요.'
                 }
             })
