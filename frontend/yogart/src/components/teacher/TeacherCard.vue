@@ -2,7 +2,7 @@
 <div class="card mb-3" style="max-width: 540px;">
   <div class="row no-gutters">
     <div class="col-md-4">
-      <img :src="imgSrc" class="card-img" alt="...">
+      <img :src="'http://localhost:8000/api/users/profileImageByEmail?userEmail=' + teacher.userEmail" class="card-img" alt="...">
     </div>
     <div class="col-md-8">
       <div class="card-body">
@@ -18,26 +18,10 @@
 export default {
     name: 'TeacherCard',
 
-    data() {
-      return {
-        imgSrc : null,
-      }
-    },
-
     props: {
         teacher: Object,
     },
 
-    created() {
-      this.getImgUrl()
-    },
-
-    methods : {
-      getImgUrl() {
-        this.imgsrc = "http://localhost:8000/api/users/profileImage?userEmail=" + this.teacher.userEmail;
-      }
-
-    }
 }
 </script>
 
