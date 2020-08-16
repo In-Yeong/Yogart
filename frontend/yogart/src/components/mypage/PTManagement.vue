@@ -1,83 +1,77 @@
 <template>
-  <div v-if="ptManagement">
-    <span>
-      <button @click="pastPT">과거 수업 내역</button>
-      <button @click="todayPT">오늘 진행 수업</button>
-      <button @click="futurePT">진행 예정인 수업</button>
-    </span>
-    <div class="my-3">
-      <div v-if="today">
-        <h5>오늘 진행 PT</h5>
-        <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <!-- <th scope="col">#</th> -->
-            <th scope="col">강사명</th>
-            <th scope="col">수업명</th>
-            <th scope="col">수업일시</th>
-            <th scope="col">바로가기</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr v-for="todayCourse in todayCourses" :key="todayCourse.courseID">
-                <!-- <th scope="row">1</th> -->
-                <td>{{todayCourse.ptClickedName.ptName}}</td>
-                <td>{{todayCourse.ptClickedName.ptIntro}}</td>
-                <td>{{todayCourse.dateTime}}</td>
-                <td><button class="w3-bar-item w3-button w3-red">입장하기</button></td>
-            </tr>
-        </tbody>
-      </table>
-      </div>
-      <div v-if="past">
-        <h5>과거 PT 내역</h5>
-        <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <!-- <th scope="col">#</th> -->
-            <th scope="col">강사명</th>
-            <th scope="col">수업명</th>
-            <th scope="col">수업일시</th>
-            <th scope="col">출석현황</th>
-            <th scope="col">리뷰</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr v-for="pastCourse in pastCourses" :key="pastCourse.courseID">
-                <!-- <th scope="row">1</th> -->
-                <td>{{pastCourse.ptClickedName.ptTeacherId.userName}}</td>
-                <td>{{pastCourse.ptClickedName.ptName}}</td>
-                <td>{{pastCourse.dateTime}}</td>
-                <td>{{pastCourse.isAttend}}</td>
-                <td><button class="w3-bar-item w3-button w3-red">리뷰작성</button></td>
-            </tr>
-        </tbody>
-      </table>
-      </div>
-      <div v-if="future">
-        <h5>진행 예정 PT</h5>
-            <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <!-- <th scope="col">#</th> -->
-            <th scope="col">강사명</th>
-            <th scope="col">수업명</th>
-            <th scope="col">수업일시</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr v-for="futureCourse in futureCourses" :key="futureCourse.courseID">
-                <!-- <th scope="row">1</th> -->
-                <td>{{futureCourse.ptClickedName.ptTeacherId.userName}}</td>
-                <td>{{futureCourse.ptClickedName.ptName}}</td>
-                <td>{{futureCourse.dateTime}}</td>
-            </tr>
-        </tbody>
-      </table>
-      </div> 
+    <div v-if="ptManagement">
+        <span>
+            <button class="past-btn" @click="pastPT()">과거 수업 내역</button>
+            <button class="today-btn active" @click="todayPT()">오늘 진행 수업</button>
+            <button class="future-btn" @click="futurePT()">진행 예정인 수업</button>
+        </span>
+        <div class="my-3">
+            <div v-if="today">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <!-- <th scope="col">#</th> -->
+                            <th scope="col">강사명</th>
+                            <th scope="col">수업명</th>
+                            <th scope="col">수업일시</th>
+                            <th scope="col">바로가기</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="todayCourse in todayCourses" :key="todayCourse.courseID">
+                            <!-- <th scope="row">1</th> -->
+                            <td>{{todayCourse.ptClickedName.ptName}}</td>
+                            <td>{{todayCourse.ptClickedName.ptIntro}}</td>
+                            <td>{{todayCourse.dateTime}}</td>
+                            <td><button class="w3-bar-item w3-button w3-red">입장하기</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div v-if="past">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <!-- <th scope="col">#</th> -->
+                            <th scope="col">강사명</th>
+                            <th scope="col">수업명</th>
+                            <th scope="col">수업일시</th>
+                            <th scope="col">출석현황</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="pastCourse in pastCourses" :key="pastCourse.courseID">
+                            <!-- <th scope="row">1</th> -->
+                            <td>{{pastCourse.ptClickedName.ptTeacherId.userName}}</td>
+                            <td>{{pastCourse.ptClickedName.ptName}}</td>
+                            <td>{{pastCourse.dateTime}}</td>
+                            <td>{{pastCourse.isAttend}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div v-if="future">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <!-- <th scope="col">#</th> -->
+                            <th scope="col">강사명</th>
+                            <th scope="col">수업명</th>
+                            <th scope="col">수업일시</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="futureCourse in futureCourses" :key="futureCourse.courseID">
+                            <!-- <th scope="row">1</th> -->
+                            <td>{{futureCourse.ptClickedName.ptTeacherId.userName}}</td>
+                            <td>{{futureCourse.ptClickedName.ptName}}</td>
+                            <td>{{futureCourse.dateTime}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> 
+        </div>   
     </div>
-     
-  </div>
 </template>
 
 <script>
@@ -130,21 +124,54 @@ export default {
         this.past = true,
         this.today = false,
         this.future = false
+        document.getElementsByClassName('active')[0].classList.remove('active')
+        document.getElementsByClassName('past-btn')[0].classList.add('active')
+        console.log(document.getElementsByClassName('past-btn')[0])
       },
       todayPT() {
         this.past = false,
         this.today = true,
         this.future = false
+        document.getElementsByClassName('active')[0].classList.remove('active')
+        document.getElementsByClassName('today-btn')[0].classList.add('active')
       },
       futurePT() {
         this.past = false,
         this.today = false,
         this.future = true
+        document.getElementsByClassName('active')[0].classList.remove('active')
+        document.getElementsByClassName('future-btn')[0].classList.add('active')
       }
     }
 }
 </script>
 
-<style>
-
+<style scoped>
+.past-btn {
+    border: 2px solid rgba(143, 160, 242, 0.8);
+    border-radius: 10px 0px 0px 10px;
+    background: rgba(255, 255, 255, 0);
+    height: 40px;
+    outline: none;
+}
+.today-btn {
+    border-top: 2px solid rgba(143, 160, 242, 0.8);
+    border-bottom: 2px solid rgba(143, 160, 242, 0.8);
+    border-left: none;
+    border-right: none;
+    background: rgba(255, 255, 255, 0);
+    height: 40px;
+    outline: none;
+}
+.future-btn {
+    border: 2px solid rgba(143, 160, 242, 0.8);
+    border-radius: 0px 10px 10px 0px;
+    background: rgba(255, 255, 255, 0);
+    height: 40px;
+    outline: none;
+}
+.active {
+    background-color: rgba(143, 160, 242, 0.8) !important;
+    color: white !important;
+}
 </style>

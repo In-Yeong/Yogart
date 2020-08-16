@@ -65,7 +65,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .schedule {
     margin-left: 10vw;
     margin-right: 10vw;
