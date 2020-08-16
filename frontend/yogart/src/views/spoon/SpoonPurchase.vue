@@ -52,7 +52,7 @@ export default {
             .then(res => {
                 // 카카오페이 결제창 오픈
                 this.$cookies.set(' ', res.data.tid)
-                window.open(res.next_redirect_pc_url)
+                window.open(res.data.next_redirect_pc_url)
             })
             .catch(err => console.error(err))
         }
