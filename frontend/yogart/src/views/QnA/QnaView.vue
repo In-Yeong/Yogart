@@ -87,7 +87,7 @@ export default {
                 this.totalPages = res.data.totalPages
                 this.items.forEach(element => element.createDate = element.createDate.substr(0,10))
             })
-            .catch(err => console.error(err))
+            .catch(err => console.log(err))
         }
 
     },
