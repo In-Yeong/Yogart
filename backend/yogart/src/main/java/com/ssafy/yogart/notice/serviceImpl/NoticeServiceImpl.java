@@ -3,6 +3,7 @@ package com.ssafy.yogart.notice.serviceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.yogart.notice.model.Notice;
@@ -21,7 +22,7 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public Page<Notice> allNotice(int page) {
-		return noticeRepository.findAll(PageRequest.of(page - 1, 5));
+		return noticeRepository.findAll(PageRequest.of(page - 1, 5, Sort.by("createDate").descending()));
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public interface UserService {
     
     void registerUserToTeacher(String userEmail);
     
-    void withdraw(String token);
+    void withdraw(User user);
     
     List<User> showAllTeacherlist();
     

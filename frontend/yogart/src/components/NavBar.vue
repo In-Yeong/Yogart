@@ -129,7 +129,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 #navbar-container{
     height: 8vh;
 }
