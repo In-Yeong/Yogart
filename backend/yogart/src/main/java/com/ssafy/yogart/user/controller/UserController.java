@@ -385,6 +385,33 @@ public class UserController {
     	return response;
     }
     
+    @ApiOperation(value="이메일로 프로필 사진 가져오기")
+    @GetMapping(value="/profileImageByEmail")
+    public ResponseEntity<byte[]> getProfileImageByEmail(@RequestParam String userEmail,
+    		HttpServletRequest request) {
+    	
+    	ResponseEntity<byte[]> response = null;
+    	HttpHeaders header = new HttpHeaders();
+    	
+    	try {
+    		InputStream input = null;
+    		User currentUser = userRepository.findByUserEmail(userEmail);
+			String filePath = request.getServletContext().getRealPath("/") + currentUser.getUserProfile();
+			System.out.println(filePath);
+			String mimeType = Files.probeContentType(Paths.get(filePath));
+			System.out.println(mimeType);
+			input = new FileInputStream(filePath);
+			
+			header.setContentType(MediaType.parseMediaType(mimeType));
+			response = new ResponseEntity<byte[]>(IOUtils.toByteArray(input), header, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response = new ResponseEntity<byte[]>(null, header, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+    	
+    	return response;
+    }
+    
     @ApiOperation(value="강사 등록대기 리스트")
     @GetMapping(value="/registrationList")
     public ResponseEntity<Set<User>> viewRegistrationList() {
