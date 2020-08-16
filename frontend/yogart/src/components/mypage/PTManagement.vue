@@ -8,64 +8,58 @@
         <div class="my-3">
             <div v-if="today">
                 <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <!-- <th scope="col">#</th> -->
-                            <th scope="col">강사명</th>
-                            <th scope="col">수업명</th>
-                            <th scope="col">수업일시</th>
-                            <th scope="col">바로가기</th>
+                    <thead class="t-head container">
+                        <tr class="row m-0">
+                            <th class="col-2">강사명</th>
+                            <th class="col-5">수업명</th>
+                            <th class="col-3">수업일시</th>
+                            <th class="col-2"></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr v-for="todayCourse in todayCourses" :key="todayCourse.courseID">
-                            <!-- <th scope="row">1</th> -->
-                            <td>{{todayCourse.ptClickedName.ptName}}</td>
-                            <td>{{todayCourse.ptClickedName.ptIntro}}</td>
-                            <td>{{todayCourse.dateTime}}</td>
-                            <td><button @click="goPt(todayCourse)" class="w3-bar-item w3-button w3-red">입장하기</button></td>
+                    <tbody class="container">
+                        <tr class="row m-0" v-for="todayCourse in todayCourses" :key="todayCourse.courseID">
+                            <td class="col-2">{{todayCourse.ptClickedName.ptTeacherId.userName}}</td>
+                            <td class="col-5 text-left">{{todayCourse.ptClickedName.ptName}}</td>
+                            <td class="col-3">{{todayCourse.dateTime}}</td>
+                            <td class="col-2"><button @click="goPt(todayCourse)" class="enter-btn">입장</button></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div v-if="past">
                 <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <!-- <th scope="col">#</th> -->
-                            <th scope="col">강사명</th>
-                            <th scope="col">수업명</th>
-                            <th scope="col">수업일시</th>
-                            <th scope="col">출석현황</th>
+                    <thead class="t-head container">
+                        <tr class="row m-0">
+                            <th class="col-2">강사명</th>
+                            <th class="col-5">수업명</th>
+                            <th class="col-3">수업일시</th>
+                            <th class="col-2">출석현황</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr v-for="pastCourse in pastCourses" :key="pastCourse.courseID">
-                            <!-- <th scope="row">1</th> -->
-                            <td>{{pastCourse.ptClickedName.ptTeacherId.userName}}</td>
-                            <td>{{pastCourse.ptClickedName.ptName}}</td>
-                            <td>{{pastCourse.dateTime}}</td>
-                            <td>{{pastCourse.isAttend}}</td>
+                    <tbody class="container">
+                        <tr class="row m-0" v-for="pastCourse in pastCourses" :key="pastCourse.courseID">
+                            <td class="col-2">{{pastCourse.ptClickedName.ptTeacherId.userName}}</td>
+                            <td class="col-5 text-left">{{pastCourse.ptClickedName.ptName}}</td>
+                            <td class="col-3">{{pastCourse.dateTime}}</td>
+                            <td class="col-2">{{pastCourse.isAttend}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div v-if="future">
                 <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <!-- <th scope="col">#</th> -->
-                            <th scope="col">강사명</th>
-                            <th scope="col">수업명</th>
-                            <th scope="col">수업일시</th>
+                    <thead class="t-head container">
+                        <tr class="row m-0">
+                            <th class="col-3">강사명</th>
+                            <th class="col-6">수업명</th>
+                            <th class="col-3">수업일시</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr v-for="futureCourse in futureCourses" :key="futureCourse.courseID">
-                            <!-- <th scope="row">1</th> -->
-                            <td>{{futureCourse.ptClickedName.ptTeacherId.userName}}</td>
-                            <td>{{futureCourse.ptClickedName.ptName}}</td>
-                            <td>{{futureCourse.dateTime}}</td>
+                    <tbody class="container">
+                        <tr class="row m-0" v-for="futureCourse in futureCourses" :key="futureCourse.courseID">
+                            <td class="col-3">{{futureCourse.ptClickedName.ptTeacherId.userName}}</td>
+                            <td class="col-6 text-left">{{futureCourse.ptClickedName.ptName}}</td>
+                            <td class="col-3">{{futureCourse.dateTime}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -178,5 +172,24 @@ export default {
 .active {
     background-color: rgba(143, 160, 242, 0.8) !important;
     color: white !important;
+}
+.t-head {
+    border-top: 2px solid rgba(143, 160, 242, 0.8);
+}
+th {
+    border: none;
+}
+tbody {
+    border-bottom: 2px solid rgba(143, 160, 242, 0.8);
+}
+.enter-btn {
+    width: 60px;
+    border-radius: 10px;
+    border: 0px;
+    background-color: rgba(143, 160, 242, 0.8);
+    color: white;
+}
+.enter-btn:hover {
+    background-color: rgba(143, 160, 242, 0.6);
 }
 </style>
