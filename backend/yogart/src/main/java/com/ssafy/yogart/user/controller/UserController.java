@@ -77,6 +77,8 @@ public class UserController {
         this.userService = userService;
     }
     
+    private static final String SUCCESS = "success";
+    
     private static int RECENT_TOTAL_AMOUNT;
     private static String RECENT_TID;
 
@@ -229,20 +231,23 @@ public class UserController {
     @ApiOperation(value="유저 정보 업데이트", response = User.class)
     @PutMapping(value = "/myInfo/update")
     public User updateInfo(@RequestHeader(value="config") Map<String, Object> header, @RequestBody User content) {
+    	System.out.println(header);
        String token = (String)header.get("authorization");
-       String username = content.getUserName();
-       String email = content.getUserEmail();
-       String nickname = content.getUserNickname();
-       String password = content.getUserPassword();
-       User user = new User(email, username, nickname, password);
-        return userService.updateInfo(user);
+       User user = userService.authentication(token);
+       System.out.println(user.getUserNickname());
+       user.setUserNickname(content.getUserNickname());
+       user.setUserIntro(content.getUserIntro());
+       return userService.updateInfo(user);
     }
 
     // 탈퇴
     @ApiOperation(value="탈퇴", response = String.class)
-    @DeleteMapping
-    public void withdraw(@RequestHeader String authorization) {
-        userService.withdraw(authorization);
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<String> withdraw(@RequestHeader Map<String, String> header) {
+    	String token = header.get("authorization");
+    	User user = userService.authentication(token);
+        userService.withdraw(user);
+        return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
     }
     
     @ApiOperation(value="강사 인증 이미지 업로드")

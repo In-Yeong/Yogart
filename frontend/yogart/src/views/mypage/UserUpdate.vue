@@ -65,10 +65,11 @@ export default {
         axios.get(this.SERVER_URL + '/api/users/myInfo', null, requestHeaders)
         .then(res => {
             this.userName = res.data.userName
-            this.userId = res.data.userId
+            this.userId = res.data.id
             this.userNickname = res.data.userNickname
             this.userProfile = res.data.userProfile
             this.userIntro = res.data.userIntro
+            this.userImageUrl = "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token')
         })
         .catch(err => console.error(err))
     },
@@ -112,10 +113,10 @@ export default {
             } else if (this.confirm === 2) {
                 const requestHeaders = {
                     headers: {
-                        Authorization: 'Token ' + this.$cookies.get('auth-token'),
+                        Authorization: this.$cookies.get('auth-token'),
                     }
                 }
-                axios.delete(this.SERVER_URL + '/api/users', requestHeaders)
+                axios.delete(this.SERVER_URL + '/api/users/delete', requestHeaders)
                 .then(res => {
                     console.log(res)
 			        this.$store.commit('storeLogout')
@@ -127,17 +128,17 @@ export default {
         update() {
             const requestHeaders = {
                 headers: {
-                    Authorization: 'Token ' + this.$cookies.get('auth-token'),
+                    Authorization: this.$cookies.get('auth-token'),
                 }
             }
             let fd = new FormData()
             fd.append('userName', this.userName)
-            fd.append('userId', this.userId)
+            fd.append('id', this.userId)
             fd.append('userNickname', this.userNickname)
             fd.append('userProfile', this.userProfile)
             fd.append('userIntro', this.userIntro)
 
-            axios.post(this.SERVER_URL + '/api/users/myInfo/update', fd, requestHeaders)
+            axios.put(this.SERVER_URL + '/api/users/myInfo/update', fd, requestHeaders)
             .then(res => {
                 this.$router.replace({ name: 'MyPage' })
             })
@@ -154,7 +155,7 @@ export default {
         imageSubmit(e) {
             const requestHeaders = {
                 headers: {
-                    Authorization: 'Token ' + this.$cookies.get('auth-token'),
+                    Authorization: this.$cookies.get('auth-token'),
                     'Content-Type' : 'multipart/form-data',
                 }
             }
