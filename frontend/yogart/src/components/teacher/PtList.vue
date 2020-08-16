@@ -3,7 +3,7 @@
     <div>
         <div v-for="pt in ptList" :key="pt.id">
             <span>{{ pt.ptName }}</span>
-            <span>{{ pt.studentName }}</span>
+            <span>{{ pt.ptStudentId.userName }}</span>
             <span>{{ pt.dateTime }}</span>
         </div>
     </div>

@@ -106,6 +106,7 @@
             }
         },
         mounted(){
+            
             this.getCourse()
             document.getElementById('good').style.display= 'none'
             document.getElementById('bad').style.display= 'none'
@@ -154,10 +155,8 @@
             },
             clickStart() {
                 this.startDateTime = new Date();
-                // this.hour = this.startDateTime.getHours();
-                // this.min = this.startDateTime.getMinutes();
-                // this.sec = this.startDateTime.getSeconds();
                 this.$cookies.set('startDateTime', this.startDateTime)
+                console.log("여기는  AI",this.startDateTime)
                 this.init()
             },
             incrementSeconds() {

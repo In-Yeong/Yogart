@@ -70,8 +70,7 @@ public class GraphBodyPart implements Serializable {
 	@ApiModelProperty(value="에너지")
 	private Integer energy;
 	
-	@CreationTimestamp
-    @Column(name="start_date_time", updatable = false)
+    @Column(name="start_date_time", unique=true)
 	@ApiModelProperty(value="시작시간")
 	private LocalDateTime startDateTime;
 

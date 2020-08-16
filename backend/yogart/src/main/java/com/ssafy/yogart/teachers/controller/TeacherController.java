@@ -199,4 +199,13 @@ public class TeacherController {
 		return new ResponseEntity<PtClicked>(ptOpen, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "PT 리스트")
+	@GetMapping(value="/pt-list")
+	public ResponseEntity<List<PtInfo>> TeacherPTList(@RequestHeader Map<String,String> header) {
+    	String token = header.get("authorization");
+		User user = userService.authentication(token);
+		List<PtInfo> list = teacherService.showAllTeacherPTlist(user);
+		return new ResponseEntity<List<PtInfo>>(list, HttpStatus.OK);
+	}
+	
 }

@@ -27,12 +27,12 @@
                 <div>{{ yogaClass.teacher_nickName }} | <span class="price"> {{ yogaClass.price}} </span> 스푼</div>
             </div>
         </div> -->
-        <div class="box px-3 d-flex justify-content-between align-items-center" @click="btnClick(yogaClass.id)" v-for="yogaClass in yogaList" :key="yogaClass.id">
+        <div class="box px-3 d-flex justify-content-between align-items-center" @click="btnClick(yogaClass.ptId)" v-for="yogaClass in yogaList" :key="yogaClass.ptId">
             <div class="d-flex align-items-center">
                 <img class="user-profile m-3" :src="require('@/assets/Hedgehog.jpg')">
-                <div class="h5">{{ yogaClass.name }}</div>
+                <div class="h5">{{ yogaClass.ptName }}</div>
             </div>
-            <div>{{ yogaClass.teacher_nickName }} | <span class="price"> {{ yogaClass.price}} </span> 스푼</div>
+            <div>{{ yogaClass.ptTeacherId.userNickname }} | <span class="price"> {{ yogaClass.ptPrice}} </span> 스푼</div>
         </div>
         <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
     </div>
@@ -73,6 +73,7 @@ export default {
         btnClick(classId) {
             console.log(classId)
             // 해당 수업 상세 페이지로 이동
+            // this.$router.push(`/teachers/${`)
         },
         infiniteHandler($state) {
             axios.get(`${this.SERVER_URL}/api/teachers/class/list/${this.limit + 10}`)
