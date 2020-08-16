@@ -16,7 +16,7 @@
             <i class="fas fa-pencil-alt fa-2x" @click="clickUpdate()"></i>
             <div class="email">{{ userEmail }}</div>
             <div class="spoon-wrap" @click="clickSpoon()">
-                <i class="fas fa-utensil-spoon fa-1x d-inline-block"></i><div class="spoon d-inline-block">{{spoons}}개</div>
+                <i class="fas fa-utensil-spoon fa-1x d-inline-block pr-3"></i><div class="spoon d-inline-block">{{spoons}}개</div>
             </div>
         </div>
 
