@@ -5,8 +5,11 @@
             <img v-if="imgSrc" class="user-profile-img" :src="imgSrc" alt="user profile image">
             <img v-else class="user-profile-img" src="../../assets/userDefault.jpg" alt="user profile image">
         </div>
-        <div class="intro-wrap">
+        <div v-if="!introDown" class="intro-wrap">
             <div class="box sb2">{{userIntro}}</div>
+        </div>
+        <div v-else >
+            <div class="box mt-0 mb-2">{{userIntro}}</div>
         </div>
         <div class="profile-content">
             <div class="nickname">{{ userNickname }}</div>
@@ -32,6 +35,7 @@ export default {
     data() {
         return {
             SERVER_URL : this.$store.state.SERVER_URL,
+            introDown: false,
             // userName: '',
             // userNickname: this.$store.state.userNickname,
             // userEmail: '',
@@ -52,6 +56,10 @@ export default {
     },
     mounted() {
         this.getUserData()
+        window.addEventListener('resize', this.setSize)
+    },
+    created() {
+        window.scrollTo(0,0);
     },
     methods : {
         clickUpdate() {
@@ -65,28 +73,36 @@ export default {
             headers: {
                 Authorization: this.$cookies.get('auth-token')
             }
-        }
-        axios.get(this.SERVER_URL + '/api/users/myInfo', requestHeaders)
-        .then(res => {
-            console.log("UserProfile page 성공",res)
-
-            this.userName = res.data.user.userName
-            this.userId = res.data.user.Id
-            this.userNickname = res.data.user.userNickname
-            this.userEmail = res.data.user.userEmail
-            this.userProfile = res.data.user.userProfile
-            this.userIntro = res.data.user.userIntro
-            this.spoons = res.data.user.userSpoon
-
-            if (this.userProfile === undefined) {
-                this.userProfile = 'userDefault'
             }
-            if (this.userIntro === undefined) {
-                this.userIntro = '상태 메세지를 적어보세요.'
-            }
-        })
-        .catch(err => console.error(err))
-        }
+            axios.get(this.SERVER_URL + '/api/users/myInfo', requestHeaders)
+            .then(res => {
+                console.log("UserProfile page 성공",res)
+
+                this.userName = res.data.user.userName
+                this.userId = res.data.user.Id
+                this.userNickname = res.data.user.userNickname
+                this.userEmail = res.data.user.userEmail
+                this.userProfile = res.data.user.userProfile
+                this.userIntro = res.data.user.userIntro
+                this.spoons = res.data.user.userSpoon
+
+                if (this.userProfile === undefined) {
+                    this.userProfile = 'userDefault'
+                }
+                if (this.userIntro === undefined) {
+                    this.userIntro = '상태 메세지를 적어보세요.'
+                }
+            })
+            .catch(err => console.error(err))
+        },
+        setSize() {
+			let size = window.innerWidth
+			if (size < 770) {
+				this.introDown = true
+			} else {
+				this.introDown = false
+			}
+		},
     }
 }
 </script>

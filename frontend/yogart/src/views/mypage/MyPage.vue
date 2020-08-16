@@ -2,11 +2,11 @@
     <div class="py-5">
         <UserProfile/>
         <div class="">
-            <div class="w3-bar" style="margin-left: 10vw;">
-                <button class="w3-bar-item w3-button w3-teal" @click="onPTMang">PT관리</button>
-                <button class="w3-bar-item w3-button w3-red" @click="onExerHis">운동기록</button>
+            <div class="btn-wrap">
+                <button class="ptBtn" @click="onPTMang">PT관리</button>
+                <button class="logBtn" @click="onExerHis">운동기록</button>
             </div>
-            <div class="schedule">
+            <div id="schedule" class="schedule ptBorder">
                 <PTManagement :ptManagement="ptManagement"/>
                 <ExerciseHistory :exerciseHistory="exerciseHistory"/>
             </div>
@@ -48,12 +48,17 @@ export default {
         onPTMang() {
             this.ptManagement = true
             this.exerciseHistory = false
+            document.getElementById('schedule').classList.remove('logBorder')
+            document.getElementById('schedule').classList.add('ptBorder')
 
  
         },
         onExerHis() {
             this.ptManagement = false
             this.exerciseHistory = true
+            console.log(document.getElementById('schedule').classList)
+            document.getElementById('schedule').classList.remove('ptBorder')
+            document.getElementById('schedule').classList.add('logBorder')
 
         },
     }
@@ -65,18 +70,44 @@ export default {
     margin-left: 10vw;
     margin-right: 10vw;
     padding : 1rem;
-    border : 2px solid lightgray;
-    background-color : lightgray;
+    min-height: 500px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 0px 30px 30px 30px;
 }
-.schedule-btn {
-    padding-top : 5px;
-    padding-bottom : 5px;
-    font-size : 20px;
-    /* border : 2px solid lightgray; */
-    background-color : gray;
+.ptBorder {
+    border : 3px solid rgba(143, 160, 242, 1);
 }
-.schedule-btn:hover {
-    background-color: rgb(209, 236, 165);
+.logBorder {
+    border : 3px solid rgba(242, 157, 143, 1);
+}
+.ptBtn {
+    background-color: rgba(143, 160, 242, 1);
+    color: white;
+    border: none;
+    border-radius: 30px 0px 0px 0px;
+    outline: none !important;
+    width: 150px;
+    height: 50px;
+}
+.ptBtn:hover {
+    background-color: rgba(143, 160, 242, 0.8);
+}
+.logBtn {
+    background-color: rgba(242, 157, 143, 1);
+    color: white;
+    border: none;
+    border-radius: 0px 30px 0px 0px;
+    outline: none !important;
+    width: 150px;
+    height: 50px;
+}
+.logBtn:hover {
+    background-color: rgba(242, 157, 143, 0.8);
+}
+.btn-wrap {
+    margin-left: 10vw;
+    margin-right: 10vw;
+    text-align: left;
 }
 
 

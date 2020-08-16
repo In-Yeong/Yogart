@@ -5,9 +5,6 @@
             <NavBar @logout="logout" :isLogin="isLogin"/>
             <router-view class="full-page" @submit-signup-data="signup" />
         </div>
-        <!-- <div v-else>
-            안녕
-        </div> -->
         <Footer/>
     </div>
 </template>

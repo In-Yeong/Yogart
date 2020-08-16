@@ -176,6 +176,7 @@ export default {
     width: 450px;
     padding-top: 1rem;
     background-color: rgba(0, 0, 0, 0);
+    outline: none;
 }
 
 .signup-btn {
