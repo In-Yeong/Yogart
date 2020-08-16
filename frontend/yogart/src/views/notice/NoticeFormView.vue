@@ -1,22 +1,19 @@
 <template>
-    <div class="NoticeFormView">
-        <h1 class="p-5">공지사항 작성 페이지</h1>
-        <div id="app">
-                   <form @submit="onSubmit">
-            <input type="text" v-model="noticeTitle">
-            <editor
+    <div class="padding-for-nav">
+        <div class="notice-page-name">공지사항 작성</div>
+        <form @submit="onSubmit">
+            <input class="title" type="text" v-model="noticeTitle" placeholder="제목을 입력해 주세요.">
+            <editor class="editor"
                 :initialValue="editorText"
                 ref="toastuiEditor"
                 height="500px"
                 initialEditType="wysiwyg"
                 previewStyle="vertical"
             />
-            <button type="submit">작성</button>
+            <button class="write-btn" type="submit">작성완료</button>
         </form>
-        </div>
-        <button @click="test()">test</button>
-
     </div>
+
 </template>
 
 <script>
@@ -79,5 +76,38 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.notice-page-name {
+    margin: -8rem auto 2rem;
+    font-size: 4vh;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.6);
+}
+.title {
+    outline: none;
+    width: 80%;
+    height: 3rem;
+    padding: 0rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.editor {
+    width: 80%;
+    margin: 0.5rem auto;
+}
+.write-btn {
+    width: 15rem;
+    height: 3rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    color: white;
+    font-size: 17px;
+    border-radius: 3rem;
+    border-width: 0px 0px 1.2px;
+    border-color: rgba(255, 255 255, 0.2);
+    background: rgba(215, 159, 215, 1);
+    outline:none;
+    cursor: pointer;
+}
+.write-btn:hover {
+    background: rgba(215, 159, 215, 0.9);
+}
 </style>
