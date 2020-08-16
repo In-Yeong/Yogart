@@ -1,6 +1,5 @@
 <template>
-    <div v-if="exerciseHistory">
-        <h3>운동기록</h3>
+    <div v-if="exerciseHistory" class="pt-3">
         <GraphView></GraphView>
     </div>
 </template>

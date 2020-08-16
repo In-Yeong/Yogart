@@ -5,9 +5,6 @@
             <NavBar @logout="logout" :isLogin="isLogin"/>
             <router-view class="full-page" @submit-signup-data="signup" />
         </div>
-        <!-- <div v-else>
-            안녕
-        </div> -->
         <Footer/>
     </div>
 </template>
@@ -40,17 +37,29 @@ export default {
                     console.log(response)
                     this.$store.commit('storeLogin', response.data)
                     this.loginComplete()
-               } 
-               else {
-                   alert('회원가입 실패')
-               }
+                }
+                else {
+                    console.log(response)
+                    if (response.data.statusCode === 403) {
+                        if (response.data.message === 'useremail') {
+                            alert('이메일이 이미 존재합니다.')
+                        } else if (response.data.message === 'nickname') {
+                            alert('닉네임이 이미 존재합니다.')
+                        } else {
+                            alert('이메일과 닉네임이 이미 존재합니다.')
+                        }
+                    }
+                    else {  
+                        alert('회원가입 실패')
+                    }
+                } 
             })
             .catch(err => {
                 console.log(err)
-                if (err.response.data.statusCode === 403) {
-                   if (err.response.data.message === 'email') {
+                if (err.data.statusCode === 403) {
+                   if (err.data.message === 'email') {
                        alert('이메일이 이미 존재합니다.')
-                   } else if (err.response.data.message === 'nickname') {
+                   } else if (err.data.message === 'nickname') {
                        alert('닉네임이 이미 존재합니다.')
                    } else {
                        alert('이메일과 닉네임이 이미 존재합니다.')

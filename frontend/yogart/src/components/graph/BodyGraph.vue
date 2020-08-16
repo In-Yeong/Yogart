@@ -1,6 +1,6 @@
 <template>
     <div class="timeGraph">
-        <h1>태그별 트레이닝 횟수</h1>
+        <div class="graph-name">태그별 트레이닝 횟수</div>
         <div class="wrapper">
             <canvas id="bodyChart"></canvas>
         </div>
@@ -66,6 +66,12 @@
 .wrapper {
     width: 50rem;
     margin: auto;
+}
+.graph-name {
+    margin: 2rem auto 2rem;
+    font-size: 4vh;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.6);
 }
 
 </style>

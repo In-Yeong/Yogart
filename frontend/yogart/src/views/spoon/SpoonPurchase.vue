@@ -44,7 +44,10 @@ export default {
             })
             .catch(err => console.error(err))
         }
-    }
+    },
+    created() {
+        window.scrollTo(0,0);
+    },
 
 }
 </script>
