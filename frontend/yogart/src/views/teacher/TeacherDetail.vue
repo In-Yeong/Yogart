@@ -1,6 +1,6 @@
 <template>
     <div>
-        <img :src="teacherInfo.teacherImage" alt="">
+        <img :src="'http://localhost:8000/api/users/profileImageByEmail?userEmail=' + teacherInfo.teacherEmail" alt="">
         <h3>{{ teacherInfo.teacherName }} 선생님</h3>
         <h5>{{ teacherInfo.teacherIntro }}</h5>
         <b-tabs content-class="mt-3">
@@ -27,7 +27,7 @@ export default {
             teacherInfo: {
                 teacherName: null,
                 teacherIntro: null,
-                teacherImage: null,
+                teacherEmail: null,
             },
             ptList: [],
         }
@@ -60,9 +60,9 @@ export default {
             //         ]
             //     }
             // }
-            this.teacherInfo.teacherName = res.data.teacherInfo.teacherName
-            this.teacherInfo.teacherIntro = res.data.teacherInfo.teacherIntro
-            this.teacherInfo.teacherImage = res.data.teacherInfo.teacherImage
+            this.teacherInfo.teacherName = res.data.teacherInfo.userName
+            this.teacherInfo.teacherIntro = res.data.teacherInfo.userIntro
+            this.teacherInfo.teacherEmail = res.data.teacherInfo.userEmail
             this.ptList = res.data.ptList
         })
         .catch(err => console.error(err))
