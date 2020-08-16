@@ -40,7 +40,7 @@ export default {
         // }
         axios.get(this.SERVER_URL + `/api/teachers/list/detail/${this.teacherId}`, this.teacherId)
         .then(res => {
-            // console.log(res)
+            console.log(res)
             // const res = {
             //     data: {
             //         teacherInfo: {

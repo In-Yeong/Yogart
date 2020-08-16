@@ -13,6 +13,7 @@ public interface TeacherService {
 	List<PtInfo> showAllTeacherPTlist(User user);
 	
 	Page<PtInfo> showAllClassList(int limit);
+	List<PtClicked> showAllClass();
 	
 	PtInfo showPTInfo(int ptId);
 	

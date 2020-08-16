@@ -166,6 +166,7 @@ export default {
         saveResult() {
             //오늘 날짜
             const startDateTime = this.$cookies.get('startDateTime');
+            console.log("여기는 결과페이지 데이트타임",startDateTime)
             //총 경과 시간
             const totalTime = String(60 * this.minutes + this.seconds)
             //부위별 태그 횟수

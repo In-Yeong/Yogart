@@ -27,6 +27,7 @@ import com.ssafy.yogart.mypage.model.MyPagePtResult;
 import com.ssafy.yogart.mypage.service.MyPageService;
 import com.ssafy.yogart.teachers.model.PtClicked;
 import com.ssafy.yogart.user.model.User;
+import com.ssafy.yogart.user.repository.UserRepository;
 import com.ssafy.yogart.user.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -44,6 +45,9 @@ public class MyPageController {
 	
 	@Autowired
 	private MyPageService myPageService;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@ApiOperation(value = "그래프 기록 데이터를 보낸다", response = GraphResult.class)
 	@GetMapping(value="/graph")

@@ -69,6 +69,11 @@ public class TeacherServiceImpl implements TeacherService {
 		return ptClickedRepository.findAllByOrderByDateTimeDesc();
 	}
 
+	@Override
+	public List<PtClicked> showAllClass() {
+		return ptClickedRepository.findAll();
+	}
+
 
 
 }

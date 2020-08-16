@@ -1,7 +1,8 @@
 package com.ssafy.yogart.aicoach.controller;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -62,9 +63,11 @@ public class AicoachController {
 		
 		String totalTime = (String)courseData.get("totalTime");
 		String times = (String)courseData.get("startDateTime");
-		String time = (String)times.substring(0, 19);
-		System.out.println(time);
-		LocalDateTime startDateTime = LocalDateTime.parse(time);
+		long d = Date.parse(times);
+		SimpleDateFormat temp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String[] temps = temp.format(d).split(" ");
+		String date = temps[0] + "T" + temps[1];
+		LocalDateTime startDateTime = LocalDateTime.parse(date);
 		
 		String tags = (String)courseData.get("tagCounting");
 		String result = "totalTime:" + totalTime + "," +
