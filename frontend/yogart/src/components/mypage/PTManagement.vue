@@ -24,7 +24,9 @@
                 <td>{{todayCourse.ptClickedName.ptName}}</td>
                 <td>{{todayCourse.ptClickedName.ptIntro}}</td>
                 <td>{{todayCourse.dateTime}}</td>
-                <td><button class="w3-bar-item w3-button w3-red">입장하기</button></td>
+                <!-- <td><button class="w3-bar-item w3-button w3-red">입장하기</button></td> -->
+                <a @click="goPt(todayCourse)">입장하기</a>
+
             </tr>
         </tbody>
       </table>
@@ -104,6 +106,10 @@ export default {
       this.getPT()
     },
     methods : {
+      goPt(todayCourse) {
+        console.log('@@@@', todayCourse)
+        window.open(`https://i3d202.p.ssafy.io:8080/rtc.html?room=${todayCourse.ptClickedName.ptTeacherId.teacherCode}`)
+      },
       getPT() {
         //오늘 날짜 기준으로 과거,오늘,미래로 나눠서 1:1 PT수업리스트를 받는 함수
         // user(auth-token을 보내주면 그 유저에 연결된 1:1 pt 수업을 보내주세요 - 내용 : 수업명, 수업id, 강사명, 출석현황(isAttend),수업날짜(dataTime) 포함된 object의 리스트)
@@ -115,6 +121,7 @@ export default {
         console.log('@@@@@@@@@@@@@@@@@@@', RequestHeaders)
         axios.get(this.SERVER_URL + '/api/mypage/ptlist', RequestHeaders)
         .then(res => {
+          console.log(res)
           console.log("PTManagement 성공",res)
           //과거 pt 기록들 날짜,시간순으로 배열로 넘겨주세요
           this.pastCourses = res.data.pastCourses
