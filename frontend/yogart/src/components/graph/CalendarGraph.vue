@@ -1,6 +1,6 @@
 <template>
     <div class="timeGraph">
-        <h1>일별 운동량</h1>
+        <div class="graph-name">일별 운동량</div>
         <div class="wrapper">
             <GChart
             :settings="{packages: ['calendar']}"
@@ -56,6 +56,11 @@
     width: 50rem;
     margin: auto;
 }
-
+.graph-name {
+    margin: 2rem auto 2rem;
+    font-size: 4vh;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.6);
+}
 
 </style>

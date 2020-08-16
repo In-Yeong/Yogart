@@ -336,6 +336,7 @@ public class UserController {
     		HttpServletRequest request) {
 
     	ResponseEntity<Result> response;
+    	System.out.println(authorization);
     	User currUser = userService.authentication(authorization.get("authorization"));
     	for(MultipartFile file : files)
     	{
