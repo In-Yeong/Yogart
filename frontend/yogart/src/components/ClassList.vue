@@ -1,7 +1,7 @@
 <template>
     <div class="m-5">
         <div class="page-index d-flex justify-content-between">
-            <h2 class="page-name">수업 목록</h2>
+            <h2 class="page-name m-0">수업 목록</h2>
 
             <div class="form-group">
                 <select class="form-control" id="sel1">
