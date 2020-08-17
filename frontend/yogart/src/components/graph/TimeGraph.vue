@@ -52,7 +52,7 @@
                         pointBorderWidth: 10,
                         pointHoverRadius: 10,
                         pointHoverBorderWidth: 1,
-                        pointRadius: 3,
+                        pointRadius: 1,
                         fill: true,
                         backgroundColor: gradientFill,
                         borderWidth: 4,
@@ -104,11 +104,11 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .wrapper {
-    width: 50rem;
+    width: 80%;
     margin: auto;
 }
 .graph-name {
-    margin: 2rem auto 2rem;
+    margin: 2rem;
     font-size: 4vh;
     font-weight: bold;
     color: rgba(0, 0, 0, 0.6);

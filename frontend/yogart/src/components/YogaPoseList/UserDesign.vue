@@ -14,8 +14,8 @@
                 {{i+1}}
             <figure>
                 <img src="https://placehold.it/360x270">
-                <figcaption>
-                    사용자 지정 코스
+                <figcaption class="text-center" style="font-size:100px;" @click="clickSet()">
+                    {{slide}}
                 </figcaption>
             </figure>
             </slide>
@@ -35,7 +35,7 @@
         name : 'UserDesign',
         data() {
             return{
-                slides : 7,
+                slides : [],
                 SERVER_URL : this.$store.state.SERVER_URL,
                 myYogaList : [],
             }
@@ -57,16 +57,11 @@
                 .then(res => {
                     console.log(res)
                     res.data.forEach(e => {
-                        var list = document.createElement('div');
-                        list.classList.add('col-4', 'border', 'rect', 'd-flex', 'flex-column');
-                        list.addEventListener('click', function(){
-                            self.clickSet(e.aiCourseId)
-                            console.log("내 요가 리스트",e.aiCourseId)
-                        })
-                        list.innerText = e.aiCourseName + '\n' + e.aiCourseOrder + '\n' + e.aiCourseUserNickname.userNickname
-                        console.log("내 요가 리스트 디테일",e.aiCourseName,e.aiCourseOrder,e.aiCourseUserNickname.userNickname)
-                        console.log("list",list)
-                        document.getElementById('mylist').prepend(list)
+                        this.slides.push(e.aiCourseName)
+                        console.log('추가함', this.slides)
+
+                        console.log("내 요가 리스트",e.aiCourseId)
+
                     });
 
                 })
