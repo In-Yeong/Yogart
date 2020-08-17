@@ -55,7 +55,7 @@ public class MyPageController {
 		String token = request.getHeader("auth-token");
 		System.out.println(token);
 		User user = userService.authentication(token);
-		GraphBodyPart tags = myPageService.showTagGraph(user);
+		List<GraphBodyPart> tags = myPageService.showTagGraph(user);
 		List<GraphTime> attendance = myPageService.showattendance(user);
 		GraphResult result = new GraphResult();
 		Map<Integer, Integer> timeCount = result.getTimeCount();
@@ -69,7 +69,16 @@ public class MyPageController {
 		for(int i = 0; i < attendance.size(); i++) {
 			attendances.put(LocalDate.from(attendance.get(i).getGraphDateTime()), attendance.get(i).getGraphRunningTime());
 		}
-		result.setTags(tags);
+		// tags 누적 시킨다음에 넣기
+		int[] temp = new int[7];
+		for(GraphBodyPart tag : tags) {
+			temp[0] += tag.getWholeBody(); temp[1] += tag.getSpine();
+			temp[2] += tag.getAbs(); temp[3] += tag.getArm();
+			temp[4] += tag.getLeg(); temp[5] += tag.getRelaxing();
+			temp[6] += tag.getEnergy();
+		}
+		GraphBodyPart bp = new GraphBodyPart(user,temp[0],temp[1],temp[2],temp[3],temp[4],temp[5],temp[6]);
+		result.setTags(bp);
 		result.setAttendance(attendances);
 		result.setTimeCount(timeCount);
 		return new ResponseEntity<GraphResult>(result, HttpStatus.OK);

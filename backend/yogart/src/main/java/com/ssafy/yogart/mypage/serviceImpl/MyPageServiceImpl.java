@@ -31,7 +31,7 @@ public class MyPageServiceImpl implements MyPageService {
 	private PtInfoRepository ptInfoRepository;
 	
 	@Override
-	public GraphBodyPart showTagGraph(User user) {
+	public List<GraphBodyPart> showTagGraph(User user) {
 		return graphBodyPartRepository.findByGraphBodyPartUserNickname(user);
 	}
 

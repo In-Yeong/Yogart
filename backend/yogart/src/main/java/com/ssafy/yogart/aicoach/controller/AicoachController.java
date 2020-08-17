@@ -74,6 +74,7 @@ public class AicoachController {
 		String result = "totalTime:" + totalTime + "," +
 						"startDateTime:" + startDateTime + "," +
 						"tagCounting:" + tags;
+		System.out.println(result);
 		String[] tag = tags.split(",");
 		GraphBodyPart bodypart = new GraphBodyPart(user,Integer.parseInt(tag[0]),
 														Integer.parseInt(tag[1]),

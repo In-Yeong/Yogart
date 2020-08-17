@@ -245,7 +245,7 @@ public class UserController {
 	@PutMapping(value = "/myInfo/update")
 	public User updateInfo(@RequestHeader(value="config") Map<String, Object> header, @ModelAttribute User content) {
 		System.out.println(header);
-		System.out.println(content.getUserEmail());
+		System.out.println(content.getUserIntro());
 //		System.out.println(content.get("userEmail"));
 		String token = (String)header.get("authorization");
 		User user = userService.authentication(token);

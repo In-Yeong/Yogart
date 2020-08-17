@@ -87,6 +87,18 @@ public class GraphBodyPart implements Serializable {
 		this.energy = energy;
 		this.startDateTime = startDateTime;
 	}
-	
-	
+
+	public GraphBodyPart(User graphBodyPartUserNickname, Integer wholeBody, Integer spine, Integer abs, Integer arm,
+			Integer leg, Integer relaxing, Integer energy) {
+		super();
+		this.graphBodyPartUserNickname = graphBodyPartUserNickname;
+		this.wholeBody = wholeBody;
+		this.spine = spine;
+		Abs = abs;
+		this.arm = arm;
+		this.leg = leg;
+		this.relaxing = relaxing;
+		this.energy = energy;
+	}
+
 }

@@ -21,6 +21,6 @@ public class GraphResult {
 		for(int i = 6; i < 30; i++) {
 			timeCount.put(i%24, 0);
 		}
-	}
+		}
 	
 }

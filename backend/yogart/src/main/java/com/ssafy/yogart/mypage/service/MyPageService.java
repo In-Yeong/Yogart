@@ -8,7 +8,7 @@ import com.ssafy.yogart.teachers.model.PtClicked;
 import com.ssafy.yogart.user.model.User;
 
 public interface MyPageService {
-	GraphBodyPart showTagGraph(User user);
+	List<GraphBodyPart> showTagGraph(User user);
 	List<GraphTime> showattendance(User user);
 	List<PtClicked> showPTList(User user);
 	GraphBodyPart saveTag(GraphBodyPart bodypart);
