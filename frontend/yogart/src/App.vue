@@ -41,7 +41,7 @@ export default {
                 else {
                     console.log(response)
                     if (response.data.statusCode === 403) {
-                        if (response.data.message === 'useremail') {
+                        if (response.data.message === 'email') {
                             alert('이메일이 이미 존재합니다.')
                         } else if (response.data.message === 'nickname') {
                             alert('닉네임이 이미 존재합니다.')

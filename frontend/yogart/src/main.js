@@ -45,7 +45,7 @@ extend('required', {
 
 extend('min', {
     ...min,
-    message: '비밀번호는 6자리 이상'
+    message: '비밀번호는 8자리 이상'
 })
 
 new Vue({

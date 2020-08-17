@@ -48,6 +48,10 @@ export default {
             this.teacherInfo.teacherName = res.data.teacherInfo.userNickname
             this.teacherInfo.teacherIntro = res.data.teacherInfo.userIntro
             this.teacherInfo.teacherImage = res.data.teacherInfo.userProfile
+            if (this.teacherInfo.teacherImage === 'default.png') {
+                this.teacherInfo.teacherImage = null
+            }
+            console.log('티처 이미지',this.teacherInfo.teacherImage)
             this.ptList = res.data.ptList
         })
         .catch(err => console.error(err))

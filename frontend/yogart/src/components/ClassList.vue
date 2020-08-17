@@ -17,7 +17,7 @@
                 <div class="option" id="high" @click="resorting('high')">높은가격순</div>
             </div> -->
   
-        <div class="box px-3 d-flex justify-content-between align-items-center" @click="btnClick(yogaClass.ptId)" v-for="yogaClass in yogaList" :key="yogaClass.ptId">
+        <div class="box px-3 d-flex justify-content-between align-items-center" v-for="yogaClass in yogaList" :key="yogaClass.ptId" @click="btnClick(yogaClass.ptTeacherId.id)">
             <div class="d-flex align-items-center">
                 <img class="user-profile m-3" :src="require('@/assets/Hedgehog.jpg')">
                 <div class="h5">{{ yogaClass.ptName }}</div>
@@ -61,10 +61,10 @@ export default {
 
         // },
 
-        btnClick(classId) {
-            console.log(classId)
+        btnClick(id) {
+            console.log(id)
             // 해당 수업 상세 페이지로 이동
-            // this.$router.push(`/teachers/${`)
+            this.$router.push(`/teachers/${id}`)
         },
         infiniteHandler($state) {
             axios.get(`${this.SERVER_URL}/api/teachers/class/list/${this.limit + 10}`)

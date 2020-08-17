@@ -10,7 +10,7 @@
                 <h3>{{ptInfo.ptName}}<br>
                 {{ dDay }} {{ time.ptTime }}시</h3>
             </div>
-                <b-button class="mt-3" variant="outline-danger" block>신청하기</b-button>
+                <b-button class="mt-3" variant="outline-danger" @click="ptRegi" block>신청하기</b-button>
         </b-modal>
     </div>
      
@@ -58,7 +58,9 @@ export default {
                 this.$refs['my-modal'].hide()
                 this.$router.push('/mypage')
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+                this.$router.push('/spoons')
+            })
         },
         showModal() {
             this.$refs['my-modal'].show()

@@ -191,15 +191,29 @@ public class UserController {
 	}
 
 	// 사용자 username과 password을 입력받아 새로운 User를 생성하고 그 결과를 반환
-	@ApiOperation(value="회원가입", response = User.class)
+	@ApiOperation(value="회원가입", response = Result.class)
 	@PostMapping(value = "/signup")
-	public ResponseEntity<Result> create(@RequestBody User signupData) {
-		String email = signupData.getUserEmail();
-		String username = signupData.getUserName();
-		String nickname = signupData.getUserNickname();
-		String password = signupData.getUserPassword();
+	public ResponseEntity<Result> create(@RequestBody Map<String, String> signupData) {
+		String email = signupData.get("userEmail");
+		String username = signupData.get("userName");
+		String nickname = signupData.get("userNickname");
+		String password = signupData.get("userPassword");
+		Result result = new Result();
+	
+		if(userService.emailChk(email) != null && userService.nicknameChk(nickname) != null) {
+			result.setMessage("email/nickname");
+			result.setStatusCode(HttpStatus.FORBIDDEN);
+			return new ResponseEntity<Result>(result, HttpStatus.OK);
+		}else if(userService.nicknameChk(nickname) != null) {			
+			result.setMessage("nickname");
+			result.setStatusCode(HttpStatus.FORBIDDEN);
+			return new ResponseEntity<Result>(result, HttpStatus.OK);
+		}else if(userService.emailChk(email) != null) {
+			result.setMessage("email");
+			result.setStatusCode(HttpStatus.FORBIDDEN);
+			return new ResponseEntity<Result>(result, HttpStatus.OK);			
+		}
 		User user = new User(email, username, nickname, password);
-		Result result = Result.successInstance();
 		result.setUser(user);
 		System.out.println(email + ", " 
 				+ username + ", " 

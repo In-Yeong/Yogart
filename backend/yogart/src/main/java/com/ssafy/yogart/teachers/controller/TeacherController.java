@@ -109,6 +109,9 @@ public class TeacherController {
 		timeSet = timeSet.plusHours(9);
 		System.out.println(timeSet);
 		int minusSpoon = (int)ptInfo.get("ptPrice");
+		if(user.getUserSpoon() < minusSpoon) {
+			return new ResponseEntity<String>("Error", HttpStatus.BAD_REQUEST);
+		}
 		System.out.println("-" + minusSpoon + " 스푼 차감되었습니다.");
 		user.setUserSpoon(user.getUserSpoon() -  minusSpoon);
 		System.out.println("잔여 스푼: " + user.getUserSpoon());

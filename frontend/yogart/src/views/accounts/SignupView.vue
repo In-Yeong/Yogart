@@ -12,13 +12,13 @@
                 <br>
                 <div class="form-group">
                     <div class="form-mid-group">
-                        <input class="signup-input" placeholder="이름" type="text" id="userName" v-model="signupData.userName" @keyup="checkName">
+                        <input class="signup-input" placeholder="이름" type="text" id="userName" v-model="signupData.userName" @change="checkName">
                         <!-- <span class="allIcon" id="userNameCheckIcon"><i class="fas fa-check fa-2x"></i></span> -->
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-mid-group">
-                        <input class="signup-input" placeholder="닉네임" type="text" id="userNickname" v-model="signupData.userNickname" @keyup="checkNickname">
+                        <input class="signup-input" placeholder="닉네임" type="text" id="userNickname" v-model="signupData.userNickname" @change="checkNickname">
                         <!-- <span class="allIcon" id="userNicknameCheckIcon"><i class="fas fa-check fa-2x"></i></span> -->
                     </div>
                 </div>
