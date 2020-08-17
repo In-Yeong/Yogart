@@ -1,17 +1,17 @@
 <template>
     <div>
-        <img :src="'http://localhost:8000/api/users/profileImageByEmail?userEmail=' + teacherInfo.teacherEmail" alt="">
-        <h3>{{ teacherInfo.teacherName }} 선생님</h3>
-        <h5>{{ teacherInfo.teacherIntro }}</h5>
-        <div v-for="pt in ptList" :key="pt.ptId" @click="displayChange(pt.ptId)">{{ pt.ptName }}</div>
-        <div v-for="pt in ptList" :key="pt.ptId" id="pt.ptId" style="display: none;">
-            <ClassRegi :ptId="pt.ptId"></ClassRegi>
+        <div class="under-border my-3">
+            <img v-if="teacherInfo.teacherImage" :src="teacherInfo.teacherImage" alt="" class="user-profile">
+            <img v-else src="../../assets/userDefault.jpg" class="user-profile m-3">
+            <h3>{{ teacherInfo.teacherName }} 선생님</h3>
+            <h5 v-if="teacherInfo.teacherIntro">{{ teacherInfo.teacherIntro }}</h5>
+            <h5 v-else>등록된 소개가 없습니다.</h5>
         </div>
-        <!-- <b-tabs content-class="mt-3">
+        <b-tabs content-class="mt-3">
             <b-tab v-for="pt in ptList" :key="pt.ptId" :title="pt.ptName">
                 <ClassRegi :ptId="pt.ptId"/>
             </b-tab>
-        </b-tabs> -->
+        </b-tabs>
     </div>
 </template>
 
@@ -31,53 +31,34 @@ export default {
             teacherInfo: {
                 teacherName: null,
                 teacherIntro: null,
-                teacherEmail: null,
+                teacherImage: null,
             },
             ptList: [],
-            showPt: ptLisit[0].ptId,
         }
     },
     mounted() {
+        // const requestHeaders = {
+        //     headers: {
+        //         Authorization: this.$cookies.get('auth-token')
+        //     }
+        // }
         axios.get(this.SERVER_URL + `/api/teachers/list/detail/${this.teacherId}`, this.teacherId)
         .then(res => {
             console.log(res)
-            // const res = {
-            //     data: {
-            //         teacherInfo: {
-            //             teacherName: '조규성',
-            //             teacherIntro: '나도 요가 초보임',
-            //             teacherImage: '...'
-            //         },
-            //         ptList: [
-            //             {
-            //                 id: 1,
-            //                 ptName: '파국이다'
-            //             },
-            //             {
-            //                 id: 2,
-            //                 ptName: '계란국이다'
-            //             }
-            //         ]
-            //     }
-            // }
-            this.teacherInfo.teacherName = res.data.teacherInfo.userName
+            this.teacherInfo.teacherName = res.data.teacherInfo.userNickname
             this.teacherInfo.teacherIntro = res.data.teacherInfo.userIntro
-            this.teacherInfo.teacherEmail = res.data.teacherInfo.userEmail
+            this.teacherInfo.teacherImage = res.data.teacherInfo.userProfile
             this.ptList = res.data.ptList
         })
         .catch(err => console.error(err))
-        displayChange(this.showPt)
-    },
-    methods: {
-        displayChange(ptId) {
-            document.getElementById(this.showPt).style = "display: none;"
-            this.showPt = ptId
-            document.getElementById(this.showPt).style = "display: block;"
-        }
+
     }
 }
 </script>
 
-<style>
+<style scoped>
+.under-border{
+    box-shadow: 3px 3px rgba(0,0,0,0.1);
+}
 
 </style>

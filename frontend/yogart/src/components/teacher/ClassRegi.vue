@@ -1,13 +1,23 @@
 <template>
     <div>
-        <h2>{{ ptInfo.ptName }}</h2>
-        <h5>{{ ptInfo.ptPrice }}스푼으로 함께해요</h5>
-        <h5>{{ ptInfo.ptIntro }}</h5>
-        <ReviewList :ptInfo="ptInfo"></ReviewList>
-        <!-- 데이터 피커를 이용해 날짜를 받으면, 그 날짜에 열리는 모든 수업을 리스팅한다. -->
-        <DatePicker format="yyyy-MM-dd-D" :highlighted="highlighted" @selected="selectDate" :language="ko"></DatePicker>
-        <div v-for="time in showArray" :key="time.time">
-            <PtListItem :ptInfo="ptInfo" :time="time" :clickedDate="clickedDate"></PtListItem>
+        <div class="white-box mb-5">
+            <div class="under-border mb-5">
+                <h2>{{ ptInfo.ptName }}</h2>
+            </div>
+            <div>
+                <h5>{{ ptInfo.ptIntro }}</h5>
+            </div>
+            <br>
+            <!-- <label class="mx-3"> 원하는 일정을 선택해보세요 </label> -->
+            <div>
+                <h5 style="color:#8fa0f2">{{ ptInfo.ptPrice }} 스푼으로 함께해요</h5>
+            </div>
+            <div>
+                <DatePicker id="date-picker" format="yyyy-MM-dd-D" :highlighted="highlighted" @selected="selectDate" :language="ko"></DatePicker>
+                <div v-for="time in showArray" :key="time.time">
+                    <PtListItem :ptInfo="ptInfo" :time="time" :clickedDate="clickedDate"></PtListItem>
+                </div>
+            </div>
         </div>
     </div>
 </template>

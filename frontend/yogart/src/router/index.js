@@ -22,7 +22,7 @@ import YogaPoseListPage from '../views/coaching/YogaPoseListPage.vue'
 import YogaPoseListDetailPage from '../views/coaching/YogaPoseListDetailPage.vue'
 import YogaPosePage from '../views/coaching/YogaPosePage.vue'
 import ClassSetting from '../components/teacher/ClassSetting.vue'
-import ClassList from '../views/ClassList.vue'
+import ClassAndTeacherList from '../views/ClassAndTeacherList.vue'
 import TeacherPage from '../views/teacher/TeacherPage.vue'
 import SpoonPurchase from '../views/spoon/SpoonPurchase.vue'
 import PayComplete from '../views/kakaopay/PayComplete.vue'
@@ -127,7 +127,7 @@ const routes = [
     {
         path: '/class',
         name: 'ClassList',
-        component: ClassList
+        component: ClassAndTeacherList
     },
     // Teacher
     {

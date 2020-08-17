@@ -1,6 +1,9 @@
 <template>
-    <div>
-        <h1>강사 목록</h1>
+    <div class="page-index">
+        <div class="under-border text-left">
+            <h2>강사 목록</h2>
+        </div>
+        
         <TeacherCard v-for="teacher in teachers" :key="teacher.id" :teacher="teacher" @click.native="onClick(teacher.id)"></TeacherCard>
     </div>
 </template>
@@ -36,6 +39,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+    .page-index {
+    height: 8vh;
+    width: 70%;
+    margin: auto;
+    margin-bottom : 1rem;
+    /* border-bottom: 2px solid rgba(143, 160, 242, 0.5); */
+}
 
 </style>

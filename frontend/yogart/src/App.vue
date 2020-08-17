@@ -127,6 +127,21 @@ export default {
     background-size: 100%;
     color: #2c3e50;
 }
+.white-box{
+    padding : 2rem;
+    width : 75%;
+    margin-top : 35px;
+    background-color: rgba(255,255,255,0.5);
+    margin : auto;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.under-border{
+   padding-bottom: 20px;
+    margin : 30px auto;
+    border-bottom : 2px solid rgba(143, 160, 242, 0.7);
+}
+
 .full-page {
     min-height: 100vh;
 }

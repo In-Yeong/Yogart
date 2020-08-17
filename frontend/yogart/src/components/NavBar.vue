@@ -4,21 +4,21 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav nav-left">
                 <li class="nav-item">
-                    <a class="nav-link" href="/coaching/yogaposelist">AI coaching</a>
+                    <router-link class="nav-link" to="/coaching/yogaposelist">AI coaching</router-link>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/class">1:1 PT</a>
+                    <router-link class="nav-link" to="/class">1:1 PT</router-link>
                 </li>
                 </ul>
-                <a class="navbar-brand" href="/"><img class="logo-img" src="../assets/logo.png" alt=""></a>
+                <router-link class="navbar-brand" to="/"><img class="logo-img" src="../assets/logo.png" alt=""></router-link>
                 <ul class="navbar-nav nav-right">
                 <li class="nav-item dropdown">
                     <div class="nav-link" id="navbarDropdown"  data-toggle="dropdown" >
                     HELP
                     </div>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="sub-item nav-link" href="/notice">공지사항</a>
-                        <a class="sub-item nav-link" href="/qna">Q&A</a>
+                        <router-link class="sub-item nav-link" to="/notice">공지사항</router-link>
+                        <router-link class="sub-item nav-link" to="/qna">Q&A</router-link>
                     </div>
                 </li>
                 
@@ -28,23 +28,23 @@
                     {{userNickname}}님
                     </a>
                     <div v-if="isAdmin" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="sub-item nav-link" href="/mypage">마이페이지</a>
-                        <a class="sub-item nav-link" href="/notice/form">공지작성</a>
-                        <a class="sub-item nav-link" href="/admin">강사지원관리</a>
-                        <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
+                        <router-link class="sub-item nav-link" to="/mypage">마이페이지</router-link>
+                        <router-link class="sub-item nav-link" to="/notice/form">공지작성</router-link>
+                        <router-link class="sub-item nav-link" to="/admin">강사지원관리</router-link>
+                        <router-link class="sub-item nav-link" @click="logoutEmmit">로그아웃</router-link>
                     </div>
                     <div v-else-if="isTeacher" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="sub-item nav-link" href="/mypage">마이페이지</a>
-                        <a class="sub-item nav-link" href="/teachers/class-settings">수업관리</a>
-                        <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
+                        <router-link class="sub-item nav-link" to="/mypage">마이페이지</router-link>
+                        <router-link class="sub-item nav-link" to="/teachers/class-settings">수업관리</router-link>
+                        <router-link class="sub-item nav-link" @click="logoutEmmit">로그아웃</router-link>
                     </div>
                     <div v-else class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="sub-item nav-link" href="/mypage">마이페이지</a>
-                        <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
+                        <router-link class="sub-item nav-link" to="/mypage">마이페이지</router-link>
+                        <router-link class="sub-item nav-link" @click="logoutEmmit">로그아웃</router-link>
                     </div>
                 </li>
                 <li class="nav-item" v-else>
-                    <a class="nav-link" @click="openLoginModal">LOGIN</a>
+                    <router-link class="nav-link" @click="openLoginModal">LOGIN</router-link>
                 </li>
                 </ul>
             </div>
