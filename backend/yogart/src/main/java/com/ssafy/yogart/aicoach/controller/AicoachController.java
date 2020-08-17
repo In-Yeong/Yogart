@@ -26,6 +26,7 @@ import com.ssafy.yogart.aicoach.model.CourseDetailResult;
 import com.ssafy.yogart.aicoach.repository.AicoachCourseRepository;
 import com.ssafy.yogart.aicoach.service.AicoachService;
 import com.ssafy.yogart.mypage.model.GraphBodyPart;
+import com.ssafy.yogart.mypage.model.GraphTime;
 import com.ssafy.yogart.mypage.service.MyPageService;
 import com.ssafy.yogart.user.model.User;
 import com.ssafy.yogart.user.service.UserService;
@@ -83,7 +84,12 @@ public class AicoachController {
 														Integer.parseInt(tag[6]),
 														startDateTime
 				);
+		GraphTime graphtime = new GraphTime();
+		graphtime.setGraphUserNickname(user);
+		graphtime.setGraphRunningTime(Integer.parseInt(totalTime));
+		graphtime.setGraphDateTime(startDateTime);
 		bodypart = myPageService.saveTag(bodypart);
+		graphtime = myPageService.saveTime(graphtime);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 	

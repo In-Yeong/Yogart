@@ -49,5 +49,10 @@ public class MyPageServiceImpl implements MyPageService {
 	public GraphBodyPart saveTag(GraphBodyPart bodypart) {
 		return graphBodyPartRepository.save(bodypart);
 	}
+
+	@Override
+	public GraphTime saveTime(GraphTime graphtime) {
+		return graphTimeRepository.save(graphtime);
+	}
 	
 }

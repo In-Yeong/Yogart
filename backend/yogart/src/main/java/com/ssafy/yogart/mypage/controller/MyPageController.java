@@ -56,9 +56,7 @@ public class MyPageController {
 		System.out.println(token);
 		User user = userService.authentication(token);
 		GraphBodyPart tags = myPageService.showTagGraph(user);
-		System.out.println(1);
 		List<GraphTime> attendance = myPageService.showattendance(user);
-		System.out.println(2);
 		GraphResult result = new GraphResult();
 		Map<Integer, Integer> timeCount = result.getTimeCount();
 		for(int i = 0; i < attendance.size(); i++) {

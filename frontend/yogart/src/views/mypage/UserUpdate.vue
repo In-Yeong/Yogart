@@ -44,7 +44,7 @@ export default {
     data() {
         return {
             userName: null,
-            userId: null,
+            id: 0,
             userNickname: null,
             userImageUrl: null,
             userIntro: null,
@@ -55,17 +55,18 @@ export default {
             stay: false,
         }
     },
-    create() {
+    created() {
         // 유저 정보를 받아옵니다.
         const requestHeaders = {
             headers: {
                 Authorization: this.$cookies.get('auth-token')
             }
         }
-        axios.get(this.SERVER_URL + '/api/users/myInfo', null, requestHeaders)
+        axios.get(this.SERVER_URL + '/api/users/myInfo', requestHeaders)
         .then(res => {
+            console.log("test???????????",res)
             this.userName = res.data.userName
-            this.userId = res.data.id
+            this.id = res.data.id
             this.userNickname = res.data.userNickname
             this.userProfile = res.data.userProfile
             this.userIntro = res.data.userIntro
@@ -133,13 +134,14 @@ export default {
             }
             let fd = new FormData()
             fd.append('userName', this.userName)
-            fd.append('id', this.userId)
+            fd.append('id', this.id)
             fd.append('userNickname', this.userNickname)
             fd.append('userProfile', this.userProfile)
             fd.append('userIntro', this.userIntro)
 
             axios.put(this.SERVER_URL + '/api/users/myInfo/update', fd, requestHeaders)
             .then(res => {
+                console.log("update!!!!!!!!!!",res)
                 this.$router.replace({ name: 'MyPage' })
             })
             .catch(err => console.error(err))
