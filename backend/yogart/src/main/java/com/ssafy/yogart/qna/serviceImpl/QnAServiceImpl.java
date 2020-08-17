@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.yogart.qna.model.QnA;
@@ -28,7 +29,7 @@ public class QnAServiceImpl implements QnAService{
 	
 	@Override
 	public Page<QnA> allQnA(int page) {
-		return qnaRepository.findAll(PageRequest.of(page-1, 5));
+		return qnaRepository.findAll(PageRequest.of(page-1, 5, Sort.by("createDate").descending()));
 	}
 	
 	@Override

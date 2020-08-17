@@ -74,8 +74,7 @@ public class UserServiceImpl implements UserService {
 
     // 탈퇴
     @Override
-    public void withdraw(String token) {
-        User user = this.authentication(token);
+    public void withdraw(User user) {
         userRepository.delete(user);
     }
 

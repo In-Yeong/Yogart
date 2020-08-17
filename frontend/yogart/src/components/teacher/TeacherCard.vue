@@ -2,7 +2,7 @@
 <div class="card mb-3" style="max-width: 540px;">
   <div class="row no-gutters">
     <div class="col-md-4">
-      <img :src="teacher.teacherImage" class="card-img" alt="...">
+      <img :src="'http://localhost:8000/api/users/profileImageByEmail?userEmail=' + teacher.userEmail" class="card-img" alt="...">
     </div>
     <div class="col-md-8">
       <div class="card-body">
@@ -17,9 +17,11 @@
 <script>
 export default {
     name: 'TeacherCard',
+
     props: {
         teacher: Object,
-    }
+    },
+
 }
 </script>
 

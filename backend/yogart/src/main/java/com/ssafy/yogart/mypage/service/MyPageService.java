@@ -12,4 +12,5 @@ public interface MyPageService {
 	List<GraphTime> showattendance(User user);
 	List<PtClicked> showPTList(User user);
 	GraphBodyPart saveTag(GraphBodyPart bodypart);
+	GraphTime saveTime(GraphTime graphtime);
 }

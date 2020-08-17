@@ -16,7 +16,7 @@
             <i class="fas fa-pencil-alt fa-2x" @click="clickUpdate()"></i>
             <div class="email">{{ userEmail }}</div>
             <div class="spoon-wrap" @click="clickSpoon()">
-                <i class="fas fa-utensil-spoon fa-1x d-inline-block pr-3"></i><div class="spoon d-inline-block">{{spoons}}개</div>
+                <i class="fas fa-utensil-spoon fa-1x d-inline-block pr-3"></i><div class="spoon d-inline-block">{{userSpoon}}개</div>
             </div>
         </div>
 
@@ -36,22 +36,14 @@ export default {
         return {
             SERVER_URL : this.$store.state.SERVER_URL,
             introDown: false,
-            // userName: '',
-            // userNickname: this.$store.state.userNickname,
-            // userEmail: '',
-            // userProfile : '',
-            // userIntro : '',
-            // userId : undefined,
-            // imgSrc : "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
-            // spoons : 0,
-            userName: '박인영',
-            userNickname: 'IN.0',
-            userEmail: 'in0_2015@naver.com',
-            userProfile : '대충사진들어가는곳',
-            userIntro : '안녕하세요, 박인영입니다.',
-            userId : 1,
+            userName: '',
+            userNickname: this.$store.state.userNickname,
+            userEmail: '',
+            userProfile : '',
+            userIntro : '',
+            id : Number,
             imgSrc : "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
-            spoons : 100,
+            userSpoon : 0,
         }
     },
     mounted() {
@@ -74,22 +66,21 @@ export default {
                 Authorization: this.$cookies.get('auth-token')
             }
             }
-            axios.get(this.SERVER_URL + '/api/users/myInfo', requestHeaders)
+            axios.get(this.SERVER_URL + '/api/users/myInfo/profile', requestHeaders)
             .then(res => {
                 console.log("UserProfile page 성공",res)
 
-                this.userName = res.data.user.userName
-                this.userId = res.data.user.Id
-                this.userNickname = res.data.user.userNickname
-                this.userEmail = res.data.user.userEmail
-                this.userProfile = res.data.user.userProfile
-                this.userIntro = res.data.user.userIntro
-                this.spoons = res.data.user.userSpoon
-
-                if (this.userProfile === undefined) {
+                this.userName = res.data.userName
+                this.id = res.data.id
+                this.userNickname = res.data.userNickname
+                this.userEmail = res.data.userEmail
+                this.userProfile = res.data.userProfile
+                this.userIntro = res.data.userIntro
+                this.userSpoon = res.data.userSpoon
+                if (this.userProfile === null) {
                     this.userProfile = 'userDefault'
                 }
-                if (this.userIntro === undefined) {
+                if (this.userIntro === null) {
                     this.userIntro = '상태 메세지를 적어보세요.'
                 }
             })
