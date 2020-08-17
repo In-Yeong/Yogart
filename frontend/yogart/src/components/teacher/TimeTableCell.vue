@@ -29,8 +29,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .select {
-    background-color: greenyellow;
+    background : rgba(143, 160, 242, 0.5);
 }
 </style>

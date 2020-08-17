@@ -31,20 +31,20 @@
                         <router-link class="sub-item nav-link" to="/mypage">마이페이지</router-link>
                         <router-link class="sub-item nav-link" to="/notice/form">공지작성</router-link>
                         <router-link class="sub-item nav-link" to="/admin">강사지원관리</router-link>
-                        <router-link class="sub-item nav-link" @click="logoutEmmit">로그아웃</router-link>
+                        <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
                     </div>
                     <div v-else-if="isTeacher" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <router-link class="sub-item nav-link" to="/mypage">마이페이지</router-link>
                         <router-link class="sub-item nav-link" to="/teachers/class-settings">수업관리</router-link>
-                        <router-link class="sub-item nav-link" @click="logoutEmmit">로그아웃</router-link>
+                        <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
                     </div>
                     <div v-else class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <router-link class="sub-item nav-link" to="/mypage">마이페이지</router-link>
-                        <router-link class="sub-item nav-link" @click="logoutEmmit">로그아웃</router-link>
+                        <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
                     </div>
                 </li>
                 <li class="nav-item" v-else>
-                    <router-link class="nav-link" @click="openLoginModal">LOGIN</router-link>
+                    <a class="nav-link" @click="openLoginModal">LOGIN</a>
                 </li>
                 </ul>
             </div>

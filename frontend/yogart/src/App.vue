@@ -87,6 +87,7 @@ export default {
 			this.$store.commit('storeLogout')
 			// 로그아웃이 완료되면 사용자를 홈페이지로 던집니다.
 			this.$router.push({ name: 'Home' })
+			window.location.reload()
 		},
 		setSize() {
 			let size = window.innerWidth
@@ -111,19 +112,13 @@ export default {
 
 <style>
 
+
 #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    /* font-family: 'Song Myung', serif; */
-    /* color: #2c3e50;
-    min-height: calc(100vh - 127.55px);
-
-    background-image: url('./assets/marble1.jpg');
-    background-size: 100%;
-     */
     background-image: url("./assets/back1.jpg");
-    /* background-repeat: no-repeat; */
+    background-repeat: no-repeat;
     background-size: 100%;
     color: #2c3e50;
 }
@@ -141,7 +136,6 @@ export default {
     margin : 30px auto;
     border-bottom : 2px solid rgba(143, 160, 242, 0.7);
 }
-
 .full-page {
     min-height: 100vh;
 }
@@ -207,6 +201,40 @@ pre {
   top: 60px;
   left: 80px;
 }
+
+
+.btn-blue {
+  transition-duration: 0.4s;
+  /* background-color:rgba(255,255,255,0.3);
+  border: 3px solid #f29d8f;
+  color: #f29d8f; */
+  background-color:rgba(143, 160, 242, 1);
+  border: 3px solid rgba(143, 160, 242, 1);
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+
+  font-size: 24px;
+  margin: 4px 2px;
+  transition:800ms ease all;
+  outline:none;
+}
+.btn-blue:hover {
+  background-color:  rgba(255,255,255,0.3);
+  color: rgba(143, 160, 242, 1);
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 24px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+
+
 .btn1 {
   transition-duration: 0.4s;
   /* background-color:rgba(255,255,255,0.3);
@@ -465,3 +493,4 @@ pre {
   background-size: cover;
 }
 </style>
+

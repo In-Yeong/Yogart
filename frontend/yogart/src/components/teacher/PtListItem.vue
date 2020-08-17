@@ -1,18 +1,20 @@
-<template>
-    <div>
-        <span>수업이름: {{ ptInfo.ptName }}</span>
-        <span> 시간: {{ time.ptTime }}시 시작</span>
-        <span> 가격: {{ ptInfo.ptPrice }}스푼</span>
-        <span> 소개: {{ ptInfo.ptIntro }}</span>
-        <b-button id="show-btn" @click="showModal">신청</b-button>
+<template>   
+    <div class="mt-3 box" @click="showModal">
+        <div class="d-flex justify-content-between px-5 py-2">
+            <span>{{ ptInfo.ptName }} (  {{ time.ptTime }}시 )</span> 
+             <span class="intro">신청할래요~ Click</span>
+            <span> {{ ptInfo.ptPrice }}스푼</span> 
+        </div>
         <b-modal ref="my-modal" hide-footer :title="modalTitle">
             <div class="d-block text-center">
                 <h3>{{ptInfo.ptName}}<br>
                 {{ dDay }} {{ time.ptTime }}시</h3>
             </div>
-                <b-button class="mt-3" variant="outline-danger" block @click="ptRegi">신청하기</b-button>
+                <b-button class="mt-3" variant="outline-danger" block>신청하기</b-button>
         </b-modal>
     </div>
+     
+  
 </template>
 
 <script>
@@ -75,6 +77,34 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.box{
+    width : 100%;
+    box-shadow: 3px 3px rgba(143, 160, 242, 0.5);
+    border-radius: 0;
+}
+.box:hover{
+    cursor: pointer;
+    background-color: rgba(143, 160, 242, 0.5);
+}
+.apply-btn{
+    color : white;
+    background-color:rgba(143, 160, 242, 0.7);
+    border : 2px solid rgba(143, 160, 242, 0.7);
+    /* width : 200px; */
+} 
+.apply-btn:hover{
+    cursor: pointer;
+    background-color: rgba(0,0,0,0);
+}
+.intro{
+
+    visibility: hidden;
+}
+.box:hover .intro {
+    color : red;
+    visibility: visible;
+}
+
 
 </style>
