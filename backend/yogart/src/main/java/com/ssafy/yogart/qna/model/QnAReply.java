@@ -46,7 +46,7 @@ public class QnAReply {
     @ApiModelProperty(value="email")
     private User userEmail;
 	
-	@Column(name="qna_reply_content", columnDefinition = "text")
+	@Column(name="qna_reply_content", columnDefinition = "longtext")
     @ApiModelProperty(value="답글내용")
 	private String qnaReplyContent;
 	
