@@ -1,14 +1,30 @@
 <template>
     <div class="m-5">
-        <label for="class_name">수업 이름</label>
-        <input type="text" id="class_name" v-model="ptName">
-        <br>
-        <label for="class_price">회당 가격</label>
-        <input type="text" id="class_price" v-model="ptPrice">
-        <br>
-        <label for="class_intro">수업 소개</label>
-        <input type="text" id="class_intro" v-model="ptIntro">
-        <table class="table table-dark">
+        <h1>수업 개설</h1>
+        <div class="d-flex mx-auto w-75 mb-3 justify-content-center">
+        <div class="mr-3">
+            <div class="field-row">
+                <input name="class_name" id="class_name" v-model="ptName" type="text" required autofocus/>
+                <label for="class_name">수업명</label> 
+            </div>
+            <div class="field-row">
+                <input name="class_price" id="class_price" v-model="ptPrice" type="text" required/>
+                <label for="class_price">회당 가격</label> 
+            </div>
+            <div class="field-row">
+                <input name="class_intro" id="class_intro" v-model="ptIntro" type="text" required/>
+                <label for="class_intro">수업 소개</label> 
+            </div>
+        </div>
+        <div style="margin-top:30px;">
+            <button id="makeClassBtn" @click="onSubmit">수업 생성</button>
+        </div>
+    </div>
+
+
+
+
+        <table class="table w-75 mx-auto">
         <thead>
             <tr>
             <th scope="col">시</th>
@@ -25,7 +41,6 @@
             <TimeTable v-for="time in times" :key="time" :time="time" :clicked="clicked" @cellClicked="cellClicked"></TimeTable>
         </tbody>
         </table>
-        <button @click="onSubmit">수업 생성</button>
     </div>
 </template>
 
@@ -99,8 +114,62 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+#makeClassBtn{
+    width : 100px;
+    height : 190px;
+    background-color: rgba(143, 160, 242, 1);
+    color : white;
+    border :2px solid white;
+    border-radius : 10px; 
+    font-weight: 500;
+}
 th {
-    border-style: solid;
+    background-color: rgba(143, 160, 242, 1);
+    color : white;
+    border :2px solid white;
+    height : 5px;
+    line-height: 25px;
+    font-size : 15px;
+}
+@import 'https://fonts.googleapis.com/css?family=Titillium+Web';
+.field-row {
+	font-family: 'Titillium Web', sans-serif;
+	margin:30px 0 0 10px;
+	position:relative;
+
+}
+label {
+	font-size:16px;
+	color:#888;
+	position:absolute;
+	top: 10px;
+    bottom: 0;
+    left: 10px;
+	transition: .3s ease;
+	cursor:text;
+}
+input {
+    width : 400px;
+    background :rgba(255, 255, 255, 0.8);
+	font-size:16px;
+	line-height:18px;
+	padding: 10px 10px 10px 0;
+	border:0;
+	border-bottom:1px solid #ccc;
+	outline:none;
+	
+}
+input:focus {
+	border-color:#888;
+}
+input:focus ~ label, input:valid ~ label {
+	font-size:15px;
+	
+	color:black;
+	transform: translate3d(0, -30px, 0);
+}
+.select{
+    background-color: rgba(143, 160, 242, 0.6);
 }
 </style>

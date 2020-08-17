@@ -40,7 +40,18 @@ export default {
 </script>
 
 <style scoped>
-td {
-    border-style: solid;
+
+tr, td {
+    border : 2px solid white;
+}
+th {
+    background-color: rgba(143, 160, 242, 1);
+    color : white;
+    height : 5px;
+    line-height: 25px;
+    font-size : 15px;
+}
+td{
+    background-color: rgba(255, 255, 255, 0.5);
 }
 </style>

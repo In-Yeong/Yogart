@@ -1,10 +1,14 @@
 <template>
     <!-- 예약된 모든 PT를 확인할 수 있는 곳입니다. -->
-    <div>
-        <div v-for="pt in ptList" :key="pt.id">
-            <span>{{ pt.ptName }}</span>
-            <span>{{ pt.ptStudentId.userName }}</span>
-            <span>{{ pt.dateTime }}</span>
+    <div class="white-box" >
+        <h1 class="under-border">예약된 PT 조회</h1>
+        <div class="d-flex flex-column box" v-for="pt in ptList" :key="pt.id">
+            <div class="d-flex justify-content-between">
+                <h4>{{ pt.ptName }}</h4>
+                <p>{{ pt.dateTime }}</p>
+            </div>
+            <h5>{{ pt.studentName }}</h5>
+           
         </div>
     </div>
 </template>
@@ -39,6 +43,5 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
 </style>

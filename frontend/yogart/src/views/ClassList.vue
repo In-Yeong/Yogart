@@ -27,7 +27,7 @@
                 <div>{{ yogaClass.teacher_nickName }} | <span class="price"> {{ yogaClass.price}} </span> 스푼</div>
             </div>
         </div> -->
-        <div class="box px-3 d-flex justify-content-between align-items-center" @click="btnClick(yogaClass.ptId)" v-for="yogaClass in yogaList" :key="yogaClass.ptId">
+        <div class="box px-3 d-flex justify-content-between align-items-center" v-for="yogaClass in yogaList" :key="yogaClass.ptId" @click="btnClick(yogaClass.ptTeacherId.id)">
             <div class="d-flex align-items-center">
                 <img class="user-profile m-3" :src="require('@/assets/Hedgehog.jpg')">
                 <div class="h5">{{ yogaClass.ptName }}</div>
@@ -70,19 +70,17 @@ export default {
         //     // axios로 요청보내기
 
         // },
-        btnClick(classId) {
-            console.log(classId)
+        btnClick(teacherId) {
+            console.log(teacherId)
             // 해당 수업 상세 페이지로 이동
-            // this.$router.push(`/teachers/${`)
+            this.$router.push(`/teachers/${teacherId}`)
         },
         infiniteHandler($state) {
             axios.get(`${this.SERVER_URL}/api/teachers/class/list/${this.limit + 10}`)
             .then(res => {
-                console.log(res)
                 setTimeout(()=> {
                     if (res.data.content.length) {
                         this.yogaList = this.yogaList.concat(res.data.content);
-                        console.log(this.yogaList);
                         $state.loaded();
                         this.limit += 10
                         if (this.yogaList.length / 10 === 0){
