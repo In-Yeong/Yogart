@@ -1,24 +1,33 @@
 <template>
     <div>
-        <div class="white-box mb-5">
+        <div class="white-box mb-5 ">
             <div class="under-border mb-5">
                 <h2>{{ ptInfo.ptName }}</h2>
             </div>
             <div>
-                <h5>{{ ptInfo.ptIntro }}</h5>
+                <h4>{{ ptInfo.ptIntro }}</h4>
             </div>
-            <br>
-            <!-- <label class="mx-3"> 원하는 일정을 선택해보세요 </label> -->
             <div>
                 <h5 style="color:#8fa0f2">{{ ptInfo.ptPrice }} 스푼으로 함께해요</h5>
             </div>
+            <br>
+            <label id="info">아래의 파란 박스를 클릭해서 원하는 일정의 수업을 신청해보세요</label>
+            <!-- <label class="mx-3"> 원하는 일정을 선택해보세요 </label> -->
             <div>
-                <DatePicker id="date-picker" format="yyyy-MM-dd-D" :highlighted="highlighted" @selected="selectDate" :language="ko"></DatePicker>
-                <div v-for="time in showArray" :key="time.time">
-                    <PtListItem :ptInfo="ptInfo" :time="time" :clickedDate="clickedDate"></PtListItem>
+                <DatePicker id="date-picker" format="yyyy-MM-dd-D" :highlighted="highlighted" @selected="selectDate" placeholder="클릭해서 원하는 일정을 선택해보세요" :language="ko"></DatePicker>
+                <div class="page-index d-flex-colum">
+                    <div v-for="time in showArray" :key="time.time">
+                        <PtListItem :ptInfo="ptInfo" :time="time" :clickedDate="clickedDate"></PtListItem>
+                    </div>
                 </div>
             </div>
         </div>
+        
+        <!-- <h2>{{ ptInfo.ptName }}</h2>
+        <h5>{{ ptInfo.ptPrice }}스푼으로 함께해요</h5>
+        <h5>{{ ptInfo.ptIntro }}</h5> -->
+        <!-- <ReviewList :ptInfo="ptInfo"></ReviewList> -->
+        <!-- 데이터 피커를 이용해 날짜를 받으면, 그 날짜에 열리는 모든 수업을 리스팅한다. -->
     </div>
 </template>
 
@@ -28,6 +37,7 @@ import DatePicker from 'vuejs-datepicker'
 import { ko } from 'vuejs-datepicker/dist/locale'
 import PtListItem from './PtListItem.vue'
 import ReviewList from '../review/ReviewList.vue'
+
 
 export default {
     name: 'ClassRegi',
@@ -62,6 +72,9 @@ export default {
             console.log('ptTimes', this.ptTimes)
             console.log('showArray', this.showArray)
             console.log('soldOut', this.soldOut)
+            this.showArray.sort(function(a, b) {
+                return a.ptTime - b.ptTime
+            })
         }
     },
     data() {
@@ -82,13 +95,15 @@ export default {
             showArray: [],
             clickedDate: null,
             SERVER_URL: this.$store.state.SERVER_URL,
+            ptUrl: null,
         }
     },
     mounted() {
+        // document.getElementById("date-picker").setAttribute("placeholder", "클릭해서 원하는 일정을 선택해보세요.");
         // 강사의 수업 정보와 이미 예약된 PT리스트를 가져옵니다.
         axios.get(this.SERVER_URL + `/api/teachers/pt/${this.ptId}`, this.ptId)
         .then(res => {
-            // console.log(res)
+            console.log(res)
             // let res = {
             //     data: {
             //         ptTeacher: 12, // 요가강사 id값
@@ -142,5 +157,15 @@ export default {
 </script>
 
 <style>
+#date-picker {
+    background-color: rgba(143, 160, 242, 0.5);
+    border : 2px solid rgba(0,0,0,0);
+    border-bottom : 1px solid black;
+    width : 100%;
+}
+#info{
+    color : gray;
+    font-size : 10px;
+}
 
 </style>

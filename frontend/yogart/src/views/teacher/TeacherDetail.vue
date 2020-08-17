@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="padding-for-nav padding-remove">
         <div class="under-border my-3">
             <img v-if="teacherInfo.teacherImage" :src="teacherInfo.teacherImage" alt="" class="user-profile">
             <img v-else src="../../assets/userDefault.jpg" class="user-profile m-3">
@@ -59,6 +59,10 @@ export default {
 <style scoped>
 .under-border{
     box-shadow: 3px 3px rgba(0,0,0,0.1);
+}
+.padding-remove{
+    margin-top: -8rem;
+    margin-bottom: 17rem;
 }
 
 </style>
