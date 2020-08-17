@@ -2,7 +2,7 @@
     
     <div class="m-5">
         <h3 style="font-weight:500px;">사용자 지정 코스</h3>
-        <carousel-3d :controls-visible="true" :clickable="true">
+        <carousel-3d id="user-carousel" :controls-visible="true" :clickable="true">
             <slide class="slide" :index="0">
             <figure>
                 <figcaption class="text-center" style="font-size:100px;" @click="newCourse()">
@@ -13,7 +13,7 @@
             <slide class="slide" v-for="(slide, i) in slides" :key="i" :index="i+1">
             <figure>
                 <img src="https://placehold.it/360x270">
-                <figcaption class="text-center" style="font-size:100px;" @click="clickSet(slides_id[i])">
+                <figcaption class="text-center" style="font-size:25px;" @click="clickSet(slides_id[i])">
                     {{slide}}
                 </figcaption>
             </figure>
@@ -41,7 +41,7 @@
         },
         watch: {
             slides() {
-                console.log('시계는와치')
+                document.getElementById('user-carousel').style = "width: 100%;"
             }
         },
         methods: {
@@ -61,7 +61,6 @@
                         this.slides.push(e.aiCourseName)
                         this.slides_id.push(e.aiCourseId)
                         console.log('추가함', this.slides)
-
                         console.log("내 요가 리스트",e.aiCourseId)
 
                     });
