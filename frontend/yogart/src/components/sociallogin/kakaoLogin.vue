@@ -26,7 +26,7 @@ export default {
                 success : function( authObj ) {
                     // console.log( authObj );
                     axios
-                    .post("http://localhost:8000/api/users/kakaoLogin", {
+                    .post(`http://i3d202.p.ssafy.io:8000/api/users/kakaoLogin`, {
                         access_token: authObj.access_token,
                         expires_in: authObj.expires_in,
                         refresh_token: authObj.refresh_token,
