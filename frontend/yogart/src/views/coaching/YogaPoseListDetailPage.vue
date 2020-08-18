@@ -14,7 +14,7 @@
         </div>
         <div class="d-flex justify-content-center my-5">
             <div class="btn-white m-5" @click="goBackToList()">다른 코스 둘러보기</div>
-            <div class="btn-white  m-5" @click="clickStart()">AI 코칭 시작할래요</div>
+            <div class="btn-white  m-5" @click="clickStart()">시작할래요</div>
             <!-- <div class="box-btn m-5">다른 코스 둘러보기</div>
             <div class="box-btn  m-5">AI 코칭 시작할래요</div> -->
         </div>
