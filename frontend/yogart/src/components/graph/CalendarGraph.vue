@@ -2,12 +2,13 @@
     <div class="timeGraph">
         <div class="graph-name">일별 운동량</div>
         <div class="wrapper">
-            <GChart
+            <GChart v-if="!isEmpty"
             :settings="{packages: ['calendar']}"
             type="Calendar"
             :data="chartData"
             :options="chartOptions"
             />
+            <div v-else>데이터가 없습니다.</div>
         </div>
     </div>
 </template>
@@ -31,7 +32,8 @@
                 calendar: { cellSize: 11 },
                 height: 150
 
-                }
+                },
+                isEmpty : true
             };
         },
         props: {
@@ -40,7 +42,9 @@
         watch: {
             calendar() {
                 var calendarArr = Object.entries(this.calendar)
-                console.log('여기~~',calendarArr.length)
+                if (calendarArr.length >= 0) {
+                    this.isEmpty = false
+                }
                 calendarArr.forEach(e => {
                     var date = e[0].split('-')
                     console.log('날짜',date)
@@ -48,7 +52,10 @@
                     this.chartData.push([new Date(date[0]*1, (date[1]*1-1), date[2]*1), run])
                 });
             }
-        }
+        },
+        methods: {
+
+        },
 
     }
 </script>

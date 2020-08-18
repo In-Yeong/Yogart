@@ -14,12 +14,12 @@
                 <ValidationObserver v-slot="{ invalid }">
                     <br>
                     <ValidationProvider name="email" rules="required|email" v-slot="{ errors }">
-                        <input class="id-input" v-model="loginData.userEmail" type="text" placeholder="이메일"><br>
+                        <input class="id-input" @keyup.enter="onSubmit" v-model="loginData.userEmail" type="text" placeholder="이메일"><br>
                         <span class="login-reject text-right">{{ errors[0] }}</span>
                     </ValidationProvider>
                     <br>
                     <ValidationProvider rules="required|min:6" v-slot="{ errors }">
-                        <input class="password-input" type="password" v-model="loginData.userPassword" placeholder="비밀번호"><br>
+                        <input class="password-input" @keyup.enter="onSubmit" type="password" v-model="loginData.userPassword" placeholder="비밀번호"><br>
                         <span class="login-reject">{{ errors[0] }}</span>
                     </ValidationProvider>
                     <br>

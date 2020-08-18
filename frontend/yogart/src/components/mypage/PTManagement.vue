@@ -111,6 +111,13 @@ export default {
           console.log("PTManagement 성공",res)
           //과거 pt 기록들 날짜,시간순으로 배열로 넘겨주세요
           this.pastCourses = res.data.pastCourses
+          this.pastCourses.forEach(pastCourse => {
+              if (pastCourse.isAttend === true) {
+                  pastCourse.isAttend = '출석'
+              } else {
+                  pastCourse.isAttend = '결석'
+              }
+          });
           //오늘 pt 기록들 시간순으로 배열로 넘겨주세요
           this.todayCourses = res.data.todayCourses
           //미래 pt 기록들 날짜,시간순으로 배열로 넘겨주세요

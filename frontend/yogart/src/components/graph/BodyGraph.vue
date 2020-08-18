@@ -23,7 +23,6 @@
         },
         watch: {
             body() {
-                console.log('바디데이타', this.body)
                 this.fillData()
             }
         },
