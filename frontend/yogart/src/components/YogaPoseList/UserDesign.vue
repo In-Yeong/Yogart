@@ -2,7 +2,7 @@
     
     <div class="m-5">
         <h3 style="font-weight:500px;">사용자 지정 코스</h3>
-        <carousel-3d id="user-carousel" :controls-visible="true" :clickable="true">
+        <carousel-3d id="user-carousel" :controls-visible="true" :clickable="true"  :controls-prev-html="'&#10092;'" :controls-next-html="'&#10093;'">
             <slide class="slide" :index="0">
             <figure>
                 <figcaption class="text-center" style="font-size:100px;" @click="newCourse()">
