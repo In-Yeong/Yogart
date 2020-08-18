@@ -13,13 +13,11 @@ export default {
         }
     },
     mounted() {
-        console.log("도넛차트",this.dougnutdata)
         this.createChart()
     },
     methods : {
         createChart() {
              var ctx2 = document.getElementById('dougnutChart').getContext('2d');
-            //  ctx2.style.backgroundColor = ' rgba(255,255,255,0.5)';
             var dougnutChart = new Chart(ctx2, {
                 // The type of chart we want to create
                 type: 'doughnut',
@@ -97,7 +95,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #dougnutChart {
     height : 400px !important;
     width : 700px !important;

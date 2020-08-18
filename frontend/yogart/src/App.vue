@@ -13,7 +13,6 @@
 import axios from 'axios'
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
-const API_URL = 'http://127.0.0.1:8000'
 
 export default {
     name: "App",
@@ -30,16 +29,13 @@ export default {
     },
     methods: {
         signup(signupData) {
-        // console.log(signupData)
         axios.post(`${this.SERVER_URL}/api/users/signup`, signupData)
             .then(response => {
                 if (response.data.statusCode === 200) {
-                    console.log(response)
                     this.$store.commit('storeLogin', response.data)
                     this.loginComplete()
                 }
                 else {
-                    console.log(response)
                     if (response.data.statusCode === 403) {
                         if (response.data.message === 'email') {
                             alert('이메일이 이미 존재합니다.')
@@ -55,15 +51,14 @@ export default {
                 } 
             })
             .catch(err => {
-                console.log(err)
                 if (err.data.statusCode === 403) {
-                   if (err.data.message === 'email') {
-                       alert('이메일이 이미 존재합니다.')
-                   } else if (err.data.message === 'nickname') {
-                       alert('닉네임이 이미 존재합니다.')
-                   } else {
-                       alert('이메일과 닉네임이 이미 존재합니다.')
-                   }
+                    if (err.data.message === 'email') {
+                        alert('이메일이 이미 존재합니다.')
+                    } else if (err.data.message === 'nickname') {
+                        alert('닉네임이 이미 존재합니다.')
+                    } else {
+                        alert('이메일과 닉네임이 이미 존재합니다.')
+                    }
                 }
                 else {  
                     alert('회원가입 실패')
@@ -91,8 +86,6 @@ export default {
 		},
 		setSize() {
 			let size = window.innerWidth
-			// console.log(size)
-			// console.log(this.isPC)
 			if (size < 660) {
 				this.isPC = false
 			} else {
@@ -117,9 +110,9 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    background-image: url("./assets/back1.jpg");
-    background-repeat: no-repeat;
-    background-size: 100%;
+    background-image: url("./assets/back.jpg");
+    background-repeat: repeat;
+    background-size: 20%;
     color: #2c3e50;
 }
 .white-box{

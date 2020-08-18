@@ -38,7 +38,6 @@ export default {
 
         },
         onClick(e) {
-            console.log('red',this.selected)
             const requestHeaders = {
                 headers: {
                     Authorization: this.$cookies.get('auth-token')
@@ -64,7 +63,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .page-name {
     margin: -4rem auto 2rem;
     font-size: 4vh;

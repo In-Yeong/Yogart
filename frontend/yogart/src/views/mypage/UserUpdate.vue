@@ -64,7 +64,6 @@ export default {
         }
         axios.get(this.SERVER_URL + '/api/users/myInfo', requestHeaders)
         .then(res => {
-            console.log("test???????????",res)
             this.userName = res.data.userName
             this.id = res.data.id
             this.userNickname = res.data.userNickname
@@ -81,10 +80,6 @@ export default {
         },
         withdrawl() {
             this.$refs['my-modal'].show()
-            // alert("")
-            // alert()
-            // alert()
-            //회원 탈퇴 내용 넣어야
         },
         stayHere() {
             this.$refs['my-modal'].hide()
@@ -119,7 +114,6 @@ export default {
                 }
                 axios.delete(this.SERVER_URL + '/api/users/delete', requestHeaders)
                 .then(res => {
-                    console.log(res)
 			        this.$store.commit('storeLogout')
                     this.$router.push('/')
                 })
@@ -141,7 +135,6 @@ export default {
 
             axios.put(this.SERVER_URL + '/api/users/myInfo/update', fd, requestHeaders)
             .then(res => {
-                console.log("update!!!!!!!!!!",res)
                 this.$router.replace({ name: 'MyPage' })
             })
             .catch(err => console.error(err))
@@ -165,7 +158,6 @@ export default {
             fd.append('userImage', this.userImage)
             axios.post(this.SERVER_URL + '/api/users/profileUpload', fd, requestHeaders)
             .then(res => {
-                console.log(res)
                 alert('변경이 완료되었습니다.')
             })
             .catch(err => console.error(err))

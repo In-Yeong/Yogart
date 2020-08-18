@@ -39,13 +39,10 @@ export default {
             for (let i = 0; i < this.$refs.tI.files.length; i++) {
                 // file.push(this.$refs.tI.files[i]);
                 let file = this.$refs.tI.files[i];
-                console.log(file);
                 fd.append('files', file)
          
             }
-            // fd.append("files",file);
-            // console.log(file);
-            console.log(fd);
+
             axios.post(this.SERVER_URL + '/api/users/imageUpload', fd, requestHeaders)
             .then(res => {
                 this.$router.push('/')

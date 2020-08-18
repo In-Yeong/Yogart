@@ -11,11 +11,6 @@
                 </select>
             </div>
         </div>
-            <!-- <div class="page-select">
-                <div class="option option-active" id="new" @click="resorting('new')">최신순</div>
-                <div class="option" id="low" @click="resorting('low')">낮은가격순</div>
-                <div class="option" id="high" @click="resorting('high')">높은가격순</div>
-            </div> -->
   
         <div class="box px-3 d-flex justify-content-between align-items-center" v-for="yogaClass in yogaList" :key="yogaClass.ptId" @click="btnClick(yogaClass.ptTeacherId.id)">
             <div class="d-flex align-items-center">
@@ -47,33 +42,17 @@ export default {
     created() {
         window.scrollTo(0,0);
     },
-    mounted(){
-        // this.dropdown()
-    },
     methods: {
-        // resorting(str) {
-        //     var options = document.getElementsByClassName('option')
-        //     options.forEach(el => {
-        //         el.classList.remove('option-active')
-        //     });
-        //     document.getElementById(str).classList.add('option-active')
-        //     // axios로 요청보내기
-
-        // },
-
         btnClick(id) {
-            console.log(id)
             // 해당 수업 상세 페이지로 이동
             this.$router.push(`/teachers/${id}`)
         },
         infiniteHandler($state) {
             axios.get(`${this.SERVER_URL}/api/teachers/class/list/${this.limit + 10}`)
             .then(res => {
-                console.log(res)
                 setTimeout(()=> {
                     if (res.data.content.length) {
                         this.yogaList = this.yogaList.concat(res.data.content);
-                        console.log(this.yogaList);
                         $state.loaded();
                         this.limit += 10
                         if (this.yogaList.length / 10 === 0){

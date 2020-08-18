@@ -22,7 +22,6 @@ export default {
     methods: {
         yogaListDetail(num) {
             // 쿠키에 저장
-            console.log("여긴 리스트페이지",num)
             this.$cookies.set('coaching-list', num)
             this.$router.push(`/coaching/yogaposelist/detail`)
         }

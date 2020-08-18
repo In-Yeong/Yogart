@@ -23,7 +23,6 @@
                 </li>
                 
                 <li class="nav-item dropdown" v-if="isLogin">
-                    <!-- <img class="user-profile-img m-3" :src="userPic"> -->
                     <a class="nav-link" id="navbarDropdown" data-toggle="dropdown">
                     {{userNickname}}님
                     </a>
@@ -33,8 +32,7 @@
                         <router-link class="sub-item nav-link" to="/admin">강사지원관리</router-link>
                         <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
                     </div>
-                    <!-- <div v-else-if="isTeacher" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> -->
-                    <div v-else-if="true" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <div v-else-if="isTeacher" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <router-link class="sub-item nav-link" to="/mypage">마이페이지</router-link>
                         <router-link class="sub-item nav-link" to="/teachers/class-settings">수업관리</router-link>
                         <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>

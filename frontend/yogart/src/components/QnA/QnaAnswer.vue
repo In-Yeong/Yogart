@@ -24,18 +24,7 @@ export default {
     data() {
         return {
             ReplyContent: '',
-            answers: [{
-                "qnaReplyId": 1,
-                "qnaReplyContent": '댓글~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-                "createDate": '2020-08-15'
-
-            },
-            {
-                "qnaReplyId": 2,
-                "qnaReplyContent": '댓글2dfsfsdgbrwwedefrwefewfefejdkdls;jcfksd;chsdjk;fhscjk;dszjkj hjklhjlkyi;yhi;hujil;hjlghkfghdjcgfj',
-                "createDate": '2020-08-15'
-
-            }],
+            answers: [],
             isAdmin: true,
             SERVER_URL: this.$store.state.SERVER_URL,
             answerData: this.ReplyContent,
@@ -44,7 +33,6 @@ export default {
     mounted() {
         axios.get(this.SERVER_URL + `/api/qna/reply/list/${this.itemId}`, this.itemId)
         .then(res => {
-            console.log(res)
             this.answers = res.data.list
             this.isAdmin = res.data.admin
         })
@@ -62,8 +50,7 @@ export default {
                 ReplyContent: this.ReplyContent,
                 qnaId: this.itemId
             }
-            // 데이터 형식 및 URL 체크 
-            console.log(replycontents) 
+            // 데이터 형식 및 URL 체크  
             if (this.answerData !== null && this.isAdmin === true) [
             axios.post(this.SERVER_URL + '/api/qna/reply/make', replycontents, requestHeaders)
             .then(res => {

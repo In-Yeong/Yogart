@@ -52,7 +52,6 @@ export default {
                 day: this.clickedDate.getDay(),
                 time: this.ptDate,
             }
-            console.log('@@@@@@@@', ptData)
             axios.post(this.SERVER_URL + '/api/teachers/pt-regist', ptData, requestHeaders)
             .then(res => {
                 this.$refs['my-modal'].hide()

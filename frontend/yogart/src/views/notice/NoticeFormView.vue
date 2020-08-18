@@ -50,7 +50,6 @@ export default {
                 noticeTitle: this.noticeTitle,
                 noticeContent: this.noticeContent,
             }
-            console.log(noticeData)
             if (this.noticeContent !== null && this.noticeTitle !== null) {
                 this.isEmpty = false
             }
@@ -74,7 +73,7 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
 .notice-page-name {
     margin: -8rem auto 2rem;

@@ -71,7 +71,6 @@ export default {
     },
     methods: {
         cellClicked(payload) {
-            // console.log(payload.day, payload.time)
             if (payload.isClicked) {
                 this.clicked.push({day: payload.day, time: payload.time})
             } else {
@@ -80,7 +79,6 @@ export default {
                 })
                 if (idx > -1) this.clicked.splice(idx, 1)
             }
-            // console.log(this.clicked)
         },
         onSubmit(e) {
             e.preventDefault()
@@ -95,24 +93,14 @@ export default {
                 ptIntro: this.ptIntro,
                 clicked: this.clicked,
             }
-            // console.log(ptData)
             // 데이터 저장을 요청합니다. 데이터를 저장하며 clicked에 맞춰 수업을 생성해야 합니다.
-            
             axios.post(this.SERVER_URL + '/api/teachers/pt-create', ptData, requestHeaders)
             .then(res => {
-              
                 // 강사 상세페이지로 이동
                 // this.$router.push('')
             })
             .catch(err => console.error(err))
         }
-    },
-    mounted() {
-        // // 전에 저장했던 강사의 수업 가능 시간을 받아 옵니다.
-        // axios.get(this.SERVER_URL + '/api/teachers/pt-timetable, pt)
-        // .then(res => {
-        //     this.clicked = res.data.clicked
-        // })
     },
 }
 </script>

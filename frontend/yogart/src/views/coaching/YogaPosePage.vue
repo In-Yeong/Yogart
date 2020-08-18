@@ -1,123 +1,80 @@
 <template>
-  <div class=" my-5" >
-      <h1 style="font-weight:700px;" class="my-5">나만의 코스 만들기</h1>
-      <!-- <div class="d-flex flex-column" style="background-color: rgba(242, 157, 143, 0.5);"> -->
-         
+    <div class=" my-5" >
+        <h1 style="font-weight:700px;" class="my-5">나만의 코스 만들기</h1>
 
-      <div id="course-list">
-          <!-- <form class="d-flex flex-column">
-            <input id="input-1" type="text" placeholder="코스명을 적어주세요" required autofocus />
-            <label for="input-1">
-                <span class="label-text" >코스 생성하기</span>
-                <div class="fill-button-trigger">CLick here and fill the form2323</div>
-            </label>
-            <button class="submit-button" type="submit">생성하기</button>
-            <p class="tip">Press Tab</p>
-            <div class="fill-button">포즈는 선택하셨나요?(최대 7개)</div>
-        </form> -->
-
-        <div class="field-row mx-5">
-            <input name="courseName" id="courseName" v-model="courseName" type="text" required @keyup.enter="makeList(courseName)"/>
-            <label for="courseName">코스명 + Enter</label>
-            
-        </div>
+        <div id="course-list">
+            <div class="field-row mx-5">
+                <input name="courseName" id="courseName" v-model="courseName" type="text" required @keyup.enter="makeList(courseName)"/>
+                <label for="courseName">코스명 + Enter</label>   
+            </div>
        
-        <p style="color:#888; margin-top:5px;">포즈를 선택해 주세요( 최대 7개 )<span @click="reset" class="reset-btn">Reset</span></p>
-        <div class="d-flex justify-content-around">
+            <p style="color:#888; margin-top:5px;">포즈를 선택해 주세요( 최대 7개 )<span @click="reset" class="reset-btn">Reset</span></p>
+            <div class="d-flex justify-content-around">
 
                 <div class="d-flex flex-column" v-for="idx in poseIndexList" :key="idx">
-                    <!-- <div class=" overlay-image _b1 "><a href="LINK_URL">
-                        <img class=" image _b2 " src="IMAGE" alt="Alt text" />
-                        <div class=" normal _b4 ">
-                        <div class=" text _2 ">Image + text
-                        ORIGINAL</div>
-                        </div>
-                        <div class=" hover _b3 ">
-                        <div class=" text _2 ">Background + text
-                        HOVER</div>
-                        </div>
-                        </a></div> -->
-
-
-                 <div>
-                    <img class="image user-profile-small m-2" :src="require(`../../../public/photos/${posefiles[idx].file_reference}`)">
-                    <span id="delete" @click="deleteItem(posefiles[idx])">x</span>
-                </div>
-                <p>{{posefiles[idx].korean_pose_name}}</p>
-                </div> 
-                    
-            </div>
-          
+                    <div>
+                        <img class="image user-profile-small m-2" :src="require(`../../../public/photos/${posefiles[idx].file_reference}`)">
+                        <span id="delete" @click="deleteItem(posefiles[idx])">x</span>
+                    </div>
+                    <p>{{posefiles[idx].korean_pose_name}}</p>
+                </div>         
+            </div>    
         </div>
 
-        <!-- <p>{{poseList}}</p> -->
-        <!-- <p>{{poseIndexList}}</p> -->
-       <div class="container">
-           <div>
-            <div class="d-flex justify-content-around" >
-            <div id="all-btn" class="btn-white"  :class="{ active: all }" @click="allBtn">전체</div>
-            <div id="beg-btn" class="btn-white" :class="{ active: beginner }" @click="beginnerBtn">초급</div>
-            <div id="int-btn" class="btn-white" :class="{ active: intermediate }" @click="intermediateBtn">중급</div>
-            <div id="exp-btn" class="btn-white"  :class="{ active: expert }" @click="expertBtn">고급</div>
-            </div>
+        <div class="container">
+            <div>
+                <div class="d-flex justify-content-around">
+                    <div id="all-btn" class="btn-white"  :class="{ active: all }" @click="allBtn">전체</div>
+                    <div id="beg-btn" class="btn-white" :class="{ active: beginner }" @click="beginnerBtn">초급</div>
+                    <div id="int-btn" class="btn-white" :class="{ active: intermediate }" @click="intermediateBtn">중급</div>
+                    <div id="exp-btn" class="btn-white"  :class="{ active: expert }" @click="expertBtn">고급</div>
+                </div>
            
             
                 <div v-if="all">
-                    <div  class="row" >       
-                    <div @click="poseChoose(posefile)" class="col-sm-2 box all-box" :id="posefile.id" v-for="posefile in posefiles" :key="posefile.pose_name">  
-                       <div class="pose-img">
-                        <img :title="posefile.korean_pose_name"  class="user-profile-mid m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-                        <!-- <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')"> -->
-                        </div> 
-                        <p>{{posefile.korean_pose_name}}</p>
-                    </div>      
+                    <div  class="row">       
+                        <div @click="poseChoose(posefile)" class="col-sm-2 box all-box" :id="posefile.id" v-for="posefile in posefiles" :key="posefile.pose_name">  
+                            <div class="pose-img">
+                                <img :title="posefile.korean_pose_name"  class="user-profile-mid m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                            </div> 
+                            <p>{{posefile.korean_pose_name}}</p>
+                        </div>      
                     </div>
                 </div>
                 <div v-if="beginner" >
                     <div class="row">
+                        <div @click="poseChoose(posefile)" class="col-sm-2 box beginner-box" :id="posefile.id" v-for="posefile in beginnerPosefiles" :key="posefile.pose_name">  
+                            <div class="pose-img" >
+                                <img  class="user-profile-mid m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                            </div> 
+                            <p>{{posefile.korean_pose_name}}</p>
                        
-                    <div @click="poseChoose(posefile)" class="col-sm-2 box beginner-box" :id="posefile.id" v-for="posefile in beginnerPosefiles" :key="posefile.pose_name">  
-                         <div class="pose-img" >
-                            <img  class="user-profile-mid m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-                            <!-- <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')"> -->
-                        </div> 
-                        <p>{{posefile.korean_pose_name}}</p>
-                       
-                    </div>      
+                        </div>      
                     </div>
                 </div>
                 <div v-if="intermediate">
                     <div class="row">
-                       
-                    <div @click="poseChoose(posefile)" class="col-sm-2 box intermediate-box" :id="posefile.id" v-for="posefile in intermediatePosefiles" :key="posefile.pose_name">  
-                        
-                         <div class="pose-img">
-                            <img class="user-profile-mid m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-                            <!-- <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')"> -->
-                        </div> 
-                        <p>{{posefile.korean_pose_name}}</p>
-                      
-                    </div>      
+                        <div @click="poseChoose(posefile)" class="col-sm-2 box intermediate-box" :id="posefile.id" v-for="posefile in intermediatePosefiles" :key="posefile.pose_name">  
+                            <div class="pose-img">
+                                <img class="user-profile-mid m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                            </div> 
+                            <p>{{posefile.korean_pose_name}}</p>
+                        </div>      
                     </div>
                 </div>
                 <div v-if="expert" >
                     <div class="row">
-                       
-                    <div @click="poseChoose(posefile)"  class="col-sm-2 box expert-box" :id="posefile.id" v-for="posefile in expertPosefiles" :key="posefile.pose_name">  
-                        
-                         <div class="pose-img">
-                            <img class="user-profile-mid m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
-                            <!-- <img @click="poseChoose(posefile)" class="user-profile m-3 pose-img-top" :src="require('../../../public/css/heart.png')"> -->
-                        </div> 
-                        <p>{{posefile.korean_pose_name}}</p>
-                      
-                    </div>
+                        <div @click="poseChoose(posefile)"  class="col-sm-2 box expert-box" :id="posefile.id" v-for="posefile in expertPosefiles" :key="posefile.pose_name">  
+                            <div class="pose-img">
+                                <img class="user-profile-mid m-3" :src="require(`../../../public/photos/${posefile.file_reference}`)">
+                            </div> 
+                            <p>{{posefile.korean_pose_name}}</p>
+                        </div>
                     </div>      
                 </div>
             </div>  
         </div>
     </div>
-
 </template>
 
 <script>
@@ -269,7 +226,6 @@ export default {
                     
                 })
         }.bind(this))
-        console.log(tags_idx,tags_val,"오타:",error)
         },
         poseChoose(btnPose) {
             
@@ -298,7 +254,6 @@ export default {
             axios.post(this.SERVER_URL + '/api/aicoach/list/create',
             { 'headers': { 'auth-token': window.$cookies.get('auth-token')},'courseName' : courseName, 'poseCourse': poseCourse } )
             .then(res => {
-                console.log("이거 res",res)
                 //이 안에서 코스 pk뽑아오기
                 // 쿠키에 저장
                 this.$cookies.set('coaching-list', res.data)
