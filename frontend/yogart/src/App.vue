@@ -13,7 +13,6 @@
 import axios from 'axios'
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
-const API_URL = 'http://127.0.0.1:8000'
 
 export default {
     name: "App",
@@ -117,9 +116,9 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    background-image: url("./assets/back1.jpg");
-    background-repeat: no-repeat;
-    background-size: 100%;
+    background-image: url("./assets/back.jpg");
+    background-repeat: repeat;
+    background-size: 20%;
     color: #2c3e50;
 }
 .white-box{
