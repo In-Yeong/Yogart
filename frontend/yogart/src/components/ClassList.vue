@@ -1,5 +1,5 @@
 <template>
-    <div class="m-5">
+    <div class="my-5">
         <div class="page-index d-flex justify-content-between">
             <h2 class="page-name m-0">수업 목록</h2>
 
@@ -79,10 +79,10 @@ export default {
 }
 .page-index {
     height: 8vh;
-    width: 70%;
+    width: 75%;
     margin: auto;
     margin-bottom : 1rem;
-    border-bottom: 2px solid rgba(143, 160, 242, 0.5);
+    border-bottom: 2px solid rgba(143, 160, 242, 0.7);
 }
 .page-name {
     font-weight: bold;

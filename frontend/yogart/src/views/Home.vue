@@ -24,7 +24,7 @@ export default {
             this.$router.push('/coaching/yogaposelist')
         },
         clickPT() {
-            this.$router.push('/class')
+            this.$router.push('/classandteacher')
         }
     },
 }

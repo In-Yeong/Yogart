@@ -117,8 +117,8 @@ const routes = [
     },
     // All class
     {
-        path: '/class',
-        name: 'ClassList',
+        path: '/classandteacher',
+        name: 'ClassAndTeacherList',
         component: ClassAndTeacherList
     },
     // Teacher

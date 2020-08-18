@@ -1,6 +1,7 @@
 <template>
-  <div class="col-sm-4 no-gutters">
-    <div class="d-flex flex-column box">
+  <div class="container">
+  <div class="row no-gutters">
+    <div class="col-sm-4 d-flex flex-column box">
         <div>
           <img v-if="teacher.teacherImage" :src="teacher.teacherImage" class="user-profile" alt="...">
           <img v-else src="../../assets/userDefault.jpg" class="user-profile" alt="...">
@@ -10,6 +11,7 @@
         </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>

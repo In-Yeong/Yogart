@@ -49,7 +49,7 @@ export default {
 						return;
                     }
                     let accessToken = String(naverLogin.accessToken.accessToken);
-                    axios.post('http://localhost:8000/api/users/naverLogin', 
+                    axios.post(`http://i3d202.p.ssafy.io:8000/api/users/naverLogin`, 
                     {
                         accessToken: accessToken
                     })

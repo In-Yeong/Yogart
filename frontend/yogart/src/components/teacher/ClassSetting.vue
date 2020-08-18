@@ -1,7 +1,10 @@
 <template>
-    <div class="m-5">
-        <h1>수업 개설</h1>
-        <div class="d-flex mx-auto w-75 mb-3 justify-content-center">
+  <div class="top-75">
+        <div class="under-border">
+            <h2 class="page-name text-left">수업 개설</h2>
+        </div>
+        
+        <div class="d-flex mb-3 justify-content-center">
         <div class="mr-3">
             <div class="field-row">
                 <input name="class_name" id="class_name" v-model="ptName" type="text" required autofocus/>
@@ -17,14 +20,14 @@
             </div>
         </div>
         <div style="margin-top:30px;">
-            <button id="makeClassBtn" @click="onSubmit">수업 생성</button>
+            <div id="makeClassBtn" @click="onSubmit">수업 생성</div>
         </div>
     </div>
 
 
-
-
-        <table class="table w-75 mx-auto">
+     <p  class="info">* 원하는 요일과 시간대를 클릭해서 수업을 스케줄링해보세요.</p>
+    
+        <table class="table">
         <thead>
             <tr>
             <th scope="col">시</th>
@@ -103,14 +106,34 @@ export default {
 </script>
 
 <style scoped>
+.top-75{
+    width:75%;
+    margin : auto;
+    margin-top: 100px;
+}
+.info{
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 10px;
+    text-align: left;
+} 
+.under-border{
+    padding : 0;
+}
 #makeClassBtn{
     width : 100px;
     height : 190px;
+    line-height: 190px;
     background-color: rgba(143, 160, 242, 1);
     color : white;
     border :2px solid white;
     border-radius : 10px; 
-    font-weight: 500;
+    font-size: 1.2rem;
+    font-weight: 500px;
+}
+#makeClassBtn:hover{
+    background-color: rgba(255, 255, 255, 0.5);
+    color : rgba(143, 160, 242, 1);
+    border :2px solid rgba(143, 160, 242, 1);
 }
 th {
     background-color: rgba(143, 160, 242, 1);
@@ -139,13 +162,14 @@ label {
 }
 input {
     width : 400px;
-    background :rgba(255, 255, 255, 0.8);
+    background :rgba(255, 255, 255, 0.6);
 	font-size:16px;
 	line-height:18px;
 	padding: 10px 10px 10px 0;
 	border:0;
 	border-bottom:1px solid #ccc;
 	outline:none;
+    padding-left : 5px;
 	
 }
 input:focus {
