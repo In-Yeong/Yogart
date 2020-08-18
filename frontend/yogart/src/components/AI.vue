@@ -11,18 +11,18 @@
             <!-- <button v-if="startBtn" class="w3-btn w3-round-xlarge w3-red w3-xlarge m-5" type="button" @click="clickStart()">Get Start!</button> -->
         </div>
        
-        <div id="loading m-5" v-if="loading">
+        <div id="loading" v-if="loading" style="margin-top:50px;">
         <!-- <div id="loading" v-if="true"> -->
-            <h1 class="m-5">AI 요가 코칭 서비스를 시작합니다</h1>
+            <h2 class="m-5">AI 요가 코칭 서비스를 시작합니다</h2>
             <h5>{{courseName}} 코스 준비중</h5>
     
             <i class="fa fa-spinner fa-pulse fa-5x fa-fw m-5" ></i>
             <span class="sr-only">Loading...</span>
 
-            <h1 class="m-5">웹캠을 켜주시고 잠시만 기다려 주세요</h1>
+            <h2 class="m-5">웹캠을 켜주시고 잠시만 기다려 주세요</h2>
             <h5> AI Yoga Coaching Service is running, Please turn on your webcam and wait</h5>
         </div>
-        <div class="d-flex justify-content-around mt-5">
+        <div class="d-flex justify-content-around" style="margin-top:50px;">
             <div v-if="aiPage" class="shadow-box">
                 <div id="pose-data">
                     <img :src="require(`../../public/photos/${posefiles[course[cur]].file_reference}`)" alt="">
@@ -352,8 +352,10 @@
 
 .shadow-box{
     padding:10px;
+    height : 490px;
     width : 450px;
     margin : 5px;
+    margin-top : 30px;
     background-color: rgba(255,255,255,0.5);
     border-radius: 10px;
     border: 1px solid white;
