@@ -1,18 +1,25 @@
 <template>
-    <div class="padding-for-nav padding-remove">
-        <div class="under-border my-3">
-            <img v-if="teacherInfo.teacherImage" :src="teacherInfo.teacherImage" alt="" class="user-profile">
-            <img v-else src="../../assets/userDefault.jpg" class="user-profile m-3">
-            <h3>{{ teacherInfo.teacherName }} 선생님</h3>
-            <h5 v-if="teacherInfo.teacherIntro">{{ teacherInfo.teacherIntro }}</h5>
-            <h5 v-else>등록된 소개가 없습니다.</h5>
+    <div>
+        <div class="teacherBgd my-3">
+            <img v-if="teacherInfo.teacherImage" :src="teacherInfo.teacherImage" alt="" class="user-profile m-5">
+            <img v-else src="../../assets/userDefault.jpg" class="user-profile m-5">
+            <h2 class="name">{{ teacherInfo.teacherName }}</h2>
+            <div class="intro-box">
+            <h5 class="intro" v-if="teacherInfo.teacherIntro">{{ teacherInfo.teacherIntro }}</h5>
+            <h5 class="intro" v-else>등록된 소개가 없습니다.</h5>
+            </div>
+            <br>
+            <h5>{{ptList.length}} 수업</h5>
         </div>
+        <div class="m-5">
+            <p class=info>* 강사님의 모든 강의를 한 눈에 보고 간편하게 수강신청을 할 수 있습니다.</p>
         <b-tabs content-class="mt-3">
-            <b-tab v-for="pt in ptList" :key="pt.ptId" :title="pt.ptName">
+            <b-tab @click="addPlaceholder()" v-for="pt in ptList" :key="pt.ptId" :title="pt.ptName">
                 <ClassRegi :ptId="pt.ptId"/>
             </b-tab>
         </b-tabs>
     </div>
+</div>
 </template>
 
 <script>
@@ -61,12 +68,31 @@ export default {
 </script>
 
 <style scoped>
-.under-border{
-    box-shadow: 3px 3px rgba(0,0,0,0.1);
+.name{
+    margin-bottom: 10px;
+    font-size : 40px;
 }
-.padding-remove{
-    margin-top: -8rem;
-    margin-bottom: 17rem;
+.intro{
+    font-size : 20px;
+}
+.intro-box{
+    margin : auto;
+    padding : 10px;
+    width : 70%;
+    border-top : 1px solid white;
+    border-bottom : 1px solid white;
+}
+.teacherBgd{
+    /* background-color: rgba(143, 160, 242, 0.7); */
+    height : 500px;
+    font-family: 'Montserrat', sans-serif;
+    background-image: url('../../assets/beach.jpg');
+    color : white;
 }
 
+.info{
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 10px;
+    text-align: left;
+}
 </style>

@@ -12,7 +12,7 @@
             </slide>
             <slide class="slide" v-for="(slide, i) in slides" :key="i" :index="i+1">
             <figure>
-                <img src="https://placehold.it/360x270">
+                <!-- <img src="https://placehold.it/360x270"> -->
                 <figcaption class="text-center" style="font-size:25px;" @click="clickSet(slides_id[i])">
                     {{slide}}
                 </figcaption>
