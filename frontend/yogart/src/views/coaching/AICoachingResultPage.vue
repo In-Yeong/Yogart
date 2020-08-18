@@ -2,21 +2,9 @@
 <div style="margin: 50px; ">
     <h2 class="m-3">{{this.courseName}}코스 AI 코칭 결과</h2>
     <h5>총 소요시간  |    {{this.minutes}} : {{this.seconds}}</h5>
-     <!-- <carousel-3d :controls-visible="true"  :controls-prev-html="'&#10092;'" :controls-next-html="'&#10093;'">
-       
-            <slide class="slide" :index="0">
-                <figure>
-                    <div class="box mr-2"><lineChart/></div>
-                </figure>
-              
-            </slide>
-    </carousel-3d> -->
-
     <div class="d-flex mx-auto pr-0">
         <div class="box mr-2"><lineChart/></div>
         <div class="box"><dougnutChart/></div>      
-        <!-- <lineChart/>
-        <dougnutChart/> -->
     </div>
     <table class="table">
         <thead>
@@ -64,9 +52,6 @@ export default {
               
         }  
     },
-    created() {
-        // this.getCourse()
-    },
     mounted(){
         this.getCourse()
         this.splitTotaltime()
@@ -96,7 +81,6 @@ export default {
                 cnt++
             })
             this.scores = scores
-            console.log(this.scores)
 
         },
         getCourse() {
@@ -104,7 +88,6 @@ export default {
             axios.get(this.SERVER_URL + `/api/aicoach/list/${this.courseId}`)
             .then(res => {
                 //코스 이름과 코스 리스트 save
-                console.log("코칭결과 페이지 코스 가져오기성공",res)
                 this.courseName = res.data.courseName
                 
                 const Course =  res.data.course.split(',') 
@@ -135,7 +118,6 @@ export default {
         createDougnutData() { //data - 태그별 카운트 
             this.course.forEach(function (poseID){
                 this.posefiles[poseID].tag.forEach(function(tag){
-                    // console.log(tag,this.dougnutdata)
                     if (tag === '전신') {
                         this.dougnutdata[0] ++       
                     }
@@ -166,12 +148,10 @@ export default {
         saveResult() {
             //오늘 날짜
             const startDateTime = this.$cookies.get('startDateTime');
-            console.log("여기는 결과페이지 데이트타임",startDateTime)
             //총 경과 시간
             const totalTime = String(60 * this.minutes + this.seconds)
             //부위별 태그 횟수
             const tagCounting = this.$cookies.get('dougnutdataStr')
-            // console.log(tagCounting)
             //db에 오늘날짜, 경과"시간,부위별 태그횟수 보내서 저장
             
             axios.post(this.SERVER_URL + `/api/aicoach/result`,
@@ -182,7 +162,7 @@ export default {
                 }
             )
             .then(res => {
-                console.log("AI 코칭 결과 저장 성공",res) 
+                console.log(res) 
             })
             .catch(err => {console.log(err)})
         }
@@ -192,7 +172,7 @@ export default {
 }
 </script>
 
-<style scoped >
+<style scoped>
 .box{
     width : 100%;
 }

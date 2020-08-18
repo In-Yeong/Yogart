@@ -5,7 +5,6 @@
         </div>
         <button class="back-to-class" @click="backToClass()">수업 구매하러 가기</button>
     </div>
-    
 </template>
 
 <script>
@@ -39,10 +38,8 @@ export default {
             tid: tid,
             pgToken: pgToken
         }
-        console.log(paymentData)
         axios.post(this.SERVER_URL + '/api/users/paymentSuccess', paymentData, requestHeaders)
         .then(res => {
-            console.log(res)
             this.quantity = res.data.quantity
         })
         .catch(err => console.error(err))

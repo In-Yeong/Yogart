@@ -46,7 +46,6 @@
         },
         methods: {
             clickSet(num) {
-                console.log(num)
                 this.$emit("clickSet",num)
             },
             newCourse() {
@@ -56,13 +55,9 @@
                 let self = this
                 axios.get(this.SERVER_URL + `/api/aicoach/list`, { 'headers': { 'auth-token': window.$cookies.get('auth-token') } })
                 .then(res => {
-                    console.log(res)
                     res.data.forEach(e => {
                         this.slides.push(e.aiCourseName)
                         this.slides_id.push(e.aiCourseId)
-                        console.log('추가함', this.slides)
-                        console.log("내 요가 리스트",e.aiCourseId)
-
                     });
 
                 })

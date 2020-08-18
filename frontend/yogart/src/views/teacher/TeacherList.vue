@@ -29,7 +29,6 @@ export default {
     created() {
         axios.get(this.SERVER_URL + '/api/teachers/list')
         .then(res => {
-            console.log(res)
             this.teachers = res.data
         })
         .catch(err => cosole.error(err))

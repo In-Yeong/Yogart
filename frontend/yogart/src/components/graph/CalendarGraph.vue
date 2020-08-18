@@ -42,7 +42,6 @@
         watch: {
             calendar() {
                 var calendarArr = Object.entries(this.calendar)
-                console.log('가렌다',calendarArr.length)
                 if (calendarArr.length === 0) {
                     this.isEmpty = false
                     document.getElementById('no-data').style = "display: block;"
@@ -60,9 +59,6 @@
                 
                 
             }
-        },
-        created() {
-            console.log(this.isEmpty)
         },
 
     }

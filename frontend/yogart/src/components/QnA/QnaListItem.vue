@@ -33,14 +33,12 @@ export default {
         itemClick(e) {
             this.isClicked = !this.isClicked
             var target = e.target
-            console.log(target)
             if (target.id !='title') {
                 target = target.parentElement
             }
             if (target.id !='title') {
                 target = target.parentElement
             }
-            console.log(this.isClicked)
             if (this.isClicked) {
                 target.style = "background-color: rgba(215, 159, 215, 1);"
                 target.firstElementChild.firstElementChild.style = "color: rgba(255, 255, 255, 0.7);"

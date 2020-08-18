@@ -16,21 +16,17 @@ export default {
         }
     },
     mounted() {
-        console.log(this.lineLabels,this.linedata)
         this.createChart()
     },
     methods : {
         createChart() {
             var ctx = document.getElementById('lineChart').getContext('2d');
-            // ctx.style.backgroundColor = 'rgba(255,255,255,0.5)';
             var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
             gradientStroke.addColorStop(0, "#80b6f4");
             gradientStroke.addColorStop(1, "#f49080");
             var gradientFill = ctx.createLinearGradient(500, 0, 100, 0);
             gradientFill.addColorStop(0, "rgba(128, 182, 244, 0.6)");
             gradientFill.addColorStop(1, "rgba(244, 144, 128, 0.6)");
-            // gradientFill.addColorStop(0, "#80b6f4");
-            // gradientFill.addColorStop(1, "f#49080");
             var lineChart = new Chart(ctx, {
             //  multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>",
                 // The type of chart we want to create
@@ -42,9 +38,6 @@ export default {
                     datasets: [{
                         
                         label: '소요 시간(초)',
-                        // backgroundColor: 'rgb(255, 99, 132)',
-                        // borderColor: '#3c5b74',
-                        // hoverBackgroundColor : '#3c5b74',
                         data: this.linedata,
                         borderColor: gradientStroke,
                         pointBorderColor: gradientStroke,
@@ -121,7 +114,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #lineChart {
     height : 400px !important;
     width : 700px !important;

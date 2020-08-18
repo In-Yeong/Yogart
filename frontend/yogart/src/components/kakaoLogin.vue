@@ -15,8 +15,6 @@ export default {
         }
     },
     created() {
-        console.log(process.env)
-        console.log("이거",this.JavaScriptApiKey)
         Kakao.init('688de69414ec5331cee58badb1cad1ea');
     },
     mounted() {
@@ -30,7 +28,6 @@ export default {
         Kakao.Auth.createLoginButton({
             container : "#kakao-login-btn",
             success : function( authObj ) {
-                console.log( authObj );
                  axios
                 .post("http://localhost:8000/api/users/kakaoLogin", {
                     access_token: authObj.access_token,
@@ -40,7 +37,6 @@ export default {
                     token_type: authObj.token_type
                     })
                 .then(res1 => {
-                console.log(res1);
                 this.$router.push("/");
                 })
                 .catch(error => {
@@ -50,8 +46,6 @@ export default {
                 Kakao.API.request({
                       url : "/v2/user/me"
                     , success : function( res ) {
-                        console.log('리퀘스트 성공')
-                        console.log( res );
                     }, fail : function( error ) {
                         alert( JSON.stringify( error ) );
                     }

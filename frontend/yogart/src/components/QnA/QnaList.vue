@@ -20,7 +20,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .noticeList{
     width: 75vw;
     height : 100%;

@@ -67,10 +67,8 @@ export default {
             target.click()
         },
         getNotices(pageNum) {
-            // console.log(this.page)
             axios.get(`${this.SERVER_URL}/api/notice/list/${pageNum}`)
             .then(response => {
-                console.log(response)
                 this.notices = response.data.content
                 this.totalPages = response.data.totalPages
                 this.notices.forEach(element => element.createDate = element.createDate.substr(0,10))
@@ -94,7 +92,7 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
 .page-name {
     margin: -4rem auto 2rem;

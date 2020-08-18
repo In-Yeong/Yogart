@@ -23,7 +23,6 @@
                 </li>
                 
                 <li class="nav-item dropdown" v-if="isLogin">
-                    <!-- <img class="user-profile-img m-3" :src="userPic"> -->
                     <a class="nav-link" id="navbarDropdown" data-toggle="dropdown">
                     {{userNickname}}님
                     </a>

@@ -93,7 +93,6 @@ export default {
     },
     methods : {
       goPt(todayCourse) {
-        console.log('@@@@', todayCourse)
         window.open(`https://i3d202.p.ssafy.io:8080/rtc.html?room=${todayCourse.ptClickedName.ptTeacherId.teacherCode}`)
       },
       getPT() {
@@ -104,11 +103,8 @@ export default {
             Authorization : this.$cookies.get('auth-token')
           }
         }
-        console.log('@@@@@@@@@@@@@@@@@@@', RequestHeaders)
         axios.get(this.SERVER_URL + '/api/mypage/ptlist', RequestHeaders)
         .then(res => {
-          console.log(res)
-          console.log("PTManagement 성공",res)
           //과거 pt 기록들 날짜,시간순으로 배열로 넘겨주세요
           this.pastCourses = res.data.pastCourses
           this.pastCourses.forEach(pastCourse => {
@@ -122,7 +118,6 @@ export default {
           this.todayCourses = res.data.todayCourses
           //미래 pt 기록들 날짜,시간순으로 배열로 넘겨주세요
           this.futureCourses = res.data.futureCourses
-          console.log(this.pastCourses,this.todayCourses,this.futureCourses)
         })
         .catch(err => console.log(err))
       },
@@ -132,7 +127,6 @@ export default {
         this.future = false
         document.getElementsByClassName('active')[0].classList.remove('active')
         document.getElementsByClassName('past-btn')[0].classList.add('active')
-        console.log(document.getElementsByClassName('past-btn')[0])
       },
       todayPT() {
         this.past = false,

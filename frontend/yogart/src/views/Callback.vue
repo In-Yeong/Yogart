@@ -18,9 +18,6 @@ export default {
 		  SERVER_URL: this.$store.state.SERVER_URL,
 	  }
   },
-  mounted() {
-      console.log(this.token)
-  }
 }
 </script>
 

@@ -6,20 +6,17 @@
                 <div class="form-group">
                     <div class="form-mid-group">
                         <input class="signup-input" @keyup.enter="signup" placeholder="이메일" type="text" id="userEmail" v-model="signupData.userEmail" @keyup="checkEmail">
-                        <!-- <span class="allIcon" id="userEmailCheckIcon"><i class="fas fa-check fa-2x"></i></span> -->
                     </div>
                 </div>
                 <br>
                 <div class="form-group">
                     <div class="form-mid-group">
                         <input class="signup-input" @keyup.enter="signup" placeholder="이름" type="text" id="userName" v-model="signupData.userName" @change="checkName">
-                        <!-- <span class="allIcon" id="userNameCheckIcon"><i class="fas fa-check fa-2x"></i></span> -->
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-mid-group">
                         <input class="signup-input" @keyup.enter="signup" placeholder="닉네임" type="text" id="userNickname" v-model="signupData.userNickname" @change="checkNickname">
-                        <!-- <span class="allIcon" id="userNicknameCheckIcon"><i class="fas fa-check fa-2x"></i></span> -->
                     </div>
                 </div>
                 <div class="form-group">
@@ -66,7 +63,6 @@ export default {
     methods: {
         signup() {
             // App.vue로 이벤트 발생
-            console.log(this.formCheck)
 
             if (this.formCheck.userEmail === false) {
                 alert('올바른 이메일을 입력해주세요.')

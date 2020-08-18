@@ -41,7 +41,6 @@ export default {
         }
         axios.get(this.SERVER_URL + '/api/teachers/pt-now', requestHeaders)
         .then(res => {
-            console.log("최근 수업 가져오기 성공",res)
             this.studentNickname = res.data.ptOpen.ptStudentId.userNickname
             this.ptName = res.data.ptOpen.ptClickedName.ptName
             this.time = res.data.ptOpen.ptTime

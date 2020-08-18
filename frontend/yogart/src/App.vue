@@ -29,16 +29,13 @@ export default {
     },
     methods: {
         signup(signupData) {
-        // console.log(signupData)
         axios.post(`${this.SERVER_URL}/api/users/signup`, signupData)
             .then(response => {
                 if (response.data.statusCode === 200) {
-                    console.log(response)
                     this.$store.commit('storeLogin', response.data)
                     this.loginComplete()
                 }
                 else {
-                    console.log(response)
                     if (response.data.statusCode === 403) {
                         if (response.data.message === 'email') {
                             alert('이메일이 이미 존재합니다.')
@@ -54,15 +51,14 @@ export default {
                 } 
             })
             .catch(err => {
-                console.log(err)
                 if (err.data.statusCode === 403) {
-                   if (err.data.message === 'email') {
-                       alert('이메일이 이미 존재합니다.')
-                   } else if (err.data.message === 'nickname') {
-                       alert('닉네임이 이미 존재합니다.')
-                   } else {
-                       alert('이메일과 닉네임이 이미 존재합니다.')
-                   }
+                    if (err.data.message === 'email') {
+                        alert('이메일이 이미 존재합니다.')
+                    } else if (err.data.message === 'nickname') {
+                        alert('닉네임이 이미 존재합니다.')
+                    } else {
+                        alert('이메일과 닉네임이 이미 존재합니다.')
+                    }
                 }
                 else {  
                     alert('회원가입 실패')
@@ -90,8 +86,6 @@ export default {
 		},
 		setSize() {
 			let size = window.innerWidth
-			// console.log(size)
-			// console.log(this.isPC)
 			if (size < 660) {
 				this.isPC = false
 			} else {

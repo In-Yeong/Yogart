@@ -62,7 +62,6 @@ export default {
         getQna(pageNum) {
             axios.get(this.SERVER_URL + `/api/qna/list/${pageNum}`)
             .then(res => {
-                console.log(res.data.content)
                 this.items = res.data.content
                 this.totalPages = res.data.totalPages
                 this.items.forEach(element => element.createDate = element.createDate.substr(0,10))

@@ -17,7 +17,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .back-to-pay {
     width: 17rem;
     height: 3rem;

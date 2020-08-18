@@ -34,11 +34,6 @@ export default {
         }
     },
     mounted() {
-        // const diary = document.getElementById('diary')
-        // const pt = document.getElementById('pt')
-        // const exchis = document.getElementById('exc-his')
-        // pt.style.backgroundColor = 'lightgray'
-        console.log(!this.$store.state.isLogin)
         if (!this.$store.state.isLogin) {
             $('#loginStaticBackdrop').modal('show')
         }
@@ -56,7 +51,6 @@ export default {
         onExerHis() {
             this.ptManagement = false
             this.exerciseHistory = true
-            console.log(document.getElementById('schedule').classList)
             document.getElementById('schedule').classList.remove('ptBorder')
             document.getElementById('schedule').classList.add('logBorder')
 

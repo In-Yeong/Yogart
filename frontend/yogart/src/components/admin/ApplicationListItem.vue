@@ -30,7 +30,6 @@ export default {
     methods: {
         getImage() {
             this.isClicked = !this.isClicked
-            console.log(this.getImageUrl)
         },
         permit() {
             this.$emit('permit', this.application.userEmail)
