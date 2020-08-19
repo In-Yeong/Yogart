@@ -86,7 +86,7 @@ export default {
 		},
 		setSize() {
 			let size = window.innerWidth
-			if (size < 660) {
+			if (size < 700) {
 				this.isPC = false
 			} else {
 				this.isPC = true

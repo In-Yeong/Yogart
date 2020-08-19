@@ -99,6 +99,10 @@ export default {
             .then(res => {
                 // console.log(res)
                 // 강사 상세페이지로 이동
+                document.getElementById('class_name').value = ''
+                document.getElementById('class_price').value = ''
+                document.getElementById('class_intro').value = ''
+                alert(`${ptData.ptName} 수업이 생성되었습니다.`)
                 this.$router.push('/classandteacher')
             })
             .catch(err => console.error(err))
