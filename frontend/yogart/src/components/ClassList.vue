@@ -69,7 +69,7 @@ export default {
                 }, 500)
             })
             .catch(err => {
-                console.log(err)
+                console.error(err)
             })
         }
 

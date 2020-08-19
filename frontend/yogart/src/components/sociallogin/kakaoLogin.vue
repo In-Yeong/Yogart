@@ -36,7 +36,7 @@ export default {
                         axiosVue.$emit('loginComplete', res1.data)
                     })
                     .catch(error => {
-                        console.log(error);
+                        console.error(error);
                     });
                     Kakao.API.request({
                         url : "/v2/user/me"

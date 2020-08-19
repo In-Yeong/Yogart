@@ -49,7 +49,7 @@
                 } else {
                     calendarArr.forEach(e => {
                     var date = e[0].split('-')
-                    console.log('날짜',date)
+                    // console.log('날짜',date)
                     var run = e[1]*1
                     this.chartData.push([new Date(date[0]*1, (date[1]*1-1), date[2]*1), run])
                     document.getElementById('no-data').style = "display: none;"

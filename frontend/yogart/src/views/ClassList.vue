@@ -2,7 +2,6 @@
     <div class="padding-for-nav">
         <div class="page-index d-flex justify-content-between">
             <div class="page-name">수업 목록</div>
-
             <div class="form-group">
                 <select class="form-control" id="sel1">
                     <option value="0" @click="resorting('new')"> 최신순</option>
@@ -11,7 +10,6 @@
                 </select>
             </div>
         </div>
-        
         <div class="box px-3 d-flex justify-content-between align-items-center" v-for="yogaClass in yogaList" :key="yogaClass.ptId" @click="btnClick(yogaClass.ptTeacherId.id)">
             <div class="d-flex align-items-center">
                 <img class="user-profile m-3" :src="require('@/assets/Hedgehog.jpg')">
@@ -68,7 +66,7 @@ export default {
                 }, 500)
             })
             .catch(err => {
-                console.log(err)
+                console.error(err)
             })
         }
 

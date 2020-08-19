@@ -119,7 +119,7 @@ export default {
           //미래 pt 기록들 날짜,시간순으로 배열로 넘겨주세요
           this.futureCourses = res.data.futureCourses
         })
-        .catch(err => console.log(err))
+        .catch(err => console.error(err))
       },
       pastPT() {
         this.past = true,

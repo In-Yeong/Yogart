@@ -45,7 +45,7 @@ export default {
     mounted() {
         axios.get(this.SERVER_URL + `/api/teachers/list/detail/${this.teacherId}`, this.teacherId)
         .then(res => {
-            console.log(res)
+            // console.log(res)
             this.teacherInfo.teacherName = res.data.teacherInfo.userNickname
             this.teacherInfo.teacherIntro = res.data.teacherInfo.userIntro
             this.teacherInfo.teacherImage = `${this.$store.state.SERVER_URL}/api/users/profileImageByEmail?userEmail=${res.data.teacherInfo.userEmail}`

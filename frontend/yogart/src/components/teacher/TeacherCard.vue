@@ -22,11 +22,11 @@ export default {
         }
     },
     mounted() {
-      console.log(this.teacher)
+      // console.log(this.teacher)
     },
     methods: {
         imgUrl(userEmail) {
-            console.log(userEmail)
+            // console.log(userEmail)
             return `${this.SERVER_URL}/api/users/profileImageByEmail?userEmail=${userEmail}`
         },
     }
