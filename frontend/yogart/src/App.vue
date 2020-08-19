@@ -1,11 +1,15 @@
 <template>
     <div id="app">
-        <div>
             <login-modal v-if="!isLogin" @loginComplete="loginComplete"></login-modal>
             <NavBar @logout="logout" :isLogin="isLogin"/>
-            <router-view class="full-page" @submit-signup-data="signup" />
-        </div>
-        <Footer/>
+            <div v-if="isPC">
+                <router-view class="full-page" @submit-signup-data="signup" />
+            </div>
+            <div id="forMobileDiv" v-else class="text-align-left">
+                <p class="mt-5">요가트는 크롬 브라우저에 최적화 되어 있습니다.</p>
+                <p>모바일을 위한 서비스는 준비중입니다.</p>
+            </div>
+            <Footer/>
     </div>
 </template>
 
@@ -86,7 +90,7 @@ export default {
 		},
 		setSize() {
 			let size = window.innerWidth
-			if (size < 700) {
+			if (size < 800) {
 				this.isPC = false
 			} else {
 				this.isPC = true
@@ -104,8 +108,6 @@ export default {
 
 
 <style>
-
-
 #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -490,6 +492,10 @@ pre {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+}
+#forMobileDiv {
+  width: 800px;
+  height: 2000px;
 }
 </style>
 

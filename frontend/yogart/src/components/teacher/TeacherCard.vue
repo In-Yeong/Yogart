@@ -1,11 +1,11 @@
 <template>
   <div class="col-sm-4 box">
           <div class="d-flex flex-column align-items-center">
-            <img v-if="teacher.teacherImage" :src="teacher.teacherImage" class="user-profile" alt="...">
+            <img v-if="teacher.userProfile" :src="imgUrl(teacher.userEmail)" class="user-profile" alt="...">
             <img v-else src="../../assets/userDefault.jpg" class="user-profile" alt="...">
             <h5>{{ teacher.userName }}</h5>
           <p v-if="teacher.userIntro">{{ teacher.userIntro }}</p>
-          <p v-else>강사 소개를 해주세요.강사 소개를 해주세요.강사 소개를 해주세요.강사 소개를 해주세요.강사 소개를 해주세요.강사 소개를 해주세요.</p>
+          <p v-else>강사 소개를 해주세요.</p>
           </div>
       </div>
 </template>
@@ -13,10 +13,23 @@
 <script>
 export default {
     name: 'TeacherCard',
-
     props: {
         teacher: Object,
     },
+    data() {
+        return {
+            SERVER_URL: this.$store.state.SERVER_URL
+        }
+    },
+    mounted() {
+      console.log(this.teacher)
+    },
+    methods: {
+        imgUrl(userEmail) {
+            console.log(userEmail)
+            return `${this.SERVER_URL}/api/users/profileImageByEmail?userEmail=${userEmail}`
+        },
+    }
 
 }
 </script>
