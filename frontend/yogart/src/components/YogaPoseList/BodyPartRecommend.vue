@@ -2,20 +2,7 @@
     
     <div class="m-5">
         <div id="example">
-        <!-- <h1>3d images gallery</h1>
-  <div class="container">
-        <div id="carousel">
-            <figure><img  :src="require('../../../public/yogaList/legs.jpg')"/></figure>
-            <figure><img  :src="require('../../../public/yogaList/arm.jpg')"/></figure>
-            <figure><img  :src="require('../../../public/yogaList/abs.jpg')"/></figure>
-            <figure><img  :src="require('../../../public/yogaList/spine.jpg')"/></figure>
-            <figure><img  :src="require('../../../public/yogaList/body.jpg')"/></figure>
-            <figure><img  :src="require('../../../public/yogaList/relax.jpg')"/></figure>
-            <figure><img  :src="require('../../../public/yogaList/energy.jpg')"/></figure>
-        </div>
-    </div> -->
-
-        <h3 class="m-5" style="font-weight:500px;">부위별 & 스페셜 요가 코스</h3>
+        <h3 class="my-5 y-border" style="font-weight:500px;">부위별 & 스페셜 요가 코스</h3>
         <carousel-3d :controls-visible="true"  :controls-prev-html="'&#10092;'" :controls-next-html="'&#10093;'">
             <!-- figcaption -->
             <slide class="slide" :index="0">
@@ -100,7 +87,6 @@
         },
         methods: {
             clickSet(num){
-                console.log("여기는 clickSet",num)
                 this.$emit("clickSet",num)
             }
         }

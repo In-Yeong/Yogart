@@ -24,7 +24,6 @@ export default {
             Kakao.Auth.createLoginButton({
                 container : "#kakao-login-btn",
                 success : function( authObj ) {
-                    // console.log( authObj );
                     axios
                     .post(`http://i3d202.p.ssafy.io:8000/api/users/kakaoLogin`, {
                         access_token: authObj.access_token,
@@ -34,7 +33,6 @@ export default {
                         token_type: authObj.token_type
                     })
                     .then(res1 => {
-                        // console.log(res1)
                         axiosVue.$emit('loginComplete', res1.data)
                     })
                     .catch(error => {
@@ -43,8 +41,6 @@ export default {
                     Kakao.API.request({
                         url : "/v2/user/me"
                         , success : function( res ) {
-                            // console.log('리퀘스트 성공')
-                            // console.log( res );
                         }, fail : function( error ) {
                             alert( JSON.stringify( error ) );
                         }

@@ -8,21 +8,19 @@
             <div class="m-5">
                 <a v-if="startBtn" @click="clickStart()" class="btn2 m-3">START</a>
             </div>
-            <!-- <button v-if="startBtn" class="w3-btn w3-round-xlarge w3-red w3-xlarge m-5" type="button" @click="clickStart()">Get Start!</button> -->
         </div>
        
-        <div id="loading m-5" v-if="loading">
-        <!-- <div id="loading" v-if="true"> -->
+        <div id="loading m-5" v-if="loading" class="y-border">
             <h1 class="m-5">AI 요가 코칭 서비스를 시작합니다</h1>
             <h5>{{courseName}} 코스 준비중</h5>
     
             <i class="fa fa-spinner fa-pulse fa-5x fa-fw m-5" ></i>
             <span class="sr-only">Loading...</span>
 
-            <h1 class="m-5">웹캠을 켜주시고 잠시만 기다려 주세요</h1>
+            <h2 class="m-5">웹캠을 켜주시고 잠시만 기다려 주세요</h2>
             <h5> AI Yoga Coaching Service is running, Please turn on your webcam and wait</h5>
         </div>
-        <div class="d-flex justify-content-around mt-5">
+        <div class="d-flex justify-content-around" style="margin-top:50px;">
             <div v-if="aiPage" class="shadow-box">
                 <div id="pose-data">
                     <img :src="require(`../../public/photos/${posefiles[course[cur]].file_reference}`)" alt="">
@@ -43,24 +41,20 @@
                 <div ><canvas id="canvas" style="border : 7px solid rgba(242, 157, 143,0.3)"></canvas></div>
                 
                 <div id="label-container" class="m-auto" style="width : 400px;">
-                        <h2 id="good" style="color:green">GOOD</h2>
-                        <h2 id="bad" style="color:red">BAD</h2>
-                    </div>
+                    <h2 id="good" style="color:green">GOOD</h2>
+                    <h2 id="bad" style="color:red">BAD</h2>
+                </div>
               
                
             </div>
             <div class="shadow-box" id="coaching-data">
                 <h2 class="watch highlight mx-auto" style="width:150px;">{{ watchMin }}:{{ watchSec}}</h2>
                 <div id="pie-chart" class="pie-chart my-5"><span class="center" id="seconds-counter">30</span></div>
-                <!-- <div>{{poseTimes}}</div> -->
-                 <div>
+                <div>
                     <div @click="next" class="btn4">Next Yoga Posture</div>
                 </div>
             </div>
-        </div>
-        
-        
-
+        </div>  
     </div>
 </template>
 
@@ -117,10 +111,8 @@
         methods: {
              getCourse() {
                 const courseID = this.$cookies.get('coaching-list')   
-                console.log('코스아이디', courseID)
                 axios.get(this.SERVER_URL + `/api/aicoach/list/${courseID}`)
                 .then(res => {
-                    console.log("result에서 axios 성공",res)
                     //코스 이름과 코스 리스트 save
                     this.courseName = res.data.courseName
                     
@@ -132,16 +124,12 @@
                         }
                     })
                     this.course = filteredCourse
-                    console.log(this.course)
-                    //
                 })
                 .catch(err => {
                     this.course = [2,7,11]
-                    console.error(err)
                 })
             },
             calculateScores() {
-                console.log(this.poseTimes,this.scores)
                 this.poseTimes.forEach(function(poseTime){
                     if (poseTime < 30){
                         this.scores.push(0)
@@ -151,12 +139,10 @@
                         this.scores.push(score)
                     }
                 }.bind(this))
-                console.log('here',this.scores)
             },
             clickStart() {
                 this.startDateTime = new Date();
                 this.$cookies.set('startDateTime', this.startDateTime)
-                console.log("여기는  AI",this.startDateTime)
                 this.init()
             },
             incrementSeconds() {
@@ -170,7 +156,6 @@
             },
             next() {
                 this.cur++;
-                console.log('here!', this.course.length)
                 if (this.cur < this.course.length){
                     clearInterval(this.counter) 
                     this.flag = !this.flag
@@ -200,7 +185,6 @@
                 if (this.flag && this.stopBtn && this.counter!==undefined) {
                     clearInterval(this.counter)
                     this.counter = undefined
-                    console.log("카운트 멈춤, ",this.seconds, this.counter)
                 }
             },
             restart() {
@@ -223,12 +207,7 @@
             },
 
             async init() {
-
-                console.log(this.course[this.cur])
                 this.startBtn = false;
-                
-               
-                console.log("click the start btn")
                 // 로딩이 시작
                 this.loading = true;
                 
@@ -241,7 +220,6 @@
                 // Note: the pose library adds a tmPose object to your window (window.tmPose)
               
                 model = await tmPose.load(modelURL, metadataURL);
-                console.log("model",model)
                 maxPredictions = model.getTotalClasses();
         
                 // Convenience function to setup a webcam
@@ -254,7 +232,6 @@
                 await webcam.play();
                 // this 붙여줘야!!!!!!!!!!!
                 this.requestId  = window.requestAnimationFrame(this.loop);
-                console.log("Here is init",this.requestId)
                 // append/get elements to the DOM
                 const canvas = document.getElementById("canvas");
                 canvas.width = width; 
@@ -270,10 +247,6 @@
                 this.aiPage = true;
                 document.getElementById('tm-shadow-box').style.visibility= 'visible'
                 document.getElementById('coaching-data').style.visibility= 'visible'
-                
-                if (this.startTime){
-                    console.log("starttime",timestamp)
-                }
                 this.startTime = false;
 
                 webcam.update(); // update the webcam frame
@@ -303,13 +276,12 @@
                     document.getElementById('label-container').firstChild.style.display = 'none'
                     //90퍼이상 일치하는 동작의 클래스명을 보여준다.
                     if (prediction[i].probability.toFixed(2) >= 0.9){
-                        labelContainer.childNodes[0].innerHTML = prediction[i].className;
+                        // labelContainer.childNodes[0].innerHTML = prediction[i].className;
                         //만약 제대로된 요가동작이 인식되면 밑에 카운트 시작 메세지가 같이 뜬다
                         if (prediction[i].className === String(this.course[this.cur]) && !this.flag ) {
                             this.flag = true;
                             document.getElementById('good').style.display = 'inline'
                             document.getElementById('bad').style.display = 'none'
-                            console.log(this.flag,this.seconds)
                             this.seconds = 30;
                             this.counter = setInterval(this.incrementSeconds,1000)  
                         
@@ -322,7 +294,10 @@
                             document.getElementById('bad').style.display = 'inline'
                             this.stop()
                         }
-                     }                    
+                    } else {
+                        document.getElementById('good').style.display = 'none'
+                        document.getElementById('bad').style.display = 'inline'
+                    }                    
                  } 
 
                 this.drawPose(pose);
@@ -331,12 +306,6 @@
             drawPose(pose) {
                 if (webcam.canvas) {
                     ctx.drawImage(webcam.canvas, 0, 0);
-                    // draw the keypoints and skeleton
-                    // if (pose) {
-                    //     const minPartConfidence = 0.5;
-                    //     tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
-                    //     tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
-                    // }
                 }
             }
         }
@@ -349,11 +318,16 @@
 </script>
     
 <style scoped>
-
+.y-border{
+    padding : 1rem;
+    padding-bottom: 3rem;
+}
 .shadow-box{
     padding:10px;
+    height : 490px;
     width : 450px;
     margin : 5px;
+    margin-top : 30px;
     background-color: rgba(255,255,255,0.5);
     border-radius: 10px;
     border: 1px solid white;

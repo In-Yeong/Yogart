@@ -13,13 +13,11 @@ export default {
         }
     },
     mounted() {
-        console.log("도넛차트",this.dougnutdata)
         this.createChart()
     },
     methods : {
         createChart() {
              var ctx2 = document.getElementById('dougnutChart').getContext('2d');
-            //  ctx2.style.backgroundColor = ' rgba(255,255,255,0.5)';
             var dougnutChart = new Chart(ctx2, {
                 // The type of chart we want to create
                 type: 'doughnut',
@@ -29,15 +27,25 @@ export default {
                     labels: ['팔', '다리', '복근', '척추','전신', '에너지','릴렉스'],
                     datasets: [{
                         label: '부위 포함',
-                        hoverBackgroundColor : '#011f4b',
+                        hoverBackgroundColor : '#F2E6FF',
                         data: this.dougnutdata,
                         backgroundColor: [
-                            'rgba(1, 31, 75, 0.8)',
-                            'rgba(3, 57, 108, 0.8)',
-                            'rgba(3, 57, 108, 0.6)',
-                            'rgba(1, 31, 75, 0.5)',
-                            'rgba(1, 31, 75, 0.4)',
-                            'rgba(3, 57, 108, 0.3)',
+                         
+                            // E5CCFF 229, 204, 255
+                            // D9B3FF 217, 179, 255
+                            // CC99FF 204, 153, 255
+                            // BF80FF 204, 153, 255
+                            // B266FF 178, 102, 255
+                            // A54DFF 165, 77, 255
+                            // 9933FF 153, 51, 255
+
+                            'rgba(242, 157, 143,0.6)',
+                            'rgba(242, 157, 143,0.6)',
+                            'rgba(173, 94, 165,0.6)',
+                            'rgba(215, 159, 215, 0.6)',
+                            'rgba(168, 136, 242, 0.6)',
+                            'rgba(148, 162, 242, 0.6)',
+                            'rgba(148, 209, 242, 0.6)'
                                      
                             
                         ]
@@ -87,7 +95,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #dougnutChart {
     height : 400px !important;
     width : 700px !important;

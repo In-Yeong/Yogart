@@ -1,8 +1,8 @@
 <template>   
-    <div class="mt-3 box" @click="showModal">
+    <div class="mt-5 box" @click="showModal">
         <div class="d-flex justify-content-between px-5 py-2">
             <span>{{ ptInfo.ptName }} (  {{ time.ptTime }}시 )</span> 
-             <span class="intro">신청할래요~ Click</span>
+             <span class="apply">신청할래요~ Click</span>
             <span> {{ ptInfo.ptPrice }}스푼</span> 
         </div>
         <b-modal ref="my-modal" hide-footer :title="modalTitle">
@@ -52,7 +52,6 @@ export default {
                 day: this.clickedDate.getDay(),
                 time: this.ptDate,
             }
-            console.log('@@@@@@@@', ptData)
             axios.post(this.SERVER_URL + '/api/teachers/pt-regist', ptData, requestHeaders)
             .then(res => {
                 this.$refs['my-modal'].hide()
@@ -89,22 +88,20 @@ export default {
     cursor: pointer;
     background-color: rgba(143, 160, 242, 0.5);
 }
-.apply-btn{
+/* .apply-btn{
     color : white;
     background-color:rgba(143, 160, 242, 0.7);
     border : 2px solid rgba(143, 160, 242, 0.7);
-    /* width : 200px; */
 } 
 .apply-btn:hover{
     cursor: pointer;
     background-color: rgba(0,0,0,0);
-}
-.intro{
-
+} */
+.apply{
     visibility: hidden;
 }
-.box:hover .intro {
-    color : red;
+.box:hover .apply {
+    color : #f29d8f;
     visibility: visible;
 }
 

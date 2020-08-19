@@ -12,7 +12,6 @@
             </div>
             <br>
             <label id="info">아래의 파란 박스를 클릭해서 원하는 일정의 수업을 신청해보세요</label>
-            <!-- <label class="mx-3"> 원하는 일정을 선택해보세요 </label> -->
             <div>
                 <DatePicker id="date-picker" format="yyyy-MM-dd-D" :highlighted="highlighted" @selected="selectDate" placeholder="클릭해서 원하는 일정을 선택해보세요" :language="ko"></DatePicker>
                 <div class="page-index d-flex-colum">
@@ -23,10 +22,6 @@
             </div>
         </div>
         
-        <!-- <h2>{{ ptInfo.ptName }}</h2>
-        <h5>{{ ptInfo.ptPrice }}스푼으로 함께해요</h5>
-        <h5>{{ ptInfo.ptIntro }}</h5> -->
-        <!-- <ReviewList :ptInfo="ptInfo"></ReviewList> -->
         <!-- 데이터 피커를 이용해 날짜를 받으면, 그 날짜에 열리는 모든 수업을 리스팅한다. -->
     </div>
 </template>
@@ -69,9 +64,6 @@ export default {
                 }
                 return pt.ptDay === day && isSoldOut
             })
-            console.log('ptTimes', this.ptTimes)
-            console.log('showArray', this.showArray)
-            console.log('soldOut', this.soldOut)
             this.showArray.sort(function(a, b) {
                 return a.ptTime - b.ptTime
             })
@@ -103,18 +95,6 @@ export default {
         // 강사의 수업 정보와 이미 예약된 PT리스트를 가져옵니다.
         axios.get(this.SERVER_URL + `/api/teachers/pt/${this.ptId}`, this.ptId)
         .then(res => {
-            console.log(res)
-            // let res = {
-            //     data: {
-            //         ptTeacher: 12, // 요가강사 id값
-            //         ptId: 1,
-            //         ptName: '요가를 처음 하는 사람을 위함',
-            //         ptPrice: 250,
-            //         ptIntro: '편하게 시작해 봐요',
-            //         clicked: [{day: 3, time:20}, {day:4, time: 19}, {day: 4, time:18}, {day:3, time: 18}],
-            //         soldOut: [ new Date(2020, 7, 13, 19), new Date(2020, 7, 12, 18)]
-            //     }
-            // }
             this.ptTimes = res.data.clicked
             this.ptInfo.ptTeacher = res.data.ptInfo.ptTeacherId
             this.ptInfo.ptId = res.data.ptInfo.ptId
@@ -129,7 +109,6 @@ export default {
                 let hh = Number(e.slice(11, 13))
                 self.soldOut.push(new Date(yyyy, mm, dd, hh))
             })
-            console.log(this.soldOut)
             const today = new Date() // 오늘의 날짜
             for (let i = 0; i < 14; i++) {
                 let cnt = 0
@@ -156,7 +135,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #date-picker {
     background-color: rgba(143, 160, 242, 0.5);
     border : 2px solid rgba(0,0,0,0);

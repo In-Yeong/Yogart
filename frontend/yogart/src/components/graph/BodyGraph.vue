@@ -23,7 +23,6 @@
         },
         watch: {
             body() {
-                console.log('바디데이타', this.body)
                 this.fillData()
             }
         },
@@ -48,8 +47,6 @@
             }]
             };
 
-
-
             var bodyChart = new Chart(ctx, {
                 data: birdsData,
                 type: 'polarArea'
@@ -62,7 +59,6 @@
     }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .wrapper {
     width: 90%;

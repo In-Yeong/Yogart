@@ -52,11 +52,9 @@ export default {
         getData() {
              axios.get(this.SERVER_URL + `/api/mypage/graph`, { 'headers': { 'auth-token': window.$cookies.get('auth-token') } })
                 .then(res => {
-                    console.log(res)
                     this.time = res.data.timeCount
                     this.calendar = res.data.attendance
                     this.body = res.data.tags
-                    console.log(this.body)
                 })
                 .catch(err => {
                     console.error(err)

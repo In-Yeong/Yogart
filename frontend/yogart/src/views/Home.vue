@@ -1,20 +1,19 @@
 <template>
-<div class="main">
-    <div class="index-image1"></div>
-    <div class="loader1"></div>
-    <div class="index1-btn button-container-1">
-        <span class="mas1">코칭 시작</span>
-        <button id='work' type="button" name="Hover" @click="clickAiCoaching()">START</button>
-    </div>
-    
-    <div class="index-image2"></div>
-    <div class="loader2"></div>
-    <div class="index2-btn button-container-2">
-        <span class="mas2">PT 시작</span>
-        <button id='work' type="button" name="Hover" @click="clickPT()">START</button>
-    </div>
-</div>
-  
+	<div class="main">
+		<div class="index-image1"></div>
+		<div class="loader1"></div>
+		<div class="index1-btn button-container-1">
+			<span class="mas1">코칭 시작</span>
+			<button id='work' type="button" name="Hover" @click="clickAiCoaching()">START</button>
+		</div>
+		
+		<div class="index-image2"></div>
+		<div class="loader2"></div>
+		<div class="index2-btn button-container-2">
+			<span class="mas2">PT 시작</span>
+			<button id='work' type="button" name="Hover" @click="clickPT()">START</button>
+		</div>
+	</div>  
 </template>
 
 <script>
@@ -25,7 +24,7 @@ export default {
             this.$router.push('/coaching/yogaposelist')
         },
         clickPT() {
-            this.$router.push('/class')
+            this.$router.push('/classandteacher')
         }
     },
 }

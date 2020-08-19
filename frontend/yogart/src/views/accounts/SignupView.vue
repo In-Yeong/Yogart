@@ -5,33 +5,30 @@
             <div class="signup-pack">
                 <div class="form-group">
                     <div class="form-mid-group">
-                        <input class="signup-input" placeholder="이메일" type="text" id="userEmail" v-model="signupData.userEmail" @keyup="checkEmail">
-                        <!-- <span class="allIcon" id="userEmailCheckIcon"><i class="fas fa-check fa-2x"></i></span> -->
+                        <input class="signup-input" @keyup.enter="signup" placeholder="이메일" type="text" id="userEmail" v-model="signupData.userEmail" @keyup="checkEmail">
                     </div>
                 </div>
                 <br>
                 <div class="form-group">
                     <div class="form-mid-group">
-                        <input class="signup-input" placeholder="이름" type="text" id="userName" v-model="signupData.userName" @change="checkName">
-                        <!-- <span class="allIcon" id="userNameCheckIcon"><i class="fas fa-check fa-2x"></i></span> -->
+                        <input class="signup-input" @keyup.enter="signup" placeholder="이름" type="text" id="userName" v-model="signupData.userName" @change="checkName">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-mid-group">
-                        <input class="signup-input" placeholder="닉네임" type="text" id="userNickname" v-model="signupData.userNickname" @change="checkNickname">
-                        <!-- <span class="allIcon" id="userNicknameCheckIcon"><i class="fas fa-check fa-2x"></i></span> -->
+                        <input class="signup-input" @keyup.enter="signup" placeholder="닉네임" type="text" id="userNickname" v-model="signupData.userNickname" @change="checkNickname">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-mid-group">
-                        <input class="signup-input" placeholder="비밀번호" type="password" id="userPassword" v-model="signupData.userPassword" @keyup="checkPassword">
+                        <input class="signup-input" @keyup.enter="signup" placeholder="비밀번호" type="password" id="userPassword" v-model="signupData.userPassword" @keyup="checkPassword">
                         <span class="allIcon" id="userPasswordCheckIcon"><i class="fas fa-check fa-2x"></i></span>
                     </div>
                     <small class="form-text text-muted">숫자, 영문 포함 8자 이상</small>
                 </div>
                 <div class="form-group">
                     <div class="form-mid-group">
-                        <input class="signup-input" placeholder="비밀번호 확인" type="password" id="userRePassword" v-model="signupData.userRePassword" @keyup="checkRePassword">
+                        <input class="signup-input" @keyup.enter="signup" placeholder="비밀번호 확인" type="password" id="userRePassword" v-model="signupData.userRePassword" @keyup="checkRePassword">
                         <span class="allIcon" id="userRePasswordCheckIcon"><i class="fas fa-check fa-2x"></i></span>
                     </div>
                 </div>
@@ -66,7 +63,6 @@ export default {
     methods: {
         signup() {
             // App.vue로 이벤트 발생
-            console.log(this.formCheck)
 
             if (this.formCheck.userEmail === false) {
                 alert('올바른 이메일을 입력해주세요.')

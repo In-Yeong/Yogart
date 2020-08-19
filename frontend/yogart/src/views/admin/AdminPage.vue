@@ -30,7 +30,6 @@ export default {
         }
     },
     mounted() {
-        console.log(123)
         const requestHeaders = {
             headers: {
                 Authorization: this.$cookies.get('auth-token')
@@ -38,7 +37,6 @@ export default {
         }
         axios.get(this.SERVER_URL + '/api/users/registrationList', requestHeaders)
         .then(res => {
-            console.log(res)
             this.applications = res.data
         })
         .catch(err => console.error(err))

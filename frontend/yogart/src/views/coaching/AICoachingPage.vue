@@ -25,7 +25,6 @@ export default {
   },
   created() {
     this.test = this.$store.state.test 
-    console.log(this.test)
   },
   
 }

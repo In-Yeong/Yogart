@@ -1,16 +1,19 @@
 <template>
     <!-- Pt를 진행하는 페이지 입니다. 가장 가까운 시간의 PT를 보여줍니다. -->
-    <div class="w-75 white-box ">
+   <div class="w-75 mx-auto mt-5">
+    <p class="info">* Pt를 진행하는 페이지 입니다. 가장 가까운 시간의 PT를 보여줍니다.</p>
+    <div class=" white-box w-100">
         <div id="className">
-            <h1>{{ ptName }}</h1>
+            <h2 class="page-name m-3">{{ ptName }}</h2>
         </div>
         <div>
-            <h5 class="m-5">{{ studentNickname }} 수강생</h5>
+            <h5 class="m-3">{{ studentNickname }} 수강생</h5>
         </div>
         <div>
             <h5>{{ date }} ({{koreanDay[day]}})  {{time}}시</h5>
         </div>
         <a :href="ptUrl" class="btn-blue">라이브 스트리밍 수업 시작</a>
+    </div>
     </div>
 </template>
 
@@ -41,7 +44,6 @@ export default {
         }
         axios.get(this.SERVER_URL + '/api/teachers/pt-now', requestHeaders)
         .then(res => {
-            console.log("최근 수업 가져오기 성공",res)
             this.studentNickname = res.data.ptOpen.ptStudentId.userNickname
             this.ptName = res.data.ptOpen.ptClickedName.ptName
             this.time = res.data.ptOpen.ptTime
@@ -73,5 +75,10 @@ export default {
     width : 100%;
     font-size : 1.5rem;
     border-radius : 5px;
-}   
+} 
+.info{
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 10px;
+    text-align: left;
+}  
 </style>

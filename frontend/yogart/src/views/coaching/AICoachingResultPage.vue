@@ -1,37 +1,43 @@
 <template>
 <div style="margin: 50px; ">
-    <h2 class="m-3">{{this.courseName}}코스 AI 코칭 결과</h2>
-    <h5>총 소요시간  |    {{this.minutes}} : {{this.seconds}}</h5>
-     <!-- <carousel-3d :controls-visible="true"  :controls-prev-html="'&#10092;'" :controls-next-html="'&#10093;'">
-       
-            <slide class="slide" :index="0">
-                <figure>
-                    <div class="box mr-2"><lineChart/></div>
-                </figure>
-              
-            </slide>
-    </carousel-3d> -->
+    <h2 class="m-3">{{this.courseName}} 코칭 결과</h2>
+    <h5>{{this.courseName}} 코스</h5>
+   <span class="badge badge-success" style="font-size:1rem; background:rgba(242, 157, 143,1);">총 소요시간 {{this.minutes}} : {{this.seconds}}</span>
 
-    <div class="d-flex mx-auto pr-0">
-        <div class="box mr-2"><lineChart/></div>
-        <div class="box"><dougnutChart/></div>      
-        <!-- <lineChart/>
-        <dougnutChart/> -->
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-            <th scope="col">자세</th>
-            <th scope="col">결과</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="poseId in course"  :key="poseId">
-            <td>{{ posefiles[poseId].korean_pose_name }}</td>
-            <td>{{ scores[`${poseId}`] }}</td>
-            </tr>
-        </tbody>
-    </table>
+     <carousel-3d :controls-visible="true" :width="720" :height="450">
+        <slide class="slide" :index="0">
+            <figure>
+                <lineChart/>
+            </figure>
+        </slide>
+        <slide class="slide" :index="1">
+            <figure>
+                <dougnutChart/>
+            </figure>
+        </slide>
+        <slide class="slide" :index="2">
+            <figure class="m-5">
+                <h3>자세 결과 테이블</h3>
+                 <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">자세</th>
+                        <th scope="col">결과</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="poseId in course"  :key="poseId">
+                        <td>{{ posefiles[poseId].korean_pose_name }}</td>
+                        <td>{{ scores[`${poseId}`] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </figure>
+        </slide>
+    </carousel-3d>
+    
+    <div id="goMypage" class="btn4  m-5" @click="goMypage()">마이페이지</div>
+   
 </div>
 </template>
 
@@ -64,15 +70,15 @@ export default {
               
         }  
     },
-    created() {
-        // this.getCourse()
-    },
     mounted(){
         this.getCourse()
         this.splitTotaltime()
         this.saveResult()
     },
     methods : {
+        goMypage(){
+            this.$router.push('/mypage')
+        },
         splitTotaltime() {
             const totalTime = this.$cookies.get('resultRunTime').split('.')
             this.minutes = totalTime[0]
@@ -96,7 +102,6 @@ export default {
                 cnt++
             })
             this.scores = scores
-            console.log(this.scores)
 
         },
         getCourse() {
@@ -104,7 +109,6 @@ export default {
             axios.get(this.SERVER_URL + `/api/aicoach/list/${this.courseId}`)
             .then(res => {
                 //코스 이름과 코스 리스트 save
-                console.log("코칭결과 페이지 코스 가져오기성공",res)
                 this.courseName = res.data.courseName
                 
                 const Course =  res.data.course.split(',') 
@@ -135,7 +139,6 @@ export default {
         createDougnutData() { //data - 태그별 카운트 
             this.course.forEach(function (poseID){
                 this.posefiles[poseID].tag.forEach(function(tag){
-                    // console.log(tag,this.dougnutdata)
                     if (tag === '전신') {
                         this.dougnutdata[0] ++       
                     }
@@ -166,12 +169,10 @@ export default {
         saveResult() {
             //오늘 날짜
             const startDateTime = this.$cookies.get('startDateTime');
-            console.log("여기는 결과페이지 데이트타임",startDateTime)
             //총 경과 시간
             const totalTime = String(60 * this.minutes + this.seconds)
             //부위별 태그 횟수
             const tagCounting = this.$cookies.get('dougnutdataStr')
-            // console.log(tagCounting)
             //db에 오늘날짜, 경과"시간,부위별 태그횟수 보내서 저장
             
             axios.post(this.SERVER_URL + `/api/aicoach/result`,
@@ -182,7 +183,7 @@ export default {
                 }
             )
             .then(res => {
-                console.log("AI 코칭 결과 저장 성공",res) 
+                // console.log(res) 
             })
             .catch(err => {console.log(err)})
         }
@@ -193,10 +194,22 @@ export default {
 </script>
 
 <style scoped >
+#goMypage{
+    width : 150px;
+    height : 40px;
+    line-height:18px;
+    border : 3px solid rgba(242, 157, 143,0.3);
+    border-radius: 10px;
+    font-size : 15px;
+    font-weight: 700;
+    position : absolute;
+    top : 10%;
+    right : 5%;
+}
 .box{
     width : 100%;
 }
- 
+.carousel-3d-container
 .carousel-3d-container figure {
   margin: 0;
 }
@@ -204,7 +217,7 @@ export default {
 .carousel-3d-container figcaption {
   
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   color: #fff;
   bottom: 0;
   position: absolute;
@@ -223,5 +236,15 @@ export default {
 }
 .slide{
     border-radius: 7px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+.slide.current{
+    background-color: rgba(255, 255, 255, 0.9);
+}
+tr, td, th{
+    border : 2px solid rgba(0, 0, 0, 0.5);
+}
+th{
+    background-color: rgba(242, 157, 143, 0.5) ;
 }
 </style>

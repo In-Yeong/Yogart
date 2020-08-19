@@ -1,12 +1,10 @@
 <template>
-    <div class="padding-for-nav">
-        <div class="page-index d-flex justify-content-between">
-            <div class="page-name">강사 목록</div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <TeacherCard v-for="teacher in teachers" :key="teacher.id" :teacher="teacher" @click.native="onClick(teacher.id)"></TeacherCard>
+    <div style="margin-top:110px;">
+        <div class="page-index">
+            <div class="under-border text-left">
+                <h2 class="page-name">강사 목록</h2>
             </div>
+            <TeacherCard v-for="teacher in teachers" :key="teacher.id" :teacher="teacher" @click.native="onClick(teacher.id)"></TeacherCard>
         </div>
     </div>
 </template>
@@ -29,7 +27,6 @@ export default {
     created() {
         axios.get(this.SERVER_URL + '/api/teachers/list')
         .then(res => {
-            console.log(res)
             this.teachers = res.data
         })
         .catch(err => cosole.error(err))
@@ -43,16 +40,21 @@ export default {
 </script>
 
 <style scoped>
+
 .page-index {
+  
     width: 75%;
     margin: auto;
     margin-bottom : 1rem;
-    border-bottom: 2px solid rgba(143, 160, 242, 0.5);
+    /* border-bottom: 2px solid rgba(143, 160, 242, 0.5); */
 }
 .page-name {
-    margin-left: 1vh;
-    font-size: 4vh;
     font-weight: bold;
     color: rgba(0, 0, 0, 0.6);
+    line-height: 100%;
+    
+}
+.under-border{
+    padding : 0;
 }
 </style>

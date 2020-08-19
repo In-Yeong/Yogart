@@ -2,7 +2,8 @@
     <div class="timeGraph">
         <div class="graph-name">일별 운동량</div>
         <div class="wrapper">
-            <GChart
+            <div id="no-data">데이터가 없습니다.</div>
+            <GChart id="chart"
             :settings="{packages: ['calendar']}"
             type="Calendar"
             :data="chartData"
@@ -31,7 +32,8 @@
                 calendar: { cellSize: 11 },
                 height: 150
 
-                }
+                },
+                isEmpty : true
             };
         },
         props: {
@@ -40,15 +42,24 @@
         watch: {
             calendar() {
                 var calendarArr = Object.entries(this.calendar)
-                console.log('여기~~',calendarArr.length)
-                calendarArr.forEach(e => {
+                if (calendarArr.length === 0) {
+                    this.isEmpty = false
+                    document.getElementById('no-data').style = "display: block;"
+                    document.getElementById('chart').style = "display: none;"
+                } else {
+                    calendarArr.forEach(e => {
                     var date = e[0].split('-')
                     console.log('날짜',date)
                     var run = e[1]*1
                     this.chartData.push([new Date(date[0]*1, (date[1]*1-1), date[2]*1), run])
-                });
+                    document.getElementById('no-data').style = "display: none;"
+                    document.getElementById('chart').style = "display: block;"
+                    });
+                }
+                
+                
             }
-        }
+        },
 
     }
 </script>
@@ -66,5 +77,10 @@
     font-weight: bold;
     color: rgba(0, 0, 0, 0.6);
 }
-
+#chart {
+    display: none;
+}
+#no-data {
+    display: block;
+}
 </style>

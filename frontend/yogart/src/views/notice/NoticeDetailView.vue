@@ -19,10 +19,7 @@
 // @ is an alias to /src
 import axios from 'axios'
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-
 import { Viewer } from '@toast-ui/vue-editor';
-
-const API_URL = 'http://127.0.0.1:8000'
 
 export default {
     name: 'NoticeDetailView',
@@ -36,6 +33,7 @@ export default {
             noticeContent: null,
             noticeId: null,
             createDate: null,
+            SERVER_URL: this.$store.state.SERVER_URL
         },
       }
     },
@@ -45,8 +43,7 @@ export default {
     methods: {
         getNotice() {
             var noticeId = document.location.href.split("notice/")[1]
-
-            axios.get(`${API_URL}/api/notice/${noticeId}`)
+            axios.get(`${this.SERVER_URL}/api/notice/${noticeId}`)
             .then(response => {
             this.notice.noticeTitle = response.data.noticeTitle
             this.notice.noticeContent = response.data.noticeContent
@@ -66,7 +63,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .page-name {
     width: 70%;

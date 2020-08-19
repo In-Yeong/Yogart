@@ -7,7 +7,7 @@
                     <router-link class="nav-link" to="/coaching/yogaposelist">AI coaching</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link class="nav-link" to="/class">1:1 PT</router-link>
+                    <router-link class="nav-link" to="/classandteacher">1:1 PT</router-link>
                 </li>
                 </ul>
                 <router-link class="navbar-brand" to="/"><img class="logo-img" src="../assets/logo.png" alt=""></router-link>
@@ -23,7 +23,6 @@
                 </li>
                 
                 <li class="nav-item dropdown" v-if="isLogin">
-                    <!-- <img class="user-profile-img m-3" :src="userPic"> -->
                     <a class="nav-link" id="navbarDropdown" data-toggle="dropdown">
                     {{userNickname}}님
                     </a>

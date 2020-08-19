@@ -1,7 +1,10 @@
 <template>
-    <div class="m-5">
-        <h1>수업 개설</h1>
-        <div class="d-flex mx-auto w-75 mb-3 justify-content-center">
+  <div class="top-75">
+        <div class="under-border">
+            <h2 class="page-name text-left">수업 개설</h2>
+        </div>
+        
+        <div class="d-flex mb-3 justify-content-center">
         <div class="mr-3">
             <div class="field-row">
                 <input name="class_name" id="class_name" v-model="ptName" type="text" required autofocus/>
@@ -17,14 +20,14 @@
             </div>
         </div>
         <div style="margin-top:30px;">
-            <button id="makeClassBtn" @click="onSubmit">수업 생성</button>
+            <div id="makeClassBtn" @click="onSubmit">수업 생성</div>
         </div>
     </div>
 
 
-
-
-        <table class="table w-75 mx-auto">
+     <p  class="info">* 원하는 요일과 시간대를 클릭해서 수업을 스케줄링해보세요.</p>
+    
+        <table class="table">
         <thead>
             <tr>
             <th scope="col">시</th>
@@ -68,7 +71,6 @@ export default {
     },
     methods: {
         cellClicked(payload) {
-            console.log(payload.day, payload.time)
             if (payload.isClicked) {
                 this.clicked.push({day: payload.day, time: payload.time})
             } else {
@@ -77,7 +79,6 @@ export default {
                 })
                 if (idx > -1) this.clicked.splice(idx, 1)
             }
-            console.log(this.clicked)
         },
         onSubmit(e) {
             e.preventDefault()
@@ -92,37 +93,47 @@ export default {
                 ptIntro: this.ptIntro,
                 clicked: this.clicked,
             }
-            // console.log(ptData)
             // 데이터 저장을 요청합니다. 데이터를 저장하며 clicked에 맞춰 수업을 생성해야 합니다.
-            console.log(ptData)
             axios.post(this.SERVER_URL + '/api/teachers/pt-create', ptData, requestHeaders)
             .then(res => {
-                console.log(res)
                 // 강사 상세페이지로 이동
                 // this.$router.push('')
             })
             .catch(err => console.error(err))
         }
     },
-    mounted() {
-        // // 전에 저장했던 강사의 수업 가능 시간을 받아 옵니다.
-        // axios.get(this.SERVER_URL + '/api/teachers/pt-timetable, pt)
-        // .then(res => {
-        //     this.clicked = res.data.clicked
-        // })
-    },
 }
 </script>
 
 <style scoped>
+.top-75{
+    width:75%;
+    margin : auto;
+    margin-top: 100px;
+}
+.info{
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 10px;
+    text-align: left;
+} 
+.under-border{
+    padding : 0;
+}
 #makeClassBtn{
     width : 100px;
     height : 190px;
+    line-height: 190px;
     background-color: rgba(143, 160, 242, 1);
     color : white;
     border :2px solid white;
     border-radius : 10px; 
-    font-weight: 500;
+    font-size: 1.2rem;
+    font-weight: 500px;
+}
+#makeClassBtn:hover{
+    background-color: rgba(255, 255, 255, 0.5);
+    color : rgba(143, 160, 242, 1);
+    border :2px solid rgba(143, 160, 242, 1);
 }
 th {
     background-color: rgba(143, 160, 242, 1);
@@ -151,13 +162,14 @@ label {
 }
 input {
     width : 400px;
-    background :rgba(255, 255, 255, 0.8);
+    background :rgba(255, 255, 255, 0.6);
 	font-size:16px;
 	line-height:18px;
 	padding: 10px 10px 10px 0;
 	border:0;
 	border-bottom:1px solid #ccc;
 	outline:none;
+    padding-left : 5px;
 	
 }
 input:focus {

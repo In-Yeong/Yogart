@@ -1,9 +1,12 @@
 <template>
     <!-- 예약된 모든 PT를 확인할 수 있는 곳입니다. -->
     <div class="white-box" >
-        <h1 class="under-border">예약된 PT 조회</h1>
+        <div class="under-border">
+            <h2 class="page-name">예약된 PT 조회</h2>
+        </div>
+        
         <div class="d-flex flex-column box" v-for="pt in ptList" :key="pt.id">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between" style="color: rgba(0, 0, 0, 0.6); ">
                 <h4>{{ pt.ptName }}</h4>
                 <p>{{ pt.dateTime }}</p>
             </div>
@@ -44,4 +47,12 @@ export default {
 </script>
 
 <style scoped>
+.white-box{
+    margin-top: 60px;
+    height: 100%;
+}
+.under-border{
+    padding-top: 30px;
+    padding-bottom : 0;
+}
 </style>

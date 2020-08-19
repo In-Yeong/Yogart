@@ -29,7 +29,6 @@ import PayComplete from '../views/kakaopay/PayComplete.vue'
 import PayCancel from '../views/kakaopay/PayCancel.vue'
 import PayFail from '../views/kakaopay/PayFail.vue'
 import AdminPage from '../views/admin/AdminPage.vue'
-import test from '../views/test.vue'
 
 var getCookie = function(name) {
     var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
@@ -37,13 +36,11 @@ var getCookie = function(name) {
     }
 
 const requireAuth = () => (from, to, next) => {
-    // console.log(store.state.isLogin)
     if (store.state.isLogin) return next()
     $('#loginStaticBackdrop').modal('show')
 }
 
 const requireUNAuth = () => (from, to, next) => {
-    // console.log(store.state.isLogin)
     if (!store.state.isLogin) return next()
     return next('/')
 }
@@ -97,11 +94,6 @@ const routes = [
     },
     // Kakao pay
     {
-        path: '/test',
-        name: 'test',
-        component: test
-    },
-    {
         path: '/kakaoPay/Success',
         name: 'PayComplete',
         component: PayComplete
@@ -125,8 +117,8 @@ const routes = [
     },
     // All class
     {
-        path: '/class',
-        name: 'ClassList',
+        path: '/classandteacher',
+        name: 'ClassAndTeacherList',
         component: ClassAndTeacherList
     },
     // Teacher

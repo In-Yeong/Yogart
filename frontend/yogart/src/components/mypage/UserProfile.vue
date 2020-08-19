@@ -68,7 +68,6 @@ export default {
             }
             axios.get(this.SERVER_URL + '/api/users/myInfo/profile', requestHeaders)
             .then(res => {
-                console.log("UserProfile page 성공",res)
 
                 this.userName = res.data.userName
                 this.id = res.data.id
