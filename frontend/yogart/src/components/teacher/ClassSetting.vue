@@ -12,7 +12,7 @@
             </div>
             <div class="field-row">
                 <input name="class_price" id="class_price" v-model="ptPrice" type="text" required/>
-                <label for="class_price">회당 가격</label> 
+                <label for="class_price">회당 스푼</label> 
             </div>
             <div class="field-row">
                 <input name="class_intro" id="class_intro" v-model="ptIntro" type="text" required/>
@@ -41,7 +41,7 @@
             </tr>
         </thead>
         <tbody>
-            <TimeTable v-for="time in times" :key="time" :time="time" :clicked="clicked" @cellClicked="cellClicked"></TimeTable>
+            <TimeTable class="time-table" v-for="time in times" :key="time" :time="time" :clicked="clicked" @cellClicked="cellClicked"></TimeTable>
         </tbody>
         </table>
     </div>
@@ -185,6 +185,13 @@ input:focus ~ label, input:valid ~ label {
 	transform: translate3d(0, -30px, 0);
 }
 .select{
+    background-color: rgba(143, 160, 242, 0.6);
+}
+.time-table {
+    background-color: rgba(143, 160, 242, 0.3);
+}
+.time-table:hover {
+    cursor: pointer;
     background-color: rgba(143, 160, 242, 0.6);
 }
 </style>

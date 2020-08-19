@@ -39,8 +39,8 @@
                     </div>
                     <div v-else class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <router-link class="sub-item nav-link" to="/mypage">마이페이지</router-link>
-                        <router-link class="sub-item nav-link" to="/teacher-apply" >강사로 활동하기</router-link>
                         <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
+                        <router-link class="sub-item nav-link small-size" to="/teacher-apply" >강사로 활동하기</router-link>
                     </div>
                 </li>
                 <li class="nav-item" v-else>
@@ -61,7 +61,6 @@ export default {
         return {
             
             userNickname: this.$store.state.userNickname,
-            userPic: "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
             showNavbar: true,
             lastScrollPosition: 0,
             isTeacher: null,
@@ -210,5 +209,18 @@ export default {
 
 .sub-item {
     text-align: center;
+}
+.small-size {
+    font-size: 14px;
+    color: gray !important;
+    position: relative;
+    padding: 1rem !important;
+    cursor: pointer;
+}
+.small-size:after {    
+  content: "";
+  display: block;
+  height: 0px !important;
+  width: 0px !important;
 }
 </style>

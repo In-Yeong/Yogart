@@ -3,7 +3,7 @@
     <div class="profile-box">
         <div class="img-wrap">
             <img v-if="imgSrc" class="user-profile-img" :src="imgSrc" alt="user profile image">
-            <img v-else class="user-profile-img" src="../../assets/userDefault.jpg" alt="user profile image">
+            <!-- <img v-else class="user-profile-img" src="../../assets/userDefault.jpg" alt="user profile image"> -->
         </div>
         <div v-if="!introDown" class="intro-wrap">
             <div class="box sb2">{{userIntro}}</div>
@@ -42,7 +42,7 @@ export default {
             userProfile : '',
             userIntro : '',
             id : Number,
-            imgSrc : "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
+            imgSrc : `${this.$store.state.SERVER_URL}/api/users/profileImage?authToken=` + this.$cookies.get('auth-token'),
             userSpoon : 0,
         }
     },
@@ -68,7 +68,6 @@ export default {
             }
             axios.get(this.SERVER_URL + '/api/users/myInfo/profile', requestHeaders)
             .then(res => {
-
                 this.userName = res.data.userName
                 this.id = res.data.id
                 this.userNickname = res.data.userNickname
