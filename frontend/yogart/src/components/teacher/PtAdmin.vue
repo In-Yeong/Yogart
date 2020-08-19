@@ -12,7 +12,7 @@
         <div>
             <h5>{{ date }} ({{koreanDay[day]}})  {{time}}시</h5>
         </div>
-        <a :href="ptUrl" class="btn-blue">라이브 스트리밍 수업 시작</a>
+        <a :href="ptUrl" class="btn-blue" style="color:white">라이브 스트리밍 수업 시작</a>
     </div>
     </div>
 </template>

@@ -29,6 +29,25 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.nav-link {
+    color: gray !important;
+    position: relative;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 1rem !important;
+    cursor: pointer;
+}
+.nav-link:after {    
+  content: "";
+  display: block;
+  height: 4px;
+  background: #8fa0f2;
+  transition: width 0.7s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+.nav-link:hover:after { 
+  width: 10rem !important;
+}
 
 </style>

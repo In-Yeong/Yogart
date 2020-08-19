@@ -1,16 +1,13 @@
 <template>
-  <div class="container">
-  <div class="row no-gutters">
-    <div class="col-sm-4 d-flex flex-column box">
-        <div>
-          <img v-if="teacher.teacherImage" :src="teacher.teacherImage" class="user-profile" alt="...">
-          <h5>{{ teacher.userName }}</h5>
-        <p v-if="teacher.userIntro">{{ teacher.userIntro }}</p>
-        <p v-else>강사 소개를 해주세요.</p>
-        </div>
-    </div>
-  </div>
-</div>
+  <div class="col-sm-4 box">
+          <div class="d-flex flex-column align-items-center">
+            <img v-if="teacher.teacherImage" :src="teacher.teacherImage" class="user-profile" alt="...">
+            <img v-else src="../../assets/userDefault.jpg" class="user-profile" alt="...">
+            <h5>{{ teacher.userName }}</h5>
+          <p v-if="teacher.userIntro">{{ teacher.userIntro }}</p>
+          <p v-else>강사 소개를 해주세요.강사 소개를 해주세요.강사 소개를 해주세요.강사 소개를 해주세요.강사 소개를 해주세요.강사 소개를 해주세요.</p>
+          </div>
+      </div>
 </template>
 
 <script>
@@ -19,9 +16,6 @@ export default {
 
     props: {
         teacher: Object,
-    },
-    created() {
-      console.log(teacher.teacherImage)
     },
 
 }
@@ -34,14 +28,13 @@ export default {
   height: 80px;
   border-radius: 50%;
   border : 2px solid rgba(255, 255, 255, 0.5);
-
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+  margin-bottom: 10px;
 }
 .box{
     padding :10px;
-    width : 100%;
     background-color: rgba(255, 255, 255, 0.3);
     box-shadow: 3px 3px rgba(143, 160, 242, 0.5);
 }

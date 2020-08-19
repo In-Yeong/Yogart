@@ -73,7 +73,7 @@ export default {
 }
 .teacherBgd{
     /* background-color: rgba(143, 160, 242, 0.7); */
-    height : 500px;
+    height : 450px;
     font-family: 'Montserrat', sans-serif;
     background-image: url('../../assets/beach.jpg');
     color : white;

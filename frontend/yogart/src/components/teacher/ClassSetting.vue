@@ -111,7 +111,7 @@ export default {
 .top-75{
     width:75%;
     margin : auto;
-    margin-top: 100px;
+    margin-top: 40px;
 }
 .info{
     color: rgba(0, 0, 0, 0.6);

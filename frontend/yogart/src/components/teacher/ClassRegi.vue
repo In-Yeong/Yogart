@@ -46,27 +46,30 @@ export default {
     },
     methods: {
         selectDate(date) {
-            // 유저가 날짜를 선택하면 그날에 열리는 수업을 보여줘야 합니다.
-            this.clickedDate = date
-            let day = date.getDay()
+            const today = new Date()
             this.showArray.length = 0
-            let self = this
-            if (Math.abs(this.clickedDate.getDate() - new Date().getDate()) > 15) {
-                self.clickedDate = null
-                return
-            }
-            this.showArray = this.ptTimes.filter(pt => {
-                let isSoldOut = true
-                for (let k = 0; k < self.soldOut.length; k++) {
-                    if (date.getDate() === self.soldOut[k].getDate() && pt.ptTime === self.soldOut[k].getHours()) {
-                        isSoldOut = false
-                    }
+            if (date.getMonth() >= today.getMonth() && date.getDate() >= today.getDate()){
+            // 유저가 날짜를 선택하면 그날에 열리는 수업을 보여줘야 합니다.
+                this.clickedDate = date
+                let day = date.getDay()
+                let self = this
+                if (Math.abs(this.clickedDate.getDate() - new Date().getDate()) > 15) {
+                    self.clickedDate = null
+                    return
                 }
-                return pt.ptDay === day && isSoldOut
-            })
-            this.showArray.sort(function(a, b) {
-                return a.ptTime - b.ptTime
-            })
+                this.showArray = this.ptTimes.filter(pt => {
+                    let isSoldOut = true
+                    for (let k = 0; k < self.soldOut.length; k++) {
+                        if (date.getDate() === self.soldOut[k].getDate() && pt.ptTime === self.soldOut[k].getHours()) {
+                            isSoldOut = false
+                        }
+                    }
+                    return pt.ptDay === day && isSoldOut
+                })
+                this.showArray.sort(function(a, b) {
+                    return a.ptTime - b.ptTime
+                })
+            }
         }
     },
     data() {
@@ -136,11 +139,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .bottom-margin {
     margin: 300px;
 }
-.date-picker {
+#date-picker {
     background-color: rgba(143, 160, 242, 0.5);
     border : 2px solid rgba(0,0,0,0);
     border-bottom : 1px solid black;

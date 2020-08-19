@@ -48,7 +48,8 @@ export default {
 
 <style scoped>
 .white-box{
-    margin-top: 60px;
+    padding-top: 0px;
+    margin-top: 10px;
     height: 100%;
 }
 .under-border{
