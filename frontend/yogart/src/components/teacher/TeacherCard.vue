@@ -21,6 +21,9 @@ export default {
     props: {
         teacher: Object,
     },
+    created() {
+      console.log(teacher.teacherImage)
+    },
 
 }
 </script>
