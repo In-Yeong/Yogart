@@ -115,6 +115,15 @@ export default {
     background-size: 20%;
     color: #2c3e50;
 }
+.y-border{
+
+  border-top : 2px solid black;
+  border-bottom: 2px solid black;
+  padding : 10px;
+  width : 85%;
+  margin : auto;
+  margin-top : 30px;
+}
 .white-box{
     padding : 2rem;
     width : 75%;
@@ -198,9 +207,6 @@ pre {
 
 .btn-blue {
   transition-duration: 0.4s;
-  /* background-color:rgba(255,255,255,0.3);
-  border: 3px solid #f29d8f;
-  color: #f29d8f; */
   background-color:rgba(143, 160, 242, 1);
   border: 3px solid rgba(143, 160, 242, 1);
   color: white;
