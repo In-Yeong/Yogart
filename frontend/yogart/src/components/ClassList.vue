@@ -5,9 +5,9 @@
 
             <div class="form-group">
                 <select class="form-control" id="sel1" v-model="selected">
-                    <option id="new" value="0"> 최신순</option>
-                    <option id="low" value="1">낮은가격순</option>
-                    <option id="high" value="2">높은가격순</option>
+                    <option id="new" value="new"> 최신순</option>
+                    <option id="low" value="low">낮은가격순</option>
+                    <option id="high" value="high">높은가격순</option>
                 </select>
             </div>
         </div>
