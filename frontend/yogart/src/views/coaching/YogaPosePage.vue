@@ -15,6 +15,7 @@
             <p class="tip">Press Tab</p>
             <div class="fill-button">포즈는 선택하셨나요?(최대 7개)</div>
         </form> -->
+    
 
         <div class="field-row mx-5">
             <input name="courseName" id="courseName" v-model="courseName" type="text" required @keyup.enter="makeList(courseName)"/>
@@ -25,20 +26,7 @@
         <p style="color:#888; margin-top:5px;">포즈를 선택해 주세요( 최대 7개 )<span @click="reset" class="reset-btn">Reset</span></p>
         <div class="d-flex justify-content-around">
 
-                <div class="d-flex flex-column" v-for="idx in poseIndexList" :key="idx">
-                    <!-- <div class=" overlay-image _b1 "><a href="LINK_URL">
-                        <img class=" image _b2 " src="IMAGE" alt="Alt text" />
-                        <div class=" normal _b4 ">
-                        <div class=" text _2 ">Image + text
-                        ORIGINAL</div>
-                        </div>
-                        <div class=" hover _b3 ">
-                        <div class=" text _2 ">Background + text
-                        HOVER</div>
-                        </div>
-                        </a></div> -->
-
-
+                <div class="d-flex flex-column" v-for="idx in poseIndexList" :key="idx">          
                  <div>
                     <img class="image user-profile-small m-2" :src="require(`../../../public/photos/${posefiles[idx].file_reference}`)">
                     <span id="delete" @click="deleteItem(posefiles[idx])">x</span>
@@ -50,8 +38,6 @@
           
         </div>
 
-        <!-- <p>{{poseList}}</p> -->
-        <!-- <p>{{poseIndexList}}</p> -->
        <div class="container">
            <div>
             <div class="d-flex justify-content-around" >
