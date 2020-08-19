@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h1 class="m-3" style="font-weight:700">요가 포즈 리스트</h1>
+      <h1 class="my-3" style="font-weight:700">요가 포즈 리스트</h1>
       <BodyPartRecommend @clickSet="yogaListDetail"/>
       <UserDesign @clickSet="yogaListDetail"/>
       

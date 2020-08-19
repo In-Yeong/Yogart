@@ -34,9 +34,6 @@ export default {
         }
     },
     methods: {
-        selected(e) {
-
-        },
         onClick(e) {
             const requestHeaders = {
                 headers: {

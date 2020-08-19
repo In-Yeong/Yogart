@@ -2,7 +2,7 @@
     
     <div class="m-5">
         <div id="example">
-        <h3 class="m-5" style="font-weight:500px;">부위별 & 스페셜 요가 코스</h3>
+        <h3 class="my-5 y-border" style="font-weight:500px;">부위별 & 스페셜 요가 코스</h3>
         <carousel-3d :controls-visible="true"  :controls-prev-html="'&#10092;'" :controls-next-html="'&#10093;'">
             <!-- figcaption -->
             <slide class="slide" :index="0">

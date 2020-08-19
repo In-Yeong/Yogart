@@ -3,14 +3,14 @@
         <h1 class="mx-5 mb-5 under-border">요가지도자 자격 인증</h1>
         <h5>요가 수업을 진행하기 위해서는 요가지도자 자격을 인증하셔야 합니다.</h5>
         <h5>이를 위해 아래에 해당하는 이미지를 첨부해주세요.</h5>
-        <p>( 모든 첨부 파일들을 하나의 이미지로 만들어주세요 )</p>
+        <p>( 모든 첨부 파일들을 하나의 이미지에 담아주세요 )</p>
         <div class=" mx-5 under-border"></div>
         <div >
             <h5>1. 신분증 사본</h5>
             <h5 class="my-3">2. 요가지도자 자격증 사본(종류 무관)</h5>
         </div>
         <input type="file" ref="tI" id="t-i" accept=".jpg, .jpeg, .gif, .png" multiple="multiple">
-        <p class="info">모든 파일은 인증 후 파기됩니다.</p>
+        <p class="info">모든 정보는 인증 후 파기됩니다.</p>
         <button class="btn-blue" @click="onSubmit">등록</button>
     </div>
 </template>

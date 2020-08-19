@@ -31,7 +31,12 @@ export default {
         }
     },
     mounted() {
-        axios.get(this.SERVER_URL + `/api/qna/reply/list/${this.itemId}`, this.itemId)
+        const requestHeaders = {
+            headers: {
+                Authorization: this.$cookies.get('auth-token')
+            }
+        }
+        axios.get(this.SERVER_URL + `/api/qna/reply/list/${this.itemId}`, requestHeaders)
         .then(res => {
             this.answers = res.data.list
             this.isAdmin = res.data.admin
@@ -51,20 +56,14 @@ export default {
                 qnaId: this.itemId
             }
             // 데이터 형식 및 URL 체크  
-            if (this.answerData !== null && this.isAdmin === true) [
-            axios.post(this.SERVER_URL + '/api/qna/reply/make', replycontents, requestHeaders)
-            .then(res => {
-                axios.get(this.SERVER_URL + `/api/qna/reply/list/${this.itemId}`, this.itemId)
+            if (this.answerData !== null && this.isAdmin === true) {
+                axios.post(this.SERVER_URL + '/api/qna/reply/make', replycontents, requestHeaders)
                 .then(res => {
-                console.log(res)
-                this.answers = res.data.list
-                this.isAdmin = res.data.admin
+                    this.answers = res.data.list
+                    this.ReplyContent = null
                 })
-                .catch(err => console.log(err))
-            })
-            .catch(err => console.error(err))
-            ]
-            console.log(e)
+                .catch(err => console.error(err))
+            }
         }
     },
 }

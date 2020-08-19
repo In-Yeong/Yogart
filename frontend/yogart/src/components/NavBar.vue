@@ -39,6 +39,7 @@
                     </div>
                     <div v-else class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <router-link class="sub-item nav-link" to="/mypage">마이페이지</router-link>
+                        <router-link class="sub-item nav-link" to="/teacher-apply" >강사로 활동하기</router-link>
                         <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
                     </div>
                 </li>
