@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <h1 class="m-5">{{courseName}} 코스</h1>
+        <h1 class="my-5 y-border">{{courseName}} 코스</h1>
          
         <p class="mb-5">다음 동작 순서대로 AI 코칭이 진행됩니다.</p>
      
@@ -87,19 +87,12 @@ export default {
     border : 2px solid white;
     cursor: pointer;
 }
-/* .box-btn{
-    color : black;
-    margin : auto;
-    width : 30%;
-    height : 50px;
-    line-height : 50px;
-    background-color: rgba(255, 255, 255, 0.5);
-    border : 2px solid white;
+.user-profile{
+    box-shadow: 3px 3px rgba(0,0,0,0.6);
 }
-.box-btn:hover{
-    border : 2px solid#d79fd7;
-    color : #d79fd7;
-    cursor: pointer;
-} */
-
+.y-border{
+    border-top : 2px solid #f29d8f;
+    border-bottom : 2px solid #f29d8f;
+    width : %;
+}
 </style>

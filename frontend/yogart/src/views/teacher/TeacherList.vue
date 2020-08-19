@@ -1,8 +1,8 @@
 <template>
-    <div style="margin-top:110px;">
+    <div style="margin-top:50px;">
         <div class="page-index">
             <div class="under-border text-left">
-                <h2 class="page-name">강사 목록</h2>
+                <h2 class="page-name pb-2">강사 목록</h2>
             </div>
             <TeacherCard v-for="teacher in teachers" :key="teacher.id" :teacher="teacher" @click.native="onClick(teacher.id)"></TeacherCard>
         </div>

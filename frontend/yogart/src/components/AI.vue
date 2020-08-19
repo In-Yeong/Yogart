@@ -10,7 +10,7 @@
             </div>
         </div>
        
-        <div id="loading m-5" v-if="loading">
+        <div id="loading m-5" v-if="loading" class="y-border">
             <h1 class="m-5">AI 요가 코칭 서비스를 시작합니다</h1>
             <h5>{{courseName}} 코스 준비중</h5>
     
@@ -318,7 +318,10 @@
 </script>
     
 <style scoped>
-
+.y-border{
+    padding : 1rem;
+    padding-bottom: 3rem;
+}
 .shadow-box{
     padding:10px;
     height : 490px;
