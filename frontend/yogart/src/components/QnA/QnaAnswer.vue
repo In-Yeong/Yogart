@@ -59,7 +59,7 @@ export default {
             if (this.answerData !== null && this.isAdmin === true) {
                 axios.post(this.SERVER_URL + '/api/qna/reply/make', replycontents, requestHeaders)
                 .then(res => {
-                    this.answers = res.data.list
+                    this.answers = res.data
                     this.ReplyContent = null
                 })
                 .catch(err => console.error(err))
