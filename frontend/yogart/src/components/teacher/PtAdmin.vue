@@ -16,7 +16,7 @@
         </div>
         <div v-else class=" white-box w-100">
             <div id="className">
-                <h2 class="page-name m-3">예약된 수업이 없습니다.</h2>
+                <h2 class="page-name m-3">예약된 수업이 없습니다</h2>
             </div>
         </div>
     </div>
