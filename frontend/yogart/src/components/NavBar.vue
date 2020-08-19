@@ -34,7 +34,7 @@
                     </div>
                     <div v-else-if="isTeacher" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <router-link class="sub-item nav-link" to="/mypage">마이페이지</router-link>
-                        <router-link class="sub-item nav-link" to="/teachers/class-settings">수업관리</router-link>
+                        <router-link class="sub-item nav-link" to="/teacherpage">수업관리</router-link>
                         <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
                     </div>
                     <div v-else class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -59,6 +59,7 @@ export default {
     name: 'NavBar',
     data() {
         return {
+            
             userNickname: this.$store.state.userNickname,
             userPic: "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
             showNavbar: true,
@@ -87,32 +88,30 @@ export default {
             }
             this.showNavbar = currentScrollPosition < this.lastScrollPosition
             this.lastScrollPosition = currentScrollPosition
-        }
-
+        },
     },
-    mounted () {
+    mounted() {
         window.addEventListener('scroll', this.onScroll)
         // 해당 유저가 강사자격을 보유했는지 확인합니다.
-        const requestHeaders = {
+                const requestHeaders = {
             headers: {
                 Authorization: this.$cookies.get('auth-token')
             }
         }
         const self = this
+        async function getIsAdmin() {
+            try {
+                const res = await axios.get(self.$store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
+                self.isAdmin = res.data
+            } catch (err) {
+                console.error(err)
+            }
+        }
         async function getIsTeacher() {
             try {
                 const res = await axios.get(self.$store.state.SERVER_URL + '/api/users/isTeacher', requestHeaders)
                 self.isTeacher = res.data
             } catch(err) {
-                console.error(err)
-            }
-        }
-        async function getIsAdmin() {
-            try {
-                const res = await axios.get(self.$store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
-                self.isAdmin = res.data
-                self.isTeacher = res.data
-            } catch (err) {
                 console.error(err)
             }
         }

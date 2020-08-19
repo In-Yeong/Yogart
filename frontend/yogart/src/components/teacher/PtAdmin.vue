@@ -44,12 +44,14 @@ export default {
         }
         axios.get(this.SERVER_URL + '/api/teachers/pt-now', requestHeaders)
         .then(res => {
-            this.studentNickname = res.data.ptOpen.ptStudentId.userNickname
-            this.ptName = res.data.ptOpen.ptClickedName.ptName
-            this.time = res.data.ptOpen.ptTime
-            this.day = res.data.ptOpen.ptDay
-            this.date = res.data.ptOpen.dateTime.slice(0,10)
-            this.ptUrl = `https://i3d202.p.ssafy.io:8080/rtc.html?room=${res.data.teacher.teacherCode}`
+            if(res.data !== ""){
+                this.studentNickname = res.data.ptOpen.ptStudentId.userNickname
+                this.ptName = res.data.ptOpen.ptClickedName.ptName
+                this.time = res.data.ptOpen.ptTime
+                this.day = res.data.ptOpen.ptDay
+                this.date = res.data.ptOpen.dateTime.slice(0,10)
+                this.ptUrl = `https://i3d202.p.ssafy.io:8080/rtc.html?room=${res.data.teacher.teacherCode}`
+            }
         })
         .catch(err => console.error(err))
     },

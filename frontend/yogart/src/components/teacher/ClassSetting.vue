@@ -93,11 +93,13 @@ export default {
                 ptIntro: this.ptIntro,
                 clicked: this.clicked,
             }
+            // console.log(ptData)
             // 데이터 저장을 요청합니다. 데이터를 저장하며 clicked에 맞춰 수업을 생성해야 합니다.
             axios.post(this.SERVER_URL + '/api/teachers/pt-create', ptData, requestHeaders)
             .then(res => {
+                // console.log(res)
                 // 강사 상세페이지로 이동
-                // this.$router.push('')
+                this.$router.push('/classandteacher')
             })
             .catch(err => console.error(err))
         }
@@ -131,6 +133,7 @@ export default {
     font-weight: 500px;
 }
 #makeClassBtn:hover{
+    cursor: pointer;
     background-color: rgba(255, 255, 255, 0.5);
     color : rgba(143, 160, 242, 1);
     border :2px solid rgba(143, 160, 242, 1);

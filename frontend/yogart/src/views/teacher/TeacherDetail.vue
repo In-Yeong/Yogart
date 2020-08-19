@@ -14,7 +14,7 @@
         <div class="m-5">
             <p class=info>* 강사님의 모든 강의를 한 눈에 보고 간편하게 수강신청을 할 수 있습니다.</p>
         <b-tabs content-class="mt-3">
-            <b-tab @click="addPlaceholder()" v-for="pt in ptList" :key="pt.ptId" :title="pt.ptName">
+            <b-tab v-for="pt in ptList" :key="pt.ptId" :title="pt.ptName">
                 <ClassRegi :ptId="pt.ptId"/>
             </b-tab>
         </b-tabs>
@@ -55,7 +55,6 @@ export default {
             this.ptList = res.data.ptList
         })
         .catch(err => console.error(err))
-
     }
 }
 </script>

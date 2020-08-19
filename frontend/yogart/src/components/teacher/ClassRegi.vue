@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-        
+        <div class="bottom-margin"></div>
         <!-- 데이터 피커를 이용해 날짜를 받으면, 그 날짜에 열리는 모든 수업을 리스팅한다. -->
     </div>
 </template>
@@ -95,6 +95,7 @@ export default {
         // 강사의 수업 정보와 이미 예약된 PT리스트를 가져옵니다.
         axios.get(this.SERVER_URL + `/api/teachers/pt/${this.ptId}`, this.ptId)
         .then(res => {
+            // console.log(res)
             this.ptTimes = res.data.clicked
             this.ptInfo.ptTeacher = res.data.ptInfo.ptTeacherId
             this.ptInfo.ptId = res.data.ptInfo.ptId
@@ -136,7 +137,10 @@ export default {
 </script>
 
 <style scoped>
-#date-picker {
+.bottom-margin {
+    margin: 300px;
+}
+.date-picker {
     background-color: rgba(143, 160, 242, 0.5);
     border : 2px solid rgba(0,0,0,0);
     border-bottom : 1px solid black;
