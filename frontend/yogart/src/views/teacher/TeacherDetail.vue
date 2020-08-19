@@ -2,7 +2,6 @@
     <div>
         <div class="teacherBgd my-3">
             <img v-if="teacherInfo.teacherImage" :src="teacherInfo.teacherImage" alt="" class="user-profile m-5">
-            <img v-else src="../../assets/userDefault.jpg" class="user-profile m-5">
             <h2 class="name">{{ teacherInfo.teacherName }}</h2>
             <div class="intro-box">
             <h5 class="intro" v-if="teacherInfo.teacherIntro">{{ teacherInfo.teacherIntro }}</h5>
@@ -46,12 +45,10 @@ export default {
     mounted() {
         axios.get(this.SERVER_URL + `/api/teachers/list/detail/${this.teacherId}`, this.teacherId)
         .then(res => {
+            console.log(res)
             this.teacherInfo.teacherName = res.data.teacherInfo.userNickname
             this.teacherInfo.teacherIntro = res.data.teacherInfo.userIntro
-            this.teacherInfo.teacherImage = res.data.teacherInfo.userProfile
-            if (this.teacherInfo.teacherImage === 'default.png') {
-                this.teacherInfo.teacherImage = null
-            }
+            this.teacherInfo.teacherImage = `${this.$store.state.SERVER_URL}/api/users/profileImageByEmail?userEmail=${res.data.teacherInfo.userEmail}`
             this.ptList = res.data.ptList
         })
         .catch(err => console.error(err))
