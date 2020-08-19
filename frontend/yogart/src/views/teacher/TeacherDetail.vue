@@ -52,6 +52,16 @@ export default {
             this.ptList = res.data.ptList
         })
         .catch(err => console.error(err))
+        const links = document.querySelectorAll('a')
+        links.forEach(e => {
+            e.setAttribute('style', 'color: black !important')
+        })
+    },
+    beforeDestroy() {
+        const links = document.querySelectorAll('a')
+        links.forEach(e => {
+            e.setAttribute('style', 'color: gray')
+        })
     }
 }
 </script>
@@ -84,4 +94,5 @@ export default {
     font-size: 10px;
     text-align: left;
 }
+
 </style>

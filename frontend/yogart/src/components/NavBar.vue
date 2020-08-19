@@ -13,9 +13,9 @@
                 <router-link class="navbar-brand" to="/"><img class="logo-img" src="../assets/logo.png" alt=""></router-link>
                 <ul class="navbar-nav nav-right">
                 <li class="nav-item dropdown">
-                    <div class="nav-link" id="navbarDropdown"  data-toggle="dropdown" >
+                    <a class="nav-link" id="navbarDropdown"  data-toggle="dropdown" >
                     HELP
-                    </div>
+                    </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <router-link class="sub-item nav-link" to="/notice">공지사항</router-link>
                         <router-link class="sub-item nav-link" to="/qna">Q&A</router-link>
