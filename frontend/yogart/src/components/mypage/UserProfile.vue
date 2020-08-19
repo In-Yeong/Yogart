@@ -16,7 +16,7 @@
             <i class="fas fa-pencil-alt fa-2x" @click="clickUpdate()"></i>
             <div class="email">{{ userEmail }}</div>
             <div class="spoon-wrap" @click="clickSpoon()">
-                <i class="fas fa-utensil-spoon fa-1x d-inline-block pr-3"></i><div class="spoon d-inline-block">{{userSpoon}}개</div>
+                <i class="fas fa-utensil-spoon fa-1x d-inline-block pr-3"></i><div class="spoon d-inline-block">{{userSpoon}} 스푼 </div>
             </div>
         </div>
 
@@ -177,6 +177,4 @@ export default {
     background-color: rgba(242, 157, 143, 0.8);
     cursor: pointer;
 }
-
-
 </style>

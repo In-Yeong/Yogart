@@ -34,13 +34,12 @@
                     </div>
                     <div v-else-if="isTeacher" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <router-link class="sub-item nav-link" to="/mypage">마이페이지</router-link>
-                        <router-link class="sub-item nav-link" to="/teacherpage">수업관리</router-link>
+                        <router-link class="sub-item nav-link" to="/teachers/class-settings">수업관리</router-link>
                         <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
                     </div>
                     <div v-else class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <router-link class="sub-item nav-link" to="/mypage">마이페이지</router-link>
                         <a class="sub-item nav-link" @click="logoutEmmit">로그아웃</a>
-                        <router-link class="sub-item nav-link small-size" to="/teacher-apply" >강사로 활동하기</router-link>
                     </div>
                 </li>
                 <li class="nav-item" v-else>
@@ -59,8 +58,8 @@ export default {
     name: 'NavBar',
     data() {
         return {
-            
             userNickname: this.$store.state.userNickname,
+            userPic: "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token'),
             showNavbar: true,
             lastScrollPosition: 0,
             isTeacher: null,
@@ -87,30 +86,32 @@ export default {
             }
             this.showNavbar = currentScrollPosition < this.lastScrollPosition
             this.lastScrollPosition = currentScrollPosition
-        },
+        }
+
     },
-    mounted() {
+    mounted () {
         window.addEventListener('scroll', this.onScroll)
         // 해당 유저가 강사자격을 보유했는지 확인합니다.
-                const requestHeaders = {
+        const requestHeaders = {
             headers: {
                 Authorization: this.$cookies.get('auth-token')
             }
         }
         const self = this
-        async function getIsAdmin() {
-            try {
-                const res = await axios.get(self.$store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
-                self.isAdmin = res.data
-            } catch (err) {
-                console.error(err)
-            }
-        }
         async function getIsTeacher() {
             try {
                 const res = await axios.get(self.$store.state.SERVER_URL + '/api/users/isTeacher', requestHeaders)
                 self.isTeacher = res.data
             } catch(err) {
+                console.error(err)
+            }
+        }
+        async function getIsAdmin() {
+            try {
+                const res = await axios.get(self.$store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
+                self.isAdmin = res.data
+                self.isTeacher = res.data
+            } catch (err) {
                 console.error(err)
             }
         }
@@ -172,6 +173,9 @@ export default {
 .nav-link:hover:after { 
   width: 8rem !important;
 }
+.router-link-active {
+    color: rgba(143, 160, 242, 1) !important;
+}
 .nav-right {
     position: fixed;
     right: 1rem;
@@ -209,18 +213,5 @@ export default {
 
 .sub-item {
     text-align: center;
-}
-.small-size {
-    font-size: 14px;
-    color: gray !important;
-    position: relative;
-    padding: 1rem !important;
-    cursor: pointer;
-}
-.small-size:after {    
-  content: "";
-  display: block;
-  height: 0px !important;
-  width: 0px !important;
 }
 </style>
