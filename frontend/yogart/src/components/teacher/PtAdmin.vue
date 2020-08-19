@@ -1,19 +1,24 @@
 <template>
     <!-- Pt를 진행하는 페이지 입니다. 가장 가까운 시간의 PT를 보여줍니다. -->
    <div class="w-75 mx-auto mt-5">
-    <p class="info">* Pt를 진행하는 페이지 입니다. 가장 가까운 시간의 PT를 보여줍니다.</p>
-    <div class=" white-box w-100">
-        <div id="className">
-            <h2 class="page-name m-3">{{ ptName }}</h2>
+        <p class="info">* Pt를 진행하는 페이지 입니다. 가장 가까운 시간의 PT를 보여줍니다.</p>
+        <div v-if="this.studentNickname" class=" white-box w-100">
+            <div id="className">
+                <h2 class="page-name m-3">{{ ptName }}</h2>
+            </div>
+            <div>
+                <h5 class="m-3">{{ studentNickname }} 수강생</h5>
+            </div>
+            <div>
+                <h5>{{ date }} ({{koreanDay[day]}})  {{time}}시</h5>
+            </div>
+            <a :href="ptUrl" class="btn-blue" style="color:white">라이브 스트리밍 수업 시작</a>
         </div>
-        <div>
-            <h5 class="m-3">{{ studentNickname }} 수강생</h5>
+        <div v-else class=" white-box w-100">
+            <div id="className">
+                <h2 class="page-name m-3">예약된 수업이 없습니다.</h2>
+            </div>
         </div>
-        <div>
-            <h5>{{ date }} ({{koreanDay[day]}})  {{time}}시</h5>
-        </div>
-        <a :href="ptUrl" class="btn-blue" style="color:white">라이브 스트리밍 수업 시작</a>
-    </div>
     </div>
 </template>
 
