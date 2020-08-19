@@ -4,10 +4,9 @@
     <div class="col-sm-4 d-flex flex-column box">
         <div>
           <img v-if="teacher.teacherImage" :src="teacher.teacherImage" class="user-profile" alt="...">
-          <img v-else src="../../assets/userDefault.jpg" class="user-profile" alt="...">
           <h5>{{ teacher.userName }}</h5>
         <p v-if="teacher.userIntro">{{ teacher.userIntro }}</p>
-        <p v-else>강사 소개를 해주세요.강사 소개를 해주세요.강사 소개를 해주세요.강사 소개를 해주세요.강사 소개를 해주세요.강사 소개를 해주세요.</p>
+        <p v-else>강사 소개를 해주세요.</p>
         </div>
     </div>
   </div>
@@ -20,6 +19,9 @@ export default {
 
     props: {
         teacher: Object,
+    },
+    created() {
+      console.log(teacher.teacherImage)
     },
 
 }

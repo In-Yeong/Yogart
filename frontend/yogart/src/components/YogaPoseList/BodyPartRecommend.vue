@@ -9,7 +9,7 @@
                 <figure>
                     <img :src="require('../../../public/yogaList/legs.jpg')"/>
                      <figcaption @click="clickSet(1)">
-                         다리 요가 코스
+                         바디 릴렉싱 요가
                     </figcaption>
                 </figure>
               
@@ -17,23 +17,23 @@
             <slide class="slide" :index="1" >
                 <figure>
                     <img :src="require('../../../public/yogaList/arm.jpg')"/>
-                     <figcaption @click="clickSet(4)">
-                         팔 요가 코스
+                     <figcaption @click="clickSet(2)">
+                         에너지 넘치는 아침 요가
                     </figcaption>
                 </figure>
             </slide>
             <slide class="slide" :index="2" >
                 <figure>
                     <img :src="require('../../../public/yogaList/abs.jpg')"/>
-                     <figcaption @click="clickSet(5)">
-                         복근 요가 코스
+                     <figcaption @click="clickSet(3)">
+                         전신 요가 코스
                     </figcaption>
                 </figure>
             </slide>
             <slide class="slide" :index="3">
                 <figure>
                     <img :src="require('../../../public/yogaList/spine.jpg')"/>
-                     <figcaption @click="clickSet(6)">
+                     <figcaption @click="clickSet(4)">
                          척추 요가 코스
                     </figcaption>
                 </figure>
@@ -41,16 +41,16 @@
             <slide class="slide" :index="4">
                 <figure>
                     <img  :src="require('../../../public/yogaList/body.jpg')"/>
-                     <figcaption @click="clickSet(7)">
-                         전신 요가 코스
+                     <figcaption @click="clickSet(5)">
+                         복근 요가 코스
                     </figcaption>
                 </figure>
             </slide>
             <slide class="slide" :index="5">
                 <figure>
                     <img :src="require('../../../public/yogaList/relax.jpg')"/>
-                     <figcaption @click="clickSet(3)">
-                         바디 릴렉싱 요가
+                     <figcaption @click="clickSet(6)">
+                         팔 요가 코스
                     </figcaption>
                 </figure>
               
@@ -58,8 +58,8 @@
             <slide class="slide" :index="6" >
                 <figure>
                     <img :src="require('../../../public/yogaList/energy.jpg')"/>
-                     <figcaption @click="clickSet(2)">
-                         에너지 넘치는 아침 요가
+                     <figcaption @click="clickSet(7)">
+                         다리 요가 코스
                     </figcaption>
                 </figure>
             </slide>     

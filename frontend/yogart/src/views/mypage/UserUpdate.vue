@@ -69,7 +69,7 @@ export default {
             this.userNickname = res.data.userNickname
             this.userProfile = res.data.userProfile
             this.userIntro = res.data.userIntro
-            this.userImageUrl = "http://localhost:8000/api/users/profileImage?authToken=" + this.$cookies.get('auth-token')
+            this.userImageUrl = `${this.$store.state.SERVER_URL}/api/users/profileImage?authToken=` + this.$cookies.get('auth-token')
         })
         .catch(err => console.error(err))
     },
