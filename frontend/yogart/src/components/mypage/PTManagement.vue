@@ -116,7 +116,7 @@ export default {
           });
           //오늘 pt 기록들 시간순으로 배열로 넘겨주세요
           this.todayCourses = res.data.todayCourses
-          console.log(this.todayCourses)
+        //   console.log(this.todayCourses)
           //미래 pt 기록들 날짜,시간순으로 배열로 넘겨주세요
           this.futureCourses = res.data.futureCourses
         })
