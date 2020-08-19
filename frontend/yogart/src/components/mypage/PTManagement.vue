@@ -93,7 +93,7 @@ export default {
     },
     methods : {
       goPt(todayCourse) {
-        window.open(`https://i3d202.p.ssafy.io:8080/rtc.html?room=${todayCourse.ptClickedName.ptTeacherId.teacherCode}`)
+        window.open(`https://i3d202.p.ssafy.io:8080/livePT.html?room=${todayCourse.ptClickedName.ptTeacherId.teacherCode}`)
       },
       getPT() {
         //오늘 날짜 기준으로 과거,오늘,미래로 나눠서 1:1 PT수업리스트를 받는 함수
@@ -116,6 +116,7 @@ export default {
           });
           //오늘 pt 기록들 시간순으로 배열로 넘겨주세요
           this.todayCourses = res.data.todayCourses
+          console.log(this.todayCourses)
           //미래 pt 기록들 날짜,시간순으로 배열로 넘겨주세요
           this.futureCourses = res.data.futureCourses
         })

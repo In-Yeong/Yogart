@@ -51,7 +51,7 @@ export default {
             return `${this.SERVER_URL}/api/users/profileImageByEmail?userEmail=${userEmail}`
         },
         infiniteHandler($state) {
-            axios.get(`${this.SERVER_URL}/api/teachers/class/list/${this.limit + 10}`)
+            axios.get(`${this.SERVER_URL}/api/teachers/class/list/new/${this.limit + 10}`)
             .then(res => {
                 // console.log(res)
                 setTimeout(()=> {
