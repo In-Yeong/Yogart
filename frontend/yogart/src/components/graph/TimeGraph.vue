@@ -56,9 +56,9 @@
                         fill: true,
                         backgroundColor: gradientFill,
                         borderWidth: 4,
-                        data: [this.time['6'], this.time['7'], this.time['8'], this.time['9'], this.time['10'], this.time['11'], this.time['12'], this.time['13'], this.time['14'], 
-                        this.time['15'], this.time['16'], this.time['17'], this.time['18'], this.time['19'], this.time['20'], this.time['21'], this.time['22'], this.time['23'], 
-                        this.time['0'], this.time['1'], this.time['2'], this.time['3'], this.time['4'], this.time['5']] // 데이터 (시간(06시~05시) 별 횟수) 들어가는 부분
+                        data: [this.time['21'], this.time['22'], this.time['23'], this.time['0'], this.time['1'], this.time['2'], this.time['3'], this.time['4'], this.time['5'], 
+                        this.time['6'], this.time['7'], this.time['8'], this.time['9'], this.time['10'], this.time['11'], this.time['12'], this.time['13'], this.time['14'], 
+                        this.time['15'], this.time['16'], this.time['17'], this.time['18'], this.time['19'], this.time['20']] // 데이터 (시간(06시~05시) 별 횟수) 들어가는 부분
                     }]
                 },
                 options: {
