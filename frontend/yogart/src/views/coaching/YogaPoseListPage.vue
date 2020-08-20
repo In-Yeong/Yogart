@@ -1,7 +1,8 @@
 <template>
   <div>
-      <h1 class="my-3" style="font-weight:700">요가 포즈 리스트</h1>
+      <div id="topSpace"></div>
       <BodyPartRecommend @clickSet="yogaListDetail"/>
+      <div id="topSpace"></div>
       <UserDesign @clickSet="yogaListDetail"/>
       
   </div>
@@ -30,7 +31,10 @@ export default {
 </script>
 
 <style>
- 
+#topSpace {
+  height: 50px;
+}
+
 .carousel-3d-container figure {
   margin: 0;
 }
