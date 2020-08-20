@@ -111,7 +111,6 @@ export default {
             try {
                 const res = await axios.get(self.$store.state.SERVER_URL + '/api/users/isAdmin', requestHeaders)
                 self.isAdmin = res.data
-                self.isTeacher = res.data
             } catch (err) {
                 console.error(err)
             }
