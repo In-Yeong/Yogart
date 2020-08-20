@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-5">
         <h2>요가 강사 자격증명</h2>
         <ApplicationList @permit="setTeacher" :applications="applications"/>
     </div>

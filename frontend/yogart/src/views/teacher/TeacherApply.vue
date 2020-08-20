@@ -31,6 +31,7 @@ export default {
                 headers: {
                     Authorization: this.$cookies.get('auth-token'),
                     'Content-Type' : 'multipart/form-data',
+                    'Access-Control-Allow-Origin': '*',
                 }
             }
             // 확인 필요
@@ -40,7 +41,6 @@ export default {
                 // file.push(this.$refs.tI.files[i]);
                 let file = this.$refs.tI.files[i];
                 fd.append('files', file)
-         
             }
 
             axios.post(this.SERVER_URL + '/api/users/imageUpload', fd, requestHeaders)
