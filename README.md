@@ -20,13 +20,10 @@
 
 
 > > 메인 페이지
-
-<div align="center">
-<img src="imgForREADME/main1.png" alt="main1">
-	<br />
-    <br />
-<img src="imgForREADME/main2.png" alt="main2">
-</div>
+<p align="center">
+<img src="imgForREADME/main1.PNG">
+    <img src="imgForREADME/main2.PNG">
+</p>
 
 
 
