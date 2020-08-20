@@ -46,7 +46,7 @@ export default {
     },
     methods: {
         backToClass() {
-            this.$router.push("/class")
+            this.$router.push("/classandteacher")
         }
     },
 }

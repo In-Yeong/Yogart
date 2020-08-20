@@ -13,7 +13,7 @@
         </div>
         <div class="profile-content">
             <div class="nickname">{{ userNickname }}</div>
-            <i class="fas fa-pencil-alt fa-2x" @click="clickUpdate()"></i>
+            <i class="fas fa-pencil-alt" @click="clickUpdate()"></i>
             <div class="email">{{ userEmail }}</div>
             <div class="spoon-wrap" @click="clickSpoon()">
                 <i class="fas fa-utensil-spoon fa-1x d-inline-block pr-3"></i><div class="spoon d-inline-block">{{userSpoon}} 스푼 </div>
