@@ -4,10 +4,10 @@
             <h2 class="page-name m-0">수업 목록</h2>
 
             <div class="form-group">
-                <select class="form-control" id="sel1">
-                    <option id="new" value="0" @click="resorting('new')"> 최신순</option>
-                    <option id="low" value="1" @click="resorting('low')">낮은가격순</option>
-                    <option id="high" value="2" @click="resorting('high')">높은가격순</option>
+                <select class="form-control" id="sel1" v-model="selected">
+                    <option id="new" value="new"> 최신순</option>
+                    <option id="low" value="low">낮은가격순</option>
+                    <option id="high" value="high">높은가격순</option>
                 </select>
             </div>
         </div>
@@ -33,7 +33,15 @@ export default {
         return {
             SERVER_URL: this.$store.state.SERVER_URL,
             limit: 0,
-            yogaList : []
+            yogaList : [],
+            selected: 'new',
+        }
+    },
+    watch: {
+        selected : function () {
+            this.yogaList = []
+            this.limit = 0
+            this.infiniteHandler()
         }
     },
     components: {
@@ -51,7 +59,7 @@ export default {
             return `${this.SERVER_URL}/api/users/profileImageByEmail?userEmail=${userEmail}`
         },
         infiniteHandler($state) {
-            axios.get(`${this.SERVER_URL}/api/teachers/class/list/new/${this.limit + 10}`)
+            axios.get(`${this.SERVER_URL}/api/teachers/class/list/${this.selected}/${this.limit + 10}`)
             .then(res => {
                 // console.log(res)
                 setTimeout(()=> {
