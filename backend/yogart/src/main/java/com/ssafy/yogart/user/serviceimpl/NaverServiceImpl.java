@@ -21,7 +21,7 @@ public class NaverServiceImpl implements NaverService {
 	
 	@Override
 	public HashMap<String, String> getTokenInfo(String code, String state) throws Exception {
-		String redirectURI = URLEncoder.encode("http://localhost:3000/login", "UTF-8");
+		String redirectURI = URLEncoder.encode("http://i3d202.p.ssafy.io/login", "UTF-8");
         String apiURL;
         apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
         apiURL += "client_id=" + NAVER_CLIENT_ID;

@@ -2,14 +2,14 @@
     
     <div class="m-5">
         <div id="example">
-        <h3 class="my-5 y-border" style="font-weight:500px;">부위별 & 스페셜 요가 코스</h3>
+        <h3 class="my-5 y-border" style="font-weight:500px;">요가트의 추천</h3>
         <carousel-3d :controls-visible="true"  :controls-prev-html="'&#10092;'" :controls-next-html="'&#10093;'">
             <!-- figcaption -->
             <slide class="slide" :index="0">
                 <figure>
                     <img :src="require('../../../public/yogaList/legs.jpg')"/>
-                     <figcaption @click="clickSet(1)">
-                         바디 릴렉싱 요가
+                     <figcaption @click="clickSet(7)">
+                         다리 집중 요가
                     </figcaption>
                 </figure>
               
@@ -17,16 +17,16 @@
             <slide class="slide" :index="1" >
                 <figure>
                     <img :src="require('../../../public/yogaList/arm.jpg')"/>
-                     <figcaption @click="clickSet(2)">
-                         에너지 넘치는 아침 요가
+                     <figcaption @click="clickSet(6)">
+                         팔뚝 집중 요가
                     </figcaption>
                 </figure>
             </slide>
             <slide class="slide" :index="2" >
                 <figure>
                     <img :src="require('../../../public/yogaList/abs.jpg')"/>
-                     <figcaption @click="clickSet(3)">
-                         전신 요가 코스
+                     <figcaption @click="clickSet(5)">
+                         코어 강화
                     </figcaption>
                 </figure>
             </slide>
@@ -34,23 +34,23 @@
                 <figure>
                     <img :src="require('../../../public/yogaList/spine.jpg')"/>
                      <figcaption @click="clickSet(4)">
-                         척추 요가 코스
+                         척추 강화
                     </figcaption>
                 </figure>
             </slide>
             <slide class="slide" :index="4">
                 <figure>
                     <img  :src="require('../../../public/yogaList/body.jpg')"/>
-                     <figcaption @click="clickSet(5)">
-                         복근 요가 코스
+                     <figcaption @click="clickSet(3)">
+                         전신 요가
                     </figcaption>
                 </figure>
             </slide>
             <slide class="slide" :index="5">
                 <figure>
                     <img :src="require('../../../public/yogaList/relax.jpg')"/>
-                     <figcaption @click="clickSet(6)">
-                         팔 요가 코스
+                     <figcaption @click="clickSet(1)">
+                         바디 릴렉싱
                     </figcaption>
                 </figure>
               
@@ -58,8 +58,8 @@
             <slide class="slide" :index="6" >
                 <figure>
                     <img :src="require('../../../public/yogaList/energy.jpg')"/>
-                     <figcaption @click="clickSet(7)">
-                         다리 요가 코스
+                     <figcaption @click="clickSet(2)">
+                         에너지 넘치는 아침
                     </figcaption>
                 </figure>
             </slide>     
@@ -87,7 +87,7 @@
         },
         methods: {
             clickSet(num){
-                this.$emit("clickSet",num)
+                this.$emit("clickSet", num)
             }
         }
  

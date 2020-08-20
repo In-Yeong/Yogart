@@ -2,7 +2,7 @@
     <div class="timeGraph">
         <div class="graph-name">일별 운동량</div>
         <div class="wrapper">
-            <div id="no-data">데이터가 없습니다.</div>
+            <div id="no-data">AI 코칭을 이용하고 운동량을 확인해보세요</div>
             <GChart id="chart"
             :settings="{packages: ['calendar']}"
             type="Calendar"

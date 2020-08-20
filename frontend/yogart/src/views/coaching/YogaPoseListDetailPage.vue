@@ -43,6 +43,21 @@ export default {
             axios.get(this.SERVER_URL + `/api/aicoach/list/${this.listId}`)
             .then(response => {
                 this.courseName = response.data.courseName
+                if (this.courseName === 'Abs') {
+                    this.courseName = '코어 강화'
+                } else if (this.courseName === 'leg') {
+                    this.courseName = '다리 집중'
+                } else if (this.courseName === 'arm') {
+                    this.courseName = '팔뚝 집중'
+                } else if (this.courseName === 'spine') {
+                    this.courseName = '척추 강화'
+                } else if (this.courseName === 'Whole Body') {
+                    this.courseName = '전신 요가'
+                } else if (this.courseName === 'Good Morning') {
+                    this.courseName = '에너지 넘치는 아침'
+                } else if (this.courseName === 'Mental and physical stability') {
+                    this.courseName = '바디 릴렉싱'
+                }
                 this.backCommingString = response.data.course
                 this.StringToArr()
             })
@@ -93,6 +108,5 @@ export default {
 .y-border{
     border-top : 2px solid #f29d8f;
     border-bottom : 2px solid #f29d8f;
-    width : %;
 }
 </style>
