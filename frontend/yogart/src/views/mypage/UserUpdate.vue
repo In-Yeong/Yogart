@@ -116,6 +116,7 @@ export default {
                 .then(res => {
 			        this.$store.commit('storeLogout')
                     this.$router.push('/')
+                    window.location.reload()
                 })
                 .catch(err => console.error(err))
             }
