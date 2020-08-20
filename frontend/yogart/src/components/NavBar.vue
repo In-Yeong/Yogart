@@ -13,10 +13,10 @@
                 <router-link class="navbar-brand" to="/"><img class="logo-img" src="../assets/logo.png" alt=""></router-link>
                 <ul class="navbar-nav nav-right">
                 <li class="nav-item dropdown">
-                    <a class="nav-link" id="navbarDropdown" data-toggle="dropdown">
+                    <a class="nav-link-no" id="navbarDropdown" data-toggle="dropdown">
                     HELP
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu dropdown-menu" aria-labelledby="navbarDropdown">
                         <router-link class="sub-item nav-link" to="/notice">공지사항</router-link>
                         <router-link class="sub-item nav-link" to="/qna">Q&A</router-link>
                     </div>
@@ -153,7 +153,26 @@ export default {
     text-align: center;
     margin: 0 auto !important;
 }
-
+.nav-link-no {
+    color: gray !important;
+    position: relative;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 1rem !important;
+    cursor: pointer;
+    display: block;
+}
+.nav-link-no:after {    
+  content: "";
+  display: block;
+  height: 4px;
+  background: rgba(242, 157, 143, 1);
+  transition: width 0.7s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+.nav-link-no:hover:after { 
+  width: 3rem !important;
+}
 .nav-link {
     color: gray !important;
     position: relative;
