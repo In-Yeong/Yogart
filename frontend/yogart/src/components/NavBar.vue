@@ -13,7 +13,7 @@
                 <router-link class="navbar-brand" to="/"><img class="logo-img" src="../assets/logo.png" alt=""></router-link>
                 <ul class="navbar-nav nav-right">
                 <li class="nav-item dropdown">
-                    <a class="nav-link" id="navbarDropdown"  data-toggle="dropdown" >
+                    <a class="nav-link" id="navbarDropdown" data-toggle="dropdown">
                     HELP
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

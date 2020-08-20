@@ -70,6 +70,9 @@ export default {
               
         }  
     },
+    created() {
+        window.scrollTo(0,0);
+    },
     mounted(){
         this.getCourse()
         this.splitTotaltime()
@@ -111,16 +114,10 @@ export default {
                 //코스 이름과 코스 리스트 save
                 this.courseName = res.data.courseName
                 
-                const Course =  res.data.course.split(',') 
-                const filteredCourse =  []
-                Course.forEach(function(courseId){
-                    if (courseId < 1000){
-                        filteredCourse.push(courseId)
-                    }
-                })
-                this.course = filteredCourse
-                this.createLineLabels()
-                this.createDougnutData()
+                this.course =  res.data.course.split(',')
+                console.log("결과",this.course)
+                this.createLineLabels(this.course)
+                this.createDougnutData(this.course)
                 this.getScores()
                 //
             })
@@ -128,16 +125,17 @@ export default {
                 console.error(err)
             })
         },
-        createLineLabels() { //라벨 - 동작이름들
+        createLineLabels(courses) { //라벨 - 동작이름들
             const lineLabels = []
-            this.course.forEach(function (poseID){
+            // console.log("라인라벨",courses)
+            courses.forEach(function (poseID){
                 lineLabels.push(posefiles[poseID].korean_pose_name)
             }.bind(this))
             const lineLabelStr = lineLabels.join(',')
             this.$cookies.set('lineLabelStr',lineLabelStr) 
         },
-        createDougnutData() { //data - 태그별 카운트 
-            this.course.forEach(function (poseID){
+        createDougnutData(courses) { //data - 태그별 카운트 
+            courses.forEach(function (poseID){
                 this.posefiles[poseID].tag.forEach(function(tag){
                     if (tag === '전신') {
                         this.dougnutdata[0] ++       

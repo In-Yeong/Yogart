@@ -98,16 +98,23 @@ export default {
 		}
     },
     created() {
-        Kakao.init('688de69414ec5331cee58badb1cad1ea');
+        Kakao.init('688de69414ec5331cee58badb1cad1ea')
     },
     mounted() {
         window.addEventListener('resize', this.setSize)
+    },
+    updated() {
+        window.scrollTo(0,0)
     }
 }
 </script>
 
 
 <style>
+*:not(i) {
+  font-family: 'Gothic A1', sans-serif !important;
+}
+
 #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

@@ -100,7 +100,6 @@
             }
         },
         mounted(){
-            
             this.getCourse()
             document.getElementById('good').style.display= 'none'
             document.getElementById('bad').style.display= 'none'
