@@ -87,6 +87,10 @@ export default {
                     Authorization: this.$cookies.get('auth-token')
                 }
             }
+            if (this.ptPrice < 0) {
+                alert('돈을 주면서 수업 하시게요?')
+                return
+            }
             const ptData = {
                 ptName: this.ptName,
                 ptPrice: this.ptPrice,
