@@ -1,6 +1,6 @@
 <template>
     <div class="noticeList">
-        <div v-for="item in items" :key="item.qnaId">
+        <div class="big-piece" v-for="item in items" :key="item.qnaId">
             <QnaListItem :item="item"/>
         </div>
     </div>
@@ -20,8 +20,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .noticeList{
-    height : 600px;
+    width: 75vw;
+    height : 100%;
+    margin: auto;
 }
 </style>

@@ -1,17 +1,13 @@
 <template>
-    <div class="mb-5" style="margin-top : 50px">
-        <h1>Mypage</h1>
+    <div class="py-5">
         <UserProfile/>
-       
-        <div class="d-flex flex-column">
-            <div class="w3-bar" style="margin-left: 10vw;">
-            <!-- <button class="w3-bar-item w3-button w3-black" @click="onDiary">다이어리</button> -->
-            <button class="w3-bar-item w3-button w3-teal" @click="onPTMang">PT관리</button>
-            <button class="w3-bar-item w3-button w3-red" @click="onExerHis">운동기록</button>
+        <div class="">
+            <div class="btn-wrap">
+                <button class="ptBtn" @click="onPTMang">PT관리</button>
+                <button class="logBtn" @click="onExerHis">운동기록</button>
             </div>
-            <div class="schedule">
+            <div id="schedule" class="schedule ptBorder">
                 <PTManagement :ptManagement="ptManagement"/>
-                <!-- <Diary :diary="diary"/> -->
                 <ExerciseHistory :exerciseHistory="exerciseHistory"/>
             </div>
         </div>
@@ -22,7 +18,6 @@
 <script>
 import UserProfile from '@/components/mypage/UserProfile.vue'
 import PTManagement from '@/components/mypage/PTManagement.vue'
-// import Diary from '@/components/mypage/Diary.vue'
 import ExerciseHistory from '@/components/mypage/ExerciseHistory.vue'
 
 export default {
@@ -30,76 +25,83 @@ export default {
     components : {
         UserProfile,
         PTManagement,
-        // Diary,
         ExerciseHistory
     },
     data() {
         return {
             ptManagement : true,
-            // diary : true,
             exerciseHistory : false,
         }
     },
     mounted() {
-        // const diary = document.getElementById('diary')
-        const pt = document.getElementById('pt')
-        const exchis = document.getElementById('exc-his')
-        pt.style.backgroundColor = 'lightgray'
+        if (!this.$store.state.isLogin) {
+            $('#loginStaticBackdrop').modal('show')
+        }
     },
     methods : {
-        // onDiary() {
-        //     this.ptManagement = false
-        //     this.diary = true
-        //     this.exerciseHistory = false
-        //     diary.style.backgroundColor = 'lightgray'
-        //     pt.style.backgroundColor = 'gray'
-        //     exchis.style.backgroundColor = 'red'
-        // },
+   
         onPTMang() {
             this.ptManagement = true
-            // this.d/ary = false
             this.exerciseHistory = false
-            // diary.style.backgroundColor = 'gray'
-            pt.style.backgroundColor = 'lightgray'
-            exchis.style.backgroundColor = 'gray'
+            document.getElementById('schedule').classList.remove('logBorder')
+            document.getElementById('schedule').classList.add('ptBorder')
+
  
         },
         onExerHis() {
             this.ptManagement = false
-            // this.diary = false
             this.exerciseHistory = true
-            // diary.style.backgroundColor = 'gray'
-            pt.style.backgroundColor = 'gray'
-            exchis.style.backgroundColor = 'lightgray'
+            document.getElementById('schedule').classList.remove('ptBorder')
+            document.getElementById('schedule').classList.add('logBorder')
+
         },
     }
 }
 </script>
 
-<style>
+<style scoped>
 .schedule {
     margin-left: 10vw;
     margin-right: 10vw;
     padding : 1rem;
-    border : 2px solid lightgray;
-    background-color : lightgray;
+    min-height: 500px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 0px 30px 30px 30px;
 }
-.schedule-btn {
-    padding-top : 5px;
-    padding-bottom : 5px;
-    font-size : 20px;
-    /* border : 2px solid lightgray; */
-    background-color : gray;
+.ptBorder {
+    border : 3px solid rgba(143, 160, 242, 1);
 }
-.schedule-btn:hover {
-    background-color: rgb(209, 236, 165);
+.logBorder {
+    border : 3px solid rgba(242, 157, 143, 1);
 }
-
-.gray {
+.ptBtn {
+    background-color: rgba(143, 160, 242, 1);
+    color: white;
+    border: none;
+    border-radius: 30px 0px 0px 0px;
+    outline: none !important;
+    width: 150px;
+    height: 50px;
+}
+.ptBtn:hover {
+    background-color: rgba(143, 160, 242, 0.8);
+}
+.logBtn {
+    background-color: rgba(242, 157, 143, 1);
+    color: white;
+    border: none;
+    border-radius: 0px 30px 0px 0px;
+    outline: none !important;
+    width: 150px;
+    height: 50px;
+}
+.logBtn:hover {
+    background-color: rgba(242, 157, 143, 0.8);
+}
+.btn-wrap {
     margin-left: 10vw;
     margin-right: 10vw;
-    padding : 1rem;
-    border : 2px solid gray;
+    text-align: left;
 }
 
 

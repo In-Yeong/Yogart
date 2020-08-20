@@ -1,6 +1,4 @@
-const index = require('./index.js');
 "use strict";
-
 
 let localVideo = document.getElementById("localVideo");
 let remoteVideo = document.getElementById("remoteVideo");
@@ -10,16 +8,22 @@ let isStarted = false;
 let localStream;
 let remoteStream;
 let pc;
-
 let pcConfig = {
     'iceServers': [{
         'urls': 'stun:stun.l.google.com:19302'
       }]
 }
+let isVidOn = true;
+let isAudOn = true;
 
-let room = index.roomName;
+var currentURL = document.URL;
+var params = {};
+currentURL.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
+var roomName = params.room
 
 let socket = io.connect();
+
+let room = roomName;
 
   if(room !==''){
     socket.emit('create or join',room);
@@ -78,7 +82,7 @@ function sendMessage(message){
 navigator.mediaDevices
   .getUserMedia({
     video: true,
-    audio: false,
+    audio: true,
   })
   .then(gotStream)
   .catch((error) => console.error(error));
@@ -91,6 +95,23 @@ function gotStream(stream) {
   if (isInitiator) {
     maybeStart();
   }
+}
+
+// function vidMute() {
+//   localStream.getTracks().forEach(track => 
+//     track.enabled = !track.enabled
+//     );
+//   isLocalOn = !isLocalOn;
+// }
+
+function vidMute() {
+  localStream.getVideoTracks()[0].enabled = isVidOn;
+  isVidOn = !isVidOn;
+}
+
+function audMute() {
+  localStream.getAudioTracks()[0].enabled = isAudOn;
+  isAudOn2 = !isAudOn;
 }
 
 function createPeerConnection() {

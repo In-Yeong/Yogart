@@ -1,37 +1,26 @@
 <template>
      <!-- Footer -->
-    <footer class="page-footer font-small unique-color-dark pt-4" style="background-color:black; color:white">
-        <!-- Footer Elements -->
-        <div class="container" >
-            <!-- Call to action -->
-            <ul class="list-unstyled list-inline text-center">
-            <li class="list-inline-item">
-                <h5 class="mb-1">Register for free</h5>
-            </li>
-            <li class="list-inline-item">
-                <a href="/accounts/signup" class="btn outline-white btn-rounded btn-danger">Sign up!</a>
-            </li>
-            </ul>
-        </div>
+    <footer class="page-footer font-small">
         <!-- Copyright -->
-        <div class="footer-copyright text-center py-3 " style="background-color:black;">© 2020 Copyright:
-            <a href="https://mdbootstrap.com/"> yogart.com</a>
+        <div class="text-center" style="height:4vh;">
+            <img src="../../public/favicon.png" style="max-height: 40px;">
+            Copyright 조규성, 박인영, 정승희, 유상욱, 노우현 ⓒ 2020. All Rights Reserved.
         </div>
     </footer>
 </template>
 
 <script>
 export default {
-
+    name: 'NavBar',
 }
+
 </script>
 
-<style>
+<style scoped>
 .page-footer {
-    margin-top:auto;    
+    position: relative;
+    color: gray;
+    font-weight: 500;
+    bottom: 2rem;
 }
-.outline-white{
-    border : 2px solid white;
-}
-
 </style>

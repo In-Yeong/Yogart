@@ -8,14 +8,24 @@ Vue.use(VueCookies)
 export default new Vuex.Store({
     state: {
         isLogin: !!window.$cookies.get('auth-token'),
-        SERVER_URL: "http://localhost:8000",
+        SERVER_URL: 'http://i3d202.p.ssafy.io:8000',
+        LOCAL_URL: 'http://localhost:3000',
+        userNickname: window.$cookies.get('userNickname'),
     },
     mutations: {
-        storeLogin(state) {
+        storeLogin(state, payload) {
+            window.$cookies.set('auth-token', payload.token)
+            window.$cookies.set('userNickname', payload.user.userNickname)
             state.isLogin = true
+            state.userNickname = payload.user.userNickname
+            state.imageUrl = payload.user.imageUrl
         },
         storeLogout(state) {
             state.isLogin = false
+            state.userNickname = null
+            state.imageUrl = null
+            window.$cookies.remove('auth-token')
+            window.$cookies.remove('userNickname')
         },
     },
     actions: {

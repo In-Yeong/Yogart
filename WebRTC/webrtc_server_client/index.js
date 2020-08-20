@@ -21,15 +21,9 @@ let app = http.createServer((req,res)=>{
 }).listen(8080);
 
 let io = socketIO.listen(app);
-module.exports.roomName="";
 
 io.sockets.on('connection',socket=>{
     function log() {
-        // console.log(querystring.parse(socket.request.headers.referer));
-        var params = {};
-        socket.request.headers.referer.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
-        console.log(params.room);
-        roomName = params.room
         let array = ['Message from server:'];
         array.push.apply(array,arguments);
         socket.emit('log',array);
@@ -63,6 +57,4 @@ io.sockets.on('connection',socket=>{
             socket.emit('full',room);
         }
     });
-
-
 });

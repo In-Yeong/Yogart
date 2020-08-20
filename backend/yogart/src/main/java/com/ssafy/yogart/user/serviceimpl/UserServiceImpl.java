@@ -1,10 +1,15 @@
 package com.ssafy.yogart.user.serviceimpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.yogart.teachers.repository.PtInfoRepository;
 import com.ssafy.yogart.user.error.AlreadyExistsException;
 import com.ssafy.yogart.user.model.User;
+import com.ssafy.yogart.user.model.UserFile;
+import com.ssafy.yogart.user.repository.UserFileRepository;
 import com.ssafy.yogart.user.repository.UserRepository;
 import com.ssafy.yogart.user.service.JwtService;
 import com.ssafy.yogart.user.service.UserService;
@@ -13,6 +18,12 @@ import com.ssafy.yogart.user.service.UserService;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private UserFileRepository userFileRepository;
+
+	@Autowired
+	private PtInfoRepository ptInfoRepository;
 	
 	@Autowired
 	private JwtService jwtService;
@@ -39,18 +50,18 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(new User(email, name, nickname, password));
     }
     
-    public User join(String email, String nickname, String loginMethod) {
+    public User joinSocial(String email, String nickname, String randPass, String loginMethod) {
     	User user = userRepository.findByUserEmailAndLoginMethod(email, loginMethod);
     	if (user != null)
     		throw new AlreadyExistsException("Duplicate useremail");
-    	return userRepository.save(new User(email, nickname, loginMethod));
+    	return userRepository.save(new User(email, nickname, nickname, randPass, loginMethod));
     }
 
-    // 인증 & 개인정보 조회
+
+	// 인증 & 개인정보 조회
     @Override
     public User authentication(String token) {
     	if(jwtService.isUsable(token)) {
-    		System.out.println("123");
 //    		Map<String, Object> result = jwtService.get(token);
     		User userTemp = jwtService.get(token);
 //    		User user = userRepository.findByUserEmailAndUserPassword((String)result.get("UserEmail")
@@ -61,25 +72,57 @@ public class UserServiceImpl implements UserService {
     	return null;
     }
 
-    // 비밀번호 업데이트
-    @Override
-    public User updatePassword(String token, String password) {
-        User user = this.authentication(token);
-        user.setUserPassword(password);
-        return userRepository.save(user);
-    }
-
     // 탈퇴
     @Override
-    public void withdraw(String token) {
-        User user = this.authentication(token);
+    public void withdraw(User user) {
         userRepository.delete(user);
     }
 
 	@Override
-	public User login(String email, String loginMethod, String trash) {
+	public User loginSocial(String email, String loginMethod) {
 		User user = userRepository.findByUserEmailAndLoginMethod(email, loginMethod);
 		return user;
+	}
+	
+	@Override
+	public User emailChk(String email) {
+		User user = userRepository.findByUserEmail(email);
+		return user;
+	}
+
+	@Override
+	public User nicknameChk(String nickname) {
+		User user = userRepository.findByUserNickname(nickname);
+		return user;
+	}
+
+	@Override
+	public List<UserFile> getRegistrationUsers() {
+		return userFileRepository.getUsers();
+	}
+
+	@Override
+	public List<UserFile> getRegistrationImage(String userEmail) {
+		return userFileRepository.getImageName(userEmail);
+	}
+
+	@Override
+	public void registerUserToTeacher(String userEmail) {
+		userFileRepository.deleteByUserFileEmail(userEmail);
+	}
+	
+	public List<User> showAllTeacherlist() {
+		return userRepository.findByUserAuthority("TEACHER");
+	}
+	
+	@Override
+	public User findUser(int id) {
+		return userRepository.findOneById(id);
+	}
+
+	@Override
+	public User updateInfo(User user) {
+		return userRepository.save(user);
 	}
 
 }

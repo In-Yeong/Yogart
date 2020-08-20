@@ -6,15 +6,25 @@ import VueCookies from 'vue-cookies'
 import LoginModal from './components/login/LoginModal.vue'
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
 import { required, email, min } from 'vee-validate/dist/rules'
-import CKEditor from '@ckeditor/ckeditor5-vue'
+import 'codemirror/lib/codemirror.css';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import { Editor } from '@toast-ui/vue-editor';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import Carousel3d from 'vue-carousel-3d';
 
-// for google login
-// import GAuth from 'vue-google-oath2'
-// Vue.use(GAuth, {clientId: "464033788490-4n32ni2tto41a0j7crvvo8nuft697un6.apps.googleusercontent.com", scope: 'profile email https://www.googleapis.com/auth/plus.login'})
+
+Vue.use(Carousel3d);
+// Install BootstrapVue
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
+
 
 Vue.config.productionTip = false
 Vue.use(VueCookies)
-Vue.use(CKEditor)
+Vue.use(Editor)
+Vue.use(BootstrapVue)
 
 Vue.component(LoginModal.name, LoginModal)
 Vue.component('ValidationObserver', ValidationObserver)
@@ -32,7 +42,7 @@ extend('required', {
 
 extend('min', {
     ...min,
-    message: '비밀번호는 6자리 이상'
+    message: '비밀번호는 8자리 이상'
 })
 
 new Vue({

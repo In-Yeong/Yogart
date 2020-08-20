@@ -15,8 +15,6 @@ export default {
         }
     },
     created() {
-        console.log(process.env)
-        console.log("이거",this.JavaScriptApiKey)
         Kakao.init('688de69414ec5331cee58badb1cad1ea');
     },
     mounted() {
@@ -24,17 +22,12 @@ export default {
 
         // @details 카카오톡 Developer API 사이트에서 발급받은 JavaScript Key
       
-        // Kakao.init("688de69414ec5331cee58badb1cad1ea");
-        Kakao.init("804d91902e09ccbb770ad9e5f6e72c5f");
-
-
 
         // @breif 카카오 로그인 버튼을 생성합니다.
 
         Kakao.Auth.createLoginButton({
             container : "#kakao-login-btn",
             success : function( authObj ) {
-                console.log( authObj );
                  axios
                 .post("http://localhost:8000/api/users/kakaoLogin", {
                     access_token: authObj.access_token,
@@ -44,18 +37,15 @@ export default {
                     token_type: authObj.token_type
                     })
                 .then(res1 => {
-                console.log(res1);
                 this.$router.push("/");
                 })
                 .catch(error => {
-                console.log(error);
+                console.error(error);
                 });
                 
                 Kakao.API.request({
                       url : "/v2/user/me"
                     , success : function( res ) {
-                        console.log('리퀘스트 성공')
-                        console.log( res );
                     }, fail : function( error ) {
                         alert( JSON.stringify( error ) );
                     }
