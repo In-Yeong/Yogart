@@ -50,7 +50,7 @@ public class KakaoServiceImpl implements KakaoService {
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
             sb.append("&client_id=b5f85af25d1bdf961d4f2016bafe3c6e");
-            sb.append("&redirect_uri=http://localhost:8000/login");
+            sb.append("&redirect_uri=http://i3d202.p.ssafy.io:8000/login");
             sb.append("&code=" + authorizeCode);
             bw.write(sb.toString());
             bw.flush();
@@ -185,9 +185,9 @@ public class KakaoServiceImpl implements KakaoService {
         parameters.add("quantity", String.valueOf(quantity));
         parameters.add("total_amount", String.valueOf(price));
         parameters.add("tax_free_amount", "0");
-        parameters.add("approval_url", "http://localhost:3000/kakaoPay/Success");
-        parameters.add("cancel_url", "http://localhost:3000/kakaoPay/Cancel");
-        parameters.add("fail_url", "http://localhost:3000/kakaoPay/Fail");
+        parameters.add("approval_url", "http://i3d202.p.ssafy.io/kakaoPay/Success");
+        parameters.add("cancel_url", "http://i3d202.p.ssafy.io/kakaoPay/Cancel");
+        parameters.add("fail_url", "http://i3d202.p.ssafy.io/kakaoPay/Fail");
 		
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(parameters, header);
         

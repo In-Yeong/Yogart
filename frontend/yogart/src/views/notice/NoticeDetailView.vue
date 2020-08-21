@@ -33,8 +33,8 @@ export default {
             noticeContent: null,
             noticeId: null,
             createDate: null,
-            SERVER_URL: this.$store.state.SERVER_URL
         },
+        SERVER_URL: this.$store.state.SERVER_URL
       }
     },
     created() {
