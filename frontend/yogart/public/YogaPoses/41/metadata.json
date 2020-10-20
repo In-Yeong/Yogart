@@ -1,1 +1,0 @@
-{"tfjsVersion":"1.3.1","tmVersion":"0.8.6","packageVersion":"0.8.6","packageName":"@teachablemachine/pose","timeStamp":"2020-08-19T13:55:09.543Z","userMetadata":{},"modelName":"my-pose-model","labels":["error","41"],"modelSettings":{"posenet":{"architecture":"MobileNetV1","outputStride":16,"inputResolution":257,"multiplier":0.75}}}
