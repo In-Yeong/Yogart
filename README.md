@@ -71,7 +71,7 @@
 > >
 > > 
 
-![컬러 디자인 기획서](imgForREADME\컬러 디자인 기획서.jpg)
+![컬러 디자인 기획서](imgForREADME/color_design.jpg)
 
 
 
