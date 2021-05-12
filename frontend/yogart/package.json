@@ -13,7 +13,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.16.0",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "chartjs-plugin-labels": "^1.1.0",
     "core-js": "^3.6.5",
     "facebook-login-vuejs": "^2.1.3",
